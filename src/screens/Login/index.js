@@ -14,7 +14,10 @@ import {
   Right,
   Toast
 } from "native-base";
+import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
+
+import { fetchData } from './actions'
 
 import styles from "./styles";
 // import commonColor from "../../theme/variables/commonColor";
@@ -91,6 +94,8 @@ class LoginForm extends Component {
   }
 
   render() {
+    const { fetchData, loginReducer } = this.props;
+    const leftText = loginReducer.isFetching ? "Fetching ..." : loginReducer.error ? "Error" : `Length: ${loginReducer.data.length}`
     const navigation = this.props.navigation;
     return (
       <Container>
@@ -162,7 +167,8 @@ class LoginForm extends Component {
                     small
                     transparent
                     style={styles.skipBtn}
-                    onPress={() => navigation.navigate("Walkthrough")}
+                    onPress={() => fetchData()}
+                    //onPress={() => navigation.navigate("Walkthrough")}
                   >
                     <Text
                       style={
@@ -176,6 +182,11 @@ class LoginForm extends Component {
                     </Text>
                   </Button>
                 </View>
+                <View style={{ flex: 1, alignSelf: "flex-start" }}>
+                  <Text>
+                    {leftText}
+                  </Text>
+                </View>
               </View>
             </View>
           </Content>
@@ -184,6 +195,21 @@ class LoginForm extends Component {
     );
   }
 }
+
+function mapStateToProps (state) {
+  return {
+    loginReducer: state.loginReducer
+  }
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    fetchData: () => dispatch(fetchData())
+  }
+}
+
+LoginForm = connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+
 const Login = reduxForm({
   form: "login"
 })(LoginForm);

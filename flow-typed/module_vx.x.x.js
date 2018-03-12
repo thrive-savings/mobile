@@ -40,7 +40,7 @@ declare module "remote-redux-devtools" {
 declare module "redux" {
 	declare module.exports: any;
 }
-declare module "redux-thunk" {
+declare module "redux-saga" {
 	declare module.exports: any;
 }
 declare module "redux-persist" {
