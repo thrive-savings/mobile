@@ -1,30 +1,37 @@
-import { FETCHING_DATA, FETCHING_DATA_SUCCESS, FETCHING_DATA_FAILURE } from './constants'
+import { REQUEST_URL } from "./constants";
 const initialState = {
-  data: [],
+  data: {},
+  notVerified: false,
   dataFetched: false,
   isFetching: false,
-  error: false
-}
+  error: false,
+  errorMessage: ""
+};
 
-export default function dataReducer (state = initialState, action) {
+export default function authReducer (state = initialState, action) {
+  console.log(`Reducing ${action.type}`);
   switch (action.type) {
-    case FETCHING_DATA:
+    case `${REQUEST_URL}_SUBMIT`:
       return {
         ...state,
-        data: [],
         isFetching: true
       }
-    case FETCHING_DATA_SUCCESS:
+    case `${REQUEST_URL}_SUCCEED`:
+      console.log("Authorization Succeeded!");
+      const { payload: { data, notVerified } } = action;
       return {
         ...state,
-        isFetching: false,
-        data: action.data
+        data,
+        notVerified: notVerified ? true : false,
+        isFetching: false
       }
-    case FETCHING_DATA_FAILURE:
+    case `${REQUEST_URL}_FAIL`:
+      console.log("Authorization Failed!");
       return {
         ...state,
         isFetching: false,
-        error: true
+        error: true,
+        errorMessage: action.error
       }
     default:
       return state

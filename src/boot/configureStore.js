@@ -1,12 +1,14 @@
 // @flow
 import { AsyncStorage } from "react-native";
 import { composeWithDevTools } from "remote-redux-devtools";
-import { createStore, applyMiddleware, compose } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import createSagaMiddleware from 'redux-saga'
 import { persistStore } from "redux-persist";
 import reducer from "../reducers";
 
-import dataSaga from "../screens/Login/saga";
+import { requestApiSaga } from "../actions/requestApi";
+import loginSaga from "../screens/Login/sagas";
+import fetchHomeSaga from "../screens/Home/sagas";
 
 export default function configureStore(onCompletion: () => void): any {
   const sagaMiddleware = createSagaMiddleware();
@@ -22,7 +24,9 @@ export default function configureStore(onCompletion: () => void): any {
   const store = createStore(reducer, enhancer);
   persistStore(store, { storage: AsyncStorage }, onCompletion);
 
-  sagaMiddleware.run(dataSaga);
+  sagaMiddleware.run(requestApiSaga);
+  sagaMiddleware.run(loginSaga);
+  sagaMiddleware.run(fetchHomeSaga);
 
   return store;
 }

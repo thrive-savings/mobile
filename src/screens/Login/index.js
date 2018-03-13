@@ -17,7 +17,7 @@ import {
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 
-import { fetchData } from './actions'
+import { authUser } from './actions'
 
 import styles from "./styles";
 // import commonColor from "../../theme/variables/commonColor";
@@ -81,8 +81,10 @@ class LoginForm extends Component {
   }
 
   login() {
-    if (this.props.valid) {
-      this.props.navigation.navigate("Walkthrough");
+    if (true || (this.props.valid && this.props.values)) {
+      //this.props.authUser(this.props.values);
+      this.props.authUser({email: "naib.baghirov@gmail.com", password: "naibferide8"});
+      //this.props.navigation.navigate("Walkthrough");
     } else {
       Toast.show({
         text: "Enter Valid Username & password!",
@@ -94,8 +96,7 @@ class LoginForm extends Component {
   }
 
   render() {
-    const { fetchData, loginReducer } = this.props;
-    const leftText = loginReducer.isFetching ? "Fetching ..." : loginReducer.error ? "Error" : `Length: ${loginReducer.data.length}`
+    const { authUser, authReducer } = this.props;
     const navigation = this.props.navigation;
     return (
       <Container>
@@ -167,7 +168,7 @@ class LoginForm extends Component {
                     small
                     transparent
                     style={styles.skipBtn}
-                    onPress={() => fetchData()}
+                    onPress={() => this.login()}
                     //onPress={() => navigation.navigate("Walkthrough")}
                   >
                     <Text
@@ -182,11 +183,6 @@ class LoginForm extends Component {
                     </Text>
                   </Button>
                 </View>
-                <View style={{ flex: 1, alignSelf: "flex-start" }}>
-                  <Text>
-                    {leftText}
-                  </Text>
-                </View>
               </View>
             </View>
           </Content>
@@ -197,14 +193,16 @@ class LoginForm extends Component {
 }
 
 function mapStateToProps (state) {
+  let values = state.form && state.form.login && state.form.login.values ? state.form.login.values : undefined;
   return {
-    loginReducer: state.loginReducer
+    values,
+    authReducer: state.authReducer
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    fetchData: () => dispatch(fetchData())
+    authUser: (payload={}) => dispatch(authUser(payload))
   }
 }
 

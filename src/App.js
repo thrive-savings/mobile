@@ -1,5 +1,6 @@
 // @flow
 import React from "react";
+import { connect } from "react-redux";
 import { StackNavigator, DrawerNavigator } from "react-navigation";
 import { Root } from "native-base";
 import Login from "./screens/Login/";
@@ -36,17 +37,19 @@ const Drawer = DrawerNavigator(
   }
 );
 
-const App = StackNavigator(
-  {
-    Login: { screen: Login },
-    SignUp: { screen: SignUp },
-    ForgotPassword: { screen: ForgotPassword },
-    Walkthrough: { screen: Walkthrough },
-    Story: { screen: Story },
-    Comments: { screen: Comments },
-    Channel: { screen: Channel },
-    Drawer: { screen: Drawer }
-  },
+const stackScreens = {
+  Login: { screen: Login },
+  SignUp: { screen: SignUp },
+  ForgotPassword: { screen: ForgotPassword },
+  Walkthrough: { screen: Walkthrough },
+  Story: { screen: Story },
+  Comments: { screen: Comments },
+  Channel: { screen: Channel },
+  Drawer: { screen: Drawer }
+};
+
+const StackerWithLogin = StackNavigator(
+  stackScreens,
   {
     index: 0,
     initialRouteName: "Login",
@@ -54,7 +57,37 @@ const App = StackNavigator(
   }
 );
 
-export default () =>
-  <Root>
-    <App />
-  </Root>;
+const StackerWithDrawer = StackNavigator(
+  stackScreens,
+  {
+    index: 0,
+    initialRouteName: "Drawer",
+    headerMode: "none"
+  }
+);
+
+class App extends React.Component {
+  render() {
+    const authReducer = this.props.authReducer;
+    let stacker = <StackerWithLogin />;
+    if(authReducer.data && authReducer.data.authorized) { 
+      stacker = <StackerWithDrawer />;
+    }
+
+    return (
+      <Root>
+        {stacker}
+      </Root>
+    );
+  }
+}
+
+function mapStateToProps (state) {
+  console.log("Mapping State to Props in App root component");
+  console.log(state);
+  return {
+    authReducer: state.authReducer
+  }
+}
+
+export default connect(mapStateToProps)(App);

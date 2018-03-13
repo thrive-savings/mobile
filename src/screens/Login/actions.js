@@ -1,7 +1,3 @@
-import { FETCHING_DATA } from './constants'
+import { REQUEST_URL } from './constants';
 
-export function fetchData() {
-  return {
-    type: FETCHING_DATA
-  }
-}
+export const authUser = (payload) => ({ payload, type: `${REQUEST_URL}_SUBMIT` });

@@ -1,10 +1,11 @@
 import { combineReducers } from "redux";
 import { reducer as formReducer } from "redux-form";
 
-//import homeReducer from "../screens/Home/reducer";
-import loginReducer from "../screens/Login/reducer";
+import authReducer from "../screens/Login/reducer";
+import homeReducer from "../screens/Home/reducer";
 
 export default combineReducers({
   form: formReducer,
-  loginReducer
+  authReducer,
+  homeReducer
 });

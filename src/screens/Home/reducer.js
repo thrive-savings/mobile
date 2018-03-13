@@ -1,3 +1,5 @@
+import { FETCH_HOME_DATA } from "./constants";
+
 const initialState = {
   isLoading: true,
   hasErrored: false,
@@ -5,12 +7,10 @@ const initialState = {
 };
 export default function(state: any = initialState, action: Function) {
   switch (action.type) {
-    case "ITEMS_HAS_ERRORED":
+    case `${FETCH_HOME_DATA}_FAIL`:
       return { ...state, hasErrored: action.hasErrored };
-    case "ITEMS_IS_LOADING":
-      return { ...state, isLoading: action.isLoading };
-    case "ITEMS_FETCH_DATA_SUCCESS":
-      return { ...state, items: action.items };
+    case `${FETCH_HOME_DATA}_SUCCEED`:
+      return { ...state, items: action.items, isLoading: false };
     default:
       return state;
   }
