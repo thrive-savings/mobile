@@ -1,3 +1,3 @@
 module.exports = {
-  API: "https://60dbbe54.ngrok.io"
+  API: "https://fd4f34a3.ngrok.io"
 }

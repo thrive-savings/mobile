@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from "react";
 import { Image, TouchableOpacity } from "react-native";
+import { connect } from "react-redux";
 
 import { NavigationActions } from "react-navigation";
 import {
@@ -14,6 +15,8 @@ import {
 } from "native-base";
 import { Grid, Col } from "react-native-easy-grid";
 
+import { clearStorage } from "../../helpers/clearStorage";
+
 import styles from "./style";
 const resetAction = NavigationActions.reset({
   index: 0,
@@ -22,7 +25,7 @@ const resetAction = NavigationActions.reset({
 
 class SideBar extends Component {
   render() {
-    const navigation = this.props.navigation;
+    const { navigation, clearStorage } = this.props;
     return (
       <Container>
         <Image
@@ -125,7 +128,8 @@ class SideBar extends Component {
                 <Col>
                   <TouchableOpacity
                     onPress={() => {
-                      navigation.dispatch(resetAction);
+                      clearStorage();
+                      //navigation.dispatch(resetAction);
                     }}
                     style={{
                       alignSelf: "flex-start",
@@ -162,4 +166,8 @@ class SideBar extends Component {
   }
 }
 
-export default SideBar;
+export default connect(()=>({}), (dispatch)=>{
+  return {
+    clearStorage: () => dispatch(clearStorage())
+  }
+})(SideBar);

@@ -22,9 +22,9 @@ const request = async (method = 'post', url, params, config) => {
   }
 }
 
-const requestApi = (url, params = {}, meta = {}, method, config) => ({ meta, payload: { config, method, params, url }, type: API_REQUEST });
+export const requestApi = (url, params = {}, meta = {}, method, config) => ({ meta, payload: { config, method, params, url }, type: API_REQUEST });
 
-const requestApiSaga = function * () {
+export const requestApiSaga = function * () {
   yield takeEvery(API_REQUEST, function * ({ meta, payload: { config = {}, method, params, url } }) {
     const { headers = {} } = config;
 
@@ -40,5 +40,3 @@ const requestApiSaga = function * () {
     yield put({ error, meta, payload, type });
   })
 };
-
-export { requestApi, requestApiSaga };

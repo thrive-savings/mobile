@@ -1,6 +1,7 @@
 import * as Expo from "expo";
 import React, { Component } from "react";
 import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 import { StyleProvider } from "native-base";
 
 import App from "../App";
@@ -11,14 +12,15 @@ import variables from "../theme/variables/commonColor";
 export default class Setup extends Component {
   state: {
     store: Object,
-    isLoading: boolean,
+    persistor: Object,
     isReady: boolean
   };
   constructor() {
     super();
+    const { store, persistor } = configureStore();
     this.state = {
-      isLoading: false,
-      store: configureStore(() => this.setState({ isLoading: false })),
+      store,
+      persistor,
       isReady: false
     };
   }
@@ -42,7 +44,9 @@ export default class Setup extends Component {
     return (
       <StyleProvider style={getTheme(variables)}>
         <Provider store={this.state.store}>
-          <App />
+          <PersistGate loading={<Expo.AppLoading />} persistor={this.state.persistor}>
+            <App />
+          </PersistGate>
         </Provider>
       </StyleProvider>
     );

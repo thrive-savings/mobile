@@ -1,3 +1,4 @@
+import { CLEAR_STORAGE } from "../../helpers/clearStorage";
 import { REQUEST_URL } from "./constants";
 const initialState = {
   data: {},
@@ -15,7 +16,7 @@ export default function authReducer (state = initialState, action) {
       return {
         ...state,
         isFetching: true
-      }
+      };
     case `${REQUEST_URL}_SUCCEED`:
       console.log("Authorization Succeeded!");
       const { payload: { data, notVerified } } = action;
@@ -24,7 +25,7 @@ export default function authReducer (state = initialState, action) {
         data,
         notVerified: notVerified ? true : false,
         isFetching: false
-      }
+      };
     case `${REQUEST_URL}_FAIL`:
       console.log("Authorization Failed!");
       return {
@@ -32,8 +33,10 @@ export default function authReducer (state = initialState, action) {
         isFetching: false,
         error: true,
         errorMessage: action.error
-      }
+      };
+    case `${CLEAR_STORAGE}`:
+      return {};
     default:
-      return state
+      return state;
   }
 }
