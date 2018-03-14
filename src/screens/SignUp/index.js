@@ -46,9 +46,11 @@ class SignUpForm extends Component {
           <Icon
             active
             name={
-              input.name === "username"
+              input.name === "fullname"
                 ? "person"
-                : input.name === "email" ? "mail" : "unlock"
+                : input.name === "phone"
+                  ? "md-phone-portrait"
+                  : input.name === "email" ? "mail" : "unlock"
             }
             style={{ color: "#fff" }}
           />
@@ -57,9 +59,11 @@ class SignUpForm extends Component {
             placeholderTextColor="#FFF"
             style={styles.input}
             placeholder={
-              input.name === "username"
-                ? "Username"
-                : input.name === "email" ? "Email" : "Password"
+              input.name === "fullname"
+                ? "Full Name"
+                : input.name === "email"
+                  ? "Email"
+                  : input.name === "phone" ? "Phone" : "Password"
             }
             secureTextEntry={input.name === "password" ? true : false}
             {...input}
@@ -109,17 +113,22 @@ class SignUpForm extends Component {
             <Text style={styles.signupHeader}>CREATE ACCOUNT</Text>
             <View style={styles.signupContainer}>
               <Field
-                name="username"
+                name="fullname"
                 component={this.renderInput}
                 type="text"
                 validate={[required, alphaNumeric, minLength5]}
               />
-
               <Field
                 name="email"
                 component={this.renderInput}
                 type="email"
                 validate={[email, required]}
+              />
+              <Field
+                name="phone"
+                component={this.renderInput}
+                type="text"
+                validate={[required, alphaNumeric, minLength5]}
               />
               <Field
                 name="password"

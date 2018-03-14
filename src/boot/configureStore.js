@@ -7,8 +7,8 @@ import { persistStore, persistReducer } from "redux-persist";
 import reducer from "../reducers";
 
 import { requestApiSaga } from "../helpers/requestApi";
-import loginSaga from "../screens/Login/sagas";
-import fetchHomeSaga from "../screens/Home/sagas";
+import loginSaga from "../screens/Login/state/sagas";
+import fetchHomeSaga from "../screens/Home/state/sagas";
 
 export default function configureStore(): any {
   const sagaMiddleware = createSagaMiddleware();

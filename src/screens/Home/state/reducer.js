@@ -1,4 +1,4 @@
-import { CLEAR_STORAGE } from "../../helpers/clearStorage";
+import { CLEAR_STORAGE } from "../../../helpers/clearStorage";
 import { FETCH_HOME_DATA } from "./constants";
 
 const initialState = {

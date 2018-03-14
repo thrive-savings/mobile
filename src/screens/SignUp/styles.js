@@ -23,11 +23,11 @@ export default {
   signupHeader: {
     alignSelf: "center",
     fontSize: 22,
-    padding: 10,
+    padding: 5,
     fontWeight: "bold",
     color: "#FFF",
     marginTop:
-      Platform.OS === "android" ? deviceHeight / 6 : deviceHeight / 6 + 10
+      Platform.OS === "android" ? deviceHeight / 15 : deviceHeight / 15 + 10
   },
   background: {
     flex: 1,

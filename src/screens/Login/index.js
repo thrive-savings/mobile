@@ -17,7 +17,7 @@ import {
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 
-import { authUser } from './actions'
+import { authUser } from './state/actions'
 
 import styles from "./styles";
 // import commonColor from "../../theme/variables/commonColor";
@@ -80,11 +80,13 @@ class LoginForm extends Component {
     );
   }
 
+  fastLogin() {
+    this.props.authUser({email: "naib.baghirov@gmail.com", password: "naibferide8"});
+  }
+
   login() {
-    if (true || (this.props.valid && this.props.values)) {
-      //this.props.authUser(this.props.values);
-      this.props.authUser({email: "naib.baghirov@gmail.com", password: "naibferide8"});
-      //this.props.navigation.navigate("Walkthrough");
+    if (this.props.valid && this.props.values) {
+      this.props.authUser(this.props.values);
     } else {
       Toast.show({
         text: "Enter Valid Username & password!",
@@ -168,8 +170,7 @@ class LoginForm extends Component {
                     small
                     transparent
                     style={styles.skipBtn}
-                    onPress={() => this.login()}
-                    //onPress={() => navigation.navigate("Walkthrough")}
+                    onPress={() => this.fastLogin()}
                   >
                     <Text
                       style={
@@ -193,9 +194,8 @@ class LoginForm extends Component {
 }
 
 function mapStateToProps (state) {
-  let values = state.form && state.form.login && state.form.login.values ? state.form.login.values : undefined;
   return {
-    values,
+    values: state.form && state.form.login && state.form.login.values ? state.form.login.values : undefined,
     authReducer: state.authReducer
   }
 }
