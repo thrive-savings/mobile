@@ -6,7 +6,7 @@ import createSagaMiddleware from 'redux-saga'
 import { persistStore, persistReducer } from "redux-persist";
 import reducer from "../reducers";
 
-import { requestApiSaga } from "../helpers/requestApi";
+import { requestApiSaga } from "../globals/requestApi";
 import logInSaga from "../screens/Login/state/sagas";
 import signUpSaga from "../screens/SignUp/state/sagas";
 import fetchHomeSaga from "../screens/Home/state/sagas";

@@ -1,6 +1,6 @@
 import { REQUEST_URL } from "./constants";
 import { put, takeEvery } from "redux-saga/effects";
-import { requestApi } from "../../../helpers/requestApi";
+import { requestApi } from "../../../globals/requestApi";
 
 const signUpSaga = function * () {
   yield takeEvery(`${REQUEST_URL}_SUBMIT`, function * ({ payload }) {

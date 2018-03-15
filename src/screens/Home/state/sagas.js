@@ -1,6 +1,6 @@
 import { FETCH_HOME_DATA } from "./constants";
 import { put, takeEvery } from "redux-saga/effects";
-import { requestApi } from "../../../helpers/requestApi";
+import { requestApi } from "../../../globals/requestApi";
 
 const fetchHomeSaga = function * () {
   yield takeEvery(FETCH_HOME_DATA, function * ({ url }) {

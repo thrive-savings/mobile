@@ -15,7 +15,7 @@ import {
 } from "native-base";
 import { Grid, Col } from "react-native-easy-grid";
 
-import { clearStorage } from "../../helpers/clearStorage";
+import { clearStorage } from "../../globals/clearStorage";
 
 import styles from "./style";
 const resetAction = NavigationActions.reset({

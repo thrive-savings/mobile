@@ -1,4 +1,4 @@
-import { CLEAR_STORAGE } from "../../../helpers/clearStorage";
+import { CLEAR_STORAGE } from "../../../globals/clearStorage";
 import { REQUEST_URL } from "./constants";
 const initialState = {
   data: {},
