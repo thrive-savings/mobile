@@ -2,36 +2,33 @@ import { CLEAR_STORAGE } from "../../../helpers/clearStorage";
 import { REQUEST_URL } from "./constants";
 const initialState = {
   data: {},
-  notVerified: false,
-  isFetching: false,
+  isSaving: false,
   error: false,
   errorMessage: ""
 };
 
 export default function authReducer (state = initialState, action) {
-  console.log(`Reducing ${action.type}`);
   switch (action.type) {
     case `${REQUEST_URL}_SUBMIT`:
       return {
         ...state,
-        isFetching: true
+        isSaving: true
       };
     case `${REQUEST_URL}_SUCCEED`:
-      console.log("Authorization Succeeded!");
-      const { payload: { data, notVerified } } = action;
+      console.log("Sign Up Succeeded!");
+      const { payload: { data } } = action;
       return {
         ...state,
         data,
-        notVerified: notVerified ? true : false,
-        isFetching: false,
+        isSaving: false,
         error: false,
         errorMessage: ""
       };
     case `${REQUEST_URL}_FAIL`:
-      console.log("Authorization Failed!");
+      console.log("Sign Up Failed!");
       return {
         ...state,
-        isFetching: false,
+        isSaving: false,
         error: true,
         errorMessage: action.error
       };

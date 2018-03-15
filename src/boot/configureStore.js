@@ -7,7 +7,8 @@ import { persistStore, persistReducer } from "redux-persist";
 import reducer from "../reducers";
 
 import { requestApiSaga } from "../helpers/requestApi";
-import loginSaga from "../screens/Login/state/sagas";
+import logInSaga from "../screens/Login/state/sagas";
+import signUpSaga from "../screens/SignUp/state/sagas";
 import fetchHomeSaga from "../screens/Home/state/sagas";
 
 export default function configureStore(): any {
@@ -23,7 +24,8 @@ export default function configureStore(): any {
 
   const persistConfig = {
     key: 'root',
-    storage: AsyncStorage
+    storage: AsyncStorage,
+    blacklist: ['form']
   };
   const persistedReducer = persistReducer(persistConfig, reducer)
 
@@ -31,7 +33,8 @@ export default function configureStore(): any {
   const persistor = persistStore(store);
 
   sagaMiddleware.run(requestApiSaga);
-  sagaMiddleware.run(loginSaga);
+  sagaMiddleware.run(logInSaga);
+  sagaMiddleware.run(signUpSaga);
   sagaMiddleware.run(fetchHomeSaga);
 
   return { store, persistor };

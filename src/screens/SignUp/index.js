@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from "react";
 import { Image, StatusBar } from "react-native";
+import { connect } from "react-redux";
 import {
   Container,
   Content,
@@ -13,9 +14,12 @@ import {
   Toast,
   Left,
   Right,
-  Footer
+  Footer,
+  Spinner
 } from "native-base";
 import { Field, reduxForm } from "redux-form";
+
+import { signUpUser } from "./state/actions";
 
 import styles from "./styles";
 import commonColor from "../../theme/variables/commonColor";
@@ -46,7 +50,7 @@ class SignUpForm extends Component {
           <Icon
             active
             name={
-              input.name === "fullname"
+              input.name === "firstName" || input.name === "lastName"
                 ? "person"
                 : input.name === "phone"
                   ? "md-phone-portrait"
@@ -59,11 +63,13 @@ class SignUpForm extends Component {
             placeholderTextColor="#FFF"
             style={styles.input}
             placeholder={
-              input.name === "fullname"
-                ? "Full Name"
-                : input.name === "email"
-                  ? "Email"
-                  : input.name === "phone" ? "Phone" : "Password"
+              input.name === "firstName"
+                ? "First Name"
+                : input.name === "lastName"
+                  ? "Last Name"
+                  : input.name === "email"
+                    ? "Email"
+                    : input.name === "phone" ? "Phone" : "Password"
             }
             secureTextEntry={input.name === "password" ? true : false}
             {...input}
@@ -81,13 +87,28 @@ class SignUpForm extends Component {
           ? <Text style={styles.formErrorText1}>
               {error}
             </Text>
-          : <Text style={styles.formErrorText2}>> error here</Text>}
+          : <Text style={styles.formErrorText2}> error here</Text>}
       </View>
     );
   }
+
+  fastSignUp() {
+    const values = {
+      "email": "naib@thrivesavings.com",
+      "firstName": "Naib",
+      "lastName": "MobileTester",
+      "password": "naibferide8",
+      "phone": "9991239876"
+    };
+    this.props.signUpUser(values);
+  }
+
   signUp() {
     if (this.props.valid) {
-      this.props.navigation.goBack();
+      console.log("Calling SignUpUser");
+      console.log(this.props.values);
+      this.props.signUpUser(this.props.values);
+      //this.props.navigation.goBack();
     } else {
       Toast.show({
         text: "All the fields are compulsory!",
@@ -99,6 +120,18 @@ class SignUpForm extends Component {
   }
 
   render() {
+    const { data, isSaving, error, errorMessage } = this.props.signUpReducer;
+
+    let errorText = "";
+    if(error) {
+      const { errors } = errorMessage;
+      if(errors && errors.constructor === Array && errors.length > 0) {
+        errorText = errors[0].value;
+      } else {
+        errorText = "Server Error!";
+      }
+    }
+
     return (
       <Container>
         <StatusBar
@@ -113,10 +146,16 @@ class SignUpForm extends Component {
             <Text style={styles.signupHeader}>CREATE ACCOUNT</Text>
             <View style={styles.signupContainer}>
               <Field
-                name="fullname"
+                name="firstName"
                 component={this.renderInput}
                 type="text"
-                validate={[required, alphaNumeric, minLength5]}
+                validate={[required, alphaNumeric]}
+              />
+              <Field
+                name="lastName"
+                component={this.renderInput}
+                type="text"
+                validate={[required, alphaNumeric]}
               />
               <Field
                 name="email"
@@ -137,14 +176,20 @@ class SignUpForm extends Component {
                 validate={[alphaNumeric, minLength8, maxLength15, required]}
               />
 
+              {error && <Text style={styles.formErrorText3}>{errorText}</Text>}
+
               <Button
                 rounded
                 bordered
                 block
-                onPress={() => this.signUp()}
+                onPress={() => this.fastSignUp()}
                 style={styles.signupBtn}
               >
-                <Text style={{ color: "#FFF" }}>Continue</Text>
+                {
+                  isSaving
+                   ? <Spinner />
+                   : <Text style={{ color: "#FFF" }}>Continue</Text>
+                }
               </Button>
             </View>
           </Content>
@@ -174,6 +219,21 @@ class SignUpForm extends Component {
     );
   }
 }
+
+function mapStateToProps (state) {
+  return {
+    values: state.form && state.form.signup && state.form.signup.values ? state.form.signup.values : undefined,
+    signUpReducer: state.signUpReducer
+  }
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    signUpUser: (payload={}) => dispatch(signUpUser(payload))
+  }
+}
+
+SignUpForm = connect(mapStateToProps, mapDispatchToProps)(SignUpForm);
 
 const SignUp = reduxForm({
   form: "signup"

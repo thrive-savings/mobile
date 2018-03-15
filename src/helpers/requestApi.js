@@ -31,7 +31,7 @@ export const requestApiSaga = function * () {
     //const jwt = yield select((state) => state.getIn(['authorized', 'jwt']));
 
     //if (jwt) config.headers = { ...headers, authorization: `Bearer ${jwt}` };
-
+    console.log(`Calling the API for method ${method}`);
     const { payload, error } = yield call(request, method, url, params, config);
 
     const type = `${url}_${payload ? 'SUCCEED' : 'FAIL'}`;

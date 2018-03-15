@@ -12,7 +12,8 @@ import {
   View,
   Left,
   Right,
-  Toast
+  Toast,
+  Spinner
 } from "native-base";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
@@ -98,8 +99,21 @@ class LoginForm extends Component {
   }
 
   render() {
-    const { authUser, authReducer } = this.props;
+    const { authUser } = this.props;
     const navigation = this.props.navigation;
+
+    const { data, notVerified, isFetching, error, errorMessage } = this.props.authReducer;
+
+    let errorText = "";
+    if(error) {
+      const { errors } = errorMessage;
+      if(errors && errors.constructor === Array && errors.length > 0) {
+        errorText = errors[0].value;
+      } else {
+        errorText = "Server Error!";
+      }
+    }
+
     return (
       <Container>
         <StatusBar barStyle="light-content" />
@@ -123,6 +137,8 @@ class LoginForm extends Component {
                   validate={[alphaNumeric, minLength8, maxLength15, required]}
                 />
 
+                {error && <Text style={styles.formErrorText3}>{errorText}</Text>}
+
                 <Button
                   rounded
                   primary
@@ -131,15 +147,19 @@ class LoginForm extends Component {
                   style={styles.loginBtn}
                   onPress={() => this.login()}
                 >
-                  <Text
-                    style={
-                      Platform.OS === "android"
-                        ? { fontSize: 16, textAlign: "center", top: -5 }
-                        : { fontSize: 16, fontWeight: "900" }
-                    }
-                  >
-                    Get Started
-                  </Text>
+                  {
+                    isFetching
+                     ? <Spinner color="white"/>
+                     : <Text
+                         style={
+                           Platform.OS === "android"
+                             ? { fontSize: 16, textAlign: "center", top: -5 }
+                             : { fontSize: 16, fontWeight: "900" }
+                         }
+                       >
+                         Get Started
+                       </Text>
+                  }
                 </Button>
 
                 <View style={styles.otherLinksContainer}>

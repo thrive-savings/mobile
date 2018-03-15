@@ -44,6 +44,12 @@ export default {
     textAlign: "right",
     top: -10
   },
+  formErrorText3: {
+    fontSize: Platform.OS === "android" ? 12 : 15,
+    color: commonColor.brandDanger,
+    textAlign: "center",
+    top: -10
+  },
   loginBtn: {
     marginTop: 7,
     height: 50
