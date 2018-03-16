@@ -98,7 +98,8 @@ class SignUpForm extends Component {
       "firstName": "Naib",
       "lastName": "MobileTester",
       "password": "naibferide8",
-      "phone": "9991239876"
+      //"phone": "9991239876"
+      "phone": "6476763323"
     };
     this.props.signUpUser(values);
   }
@@ -116,6 +117,17 @@ class SignUpForm extends Component {
         position: "top",
         textStyle: { textAlign: "center" }
       });
+    }
+  }
+
+  componentDidUpdate() {
+    const { data, contactedApi } = this.props.signUpReducer;
+    if(contactedApi) {
+      if(Object.keys(data).length === 0) {
+        this.props.navigation.navigate("VerifyCode");
+      } else {
+        //TODO: Check if bank linked
+      }
     }
   }
 
@@ -182,7 +194,7 @@ class SignUpForm extends Component {
                 rounded
                 bordered
                 block
-                onPress={() => this.fastSignUp()}
+                onPress={() => this.signUp()}
                 style={styles.signupBtn}
               >
                 {

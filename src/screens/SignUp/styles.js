@@ -5,8 +5,6 @@ const commonColor = require("../../theme/variables/commonColor");
 const deviceHeight = Dimensions.get("window").height;
 const deviceWidth = Dimensions.get("window").width;
 
-const primary = require("../../theme/variables/commonColor").brandPrimary;
-
 export default {
   signupContainer: {
     paddingLeft: 20,
@@ -33,7 +31,7 @@ export default {
     flex: 1,
     width: null,
     height: null,
-    backgroundColor: primary
+    backgroundColor: commonColor.primary
   },
   formErrorIcon: {
     color: "#fff",
@@ -73,6 +71,7 @@ export default {
   signupBtn: {
     height: 50,
     marginTop: 10,
+    marginBottom: 10,
     borderWidth: 1,
     borderColor: "#ddd"
   },

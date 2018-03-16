@@ -1,13 +1,13 @@
-import { CLEAR_STORAGE } from "../../../globals/clearStorage";
 import { REQUEST_URL } from "./constants";
 const initialState = {
   data: {},
   isSaving: false,
+  contactedApi: false,
   error: false,
   errorMessage: ""
 };
 
-export default function authReducer (state = initialState, action) {
+export default function signUpReducer (state = initialState, action) {
   switch (action.type) {
     case `${REQUEST_URL}_SUBMIT`:
       return {
@@ -16,11 +16,12 @@ export default function authReducer (state = initialState, action) {
       };
     case `${REQUEST_URL}_SUCCEED`:
       console.log("Sign Up Succeeded!");
-      const { payload: { data } } = action;
+      const { payload: { data: payloadData } } = action;
       return {
         ...state,
-        data,
+        data: payloadData ? payloadData : {},
         isSaving: false,
+        contactedApi: true,
         error: false,
         errorMessage: ""
       };
@@ -29,11 +30,10 @@ export default function authReducer (state = initialState, action) {
       return {
         ...state,
         isSaving: false,
+        contactedApi: true,
         error: true,
         errorMessage: action.error
       };
-    case `${CLEAR_STORAGE}`:
-      return {};
     default:
       return state;
   }

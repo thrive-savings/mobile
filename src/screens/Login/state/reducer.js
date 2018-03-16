@@ -1,4 +1,3 @@
-import { CLEAR_STORAGE } from "../../../globals/clearStorage";
 import { REQUEST_URL } from "./constants";
 const initialState = {
   data: {},
@@ -9,9 +8,10 @@ const initialState = {
 };
 
 export default function authReducer (state = initialState, action) {
-  console.log(`Reducing ${action.type}`);
   switch (action.type) {
     case `${REQUEST_URL}_SUBMIT`:
+      console.log(`Reducing ${REQUEST_URL}_SUBMIT`);
+      console.log(state);
       return {
         ...state,
         isFetching: true
@@ -35,8 +35,6 @@ export default function authReducer (state = initialState, action) {
         error: true,
         errorMessage: action.error
       };
-    case `${CLEAR_STORAGE}`:
-      return {};
     default:
       return state;
   }

@@ -9,6 +9,7 @@ import reducer from "../reducers";
 import { requestApiSaga } from "../globals/requestApi";
 import logInSaga from "../screens/Login/state/sagas";
 import signUpSaga from "../screens/SignUp/state/sagas";
+import { verifyCodeSaga, resendCodeSaga } from "../screens/VerifyCode/state/sagas";
 import fetchHomeSaga from "../screens/Home/state/sagas";
 
 export default function configureStore(): any {
@@ -35,6 +36,8 @@ export default function configureStore(): any {
   sagaMiddleware.run(requestApiSaga);
   sagaMiddleware.run(logInSaga);
   sagaMiddleware.run(signUpSaga);
+  sagaMiddleware.run(verifyCodeSaga);
+  sagaMiddleware.run(resendCodeSaga);
   sagaMiddleware.run(fetchHomeSaga);
 
   return { store, persistor };

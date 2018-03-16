@@ -1,4 +1,3 @@
-import { CLEAR_STORAGE } from "../../../globals/clearStorage";
 import { FETCH_HOME_DATA } from "./constants";
 
 const initialState = {
@@ -12,8 +11,6 @@ export default function(state: any = initialState, action: Function) {
       return { ...state, hasErrored: action.hasErrored };
     case `${FETCH_HOME_DATA}_SUCCEED`:
       return { ...state, items: action.items, isLoading: false };
-    case `${CLEAR_STORAGE}`:
-        return {};
     default:
       return state;
   }

@@ -19,6 +19,7 @@ import Timeline from "./screens/Timeline";
 import Feedback from "./screens/Feedback/";
 import Profile from "./screens/Profile/";
 import Settings from "./screens/Settings";
+import VerifyCode from "./screens/VerifyCode";
 
 const Drawer = DrawerNavigator(
   {
@@ -45,6 +46,7 @@ const stackScreens = {
   Story: { screen: Story },
   Comments: { screen: Comments },
   Channel: { screen: Channel },
+  VerifyCode: { screen: VerifyCode },
   Drawer: { screen: Drawer }
 };
 
@@ -68,9 +70,19 @@ const StackerWithDrawer = StackNavigator(
 
 class App extends React.Component {
   render() {
-    const authReducer = this.props.authReducer;
+    const { authReducer, signUpReducer, verifyCodeReducer } = this.props;
     let stacker = <StackerWithLogin />;
-    if(authReducer.data && authReducer.data.authorized) { 
+
+    let authorized;
+    if(signUpReducer.data && signUpReducer.data.authorized) {
+      authorized = signUpReducer.data.authorized;
+    } else if(verifyCodeReducer.data && verifyCodeReducer.data.authorized) {
+      authorized = verifyCodeReducer.data.authorized;
+    } else if(authReducer.data && authReducer.data.authorized) {
+      authorized = authReducer.data.authorized;
+    }
+
+    if(authorized) {
       stacker = <StackerWithDrawer />;
     }
 
@@ -86,7 +98,9 @@ function mapStateToProps (state) {
   console.log("Mapping State to Props in App root component");
   console.log(state);
   return {
-    authReducer: state.authReducer
+    authReducer: state.authReducer,
+    signUpReducer: state.signUpReducer,
+    verifyCodeReducer: state.verifyCodeReducer
   }
 }
 

@@ -18,7 +18,7 @@ import {
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 
-import { authUser } from './state/actions'
+import { authUser } from './state/actions';
 
 import styles from "./styles";
 // import commonColor from "../../theme/variables/commonColor";
