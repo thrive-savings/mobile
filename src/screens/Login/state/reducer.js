@@ -1,4 +1,4 @@
-import { REQUEST_URL } from "./constants";
+import { REQUEST_URL, UPDATE_AUTH_DATA } from "./constants";
 const initialState = {
   data: {},
   notVerified: false,
@@ -9,6 +9,14 @@ const initialState = {
 
 export default function authReducer (state = initialState, action) {
   switch (action.type) {
+    case `${UPDATE_AUTH_DATA}`:
+      console.log(`Reducing ${UPDATE_AUTH_DATA}`);
+      const { payload: { data: authData } } = action;
+      console.log(authData);
+      return {
+        ...state,
+        data: authData
+      }
     case `${REQUEST_URL}_SUBMIT`:
       console.log(`Reducing ${REQUEST_URL}_SUBMIT`);
       console.log(state);

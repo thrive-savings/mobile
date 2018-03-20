@@ -20,6 +20,9 @@ import Feedback from "./screens/Feedback/";
 import Profile from "./screens/Profile/";
 import Settings from "./screens/Settings";
 import VerifyCode from "./screens/VerifyCode";
+import IntegrateBank from "./screens/IntegrateBank";
+
+import getAuthorized from "./globals/getAuthorized";
 
 const Drawer = DrawerNavigator(
   {
@@ -47,43 +50,50 @@ const stackScreens = {
   Comments: { screen: Comments },
   Channel: { screen: Channel },
   VerifyCode: { screen: VerifyCode },
+  IntegrateBank: {screen: IntegrateBank },
   Drawer: { screen: Drawer }
+};
+
+const stackerOptions = {
+  index: 0,
+  headerMode: "none"
 };
 
 const StackerWithLogin = StackNavigator(
   stackScreens,
   {
-    index: 0,
-    initialRouteName: "Login",
-    headerMode: "none"
+    ...stackerOptions,
+    initialRouteName: "Login"
   }
 );
 
 const StackerWithDrawer = StackNavigator(
   stackScreens,
   {
-    index: 0,
-    initialRouteName: "Drawer",
-    headerMode: "none"
+    ...stackerOptions,
+    initialRouteName: "Drawer"
   }
 );
 
+const StackerWithIntegrateBank = StackNavigator(
+  stackScreens,
+  {
+    ...stackerOptions,
+    initialRouteName: "IntegrateBank"
+  }
+)
+
 class App extends React.Component {
   render() {
-    const { authReducer, signUpReducer, verifyCodeReducer } = this.props;
     let stacker = <StackerWithLogin />;
 
-    let authorized;
-    if(signUpReducer.data && signUpReducer.data.authorized) {
-      authorized = signUpReducer.data.authorized;
-    } else if(verifyCodeReducer.data && verifyCodeReducer.data.authorized) {
-      authorized = verifyCodeReducer.data.authorized;
-    } else if(authReducer.data && authReducer.data.authorized) {
-      authorized = authReducer.data.authorized;
-    }
-
+    const authorized = getAuthorized(this.props.authReducer);
     if(authorized) {
-      stacker = <StackerWithDrawer />;
+      if(authorized.account && authorized.account.flLoginID) {
+        stacker = <StackerWithDrawer />;
+      } else {
+        stacker = <StackerWithIntegrateBank />;
+      }
     }
 
     return (
@@ -98,9 +108,7 @@ function mapStateToProps (state) {
   console.log("Mapping State to Props in App root component");
   console.log(state);
   return {
-    authReducer: state.authReducer,
-    signUpReducer: state.signUpReducer,
-    verifyCodeReducer: state.verifyCodeReducer
+    authReducer: state.authReducer
   }
 }
 

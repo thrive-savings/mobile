@@ -121,8 +121,8 @@ class SignUpForm extends Component {
   }
 
   componentDidUpdate() {
-    const { data, contactedApi } = this.props.signUpReducer;
-    if(contactedApi) {
+    const { data, contactedApi, error } = this.props.signUpReducer;
+    if(contactedApi && !error) {
       if(Object.keys(data).length === 0) {
         this.props.navigation.navigate("VerifyCode");
       } else {
@@ -194,7 +194,7 @@ class SignUpForm extends Component {
                 rounded
                 bordered
                 block
-                onPress={() => this.signUp()}
+                onPress={() => this.fastSignUp()}
                 style={styles.signupBtn}
               >
                 {

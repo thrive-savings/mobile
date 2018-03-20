@@ -1,3 +1,5 @@
 module.exports = {
-  API: "https://f17dd709.ngrok.io"
+  API: "https://adf41d56.ngrok.io",
+  URL: "https://join.thrivesavings.com",
+  FlinksURL: "https://thrive-iframe.flinks.io"
 }

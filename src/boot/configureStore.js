@@ -8,8 +8,9 @@ import reducer from "../reducers";
 
 import { requestApiSaga } from "../globals/requestApi";
 import logInSaga from "../screens/Login/state/sagas";
-import signUpSaga from "../screens/SignUp/state/sagas";
-import { verifyCodeSaga, resendCodeSaga } from "../screens/VerifyCode/state/sagas";
+import { signUpSaga, signUpSucceedSaga } from "../screens/SignUp/state/sagas";
+import { verifyCodeSaga, verifyCodeSucceedSaga, resendCodeSaga } from "../screens/VerifyCode/state/sagas";
+import { fetchAccountsSaga, setDefaultSaga } from "../screens/IntegrateBank/state/sagas";
 import fetchHomeSaga from "../screens/Home/state/sagas";
 
 export default function configureStore(): any {
@@ -36,8 +37,12 @@ export default function configureStore(): any {
   sagaMiddleware.run(requestApiSaga);
   sagaMiddleware.run(logInSaga);
   sagaMiddleware.run(signUpSaga);
+  sagaMiddleware.run(signUpSucceedSaga);
   sagaMiddleware.run(verifyCodeSaga);
+  sagaMiddleware.run(verifyCodeSucceedSaga);
   sagaMiddleware.run(resendCodeSaga);
+  sagaMiddleware.run(fetchAccountsSaga);
+  sagaMiddleware.run(setDefaultSaga);
   sagaMiddleware.run(fetchHomeSaga);
 
   return { store, persistor };

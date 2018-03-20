@@ -1,6 +1,7 @@
 import axios from "axios";
 import { put, takeEvery, select, call } from "redux-saga/effects";
 import { API } from "../../config";
+import getAuthorized from "./getAuthorized";
 
 const API_REQUEST = 'API_REQUEST';
 
@@ -28,10 +29,12 @@ export const requestApiSaga = function * () {
   yield takeEvery(API_REQUEST, function * ({ meta, payload: { config = {}, method, params, url } }) {
     const { headers = {} } = config;
 
-    //const jwt = yield select((state) => state.getIn(['authorized', 'jwt']));
+    const authReducer = yield select(s => s.authReducer);
+    const authorized = getAuthorized(authReducer);
+    const jwt = authorized ? authorized.jwt : undefined;
+    if (jwt) config.headers = { ...headers, authorization: `Bearer ${jwt}` };
 
-    //if (jwt) config.headers = { ...headers, authorization: `Bearer ${jwt}` };
-    console.log(`Calling the API for method ${method}`);
+    console.log(`Calling the API for URL ${url} and jwt ${jwt}`);
     const { payload, error } = yield call(request, method, url, params, config);
 
     const type = `${url}_${payload ? 'SUCCEED' : 'FAIL'}`;
