@@ -10,6 +10,7 @@ import { requestApiSaga } from "../globals/requestApi";
 import logInSaga from "../screens/Login/state/sagas";
 import { signUpSaga, signUpSucceedSaga } from "../screens/SignUp/state/sagas";
 import { verifyCodeSaga, verifyCodeSucceedSaga, resendCodeSaga } from "../screens/VerifyCode/state/sagas";
+import passwordRequestSaga from "../screens/ForgotPassword/state/sagas";
 import { fetchAccountsSaga, setDefaultSaga } from "../screens/IntegrateBank/state/sagas";
 import fetchHomeSaga from "../screens/Home/state/sagas";
 
@@ -41,6 +42,7 @@ export default function configureStore(): any {
   sagaMiddleware.run(verifyCodeSaga);
   sagaMiddleware.run(verifyCodeSucceedSaga);
   sagaMiddleware.run(resendCodeSaga);
+  sagaMiddleware.run(passwordRequestSaga);
   sagaMiddleware.run(fetchAccountsSaga);
   sagaMiddleware.run(setDefaultSaga);
   sagaMiddleware.run(fetchHomeSaga);

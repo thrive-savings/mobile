@@ -3,7 +3,6 @@ const { Dimensions, Platform } = React;
 
 const deviceHeight = Dimensions.get("window").height;
 const deviceWidth = Dimensions.get("window").width;
-const primary = require("../../theme/variables/commonColor").brandPrimary;
 const commonColor = require("../../theme/variables/commonColor");
 
 export default {
@@ -32,7 +31,7 @@ export default {
     flex: 1,
     width: null,
     height: deviceHeight,
-    backgroundColor: primary
+    backgroundColor: commonColor.brandPrimary
   },
   formErrorIcon: {
     color: "#fff",
@@ -49,6 +48,12 @@ export default {
     fontSize: Platform.OS === "android" ? 12 : 15,
     color: "transparent",
     textAlign: "right",
+    top: -10
+  },
+  formSuccessText: {
+    fontSize: Platform.OS === "android" ? 12 : 15,
+    color: commonColor.brandPrimary,
+    textAlign: "center",
     top: -10
   },
   inputGrp: {

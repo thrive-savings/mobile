@@ -5,6 +5,7 @@ import { reducer as formReducer } from "redux-form";
 import authReducer from "../screens/Login/state/reducer";
 import signUpReducer from "../screens/SignUp/state/reducer";
 import verifyCodeReducer from "../screens/VerifyCode/state/reducer";
+import forgotPasswordReducer from "../screens/ForgotPassword/state/reducer";
 import integrateBankReducer from "../screens/IntegrateBank/state/reducer";
 import homeReducer from "../screens/Home/state/reducer";
 
@@ -15,6 +16,7 @@ const appReducer = combineReducers({
   authReducer,
   signUpReducer,
   verifyCodeReducer,
+  forgotPasswordReducer,
   integrateBankReducer,
   homeReducer
 });

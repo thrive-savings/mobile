@@ -82,7 +82,7 @@ class LoginForm extends Component {
   }
 
   fastLogin() {
-    this.props.authUser({email: "naib.baghirov@gmail.com", password: "naibferide8"});
+    this.props.authUser({email: "naib.baghirov@gmail.com", password: "RandomPassword8"});
   }
 
   login() {
