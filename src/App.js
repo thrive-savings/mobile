@@ -90,7 +90,7 @@ class App extends React.Component {
     const authorized = getAuthorized(this.props.authReducer);
     if(authorized) {
       //if(authorized.account && authorized.account.flLoginID) {
-      if(false) {
+      if(true) {
         stacker = <StackerWithDrawer />;
       } else {
         stacker = <StackerWithIntegrateBank />;

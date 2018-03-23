@@ -11,6 +11,16 @@ const platformStyle = undefined;
 module.exports = {
   platformStyle,
   platform,
+
+  //Custom
+  customColors: {
+    blue: "#0089CB",
+    charcoal: "#414042",
+    green: "#2CC197",
+    lightgrey: "#FDFDFD",
+    grey: "#F9F9F9"
+  },
+
   // AndroidRipple
   androidRipple: true,
   androidRippleColor: "rgba(256, 256, 256, 0.3)",

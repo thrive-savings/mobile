@@ -23,8 +23,8 @@ import { authUser } from './state/actions';
 import styles from "./styles";
 // import commonColor from "../../theme/variables/commonColor";
 
-const bg = require("../../../assets/bg.png");
-const logo = require("../../../assets/logo.png");
+const bg = require("../../../assets/Backgrounds/bg.png");
+const logo = require("../../../assets/Logo/white-large.png");
 
 const required = value => (value ? undefined : "Required");
 const maxLength = max => value =>
@@ -50,11 +50,6 @@ class LoginForm extends Component {
     return (
       <View>
         <Item error={error && touched} rounded style={styles.inputGrp}>
-          <Icon
-            active
-            name={input.name === "email" ? "mail" : "unlock"}
-            style={{ color: "#fff" }}
-          />
           <Input
             ref={c => (this.textInput = c)}
             placeholderTextColor="#FFF"
@@ -116,7 +111,7 @@ class LoginForm extends Component {
 
     return (
       <Container>
-        <StatusBar barStyle="light-content" />
+        <StatusBar barStyle="light-content" backgroundColor="#229CC6" />
         <Image source={bg} style={styles.background}>
           <Content contentContainerStyle={{ flex: 1 }}>
             <View style={styles.container}>
@@ -136,73 +131,45 @@ class LoginForm extends Component {
                   type="password"
                   validate={[alphaNumeric, minLength8, maxLength15, required]}
                 />
-
-                {error && <Text style={styles.formErrorText3}>{errorText}</Text>}
-
-                <Button
-                  rounded
-                  primary
-                  block
-                  large
-                  style={styles.loginBtn}
-                  onPress={() => this.login()}
-                >
-                  {
-                    isFetching
-                     ? <Spinner color="white"/>
-                     : <Text
-                         style={
-                           Platform.OS === "android"
-                             ? { fontSize: 16, textAlign: "center", top: -5 }
-                             : { fontSize: 16, fontWeight: "900" }
-                         }
-                       >
-                         Get Started
-                       </Text>
-                  }
-                </Button>
-
-                <View style={styles.otherLinksContainer}>
-                  <Left>
-                    <Button
-                      small
-                      transparent
-                      style={{ alignSelf: "flex-start" }}
-                      onPress={() => navigation.navigate("SignUp")}
-                    >
-                      <Text style={styles.helpBtns}>Create Account</Text>
-                    </Button>
-                  </Left>
+                <View style={styles.forgotPasswordContainer}>
                   <Right>
                     <Button
                       small
                       transparent
-                      style={{ alignSelf: "flex-end" }}
-                      onPress={() => navigation.navigate("ForgotPassword")}
                     >
-                      <Text style={styles.helpBtns}>Forgot Password</Text>
+                      <Text style={styles.forgotPasswordBtnText}>Forgot password?</Text>
                     </Button>
                   </Right>
                 </View>
-                <View style={{ flex: 1, alignSelf: "flex-end" }}>
+                {error && <Text style={styles.formErrorText3}>{errorText}</Text>}
+
+                <View style={styles.container}>
                   <Button
-                    light
-                    small
-                    transparent
-                    style={styles.skipBtn}
+                    rounded
+                    primary
+                    block
+                    large
+                    style={styles.loginBtn}
                     onPress={() => this.fastLogin()}
                   >
-                    <Text
-                      style={
-                        (
-                          [styles.helpBtns],
-                          { top: Platform.OS === "ios" ? null : 0 }
-                        )
-                      }
-                    >
-                      Skip
-                    </Text>
+                    {
+                      isFetching
+                       ? <Spinner color={styles.loaderColor}/>
+                       : <Text style={styles.loginBtnText}> LOG IN </Text>
+                    }
                   </Button>
+
+                  <View style={styles.signUpContainer}>
+                    <Text style={styles.signUpLabelText}>
+                      Don't have an account?
+                    </Text>
+                    <Button
+                      transparent
+                      onPress={() => navigation.navigate("SignUp")}
+                    >
+                      <Text style={styles.signUpBtnText}>Sign Up.</Text>
+                    </Button>
+                  </View>
                 </View>
               </View>
             </View>

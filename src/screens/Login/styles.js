@@ -1,6 +1,7 @@
 const React = require("react-native");
 const { Dimensions, Platform } = React;
 const commonColor = require("../../theme/variables/commonColor");
+const { customColors } = commonColor;
 
 const deviceHeight = Dimensions.get("window").height;
 
@@ -13,19 +14,30 @@ export default {
   },
   container: {
     flex: 1,
-    flexDirection: "row",
     alignSelf: "center"
   },
   logo: {
     flex: 1,
-    resizeMode: "contain",
+    resizeMode: "center",
     height: deviceHeight / 4,
     alignSelf: "center"
   },
   form: {
-    flex: 1,
-    paddingLeft: 20,
-    paddingRight: 20
+    paddingLeft: 60,
+    paddingRight: 60
+  },
+  inputGrp: {
+    flexDirection: "row",
+    backgroundColor: "transparent",
+    marginBottom: 5,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: "white",
+    height: 35
+  },
+  input: {
+    color: "#fff",
+    fontSize: 12
   },
   formErrorIcon: {
     color: "#fff",
@@ -36,13 +48,13 @@ export default {
     fontSize: Platform.OS === "android" ? 12 : 15,
     color: commonColor.brandDanger,
     textAlign: "right",
-    top: -10
+    top: -5
   },
   formErrorText2: {
     fontSize: Platform.OS === "android" ? 12 : 15,
     color: "transparent",
     textAlign: "right",
-    top: -10
+    top: -5
   },
   formErrorText3: {
     fontSize: Platform.OS === "android" ? 12 : 15,
@@ -52,7 +64,14 @@ export default {
   },
   loginBtn: {
     marginTop: 7,
-    height: 50
+    height: 40,
+    borderRadius: 10,
+    backgroundColor: "white"
+  },
+  loginBtnText: {
+    color: customColors.blue,
+    fontSize: 14,
+    top: Platform.OS === "android" ? -7 : 0
   },
   otherLinksContainer: {
     paddingTop: deviceHeight < 600 ? 5 : Platform.OS === "android" ? 10 : 15,
@@ -64,24 +83,30 @@ export default {
     color: "#fff",
     fontSize: Platform.OS === "android" ? 12 : 12
   },
-  inputGrp: {
+  forgotPasswordContainer: {
     flexDirection: "row",
-    backgroundColor: "rgba(255,255,255,0.3)",
-    marginBottom: 8,
-    borderWidth: 0,
-    borderColor: "transparent"
+    justifyContent: "flex-end"
   },
-  input: {
-    paddingLeft: 10,
-    color: "#fff"
+  forgotPasswordBtn: {
+    alignSelf: "flex-end"
   },
-  skipBtn: {
-    alignSelf: "flex-end",
-    marginTop: 10,
-    borderWidth: 0.3,
-    borderColor: "#FFF",
-    position: "absolute",
-    bottom: 15,
-    right: 0
-  }
+  forgotPasswordBtnText: {
+    opacity: 0.9,
+    fontSize: 12,
+    color: "white"
+  },
+  signUpContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  signUpLabelText: {
+    opacity: 0.9,
+    fontSize: 12,
+    color: customColors.charcoal
+  },
+  signUpBtnText: {
+    color: customColors.blue
+  },
+  loaderColor: customColors.blue
 };

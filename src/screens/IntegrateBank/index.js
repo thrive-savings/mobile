@@ -19,8 +19,9 @@ class IntegrateBank extends Component {
   }
 
   onMessage(event) {
-    console.log("onMessage got called");
-    console.log(event.nativeEvent.data);
+    console.log("Received Message");
+    const data = event.nativeEvent;
+    console.log(JSON.stringify(data));
   }
 
   onNavigationStateChange(navState) {
@@ -60,9 +61,9 @@ class IntegrateBank extends Component {
     } else {
       return (
         <WebView
-          source={{uri: `${FlinksURL}/?demo=true&waitSummary=true&backgroundColor=58cd83&redirectUrl=${URL}/integration`}}
-          //onMessage={this.onMessage}
+          source={{uri: `${FlinksURL}/?demo=true&jsRedirect=true&waitSummary=true&backgroundColor=58cd83&redirectUrl=${URL}/integration`}}
           onNavigationStateChange={this.onNavigationStateChange}
+          onMessage={this.onMessage}
         />
       );
     }
