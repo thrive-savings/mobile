@@ -27,8 +27,7 @@
     "eject": "react-native-scripts eject",
     "android": "react-native-scripts android",
     "ios": "react-native-scripts ios",
-    "test": "jest && flow && eslint .",
-    "precommit": "yarn test"
+    "test": "jest && flow && eslint ."
   },
   "jest": {
     "preset": "jest-expo",

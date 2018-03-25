@@ -26,6 +26,7 @@ import styles from "./styles";
 const bg = require("../../../assets/Backgrounds/bg.png");
 const logo = require("../../../assets/Logo/white-large.png");
 
+
 const required = value => (value ? undefined : "Required");
 const maxLength = max => value =>
   value && value.length > max ? `Must be ${max} characters or less` : undefined;
@@ -131,45 +132,46 @@ class LoginForm extends Component {
                   type="password"
                   validate={[alphaNumeric, minLength8, maxLength15, required]}
                 />
+
                 <View style={styles.forgotPasswordContainer}>
                   <Right>
                     <Button
                       small
                       transparent
+                      style={{ alignSelf: "flex-end" }}
+                      onPress={() => navigation.navigate("ForgotPassword")}
                     >
-                      <Text style={styles.forgotPasswordBtnText}>Forgot password?</Text>
+                      <Text uppercase={false} style={styles.forgotPasswordBtnText}>Forgot Password?</Text>
                     </Button>
                   </Right>
                 </View>
-                {error && <Text style={styles.formErrorText3}>{errorText}</Text>}
 
-                <View style={styles.container}>
-                  <Button
-                    rounded
-                    primary
-                    block
-                    large
-                    style={styles.loginBtn}
-                    onPress={() => this.fastLogin()}
+                <Button
+                  block
+                  style={styles.loginBtn}
+                  onPress={() => this.fastLogin()}
+                >
+                  <Text style={styles.loginBtnText}>
+                    Log In
+                  </Text>
+                </Button>
+
+                <View style={styles.signUpContainer}>
+                  <Text
+                    style={styles.signUpLabelText}
                   >
-                    {
-                      isFetching
-                       ? <Spinner color={styles.loaderColor}/>
-                       : <Text style={styles.loginBtnText}> LOG IN </Text>
-                    }
-                  </Button>
-
-                  <View style={styles.signUpContainer}>
-                    <Text style={styles.signUpLabelText}>
-                      Don't have an account?
+                    Don't have an account?
+                  </Text>
+                  <Button
+                    small
+                    transparent
+                    style={styles.signUpBtn}
+                    onPress={() => navigation.navigate("SignUp")}
+                  >
+                    <Text uppercase={false} style={styles.signUpBtnText}>
+                      Sign Up.
                     </Text>
-                    <Button
-                      transparent
-                      onPress={() => navigation.navigate("SignUp")}
-                    >
-                      <Text style={styles.signUpBtnText}>Sign Up.</Text>
-                    </Button>
-                  </View>
+                  </Button>
                 </View>
               </View>
             </View>
