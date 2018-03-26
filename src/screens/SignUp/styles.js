@@ -6,6 +6,11 @@ const deviceHeight = Dimensions.get("window").height;
 const deviceWidth = Dimensions.get("window").width;
 
 export default {
+  background: {
+    flex: 1,
+    width: null,
+    height: null
+  },
   signupContainer: {
     paddingLeft: 20,
     paddingRight: 20,
@@ -26,12 +31,6 @@ export default {
     color: "#FFF",
     marginTop:
       Platform.OS === "android" ? deviceHeight / 15 : deviceHeight / 15 + 10
-  },
-  background: {
-    flex: 1,
-    width: null,
-    height: null,
-    backgroundColor: commonColor.primary
   },
   formErrorIcon: {
     color: "#fff",

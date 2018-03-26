@@ -1,45 +1,42 @@
 const React = require("react-native");
 const { Dimensions, Platform } = React;
-const commonColor = require("../../theme/variables/commonColor");
+const commonColor = require("../../../../theme/variables/commonColor");
 
-const screen = Dimensions.get("window");
-const deviceHeight = screen.height;
-const deviceWidth = screen.width;
+const deviceHeight = Dimensions.get("window").height;
+const deviceWidth = Dimensions.get("window").width;
 
 export default {
-  background: {
-    flex: 1,
-    width: null,
-    height: null
-  },
   container: {
     flex: 1,
+    paddingTop: deviceHeight / 5,
+    paddingBottom: deviceHeight / 5,
+    paddingLeft: deviceWidth / 5,
+    paddingRight: deviceWidth / 5
+  },
+  inputGrp: {
     flexDirection: "row",
+    borderWidth: 1,
+    borderColor: commonColor.customColors.lightgrey,
+    borderRadius: 8,
+    height: 30,
+    width: 120,
     alignSelf: "center"
+  },
+  input: {
+    color: "#fff",
+    fontSize: 13,
+    textAlign: "center"
   },
   logo: {
     resizeMode: "center",
     width: (2 * deviceWidth - 60) / 3,
-    height: deviceHeight / 4,
-    alignSelf: "center"
+    height: deviceHeight / 4
   },
-  form: {
-    flex: 1,
-    paddingLeft: deviceWidth / 6,
-    paddingRight: deviceWidth / 6
-  },
-  inputGrp: {
-    flexDirection: "row",
-    marginBottom: 8,
-    borderWidth: 1,
-    borderColor: commonColor.customColors.lightgrey,
-    borderRadius: 8,
-    height: 40
-  },
-  input: {
-    paddingLeft: 10,
-    color: "#fff",
-    fontSize: 13
+  text: {
+    color: commonColor.customColors.lightgrey,
+    textAlign: "center",
+    fontSize: 13,
+    paddingBottom: 20
   },
   formErrorIcon: {
     color: "#fff",
@@ -57,44 +54,35 @@ export default {
     textAlign: "right",
     top: -8
   },
-  loginBtn: {
+  createAccountBtn: {
     marginTop: 7,
     height: 40,
     borderColor: commonColor.customColors.charcoal,
     borderRadius: 8,
     backgroundColor: commonColor.customColors.lightgrey
   },
-  loginBtnText: {
+  createAccountBtnText: {
     color: commonColor.customColors.blue,
-    fontWeight: "bold",
+    //fontWeight: "bold",
     fontSize: 15,
     textAlign: "center"
   },
-  forgotPasswordContainer: {
-    top: -10,
-    right: -10,
-    flexDirection: "row"
-  },
-  forgotPasswordBtnText: {
-    color: commonColor.customColors.lightgrey,
-    fontSize: Platform.OS === "android" ? 12 : 12
-  },
-  signUpContainer: {
+  bottomContainer: {
      flex: 1,
      alignSelf: "center",
      flexDirection: "row",
      position: "absolute",
      bottom: 5
   },
-  signUpLabelText: {
+  bottomLabelText: {
     color: commonColor.customColors.charcoal,
     fontSize: 10
   },
-  signUpBtn: {
+  bottomBtn: {
     top: -11,
     left: -10
   },
-  signUpBtnText: {
+  bottomBtnText: {
     color: commonColor.customColors.blue,
     fontSize: 10,
   }

@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from "react";
-import { Image, Platform, StatusBar } from "react-native";
+import { Image, StatusBar } from "react-native";
 import {
   Container,
   Content,
@@ -10,7 +10,6 @@ import {
   Button,
   Icon,
   View,
-  Left,
   Right,
   Toast,
   Spinner
@@ -18,30 +17,15 @@ import {
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 
-import { authUser } from './state/actions';
+import { authUser } from "./state/actions";
 
 import styles from "./styles";
-// import commonColor from "../../theme/variables/commonColor";
+import commonColor from "../../theme/variables/commonColor";
+
+import { required, maxLength15, minLength8, alphaNumeric, email } from "../../globals/validators";
 
 const bg = require("../../../assets/Backgrounds/bg.png");
 const logo = require("../../../assets/Logo/white-large.png");
-
-
-const required = value => (value ? undefined : "Required");
-const maxLength = max => value =>
-  value && value.length > max ? `Must be ${max} characters or less` : undefined;
-const maxLength15 = maxLength(15);
-const minLength = min => value =>
-  value && value.length < min ? `Must be ${min} characters or more` : undefined;
-const minLength8 = minLength(8);
-const email = value =>
-  value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
-    ? "Invalid email address"
-    : undefined;
-const alphaNumeric = value =>
-  value && /[^a-zA-Z0-9 ]/i.test(value)
-    ? "Only alphanumeric characters"
-    : undefined;
 
 declare type Any = any;
 class LoginForm extends Component {
@@ -95,15 +79,14 @@ class LoginForm extends Component {
   }
 
   render() {
-    const { authUser } = this.props;
     const navigation = this.props.navigation;
 
-    const { data, notVerified, isFetching, error, errorMessage } = this.props.authReducer;
+    const { isFetching, error, errorMessage } = this.props.authReducer;
 
     let errorText = "";
-    if(error) {
+    if (error) {
       const { errors } = errorMessage;
-      if(errors && errors.constructor === Array && errors.length > 0) {
+      if (errors && errors.constructor === Array && errors.length > 0) {
         errorText = errors[0].value;
       } else {
         errorText = "Server Error!";
@@ -112,7 +95,7 @@ class LoginForm extends Component {
 
     return (
       <Container>
-        <StatusBar barStyle="light-content" backgroundColor="#229CC6" />
+        <StatusBar barStyle="light-content" backgroundColor={commonColor.customColors.statusbar} />
         <Image source={bg} style={styles.background}>
           <Content contentContainerStyle={{ flex: 1 }}>
             <View style={styles.container}>
@@ -146,14 +129,20 @@ class LoginForm extends Component {
                   </Right>
                 </View>
 
+                {error && <Text style={styles.formErrorText3}>{errorText}</Text>}
+
                 <Button
                   block
                   style={styles.loginBtn}
                   onPress={() => this.fastLogin()}
                 >
-                  <Text style={styles.loginBtnText}>
-                    Log In
-                  </Text>
+                  {
+                    isFetching ?
+                      <Spinner color="white" /> :
+                      <Text style={styles.loginBtnText}>
+                        Log In
+                      </Text>
+                  }
                 </Button>
 
                 <View style={styles.signUpContainer}>
@@ -186,13 +175,13 @@ function mapStateToProps (state) {
   return {
     values: state.form && state.form.login && state.form.login.values ? state.form.login.values : undefined,
     authReducer: state.authReducer
-  }
+  };
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    authUser: (payload={}) => dispatch(authUser(payload))
-  }
+    authUser: (payload = {}) => dispatch(authUser(payload))
+  };
 }
 
 LoginForm = connect(mapStateToProps, mapDispatchToProps)(LoginForm);
