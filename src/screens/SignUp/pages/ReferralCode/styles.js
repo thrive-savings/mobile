@@ -63,7 +63,6 @@ export default {
   },
   createAccountBtnText: {
     color: commonColor.customColors.blue,
-    //fontWeight: "bold",
     fontSize: 15,
     textAlign: "center"
   },

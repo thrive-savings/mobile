@@ -24,12 +24,10 @@ import { signUpUser } from "./state/actions";
 import styles from "./styles";
 import commonColor from "../../theme/variables/commonColor";
 
-//import { required, maxLength15, minLength8, alphaNumeric, email } from "../../globals/validators";
-
 import ReferralCode from "./pages/ReferralCode";
+import PersonalDetails from "./pages/PersonalDetails";
 
 const bg = require("../../../assets/Backgrounds/bg.png");
-const logo = require("../../../assets/Logo/white-large.png");
 
 
 class SignUpForm extends Component {
@@ -37,56 +35,6 @@ class SignUpForm extends Component {
     super(props);
 
     this.state = { step: 0 };
-  }
-
-  textInput: any;
-  renderInput({ input, label, type, meta: { touched, error, warning } }) {
-    return (
-      <View>
-        <Item error={error && touched} rounded style={styles.inputGrp}>
-          <Icon
-            active
-            name={
-              input.name === "firstName" || input.name === "lastName"
-                ? "person"
-                : input.name === "phone"
-                  ? "md-phone-portrait"
-                  : input.name === "email" ? "mail" : "unlock"
-            }
-            style={{ color: "#fff" }}
-          />
-          <Input
-            ref={c => (this.textInput = c)}
-            placeholderTextColor="#FFF"
-            style={styles.input}
-            placeholder={
-              input.name === "firstName"
-                ? "First Name"
-                : input.name === "lastName"
-                  ? "Last Name"
-                  : input.name === "email"
-                    ? "Email"
-                    : input.name === "phone" ? "Phone" : "Password"
-            }
-            secureTextEntry={input.name === "password" ? true : false}
-            {...input}
-          />
-          {touched && error
-            ? <Icon
-                active
-                style={styles.formErrorIcon}
-                onPress={() => this.textInput._root.clear()}
-                name="close"
-              />
-            : <Text />}
-        </Item>
-        {touched && error
-          ? <Text style={styles.formErrorText1}>
-              {error}
-            </Text>
-          : <Text style={styles.formErrorText2}> error here</Text>}
-      </View>
-    );
   }
 
   fastSignUp() {
@@ -103,8 +51,6 @@ class SignUpForm extends Component {
 
   signUp() {
     if (this.props.valid) {
-      console.log("Calling SignUpUser");
-      console.log(this.props.values);
       this.props.signUpUser(this.props.values);
     } else {
       Toast.show({
@@ -128,25 +74,13 @@ class SignUpForm extends Component {
   }
 
   render() {
-    const { data, isSaving, error, errorMessage } = this.props.signUpReducer;
-
-    let errorText = "";
-    if (error) {
-      const { errors } = errorMessage;
-      if (errors && errors.constructor === Array && errors.length > 0) {
-        errorText = errors[0].value;
-      } else {
-        errorText = "Server Error!";
-      }
-    }
-
     let body;
     switch (this.state.step) {
       case 0:
         body = <ReferralCode navigation={this.props.navigation} />;
         break;
       case 1:
-        body = <ReferralCode />;
+        body = <PersonalDetails />;
         break;
       default:
         body = <ReferralCode />;

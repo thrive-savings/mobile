@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image } from "react-native"
+import { Image } from "react-native";
 import {
   Content,
   View,
@@ -11,14 +11,17 @@ import {
   Spinner
 } from "native-base";
 
+import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
+
+import { verifyReferralCode } from "../../state/actions";
 
 import styles from "./styles";
 import { required } from "../../../../globals/validators";
 
 const logo = require("../../../../../assets/Logo/white-large.png");
 
-class ReferralCode extends Component {
+class ReferralCodeForm extends Component {
   textInput: Any;
 
   renderInput({ input, label, type, meta: { touched, error, warning } }) {
@@ -50,9 +53,13 @@ class ReferralCode extends Component {
     );
   }
 
-  render() {
-    const navigation = this.props.navigation;
+  verify() {
+    console.log("Verify Referral Code");
+    console.log(this.props.values);
+    // this.props.verifyReferralCode(this.props.values);
+  }
 
+  render() {
     return (
       <Content contentContainerStyle={{ flex: 1 }}>
         <View style={styles.container}>
@@ -68,7 +75,7 @@ class ReferralCode extends Component {
           <Button
             block
             style={styles.createAccountBtn}
-            onPress={() => console.log("Pressed")}
+            onPress={() => this.verify()}
           >
             {
               false ?
@@ -88,7 +95,7 @@ class ReferralCode extends Component {
               small
               transparent
               style={styles.bottomBtn}
-              onPress={() => navigation.navigate("LogIn")}
+              onPress={() => this.props.navigation.navigate("Login")}
             >
               <Text uppercase={false} style={styles.bottomBtnText}>
                 Log In.
@@ -101,4 +108,21 @@ class ReferralCode extends Component {
   }
 }
 
+function mapStateToProps (state) {
+  return {
+    values: state.form && state.form.referralCode && state.form.referralCode.values ? state.form.referralCode.values : undefined
+  };
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    verifyReferralCode: (payload = {}) => dispatch(verifyReferralCode(payload))
+  };
+}
+
+ReferralCodeForm = connect(mapStateToProps, mapDispatchToProps)(ReferralCodeForm);
+
+const ReferralCode = reduxForm({
+  form: "referralCode"
+})(ReferralCodeForm);
 export default ReferralCode;

@@ -1,4 +1,4 @@
-import { REQUEST_URL } from "./constants";
+import { SIGN_UP_URL, VERIFY_REFERRAL_URL } from "./constants";
 const initialState = {
   data: {},
   isSaving: false,
@@ -9,23 +9,23 @@ const initialState = {
 
 export default function signUpReducer (state = initialState, action) {
   switch (action.type) {
-    case `${REQUEST_URL}_SUBMIT`:
+    case `${SIGN_UP_URL}_SUBMIT`:
       return {
         ...state,
         isSaving: true
       };
-    case `${REQUEST_URL}_SUCCEED`:
+    case `${SIGN_UP_URL}_SUCCEED`:
       console.log("Sign Up Succeeded!");
-      const { payload: { data: payloadData } } = action;
+      const { payload: { data: signUpData } } = action;
       return {
         ...state,
-        data: payloadData ? payloadData : {},
+        data: signUpData ? signUpData : {},
         isSaving: false,
         contactedApi: true,
         error: false,
         errorMessage: ""
       };
-    case `${REQUEST_URL}_FAIL`:
+    case `${SIGN_UP_URL}_FAIL`:
       console.log("Sign Up Failed!");
       return {
         ...state,
@@ -34,6 +34,31 @@ export default function signUpReducer (state = initialState, action) {
         error: true,
         errorMessage: action.error
       };
+    case `${VERIFY_REFERRAL_URL}_SUBMIT`:
+        return {
+          ...state,
+          isSaving: true
+        };
+    case `${VERIFY_REFERRAL_URL}_SUCCEED`:
+        console.log("Verify Referral Succeeded!");
+        const { payload: { data: verifyReferralData } } = action;
+        return {
+          ...state,
+          data: verifyReferralData ? verifyReferralData : {},
+          isSaving: false,
+          contactedApi: true,
+          error: false,
+          errorMessage: ""
+        };
+    case `${VERIFY_REFERRAL_URL}_FAIL`:
+        console.log("Verify Referral Failed!");
+        return {
+          ...state,
+          isSaving: false,
+          contactedApi: true,
+          error: true,
+          errorMessage: action.error
+        };
     default:
       return state;
   }

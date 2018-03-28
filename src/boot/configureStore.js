@@ -2,13 +2,13 @@
 import { AsyncStorage } from "react-native";
 import { composeWithDevTools } from "remote-redux-devtools";
 import { createStore, applyMiddleware } from "redux";
-import createSagaMiddleware from 'redux-saga'
+import createSagaMiddleware from "redux-saga";
 import { persistStore, persistReducer } from "redux-persist";
 import reducer from "../reducers";
 
 import { requestApiSaga } from "../globals/requestApi";
 import logInSaga from "../screens/Login/state/sagas";
-import { signUpSaga, signUpSucceedSaga } from "../screens/SignUp/state/sagas";
+import { signUpSaga, signUpSucceedSaga, verifyReferralCodeSaga } from "../screens/SignUp/state/sagas";
 import { verifyCodeSaga, verifyCodeSucceedSaga, resendCodeSaga } from "../screens/VerifyCode/state/sagas";
 import passwordRequestSaga from "../screens/ForgotPassword/state/sagas";
 import { fetchAccountsSaga, setDefaultSaga } from "../screens/IntegrateBank/state/sagas";
@@ -26,11 +26,11 @@ export default function configureStore(): any {
   );
 
   const persistConfig = {
-    key: 'root',
+    key: "root",
     storage: AsyncStorage,
-    blacklist: ['form']
+    blacklist: ["form"]
   };
-  const persistedReducer = persistReducer(persistConfig, reducer)
+  const persistedReducer = persistReducer(persistConfig, reducer);
 
   const store = createStore(persistedReducer, enhancer);
   const persistor = persistStore(store);
@@ -39,6 +39,7 @@ export default function configureStore(): any {
   sagaMiddleware.run(logInSaga);
   sagaMiddleware.run(signUpSaga);
   sagaMiddleware.run(signUpSucceedSaga);
+  sagaMiddleware.run(verifyReferralCodeSaga);
   sagaMiddleware.run(verifyCodeSaga);
   sagaMiddleware.run(verifyCodeSucceedSaga);
   sagaMiddleware.run(resendCodeSaga);
