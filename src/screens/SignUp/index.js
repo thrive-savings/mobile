@@ -4,22 +4,9 @@ import { Image, StatusBar } from "react-native";
 import { connect } from "react-redux";
 import {
   Container,
-  Content,
-  Text,
-  Button,
-  Icon,
-  Item,
-  Input,
-  View,
   Toast,
-  Left,
-  Right,
-  Footer,
-  Spinner
 } from "native-base";
-import { Field, reduxForm } from "redux-form";
-
-import { signUpUser } from "./state/actions";
+import { reduxForm } from "redux-form";
 
 import styles from "./styles";
 import commonColor from "../../theme/variables/commonColor";
@@ -30,13 +17,7 @@ import PersonalDetails from "./pages/PersonalDetails";
 const bg = require("../../../assets/Backgrounds/bg.png");
 
 
-class SignUpForm extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = { step: 0 };
-  }
-
+class SignUp extends Component {
   fastSignUp() {
     const values = {
       "email": "naib@thrivesavings.com",
@@ -62,25 +43,16 @@ class SignUpForm extends Component {
     }
   }
 
-  componentDidUpdate() {
-    const { data, contactedApi, error } = this.props.signUpReducer;
-    if (contactedApi && !error) {
-      if (Object.keys(data).length === 0) {
-        this.props.navigation.navigate("VerifyCode");
-      } else {
-        //TODO: Check if bank linked
-      }
-    }
-  }
-
   render() {
+    const { step } = this.props.signUpReducer;
+
     let body;
-    switch (this.state.step) {
+    switch (step) {
       case 0:
         body = <ReferralCode navigation={this.props.navigation} />;
         break;
       case 1:
-        body = <PersonalDetails />;
+        body = <PersonalDetails navigation={this.props.navigation} />;
         break;
       default:
         body = <ReferralCode />;
@@ -106,20 +78,10 @@ class SignUpForm extends Component {
 
 function mapStateToProps (state) {
   return {
-    values: state.form && state.form.signup && state.form.signup.values ? state.form.signup.values : undefined,
     signUpReducer: state.signUpReducer
-  }
+  };
 }
 
-function mapDispatchToProps (dispatch) {
-  return {
-    signUpUser: (payload={}) => dispatch(signUpUser(payload))
-  }
-}
-
-SignUpForm = connect(mapStateToProps, mapDispatchToProps)(SignUpForm);
-
-const SignUp = reduxForm({
+export default reduxForm({
   form: "signup"
-})(SignUpForm);
-export default SignUp;
+})(connect(mapStateToProps)(SignUp));

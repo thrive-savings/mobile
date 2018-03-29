@@ -21,6 +21,8 @@ import { required } from "../../../../globals/validators";
 
 const logo = require("../../../../../assets/Logo/white-large.png");
 
+const commonColor = require("../../../../theme/variables/commonColor");
+
 class ReferralCodeForm extends Component {
   textInput: Any;
 
@@ -32,7 +34,7 @@ class ReferralCodeForm extends Component {
             ref={c => (this.textInput = c)}
             placeholderTextColor="#FFF"
             style={styles.input}
-            placeholder={input.name === "referral" ? "ENTER CODE" : "Placeholder"}
+            placeholder={input.name === "code" ? "ENTER CODE" : "Placeholder"}
             {...input}
           />
           {touched && error
@@ -54,32 +56,43 @@ class ReferralCodeForm extends Component {
   }
 
   verify() {
-    console.log("Verify Referral Code");
-    console.log(this.props.values);
-    // this.props.verifyReferralCode(this.props.values);
+    this.props.verifyReferralCode(this.props.values);
   }
 
   render() {
+    const { isLoading, error, errorMessage } = this.props.signUpReducer;
+
+    let errorText = "";
+    if (error) {
+      const { errors } = errorMessage;
+      if (errors && errors.constructor === Array && errors.length > 0) {
+        errorText = errors[0].value;
+      } else {
+        errorText = "Server Error!";
+      }
+    }
+
     return (
       <Content contentContainerStyle={{ flex: 1 }}>
         <View style={styles.container}>
           <Image source={logo} style={styles.logo} />
           <Text style={styles.text}>Please enter the referral code you received from your employer.</Text>
           <Field
-            name="referral"
+            name="code"
             component={this.renderInput}
-            type="referral"
+            type="code"
             validate={[required]}
           />
           <Text style={styles.text}>Contact your administrator if there are any issues</Text>
+          {error && <Text style={styles.formErrorText3}>{errorText}</Text>}
           <Button
             block
             style={styles.createAccountBtn}
             onPress={() => this.verify()}
           >
             {
-              false ?
-                <Spinner color="white" /> :
+              isLoading ?
+                <Spinner color={commonColor.customColors.blue} /> :
                 <Text style={styles.createAccountBtnText}>
                   Create My Account
                 </Text>
@@ -110,7 +123,8 @@ class ReferralCodeForm extends Component {
 
 function mapStateToProps (state) {
   return {
-    values: state.form && state.form.referralCode && state.form.referralCode.values ? state.form.referralCode.values : undefined
+    values: state.form && state.form.referralCode && state.form.referralCode.values ? state.form.referralCode.values : undefined,
+    signUpReducer: state.signUpReducer
   };
 }
 

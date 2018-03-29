@@ -138,7 +138,7 @@ class LoginForm extends Component {
                 >
                   {
                     isFetching ?
-                      <Spinner color="white" /> :
+                      <Spinner color={commonColor.customColors.blue} /> :
                       <Text style={styles.loginBtnText}>
                         Log In
                       </Text>
