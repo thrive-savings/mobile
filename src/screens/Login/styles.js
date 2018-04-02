@@ -10,7 +10,7 @@ export default {
   background: {
     flex: 1,
     width: null,
-    height: null
+    height: deviceHeight
   },
   container: {
     flex: 1,
@@ -47,9 +47,9 @@ export default {
   },
   formErrorText1: {
     fontSize: Platform.OS === "android" ? 12 : 15,
-    color: commonColor.brandDanger,
+    color: commonColor.customColors.error,
     textAlign: "right",
-    top: -8
+    top: -7
   },
   formErrorText2: {
     fontSize: Platform.OS === "android" ? 12 : 15,
@@ -71,20 +71,24 @@ export default {
     textAlign: "center"
   },
   forgotPasswordContainer: {
-    top: -10,
-    right: -10,
-    flexDirection: "row"
+    flex: 1,
+    alignSelf: "center",
+    flexDirection: "row",
+    position: "absolute",
+    bottom: 40
   },
   forgotPasswordBtnText: {
-    color: commonColor.customColors.lightgrey,
-    fontSize: Platform.OS === "android" ? 12 : 12
+    color: commonColor.customColors.charcoal,
+    opacity: 0.5,
+    fontSize: Platform.OS === "android" ? 9 : 9
   },
   signUpContainer: {
      flex: 1,
      alignSelf: "center",
      flexDirection: "row",
      position: "absolute",
-     bottom: 5
+     bottom: 5,
+     left: (deviceWidth) / 4 + 20
   },
   signUpLabelText: {
     color: commonColor.customColors.charcoal,

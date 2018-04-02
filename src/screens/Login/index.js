@@ -116,19 +116,6 @@ class LoginForm extends Component {
                   validate={[alphaNumeric, minLength8, maxLength15, required]}
                 />
 
-                <View style={styles.forgotPasswordContainer}>
-                  <Right>
-                    <Button
-                      small
-                      transparent
-                      style={{ alignSelf: "flex-end" }}
-                      onPress={() => navigation.navigate("ForgotPassword")}
-                    >
-                      <Text uppercase={false} style={styles.forgotPasswordBtnText}>Forgot Password?</Text>
-                    </Button>
-                  </Right>
-                </View>
-
                 {error && <Text style={styles.formErrorText3}>{errorText}</Text>}
 
                 <Button
@@ -144,6 +131,16 @@ class LoginForm extends Component {
                       </Text>
                   }
                 </Button>
+
+                <View style={styles.forgotPasswordContainer}>
+                  <Button
+                    small
+                    transparent
+                    onPress={() => navigation.navigate("ForgotPassword")}
+                  >
+                    <Text uppercase={false} style={styles.forgotPasswordBtnText}>Forgot Password?</Text>
+                  </Button>
+                </View>
 
                 <View style={styles.signUpContainer}>
                   <Text

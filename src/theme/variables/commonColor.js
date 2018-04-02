@@ -20,7 +20,8 @@ module.exports = {
     lightgrey: "#FDFDFD",
     grey: "#F9F9F9",
     statusbar: "#229CC6",
-    greyInputBox: "#ADB4BE"
+    greyInputBox: "#ADB4BE",
+    error: "#A12938"
   },
 
   // AndroidRipple
