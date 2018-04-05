@@ -1,11 +1,11 @@
-const React = require("react-native");
-const { Dimensions, Platform } = React;
-const commonColor = require("../../theme/variables/commonColor");
+import { StyleSheet, Dimensions, Platform } from "react-native";
+import colors from "../../theme/colors";
 
-const deviceHeight = Dimensions.get("window").height;
-const deviceWidth = Dimensions.get("window").width;
+const screen = Dimensions.get("window");
+const deviceHeight = screen.height;
+const deviceWidth = screen.width;
 
-export default {
+export default StyleSheet.create({
   background: {
     flex: 1,
     width: null,
@@ -39,7 +39,7 @@ export default {
   },
   formErrorText1: {
     fontSize: Platform.OS === "android" ? 12 : 15,
-    color: commonColor.brandDanger,
+    color: colors.error,
     textAlign: "right",
     top: -10
   },
@@ -51,7 +51,7 @@ export default {
   },
   formErrorText3: {
     fontSize: Platform.OS === "android" ? 12 : 15,
-    color: commonColor.brandDanger,
+    color: colors.error,
     textAlign: "center",
     top: -10
   },
@@ -91,4 +91,4 @@ export default {
     fontWeight: "bold",
     color: "#FFF"
   }
-};
+});

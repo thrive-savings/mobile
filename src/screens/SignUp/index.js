@@ -14,7 +14,7 @@ import commonColor from "../../theme/variables/commonColor";
 import ReferralCode from "./pages/ReferralCode";
 import PersonalDetails from "./pages/PersonalDetails";
 
-const bg = require("../../../assets/Backgrounds/bg.png");
+const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
 
 
 class SignUp extends Component {

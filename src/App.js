@@ -21,6 +21,7 @@ import Profile from "./screens/Profile/";
 import Settings from "./screens/Settings";
 import VerifyCode from "./screens/VerifyCode";
 import IntegrateBank from "./screens/IntegrateBank";
+import SavingPreferences from "./screens/SavingPreferences";
 
 import getAuthorized from "./globals/getAuthorized";
 
@@ -50,7 +51,8 @@ const stackScreens = {
   Comments: { screen: Comments },
   Channel: { screen: Channel },
   VerifyCode: { screen: VerifyCode },
-  IntegrateBank: {screen: IntegrateBank },
+  IntegrateBank: { screen: IntegrateBank },
+  SavingPreferences: { screen: SavingPreferences },
   Drawer: { screen: Drawer }
 };
 
@@ -81,16 +83,16 @@ const StackerWithIntegrateBank = StackNavigator(
     ...stackerOptions,
     initialRouteName: "IntegrateBank"
   }
-)
+);
 
 class App extends React.Component {
   render() {
     let stacker = <StackerWithLogin />;
 
     const authorized = getAuthorized(this.props.authReducer);
-    if(authorized) {
+    if (authorized) {
       //if(authorized.account && authorized.account.flLoginID) {
-      if(true) {
+      if (true) {
         stacker = <StackerWithDrawer />;
       } else {
         stacker = <StackerWithIntegrateBank />;
@@ -106,11 +108,9 @@ class App extends React.Component {
 }
 
 function mapStateToProps (state) {
-  console.log("Mapping State to Props in App root component");
-  console.log(state);
   return {
     authReducer: state.authReducer
-  }
+  };
 }
 
 export default connect(mapStateToProps)(App);

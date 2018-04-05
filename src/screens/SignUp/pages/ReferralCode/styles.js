@@ -1,11 +1,11 @@
-const React = require("react-native");
-const { Dimensions, Platform } = React;
-const commonColor = require("../../../../theme/variables/commonColor");
+import { StyleSheet, Dimensions, Platform } from "react-native";
+import colors from "../../../../theme/colors";
 
-const deviceHeight = Dimensions.get("window").height;
-const deviceWidth = Dimensions.get("window").width;
+const screen = Dimensions.get("window");
+const deviceHeight = screen.height;
+const deviceWidth = screen.width;
 
-export default {
+export default StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: deviceHeight / 5,
@@ -16,7 +16,7 @@ export default {
   inputGrp: {
     flexDirection: "row",
     borderWidth: 1,
-    borderColor: commonColor.customColors.lightgrey,
+    borderColor: colors.lightgrey,
     borderRadius: 8,
     height: 30,
     width: 120,
@@ -33,7 +33,7 @@ export default {
     height: deviceHeight / 4
   },
   text: {
-    color: commonColor.customColors.lightgrey,
+    color: colors.lightgrey,
     textAlign: "center",
     fontSize: 13,
     paddingBottom: 20
@@ -44,7 +44,7 @@ export default {
   },
   formErrorText1: {
     fontSize: Platform.OS === "android" ? 12 : 15,
-    color: commonColor.brandDanger,
+    color: colors.error,
     textAlign: "right",
     top: -8
   },
@@ -56,19 +56,19 @@ export default {
   },
   formErrorText3: {
     fontSize: Platform.OS === "android" ? 12 : 15,
-    color: commonColor.brandDanger,
+    color: colors.error,
     textAlign: "center",
     top: -10
   },
   createAccountBtn: {
     marginTop: 7,
     height: 40,
-    borderColor: commonColor.customColors.charcoal,
+    borderColor: colors.charcoal,
     borderRadius: 8,
-    backgroundColor: commonColor.customColors.lightgrey
+    backgroundColor: colors.lightgrey
   },
   createAccountBtnText: {
-    color: commonColor.customColors.blue,
+    color: colors.blue,
     fontSize: 15,
     textAlign: "center"
   },
@@ -80,7 +80,7 @@ export default {
      bottom: 5
   },
   bottomLabelText: {
-    color: commonColor.customColors.charcoal,
+    color: colors.charcoal,
     fontSize: 10
   },
   bottomBtn: {
@@ -88,7 +88,7 @@ export default {
     left: -10
   },
   bottomBtnText: {
-    color: commonColor.customColors.blue,
+    color: colors.blue,
     fontSize: 10,
   }
-};
+});

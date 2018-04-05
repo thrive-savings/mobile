@@ -1,11 +1,11 @@
-const React = require("react-native");
-const { Dimensions, Platform } = React;
-const commonColor = require("../../../../theme/variables/commonColor");
+import { StyleSheet, Dimensions, Platform } from "react-native";
+import colors from "../../../../theme/colors";
 
-const deviceHeight = Dimensions.get("window").height;
-const deviceWidth = Dimensions.get("window").width;
+const screen = Dimensions.get("window");
+const deviceHeight = screen.height;
+const deviceWidth = screen.width;
 
-export default {
+export default StyleSheet.create({
   contentContainerStyle: {
     flex: 1,
     alignItems: "center",
@@ -32,7 +32,7 @@ export default {
     paddingLeft: 10,
     paddingRight: 10,
     paddingTop: 20,
-    paddingRight: 20
+    paddingBottom: 20
   },
   rowView: {
     flexDirection: "row"
@@ -45,7 +45,7 @@ export default {
      bottom: 5
   },
   bottomLabelText: {
-    color: commonColor.customColors.charcoal,
+    color: colors.charcoal,
     fontSize: 10
   },
   bottomBtn: {
@@ -53,20 +53,20 @@ export default {
     left: -10
   },
   bottomBtnText: {
-    color: commonColor.customColors.blue,
+    color: colors.blue,
     fontSize: 10,
   },
   formLabelText: {
     paddingLeft: 20,
     paddingRight: 20,
-    color: commonColor.customColors.charcoal,
+    color: colors.charcoal,
     fontSize: 13,
     textAlign: "center"
   },
   inputGrp: {
     flexDirection: "row",
     borderWidth: 1,
-    borderColor: commonColor.customColors.greyInputBox,
+    borderColor: colors.greyInputBox,
     borderRadius: 8,
     height: 30,
     alignSelf: "center"
@@ -76,4 +76,4 @@ export default {
     fontSize: 13,
     textAlign: "center"
   },
-};
+});

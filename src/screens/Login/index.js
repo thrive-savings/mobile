@@ -20,11 +20,11 @@ import { Field, reduxForm } from "redux-form";
 import { authUser } from "./state/actions";
 
 import styles from "./styles";
-import commonColor from "../../theme/variables/commonColor";
+import colors from "../../theme/colors";
 
 import { required, maxLength15, minLength8, alphaNumeric, email } from "../../globals/validators";
 
-const bg = require("../../../assets/Backgrounds/bg.png");
+const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
 const logo = require("../../../assets/Logo/white-large.png");
 
 declare type Any = any;
@@ -95,7 +95,7 @@ class LoginForm extends Component {
 
     return (
       <Container>
-        <StatusBar barStyle="light-content" backgroundColor={commonColor.customColors.statusbar} />
+        <StatusBar barStyle="light-content" backgroundColor={colors.statusbar} />
         <Image source={bg} style={styles.background}>
           <Content contentContainerStyle={{ flex: 1 }}>
             <View style={styles.container}>
@@ -125,7 +125,7 @@ class LoginForm extends Component {
                 >
                   {
                     isFetching ?
-                      <Spinner color={commonColor.customColors.blue} /> :
+                      <Spinner color={colors.blue} /> :
                       <Text style={styles.loginBtnText}>
                         Log In
                       </Text>

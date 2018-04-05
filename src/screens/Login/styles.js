@@ -1,12 +1,11 @@
-const React = require("react-native");
-const { Dimensions, Platform } = React;
-const commonColor = require("../../theme/variables/commonColor");
+import { StyleSheet, Dimensions, Platform } from "react-native";
+import colors from "../../theme/colors";
 
 const screen = Dimensions.get("window");
 const deviceHeight = screen.height;
 const deviceWidth = screen.width;
 
-export default {
+export default StyleSheet.create({
   background: {
     flex: 1,
     width: null,
@@ -32,7 +31,7 @@ export default {
     flexDirection: "row",
     marginBottom: 8,
     borderWidth: 1,
-    borderColor: commonColor.customColors.lightgrey,
+    borderColor: colors.lightgrey,
     borderRadius: 8,
     height: 40
   },
@@ -47,7 +46,7 @@ export default {
   },
   formErrorText1: {
     fontSize: Platform.OS === "android" ? 12 : 15,
-    color: commonColor.customColors.error,
+    color: colors.error,
     textAlign: "right",
     top: -7
   },
@@ -60,12 +59,12 @@ export default {
   loginBtn: {
     marginTop: 7,
     height: 40,
-    borderColor: commonColor.customColors.charcoal,
+    borderColor: colors.charcoal,
     borderRadius: 8,
-    backgroundColor: commonColor.customColors.lightgrey
+    backgroundColor: colors.lightgrey
   },
   loginBtnText: {
-    color: commonColor.customColors.blue,
+    color: colors.blue,
     fontWeight: "bold",
     fontSize: 15,
     textAlign: "center"
@@ -78,7 +77,7 @@ export default {
     bottom: 40
   },
   forgotPasswordBtnText: {
-    color: commonColor.customColors.charcoal,
+    color: colors.charcoal,
     opacity: 0.5,
     fontSize: Platform.OS === "android" ? 9 : 9
   },
@@ -91,7 +90,7 @@ export default {
      left: (deviceWidth) / 4 + 20
   },
   signUpLabelText: {
-    color: commonColor.customColors.charcoal,
+    color: colors.charcoal,
     fontSize: 10
   },
   signUpBtn: {
@@ -99,7 +98,7 @@ export default {
     left: -10
   },
   signUpBtnText: {
-    color: commonColor.customColors.blue,
+    color: colors.blue,
     fontSize: 10,
   }
-};
+});

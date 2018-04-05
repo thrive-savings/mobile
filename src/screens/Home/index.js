@@ -42,7 +42,7 @@ class Home extends Component {
     return (
       <TouchableOpacity
         style={{ flexDirection: "row" }}
-        onPress={() => this.props.navigation.navigate("Story")}
+        onPress={() => this.props.navigation.navigate("SavingPreferences")}
       >
         <View style={styles.newsContent}>
           <Text numberOfLines={2} style={styles.newsHeader}>
