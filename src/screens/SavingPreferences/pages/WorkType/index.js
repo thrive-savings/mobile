@@ -4,12 +4,13 @@ import { Svg } from "expo";
 import {
   View,
   Text,
-  Button,
   Card,
   Grid,
   Col,
   Row
 } from "native-base";
+
+import SpecialButton from "../../../../components/SpecialButton";
 
 import styles from "./styles";
 
@@ -40,6 +41,8 @@ class WorkType extends Component {
     this.state = {
       workType: ""
     };
+
+    this.next = this.next.bind(this);
   }
 
   next() {
@@ -96,28 +99,7 @@ class WorkType extends Component {
           </Col>
         </Grid>
 
-        {
-          this.state.workType
-            ?
-              <Button
-                block
-                onPress={() => this.next()}
-              >
-                <Text style={styles.disabledButtonText}>
-                  CONTINUE
-                </Text>
-              </Button>
-            :
-              <Button
-                block
-                style={styles.disabledButton}
-                onPress={() => this.next()}
-              >
-                <Text style={styles.disabledButtonText}>
-                  CONTINUE
-                </Text>
-              </Button>
-        }
+        <SpecialButton next={this.next} state={this.state.workType ? 1 : 0} />
       </Card>
     );
   }

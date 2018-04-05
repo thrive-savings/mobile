@@ -78,15 +78,5 @@ export default StyleSheet.create({
   },
   disabledType: {
     opacity: 0.6
-  },
-  disabledButton: {
-    backgroundColor: colors.grey,
-    borderRadius: 12,
-    height: 40
-  },
-  disabledButtonText: {
-    fontSize: 14,
-    fontFamily: "LatoBold",
-    color: colors.disabledButtonText
   }
 });

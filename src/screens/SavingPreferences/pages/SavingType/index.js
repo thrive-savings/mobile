@@ -4,9 +4,10 @@ import { Svg } from "expo";
 import {
   View,
   Text,
-  Card,
-  Button
+  Card
 } from "native-base";
+
+import SpecialButton from "../../../../components/SpecialButton";
 
 import styles from "./styles";
 
@@ -25,6 +26,8 @@ class SavingType extends Component {
     this.state = {
       savingType: ""
     };
+
+    this.next = this.next.bind(this);
   }
 
   next() {
@@ -68,27 +71,7 @@ class SavingType extends Component {
           </Card>
         </View>
 
-        {
-          this.state.savingType
-            ?
-              <Button
-                block
-                onPress={() => this.next()}
-              >
-                <Text style={styles.disabledButtonText}>
-                  CONTINUE
-                </Text>
-              </Button>
-            :
-              <Button
-                block
-                style={styles.disabledButton}
-              >
-                <Text style={styles.disabledButtonText}>
-                  CONTINUE
-                </Text>
-              </Button>
-        }
+        <SpecialButton next={this.next} state={this.state.savingType ? 1 : 0} />
       </Card>
     );
   }

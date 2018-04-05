@@ -21,7 +21,7 @@ export default StyleSheet.create({
   labelText: {
     color: colors.blue,
     fontSize: 14,
-    fontWeight: "bold",
+    fontFamily: "LatoBold",
     paddingTop: 20,
     paddingBottom: 10,
     paddingLeft: 60,
@@ -30,7 +30,8 @@ export default StyleSheet.create({
   },
   secondaryText: {
     color: colors.charcoal,
-    fontSize: 10
+    fontSize: 10,
+    fontFamily: "LatoRegular"
   },
   grid: {
     height: deviceHeight / 2,
@@ -57,6 +58,7 @@ export default StyleSheet.create({
   workTypeText: {
     color: colors.charcoal,
     fontSize: 13,
+    fontFamily: "LatoRegular",
     textAlign: "center",
     position: "absolute",
     bottom: 10,
@@ -64,13 +66,5 @@ export default StyleSheet.create({
   },
   disabledType: {
     opacity: 0.6
-  },
-  disabledButton: {
-    backgroundColor: colors.grey,
-    borderRadius: 12
-  },
-  disabledButtonText: {
-    fontSize: 15,
-    color: colors.disabledButtonText
   }
 });
