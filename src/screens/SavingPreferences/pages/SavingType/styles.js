@@ -30,12 +30,14 @@ export default StyleSheet.create({
   },
   secondaryText: {
     color: colors.charcoal,
-    fontSize: 10,
+    fontSize: 12,
     fontFamily: "LatoRegular",
+    textAlign: "center",
     paddingBottom: 10
   },
   typesContainer: {
     height: deviceHeight / 2,
+    width: deviceWidth - 100,
     paddingVertical: 10
   },
   savingTypeCard: {
@@ -45,35 +47,56 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
+  savingTypeGradient: {
+    height: deviceHeight / 4 - 20,
+    width: deviceWidth - 100,
+    resizeMode: "stretch",
+    justifyContent: "center",
+    paddingHorizontal: 22.5
+  },
+  tagGradient: {
+    alignSelf: "flex-end",
+    justifyContent: "center",
+    marginHorizontal: 20,
+    marginVertical: 10,
+    paddingHorizontal: 10,
+    height: 20,
+    borderRadius: 10,
+    position: "absolute",
+    top: -20,
+    right: -20
+  },
+  tagText: {
+    backgroundColor: "transparent",
+    textAlign: "center",
+    fontSize: 10,
+    fontFamily: "LatoRegular",
+    color: "white"
+  },
   greenHeader: {
     color: colors.green,
     fontSize: 12,
-    fontFamily: "LatoRegular",
-    textAlign: "center"
+    fontFamily: "LatoRegular"
   },
   greenFooter: {
     color: colors.green,
     fontSize: 12,
-    fontFamily: "LatoItalic",
-    textAlign: "center"
+    fontFamily: "LatoItalic"
   },
   blueHeader: {
     color: colors.blue,
     fontSize: 12,
-    fontFamily: "LatoRegular",
-    textAlign: "center"
+    fontFamily: "LatoRegular"
   },
   blueFooter: {
     color: colors.blue,
     fontSize: 12,
-    fontFamily: "LatoItalic",
-    textAlign: "center"
+    fontFamily: "LatoItalic"
   },
   bodyText: {
     color: colors.charcoal,
     fontSize: 12,
     fontFamily: "LatoRegular",
-    textAlign: "center",
     paddingVertical: 10
   },
   disabledType: {

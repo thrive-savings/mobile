@@ -21,7 +21,6 @@ import {
 } from "native-base";
 import { Grid, Col } from "react-native-easy-grid";
 
-import Modal from "react-native-modalbox";
 import Carousel from "react-native-carousel-view";
 
 import styles from "./styles";
@@ -205,68 +204,6 @@ class Story extends Component {
             </View>
           </View>
         </Content>
-
-        <Modal
-          position="top"
-          entry="top"
-          isOpen={this.state.open}
-          onOpened={() => this.setState({ open: true })}
-          onClosed={() => this.setState({ open: false })}
-          backButtonClose
-          style={styles.modal}
-        >
-          <View>
-            <View style={styles.modalContentBox}>
-              <Grid style={{ flex: 10, padding: 20 }}>
-                <Col>
-                  <Button transparent style={styles.dayButton}>
-                    <Icon name="ios-sunny-outline" />
-                  </Button>
-                </Col>
-                <Col>
-                  <Button transparent style={styles.nightButton}>
-                    <Icon name="ios-moon-outline" style={{ color: "#fff" }} />
-                  </Button>
-                </Col>
-              </Grid>
-            </View>
-            <View style={styles.modalContentBox}>
-              <Grid style={styles.modalContentGrid1}>
-                <Col>
-                  <Text style={styles.modalContentGridText}>
-                    CHOOSE TYPESPACE
-                  </Text>
-                </Col>
-                <Col>
-                  <Button
-                    transparent
-                    iconRight
-                    style={{ marginTop: -5, alignSelf: "center" }}
-                  >
-                    <Text style={{ color: "#FFF" }}>SANS SERIF</Text>
-                    <Icon name="ios-arrow-forward" style={{ fontSize: 28 }} />
-                  </Button>
-                </Col>
-              </Grid>
-            </View>
-            <View>
-              <Grid style={styles.modalContentGrid2}>
-                <Col>
-                  <Text style={styles.modalSmallText}>A</Text>
-                </Col>
-                <Col style={{ alignSelf: "flex-end" }}>
-                  <Text style={styles.modalLargeText}>A</Text>
-                </Col>
-              </Grid>
-              <Slider
-                {...this.props}
-                minimumTrackTintColor="#fff"
-                thumbTintColor="#fff"
-                onValueChange={value => this.setState({ value })}
-              />
-            </View>
-          </View>
-        </Modal>
       </Container>
     );
   }

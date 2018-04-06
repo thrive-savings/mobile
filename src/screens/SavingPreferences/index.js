@@ -21,7 +21,7 @@ import colors from "../../theme/colors";
 
 import WorkType from "./pages/WorkType";
 import SavingType from "./pages/SavingType";
-//import SavingDetails from "./pages/SavingDetails";
+import FixedPlan from "./pages/FixedPlan";
 
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
 
@@ -36,7 +36,7 @@ class SavingPreferences extends Component {
   constructor(props: Props) {
     super(props);
     this.state = {
-      step: 0
+      step: 2
     };
 
     this.changeStep = this.changeStep.bind(this);
@@ -58,7 +58,7 @@ class SavingPreferences extends Component {
         body = <SavingType changeStep={this.changeStep}/>;
         break;
       case 2:
-        body = <WorkType changeStep={this.changeStep}/>;
+        body = <FixedPlan changeStep={this.changeStep}/>;
         break;
     }
 

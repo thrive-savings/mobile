@@ -30,7 +30,7 @@ export default StyleSheet.create({
   },
   secondaryText: {
     color: colors.charcoal,
-    fontSize: 10,
+    fontSize: 12,
     fontFamily: "LatoRegular"
   },
   grid: {
@@ -45,11 +45,13 @@ export default StyleSheet.create({
     flex: 0.45
   },
   gridElem: {
-    flexDirection: "column",
     alignItems: "center",
-    width: deviceWidth / 2 - 50,
-    borderBottomWidth: 1,
-    borderColor: colors.grey
+    width: deviceWidth / 2 - 50
+  },
+  gridElemGradient: {
+    flex: 1,
+    resizeMode: "contain",
+    alignItems: "center"
   },
   workTypeImg: {
     flex: 0.75,
@@ -61,8 +63,8 @@ export default StyleSheet.create({
     fontFamily: "LatoRegular",
     textAlign: "center",
     position: "absolute",
-    bottom: 10,
-    paddingHorizontal: 10
+    width: 100,
+    bottom: 10
   },
   disabledType: {
     opacity: 0.6

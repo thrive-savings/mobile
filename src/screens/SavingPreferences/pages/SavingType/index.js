@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { TouchableOpacity } from "react-native";
-import { Svg } from "expo";
+import { TouchableOpacity, Image } from "react-native";
+import { Svg, LinearGradient } from "expo";
 import {
   View,
   Text,
@@ -12,6 +12,33 @@ import SpecialButton from "../../../../components/SpecialButton";
 import styles from "./styles";
 
 const colors = require("../../../../theme/colors");
+
+const border = require("../../../../../assets/Icons/Border.png");
+
+const SAVING_TYPES = [
+  {
+    name: "flex",
+    displayName: "THRIVE FLEX",
+    tag: "AUTOMATIC",
+    description: "We will automatically find spare change based on your income/spending and save for you.",
+    footer: "Optimal for freelance/part-time workers",
+    styles: {
+      headerStyle: styles.blueHeader,
+      footerStyle: styles.blueFooter
+    }
+  },
+  {
+    name: "fixed",
+    displayName: "THRIVE FIXED",
+    tag: "MANUAL",
+    description: "You set a recurring amount that will be withdrawn on a regular basis.",
+    footer: "Optimal for steady earners",
+    styles: {
+      headerStyle: styles.greenHeader,
+      footerStyle: styles.greenFooter
+    }
+  }
+];
 
 type Props = {
   navigation: () => void
@@ -39,6 +66,33 @@ class SavingType extends Component {
     this.setState({ savingType });
   }
 
+  renderSavingType(type: object) {
+    const { name, displayName, tag, description, footer, styles: { headerStyle, footerStyle } } = type;
+    const { savingType } = this.state;
+
+    const notSelected = savingType && savingType !== name;
+
+    let body =
+      <TouchableOpacity activeOpacity={0.6} onPress={() => this.typeSelected(name)}>
+        <Text style={[headerStyle, (notSelected && styles.disabledType)]}>{displayName}</Text>
+        <Text style={[styles.bodyText, (notSelected && styles.disabledType)]}>{description}</Text>
+        <Text style={[footerStyle, (notSelected && styles.disabledType)]}>{footer}</Text>
+      </TouchableOpacity>;
+
+    if (savingType === name) {
+      body =
+        <TouchableOpacity activeOpacity={0.6} onPress={() => this.typeSelected(name)}>
+          <Image source={border} style={styles.savingTypeGradient}>
+            <Text style={[headerStyle, (notSelected && styles.disabledType)]}>{displayName}</Text>
+            <Text style={[styles.bodyText, (notSelected && styles.disabledType)]}>{description}</Text>
+            <Text style={[footerStyle, (notSelected && styles.disabledType)]}>{footer}</Text>
+          </Image>
+        </TouchableOpacity>;
+    }
+
+    return body;
+  }
+
   render() {
     return (
       <Card style={styles.container}>
@@ -55,19 +109,11 @@ class SavingType extends Component {
 
         <View style={styles.typesContainer}>
           <Card style={styles.savingTypeCard}>
-            <TouchableOpacity activeOpacity={0.6} onPress={() => this.typeSelected("flex")}>
-              <Text style={[styles.blueHeader, (this.state.savingType === "fixed" && styles.disabledType)]}>THRIVE FLEX</Text>
-              <Text style={[styles.bodyText, (this.state.savingType === "fixed" && styles.disabledType)]}>We'll find disposable income based on your spending history and sweep varying funds into your Thrive Savings account.</Text>
-              <Text style={[styles.blueFooter, (this.state.savingType === "fixed" && styles.disabledType)]}>Optimal for freelance/part-time workers</Text>
-            </TouchableOpacity>
+            {this.renderSavingType(SAVING_TYPES[0])}
           </Card>
 
           <Card style={styles.savingTypeCard}>
-            <TouchableOpacity activeOpacity={0.6} onPress={() => this.typeSelected("fixed")}>
-              <Text style={[styles.greenHeader, (this.state.savingType === "flex" && styles.disabledType)]}>THRIVE FIXED</Text>
-              <Text style={[styles.bodyText, (this.state.savingType === "flex" && styles.disabledType)]}>A recurring fixed amount will be deposited into your Thrive Savings account.</Text>
-              <Text style={[styles.greenFooter, (this.state.savingType === "flex" && styles.disabledType)]}>Optimal for steady earners</Text>
-            </TouchableOpacity>
+            {this.renderSavingType(SAVING_TYPES[1])}
           </Card>
         </View>
 

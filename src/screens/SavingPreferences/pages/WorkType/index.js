@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { TouchableOpacity, Image } from "react-native";
+import { LinearGradient } from "expo";
 import { Svg } from "expo";
 import {
   View,
@@ -16,6 +17,7 @@ import styles from "./styles";
 
 const colors = require("../../../../theme/colors");
 
+const border = require("../../../../../assets/Icons/Border.png");
 const fullTime = require("../../../../../assets/WorkTypes/Fulltime.png");
 const partTime = require("../../../../../assets/WorkTypes/Parttime.png");
 const sharingEconomy = require("../../../../../assets/WorkTypes/Sharing.png");
@@ -56,14 +58,27 @@ class WorkType extends Component {
 
   renderGridElem(type: object) {
     const { text, icon } = type;
-    const isSelected = this.state.workType && this.state.workType === text;
 
-    return (
+    const anotherOneSelected = this.state.workType && this.state.workType !== text;
+    const thisSelected = this.state.workType && this.state.workType === text;
+
+    let body =
       <TouchableOpacity activeOpacity={0.6} style={styles.gridElem} onPress={() => this.typeSelected(text)}>
-        <Image source={icon} style={[styles.workTypeImg, (!isSelected && styles.disabledType)]} />
-        <Text style={[styles.workTypeText, (!isSelected && styles.disabledType)]}>{text}</Text>
-      </TouchableOpacity>
-    );
+        <Image source={icon} style={[styles.workTypeImg, (anotherOneSelected && styles.disabledType)]} />
+        <Text style={[styles.workTypeText, (anotherOneSelected && styles.disabledType)]}>{text}</Text>
+      </TouchableOpacity>;
+
+    if (thisSelected) {
+      body =
+      <TouchableOpacity activeOpacity={0.6} style={styles.gridElem} onPress={() => this.typeSelected(text)}>
+        <Image source={border} style={styles.gridElemGradient}>
+          <Image source={icon} style={styles.workTypeImg} />
+          <Text style={styles.workTypeText}>{text}</Text>
+        </Image>
+      </TouchableOpacity>;
+    }
+
+    return body;
   }
 
   render() {
