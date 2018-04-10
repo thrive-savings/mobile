@@ -17,6 +17,8 @@ import styles from "./styles";
 import WorkType from "./pages/WorkType";
 import SavingType from "./pages/SavingType";
 import FixedPlan from "./pages/FixedPlan";
+import FlexPlan from "./pages/FlexPlan";
+import AllSet from "./pages/AllSet";
 
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
 
@@ -53,7 +55,12 @@ class SavingPreferences extends Component {
         body = <SavingType changeStep={this.changeStep}/>;
         break;
       case 2:
-        body = <FixedPlan changeStep={this.changeStep}/>;
+        body = true
+          ? <FlexPlan changeStep={this.changeStep}/>
+          : <FixedPlan changeStep={this.changeStep}/>;
+        break;
+      case 3:
+        body = <AllSet changeStep={this.changeStep}/>;
         break;
     }
 

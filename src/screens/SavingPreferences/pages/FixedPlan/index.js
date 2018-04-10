@@ -43,8 +43,14 @@ class FixedPlan extends Component {
       showFrequencySetter: false
     };
 
+    this.next = this.next.bind(this);
     this.numPadClicked = this.numPadClicked.bind(this);
     this.frequencySelected = this.frequencySelected.bind(this);
+  }
+
+  next() {
+    // TODO: Handle API here
+    this.props.changeStep(3);
   }
 
   numPadClicked(value: int) {
