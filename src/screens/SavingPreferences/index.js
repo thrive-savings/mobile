@@ -4,20 +4,15 @@ import { Image, StatusBar } from "react-native";
 import { connect } from "react-redux";
 import {
   Container,
-  Header,
   Content,
   Text,
   Button,
   Icon,
-  Left,
-  Right,
-  Body,
   View
 } from "native-base";
 import { reduxForm } from "redux-form";
 
 import styles from "./styles";
-import colors from "../../theme/colors";
 
 import WorkType from "./pages/WorkType";
 import SavingType from "./pages/SavingType";

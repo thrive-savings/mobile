@@ -10,7 +10,7 @@ export default StyleSheet.create({
   disabledButtonText: {
     fontSize: 15,
     fontFamily: "LatoBold",
-    color: colors.disabledButtonText
+    color: colors.darkergrey
   },
   enabledButton: {
     alignSelf: "stretch",

@@ -114,7 +114,7 @@ class WorkType extends Component {
           </Col>
         </Grid>
 
-        <SpecialButton next={this.next} state={this.state.workType ? 1 : 0} />
+        <SpecialButton onClick={this.next} state={this.state.workType ? 1 : 0} />
       </Card>
     );
   }

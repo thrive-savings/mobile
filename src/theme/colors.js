@@ -5,7 +5,7 @@ module.exports = {
   lightgrey: "#FDFDFD",
   grey: "#F9F9F9",
   statusbar: "#229CC6",
-  disabledButtonText: "#ADB4BE",
+  darkergrey: "#ADB4BE",
   error: "#A12938",
   enabledButtonGradient: {
     colors: ["#0089CB", "#6CC4B9"]

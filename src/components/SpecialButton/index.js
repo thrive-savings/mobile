@@ -20,14 +20,16 @@ class SpecialButton extends Component {
   }
 
   renderEnabled() {
+    let text = this.props.text ? this.props.text : "CONTINUE";
+
     return (
-      <TouchableOpacity activeOpacity={0.6} onPress={() => this.props.next()} style={styles.enabledButton}>
+      <TouchableOpacity activeOpacity={0.6} onPress={() => this.props.onClick()} style={styles.enabledButton}>
         <LinearGradient
           colors={colors.enabledButtonGradient.colors}
           style={styles.enabledButtonGradient}
         >
           <Text style={styles.enabledButtonText}>
-            CONTINUE
+            {text}
           </Text>
         </LinearGradient>
       </TouchableOpacity>

@@ -10,10 +10,13 @@ import {
 } from "native-base";
 
 import SpecialButton from "../../../../components/SpecialButton";
+import ModalTemplate from "../../../../components/ModalTemplate";
 
-import NumPadModal from "../../modals/NumPad";
+import getNumPadModalContent from "../../modals/NumPad";
+import getFrequencySetterModalContent from "../../modals/FrequencySetter";
 
 import styles from "./styles";
+import { FREQUENCY_TYPES } from "./constants";
 
 const colors = require("../../../../theme/colors");
 
@@ -23,7 +26,8 @@ type Props = {
 class FixedPlan extends Component {
   state = {
     contribution: "$20.00",
-    frequency: "Once a week",
+    setContribution: 0,
+    frequencyIndex: 0,
     showContributionSetter: false,
     showFrequencySetter: false
   };
@@ -33,14 +37,29 @@ class FixedPlan extends Component {
 
     this.state = {
       contribution: "$20.00",
-      frequency: "Once a week",
+      setContribution: 0,
+      frequencyIndex: 0,
       showContributionSetter: false,
       showFrequencySetter: false
     };
+
+    this.numPadClicked = this.numPadClicked.bind(this);
+    this.frequencySelected = this.frequencySelected.bind(this);
   }
 
-  modalClosed() {
-    console.log("Modal closed");
+  numPadClicked(value: int) {
+    let setContribution = this.state.setContribution;
+    setContribution = value >= 0 ? setContribution * 10 + value : setContribution / 10;
+    let contribution = setContribution / 100;
+    contribution = contribution % 1 === 0 ? contribution : contribution.toFixed(2);
+    contribution.toLocaleString("en-US", {style: "currency", currency: "USD"});
+    contribution = "$" + contribution;
+
+    this.setState({ setContribution, contribution });
+  }
+
+  frequencySelected(value: int) {
+    this.setState({ frequencyIndex: value });
   }
 
   render() {
@@ -67,8 +86,10 @@ class FixedPlan extends Component {
             </Text>
           </Left>
           <Right>
-            <TouchableOpacity activeOpacity={0.6} onPress={() => this.setState({ showContributionSetter: true })}>
-              <Text style={styles.inputButtonText}>{this.state.contribution}</Text>
+            <TouchableOpacity activeOpacity={0.6} onPress={() => this.setState({ showContributionSetter: true, showFrequencySetter: false })}>
+              <Text style={styles.inputButtonText}>
+                {this.state.contribution}
+              </Text>
             </TouchableOpacity>
           </Right>
         </View>
@@ -80,8 +101,10 @@ class FixedPlan extends Component {
             </Text>
           </Left>
           <Right>
-            <TouchableOpacity activeOpacity={0.6} onPress={() => this.setState({ showFrequencySetter: true })}>
-              <Text style={styles.inputButtonText}>{this.state.frequency}</Text>
+            <TouchableOpacity activeOpacity={0.6} onPress={() => this.setState({ showFrequencySetter: true, showContributionSetter: false })}>
+              <Text style={styles.inputButtonText}>
+                {FREQUENCY_TYPES[this.state.frequencyIndex].displayName}
+              </Text>
             </TouchableOpacity>
           </Right>
         </View>
@@ -99,9 +122,30 @@ class FixedPlan extends Component {
         <Text style={styles.promiseText}>
           If your bank account goes below this limit, we’ll stop withdrawing any funds into your Thrive Savings account.
         </Text>
-        <SpecialButton next={this.next} state={1} />
+        <SpecialButton onClick={this.next} state={1} />
 
-        <NumPadModal show={this.state.showContributionSetter} onClose={this.modalClosed}/>
+        <ModalTemplate
+          show={this.state.showContributionSetter}
+          buttonText={"SUBMIT"}
+          content={
+            getNumPadModalContent({
+              value: this.state.setContribution && this.state.contribution,
+              onPress: this.numPadClicked
+            })
+          }
+        />
+
+        <ModalTemplate
+          show={this.state.showFrequencySetter}
+          buttonText={"SAVE"}
+          content={
+            getFrequencySetterModalContent({
+              types: FREQUENCY_TYPES,
+              selectedIndex: this.state.frequencyIndex,
+              onPress: this.frequencySelected
+            })
+          }
+        />
       </Card>
     );
   }

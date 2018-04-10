@@ -117,7 +117,7 @@ class SavingType extends Component {
           </Card>
         </View>
 
-        <SpecialButton next={this.next} state={this.state.savingType ? 1 : 0} />
+        <SpecialButton onClick={this.next} state={this.state.savingType ? 1 : 0} />
       </Card>
     );
   }

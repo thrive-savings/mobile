@@ -2,27 +2,54 @@ import { StyleSheet, Dimensions } from "react-native";
 const colors = require("../../../../theme/colors");
 
 const deviceHeight = Dimensions.get("window").height;
-const deviceWidth = Dimensions.get("window").width;
 
 export default StyleSheet.create({
-  container: {
+  labelText: {
+    color: colors.charcoal,
+    fontSize: 12,
+    fontFamily: "LatoRegular",
+    paddingBottom: 20,
+    textAlign: "center"
+  },
+  amountText: {
+    color: colors.blue,
+    fontSize: 12,
+    fontFamily: "LatoBold",
+    paddingBottom: 20,
+    textAlign: "center"
+  },
+  grid: {
+    height: deviceHeight * 0.4,
+    justifyContent: "center",
+    paddingBottom: 20
+  },
+  row: {
+    flex: 1,
+    flexDirection: "row"
+  },
+  elem: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    alignSelf: "center",
-    borderRadius: 12,
-    borderColor: "transparent",
-    backgroundColor: colors.grey,
-    width: deviceWidth - 80,
-    height: ( deviceHeight * 2) / 3
+    borderWidth: 1,
+    borderColor: colors.darkergrey
   },
-  closeButton: {
-    alignSelf: "flex-end",
-    position: "absolute",
-    right: 20,
-    top: 20
+  elemText: {
+    color: colors.charcoal
   },
-  closeIcon: {
-    alignSelf: "flex-end",
+  transparentLeft: {
+    borderLeftWidth: 0
+  },
+  transparentRight: {
+    borderRightWidth: 0
+  },
+  transparentBottom: {
+    borderBottomWidth: 0
+  },
+  transparentTop: {
+    borderTopWidth: 0
+  },
+  deleteIcon: {
     resizeMode: "center"
   }
 });
