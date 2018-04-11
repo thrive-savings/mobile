@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from "react";
-import { Image, StatusBar } from "react-native";
+import { Image, StatusBar, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import {
   Container,
@@ -21,6 +21,7 @@ import FlexPlan from "./pages/FlexPlan";
 import AllSet from "./pages/AllSet";
 
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
+const backIcon = require("../../../assets/Icons/Back/back.png");
 
 type Props = {
   navigation: () => void
@@ -71,9 +72,9 @@ class SavingPreferences extends Component {
           style={styles.background}
         >
           <View style={styles.headerContainer}>
-            <Button transparent onPress={() => navigation.goBack()}>
-              <Icon active name="arrow-back" style={styles.headerIcon}/>
-            </Button>
+            <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()} style={styles.headerIcon}>
+              <Image source={backIcon} style={styles.headerIconImage}/>
+            </TouchableOpacity>
             <Text style={styles.headerText}>SAVING PREFERENCES</Text>
           </View>
           <Content showsVerticalScrollIndicator={false} style={styles.contentContainer}>

@@ -12,18 +12,20 @@ export default StyleSheet.create({
   },
   headerContainer: {
     flex: 0.1,
-    flexDirection: "row",
-    justifyContent: "flex-start",
+    justifyContent: "center",
     alignItems: "center"
   },
   headerIcon: {
-    color: "white",
-    top: 5
+    alignSelf: "flex-start",
+    position: "absolute",
+    left: 25
+  },
+  headerIconImage: {
+    resizeMode: "center"
   },
   headerText: {
     color: "white",
-    fontSize: 14,
-    paddingLeft: deviceWidth / 6
+    fontSize: 14
   },
   contentContainer: {
     flex: 0.7,
