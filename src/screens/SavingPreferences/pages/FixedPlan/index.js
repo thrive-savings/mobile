@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { TouchableOpacity } from "react-native";
-import { Svg } from "expo";
 import {
   View,
   Text,
@@ -11,14 +10,13 @@ import {
 
 import SpecialButton from "../../../../components/SpecialButton";
 import ModalTemplate from "../../../../components/ModalTemplate";
+import Dots from "../../../../components/Dots";
 
 import getNumPadModalContent from "../../modals/NumPad";
 import getFrequencySetterModalContent from "../../modals/FrequencySetter";
 
 import styles from "./styles";
 import { FREQUENCY_TYPES } from "./constants";
-
-const colors = require("../../../../theme/colors");
 
 type Props = {
   next: () => void
@@ -71,13 +69,7 @@ class FixedPlan extends Component {
   render() {
     return (
       <Card style={styles.container}>
-        <View style={styles.dots}>
-          <Svg width={40} height={10}>
-            <Svg.Circle cx="4" cy="4" r={3} stokeWidth={1} stroke={colors.blue} fill={"white"} />
-            <Svg.Circle cx="20" cy="4" r={3} stokeWidth={1} stroke={colors.blue} fill={"white"} />
-            <Svg.Circle cx="36" cy="4" r={3} stokeWidth={1} stroke={colors.blue} fill={colors.blue} />
-          </Svg>
-        </View>
+        <Dots step={3} />
 
         <Text style={styles.labelText}>HOW MUCH WOULD YOU LIKE TO SAVE?</Text>
         <Text style={styles.secondaryText}>

@@ -1,17 +1,14 @@
 import React, { Component } from "react";
 import { Image } from "react-native";
-import { Svg } from "expo";
 import {
-  View,
   Text,
   Card
 } from "native-base";
 
 import SpecialButton from "../../../../components/SpecialButton";
+import Dots from "../../../../components/Dots";
 
 import styles from "./styles";
-
-const colors = require("../../../../theme/colors");
 
 const thriveBotIcon = require("../../../../../assets/Icons/ThriveBot/thriveBot.png");
 
@@ -33,13 +30,7 @@ class FlexPlan extends Component {
   render() {
     return (
       <Card style={styles.container}>
-        <View style={styles.dots}>
-          <Svg width={40} height={10}>
-            <Svg.Circle cx="4" cy="4" r={3} stokeWidth={1} stroke={colors.blue} fill={"white"} />
-            <Svg.Circle cx="20" cy="4" r={3} stokeWidth={1} stroke={colors.blue} fill={"white"} />
-            <Svg.Circle cx="36" cy="4" r={3} stokeWidth={1} stroke={colors.blue} fill={colors.blue} />
-          </Svg>
-        </View>
+        <Dots step={4} />
 
         <Text style={styles.labelText}>YOU'RE ALL SET!</Text>
 

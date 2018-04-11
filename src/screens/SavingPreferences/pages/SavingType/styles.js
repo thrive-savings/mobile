@@ -1,8 +1,5 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet } from "react-native";
 const colors = require("../../../../theme/colors");
-
-const deviceHeight = Dimensions.get("window").height;
-const deviceWidth = Dimensions.get("window").width;
 
 export default StyleSheet.create({
   container: {
@@ -12,11 +9,6 @@ export default StyleSheet.create({
     borderColor: "transparent",
     backgroundColor: "white",
     padding: 20
-  },
-  dots: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center"
   },
   labelText: {
     color: colors.blue,

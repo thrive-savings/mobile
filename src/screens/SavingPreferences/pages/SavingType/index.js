@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { TouchableOpacity, Image } from "react-native";
-import { Svg, LinearGradient } from "expo";
+import { LinearGradient } from "expo";
 import {
   View,
   Text,
@@ -8,6 +8,7 @@ import {
 } from "native-base";
 
 import SpecialButton from "../../../../components/SpecialButton";
+import Dots from "../../../../components/Dots";
 
 import styles from "./styles";
 
@@ -112,13 +113,7 @@ class SavingType extends Component {
 
     return (
       <Card style={styles.container}>
-        <View style={styles.dots}>
-          <Svg width={40} height={10}>
-            <Svg.Circle cx="4" cy="4" r={3} stokeWidth={1} stroke={colors.blue} fill={"white"} />
-            <Svg.Circle cx="20" cy="4" r={3} stokeWidth={1} stroke={colors.blue} fill={colors.blue} />
-            <Svg.Circle cx="36" cy="4" r={3} stokeWidth={1} stroke={colors.blue} fill={"white"} />
-          </Svg>
-        </View>
+        <Dots step={2} />
 
         <Text style={styles.labelText}>HOW WOULD YOU LIKE TO SAVE?</Text>
         <Text style={styles.secondaryText}>You can come back and update this later.</Text>

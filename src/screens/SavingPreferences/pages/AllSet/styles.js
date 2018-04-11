@@ -10,11 +10,6 @@ export default StyleSheet.create({
     backgroundColor: "white",
     padding: 20
   },
-  dots: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center"
-  },
   labelText: {
     color: colors.blue,
     fontSize: 14,

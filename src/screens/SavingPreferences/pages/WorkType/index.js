@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { TouchableOpacity, Image } from "react-native";
-import { Svg } from "expo";
 import {
-  View,
   Text,
   Card,
   Grid,
@@ -11,10 +9,9 @@ import {
 } from "native-base";
 
 import SpecialButton from "../../../../components/SpecialButton";
+import Dots from "../../../../components/Dots";
 
 import styles from "./styles";
-
-const colors = require("../../../../theme/colors");
 
 const border = require("../../../../../assets/Icons/Borders/box/box.png");
 const fullTime = require("../../../../../assets/WorkTypes/Fulltime.png");
@@ -83,13 +80,7 @@ class WorkType extends Component {
   render() {
     return (
       <Card style={styles.container}>
-        <View style={styles.dots}>
-          <Svg width={40} height={10}>
-            <Svg.Circle cx="4" cy="4" r={3} stokeWidth={1} stroke={colors.blue} fill={colors.blue} />
-            <Svg.Circle cx="20" cy="4" r={3} stokeWidth={1} stroke={colors.blue} fill={"white"} />
-            <Svg.Circle cx="36" cy="4" r={3} stokeWidth={1} stroke={colors.blue} fill={"white"} />
-          </Svg>
-        </View>
+        <Dots step={1} />
 
         <Text style={styles.labelText}>WHAT TYPE OF WORK DO YOU DO?</Text>
         <Text style={styles.secondaryText}>Choose your primary income source.</Text>
