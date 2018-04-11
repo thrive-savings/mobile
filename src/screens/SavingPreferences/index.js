@@ -6,19 +6,20 @@ import {
   Container,
   Content,
   Text,
-  Button,
-  Icon,
   View
 } from "native-base";
-import { reduxForm } from "redux-form";
 
 import styles from "./styles";
+
+import { changeStep, setWorkType, setSavingType, setSavingDetails } from "./state/actions";
 
 import WorkType from "./pages/WorkType";
 import SavingType from "./pages/SavingType";
 import FixedPlan from "./pages/FixedPlan";
 import FlexPlan from "./pages/FlexPlan";
 import AllSet from "./pages/AllSet";
+
+import colors from "../../theme/colors";
 
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
 const backIcon = require("../../../assets/Icons/Back/back.png");
@@ -27,46 +28,50 @@ type Props = {
   navigation: () => void
 };
 class SavingPreferences extends Component {
-  state: {
-    step: 0
-  };
-
   constructor(props: Props) {
     super(props);
-    this.state = {
-      step: 0
-    };
-
-    this.changeStep = this.changeStep.bind(this);
-  }
-
-  changeStep(step: int) {
-    this.setState({ step });
   }
 
   render() {
     const navigation = this.props.navigation;
 
+    const { step, values: { savingType } } = this.props.savingPreferencesReducer;
+
     let body;
-    switch (this.state.step) {
+    switch (step) {
       case 0:
-        body = <WorkType changeStep={this.changeStep}/>;
+        body =
+          <WorkType
+            reducer={this.props.savingPreferencesReducer}
+            save={this.props.setWorkType}
+          />;
         break;
       case 1:
-        body = <SavingType changeStep={this.changeStep}/>;
+        body =
+          <SavingType
+            reducer={this.props.savingPreferencesReducer}
+            save={this.props.setSavingType}
+          />;
         break;
       case 2:
-        body = true
-          ? <FlexPlan changeStep={this.changeStep}/>
-          : <FixedPlan changeStep={this.changeStep}/>;
+        body = savingType === "flex"
+          ? <FlexPlan
+              changeStep={this.props.changeStep}
+            />
+          : <FixedPlan
+              changeStep={this.props.changeStep}
+              save={this.props.setSavingDetails}
+              reducer={this.props.savingPreferencesReducer}
+            />;
         break;
       case 3:
-        body = <AllSet changeStep={this.changeStep}/>;
+        body = <AllSet navigation={this.props.navigation}/>;
         break;
     }
 
     return (
       <Container>
+        <StatusBar barStyle="light-content" backgroundColor={colors.statusbar} />
         <Image
           source={bg}
           style={styles.background}
@@ -86,4 +91,19 @@ class SavingPreferences extends Component {
   }
 }
 
-export default SavingPreferences;
+function mapStateToProps(state) {
+  return {
+    savingPreferencesReducer: state.savingPreferencesReducer
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    changeStep: (payload = { step: 0 }) => dispatch(changeStep(payload)),
+    setWorkType: (payload = {}) => dispatch(setWorkType(payload)),
+    setSavingType: (payload = {}) => dispatch(setSavingType(payload)),
+    setSavingDetails: (payload = {}) => dispatch(setSavingDetails(payload))
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SavingPreferences);

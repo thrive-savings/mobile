@@ -47,15 +47,22 @@ class FixedPlan extends Component {
   }
 
   next() {
-    // TODO: Handle API here
-    this.props.changeStep(3);
+    const { setContribution, frequencyIndex } = this.state;
+
+    this.props.save({
+      fixedContribution: setContribution > 0 ? setContribution.toString() : "2000",
+      frequency: FREQUENCY_TYPES[frequencyIndex].identifier
+    });
+
+    this.setState({ showFrequencySetter: false, showContributionSetter: false });
   }
 
   numPadClicked(value: int) {
     let setContribution = this.state.setContribution;
-    setContribution = value >= 0 ? setContribution * 10 + value : setContribution / 10;
+    setContribution = value >= 0 ? setContribution * 10 + value : Math.floor(setContribution / 10);
+
     let contribution = setContribution / 100;
-    contribution = contribution % 1 === 0 ? contribution : contribution.toFixed(2);
+    contribution = contribution.toFixed(2);
     contribution.toLocaleString("en-US", {style: "currency", currency: "USD"});
     contribution = "$" + contribution;
 
@@ -120,7 +127,7 @@ class FixedPlan extends Component {
         <Text style={styles.promiseText}>
           If your bank account goes below this limit, we’ll stop withdrawing any funds into your Thrive Savings account.
         </Text>
-        <SpecialButton onClick={this.next} state={1} />
+        <SpecialButton loading={this.props.reducer.isLoading} onClick={this.next} state={1} />
 
         <ModalTemplate
           show={this.state.showContributionSetter}

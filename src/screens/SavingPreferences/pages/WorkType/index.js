@@ -45,7 +45,8 @@ class WorkType extends Component {
 
   next() {
     // TODO: save workType
-    this.props.changeStep(1);
+    this.props.save({ workType: this.state.workType });
+    //this.props.changeStep(1);
   }
 
   typeSelected(type: string) {
@@ -104,7 +105,7 @@ class WorkType extends Component {
           </Col>
         </Grid>
 
-        <SpecialButton onClick={this.next} state={this.state.workType ? 1 : 0} />
+        <SpecialButton loading={this.props.reducer.isLoading} onClick={this.next} state={this.state.workType ? 1 : 0} />
       </Card>
     );
   }

@@ -21,8 +21,7 @@ class FlexPlan extends Component {
   }
 
   next() {
-    // TODO: Handle API here
-    this.props.changeStep(3);
+    this.props.changeStep({ step: 3 });
   }
 
   render() {

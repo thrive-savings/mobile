@@ -3,7 +3,8 @@ import { TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo";
 import {
   Text,
-  Button
+  Button,
+  Spinner
 } from "native-base";
 
 import styles from "./styles";
@@ -12,7 +13,8 @@ const colors = require("../../theme/colors");
 
 type Props = {
   next: () => void,
-  state: 1
+  state: 1,
+  loading: false
 };
 class SpecialButton extends Component {
   constructor(props: Props) {
@@ -28,9 +30,13 @@ class SpecialButton extends Component {
           colors={colors.blueGreenGradient.colors}
           style={styles.enabledButtonGradient}
         >
-          <Text style={styles.enabledButtonText}>
-            {text}
-          </Text>
+          {
+            this.props.loading
+              ? <Spinner color="white" />
+              : <Text style={styles.enabledButtonText}>
+                  {text}
+                </Text>
+          }
         </LinearGradient>
       </TouchableOpacity>
     );
@@ -44,9 +50,13 @@ class SpecialButton extends Component {
         block
         style={styles.disabledButton}
       >
-        <Text style={styles.disabledButtonText}>
-          {text}
-        </Text>
+        {
+          this.props.loading
+            ? <Spinner color="white" />
+            : <Text style={styles.disabledButtonText}>
+                {text}
+              </Text>
+        }
       </Button>
     );
   }

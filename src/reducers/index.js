@@ -8,6 +8,7 @@ import verifyCodeReducer from "../screens/VerifyCode/state/reducer";
 import forgotPasswordReducer from "../screens/ForgotPassword/state/reducer";
 import integrateBankReducer from "../screens/IntegrateBank/state/reducer";
 import homeReducer from "../screens/Home/state/reducer";
+import savingPreferencesReducer from "../screens/SavingPreferences/state/reducer";
 
 import { CLEAR_STORAGE } from "../globals/clearStorage";
 
@@ -18,11 +19,12 @@ const appReducer = combineReducers({
   verifyCodeReducer,
   forgotPasswordReducer,
   integrateBankReducer,
-  homeReducer
+  homeReducer,
+  savingPreferencesReducer
 });
 
 export default (state, action) => {
-  if(action.type === `${CLEAR_STORAGE}`) {
+  if (action.type === `${CLEAR_STORAGE}`) {
     Object.keys(state).forEach(key => {
         AsyncStorage.removeItem(`persist:${key}`);
     });

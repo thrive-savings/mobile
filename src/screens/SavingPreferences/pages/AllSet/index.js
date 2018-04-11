@@ -15,7 +15,7 @@ const thriveBotIcon = require("../../../../../assets/Icons/ThriveBot/thriveBot.p
 type Props = {
   next: () => void
 };
-class FlexPlan extends Component {
+class AllSet extends Component {
   constructor(props: Props) {
     super(props);
 
@@ -23,8 +23,7 @@ class FlexPlan extends Component {
   }
 
   next() {
-    // TODO: Handle API here
-    this.props.changeStep(4);
+    this.props.navigation.navigate("Home");
   }
 
   render() {
@@ -49,4 +48,4 @@ class FlexPlan extends Component {
   }
 }
 
-export default FlexPlan;
+export default AllSet;

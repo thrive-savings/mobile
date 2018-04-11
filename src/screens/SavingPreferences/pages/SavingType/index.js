@@ -64,7 +64,8 @@ class SavingType extends Component {
 
   next() {
     // TODO: connect api here
-    this.props.changeStep(2);
+    this.props.save({savingType: this.state.savingType});
+    //this.props.changeStep(2);
   }
 
   typeSelected(savingType: string) {
@@ -122,7 +123,7 @@ class SavingType extends Component {
           {body}
         </View>
 
-        <SpecialButton onClick={this.next} state={this.state.savingType ? 1 : 0} />
+        <SpecialButton loading={this.props.reducer.isLoading} onClick={this.next} state={this.state.savingType ? 1 : 0} />
       </Card>
     );
   }
