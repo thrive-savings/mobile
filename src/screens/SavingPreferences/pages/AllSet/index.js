@@ -52,7 +52,7 @@ class FlexPlan extends Component {
           Next step is creating your first savings goal!
         </Text>
 
-        <SpecialButton buttonText={"GO TO MY ACCOUNT"} onClick={this.next} state={1} />
+        <SpecialButton text={"GO TO MY ACCOUNT"} onClick={this.next} state={1} />
       </Card>
     );
   }

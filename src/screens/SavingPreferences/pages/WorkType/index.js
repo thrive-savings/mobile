@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { TouchableOpacity, Image } from "react-native";
-import { LinearGradient } from "expo";
 import { Svg } from "expo";
 import {
   View,
@@ -17,7 +16,7 @@ import styles from "./styles";
 
 const colors = require("../../../../theme/colors");
 
-const border = require("../../../../../assets/Icons/Border.png");
+const border = require("../../../../../assets/Icons/Borders/box/box.png");
 const fullTime = require("../../../../../assets/WorkTypes/Fulltime.png");
 const partTime = require("../../../../../assets/WorkTypes/Parttime.png");
 const sharingEconomy = require("../../../../../assets/WorkTypes/Sharing.png");

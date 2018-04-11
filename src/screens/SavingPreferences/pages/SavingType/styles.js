@@ -36,40 +36,36 @@ export default StyleSheet.create({
     paddingBottom: 10
   },
   typesContainer: {
-    height: deviceHeight / 2,
-    width: deviceWidth - 100,
+    flex: 1,
     paddingVertical: 10
   },
   savingTypeCard: {
+    borderRadius: 12
+  },
+  savingTypeTouchable: {
+    margin: 2,
     paddingVertical: 10,
     paddingHorizontal: 20,
+    justifyContent: "center",
     borderRadius: 12,
-    justifyContent: "center",
-    alignItems: "center"
+    backgroundColor: "white"
   },
-  savingTypeGradient: {
-    height: deviceHeight / 4 - 20,
-    width: deviceWidth - 100,
-    resizeMode: "stretch",
-    justifyContent: "center",
-    paddingHorizontal: 22.5
+  borderGradient: {
+    borderRadius: 12
   },
   tagGradient: {
     alignSelf: "flex-end",
-    justifyContent: "center",
-    marginHorizontal: 20,
-    marginVertical: 10,
-    paddingHorizontal: 10,
-    height: 20,
-    borderRadius: 10,
     position: "absolute",
-    top: -20,
-    right: -20
+    resizeMode: "center",
+    paddingTop: 5,
+    top: 5,
+    right: -5,
+    zIndex: 1
   },
   tagText: {
     backgroundColor: "transparent",
     textAlign: "center",
-    fontSize: 10,
+    fontSize: 12,
     fontFamily: "LatoRegular",
     color: "white"
   },

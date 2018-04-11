@@ -33,7 +33,7 @@ class SavingPreferences extends Component {
   constructor(props: Props) {
     super(props);
     this.state = {
-      step: 2
+      step: 0
     };
 
     this.changeStep = this.changeStep.bind(this);

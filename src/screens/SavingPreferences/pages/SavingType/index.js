@@ -13,13 +13,15 @@ import styles from "./styles";
 
 const colors = require("../../../../theme/colors");
 
-const border = require("../../../../../assets/Icons/Border.png");
+const tagAutoBg = require("../../../../../assets/Icons/Tags/auto.png");
+const tagManualBg = require("../../../../../assets/Icons/Tags/manual.png");
 
 const SAVING_TYPES = [
   {
     name: "flex",
     displayName: "THRIVE FLEX",
     tag: "AUTOMATIC",
+    tagBgImage: tagAutoBg,
     description: "We will automatically find spare change based on your income/spending and save for you.",
     footer: "Optimal for freelance/part-time workers",
     styles: {
@@ -31,6 +33,7 @@ const SAVING_TYPES = [
     name: "fixed",
     displayName: "THRIVE FIXED",
     tag: "MANUAL",
+    tagBgImage: tagManualBg,
     description: "You set a recurring amount that will be withdrawn on a regular basis.",
     footer: "Optimal for steady earners",
     styles: {
@@ -55,6 +58,7 @@ class SavingType extends Component {
     };
 
     this.next = this.next.bind(this);
+    this.renderSavingType = this.renderSavingType.bind(this);
   }
 
   next() {
@@ -67,13 +71,17 @@ class SavingType extends Component {
   }
 
   renderSavingType(type: object) {
-    const { name, displayName, tag, description, footer, styles: { headerStyle, footerStyle } } = type;
+    const { name, displayName, tag, tagBgImage, description, footer, styles: { headerStyle, footerStyle } } = type;
     const { savingType } = this.state;
 
     const notSelected = savingType && savingType !== name;
 
     let body =
-      <TouchableOpacity activeOpacity={0.6} onPress={() => this.typeSelected(name)}>
+      <TouchableOpacity
+        style={styles.savingTypeTouchable}
+        activeOpacity={0.6}
+        onPress={() => this.typeSelected(name)}
+      >
         <Text style={[headerStyle, (notSelected && styles.disabledType)]}>{displayName}</Text>
         <Text style={[styles.bodyText, (notSelected && styles.disabledType)]}>{description}</Text>
         <Text style={[footerStyle, (notSelected && styles.disabledType)]}>{footer}</Text>
@@ -81,19 +89,27 @@ class SavingType extends Component {
 
     if (savingType === name) {
       body =
-        <TouchableOpacity activeOpacity={0.6} onPress={() => this.typeSelected(name)}>
-          <Image source={border} style={styles.savingTypeGradient}>
-            <Text style={[headerStyle, (notSelected && styles.disabledType)]}>{displayName}</Text>
-            <Text style={[styles.bodyText, (notSelected && styles.disabledType)]}>{description}</Text>
-            <Text style={[footerStyle, (notSelected && styles.disabledType)]}>{footer}</Text>
-          </Image>
-        </TouchableOpacity>;
+        <LinearGradient
+          colors={colors.blueGreenGradient.colors}
+          style={styles.borderGradient}
+        >
+          {body}
+        </LinearGradient>;
     }
 
-    return body;
+    return (
+      <Card style={styles.savingTypeCard} key={name}>
+        {body}
+        <Image source={tagBgImage} style={[styles.tagGradient, (notSelected && styles.disabledType)]}>
+          <Text style={styles.tagText}>{tag}</Text>
+        </Image>
+      </Card>
+    );
   }
 
   render() {
+    const body = SAVING_TYPES.map(this.renderSavingType);
+
     return (
       <Card style={styles.container}>
         <View style={styles.dots}>
@@ -108,13 +124,7 @@ class SavingType extends Component {
         <Text style={styles.secondaryText}>You can come back and update this later.</Text>
 
         <View style={styles.typesContainer}>
-          <Card style={styles.savingTypeCard}>
-            {this.renderSavingType(SAVING_TYPES[0])}
-          </Card>
-
-          <Card style={styles.savingTypeCard}>
-            {this.renderSavingType(SAVING_TYPES[1])}
-          </Card>
+          {body}
         </View>
 
         <SpecialButton onClick={this.next} state={this.state.savingType ? 1 : 0} />
