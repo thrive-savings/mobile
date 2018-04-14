@@ -10,7 +10,6 @@ import {
   Button,
   Icon,
   View,
-  Right,
   Toast,
   Spinner
 } from "native-base";
@@ -62,7 +61,7 @@ class LoginForm extends Component {
   }
 
   fastLogin() {
-    this.props.authUser({email: "naib.baghirov@gmail.com", password: "RandomPassword8"});
+    this.props.authUser({email: "naib.baghirov@gmail.com", password: "Password8"});
   }
 
   login() {

@@ -6,7 +6,7 @@
 		"loading": {
 			"hideExponentText": true,
 			"icon": "./assets/loading.png",
-			"backgroundImage": "./assets/LaunchImages/splash-screen.png"
+			"backgroundImage": "./assets/LaunchImages/splash.png"
 		},
 		"orientation": "portrait",
 		"primaryColor": "#cccccc",
@@ -14,15 +14,15 @@
 			"assetExts": ["ttf"]
 		},
 		"ios": {
-			"bundleIdentifier": "io.market.nativebase.geekyants.flatappui"
+			"bundleIdentifier": "thrivesavings.mobileapp"
 		},
 		"android": {
-			"package": "io.market.nativebase.geekyants.flatappui"
+			"package": "thrivesavings.mobileapp"
 		},
-		"androidStatusBarColor": "#01cca1",
+		"androidStatusBarColor": "#229CC6",
 		"androidStatusBar": {
 			"barStyle": "dark-content",
-			"backgroundColor": "#01cca1"
+			"backgroundColor": "#229CC6"
 		}
 	}
 }

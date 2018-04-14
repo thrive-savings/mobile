@@ -19,7 +19,7 @@ import { verifyReferralCode } from "../../state/actions";
 import styles from "./styles";
 import { required } from "../../../../globals/validators";
 
-const logo = require("../../../../../assets/Logo/white-large.png");
+const logo = require("../../../../../assets/Logo/white.png");
 
 const commonColor = require("../../../../theme/variables/commonColor");
 

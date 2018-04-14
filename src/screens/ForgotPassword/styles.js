@@ -2,82 +2,108 @@ import { StyleSheet, Dimensions, Platform } from "react-native";
 import colors from "../../theme/colors";
 
 const screen = Dimensions.get("window");
-const deviceHeight = screen.height;
 const deviceWidth = screen.width;
 
 export default StyleSheet.create({
-  forgotPasswordContainer: {
-    paddingLeft: 20,
-    paddingRight: 20,
-    marginTop:
-      deviceWidth < 330
-        ? Platform.OS === "android"
-          ? deviceHeight / 9 - 20
-          : deviceHeight / 8 - 10
-        : Platform.OS === "android"
-          ? deviceHeight / 7 - 20
-          : deviceHeight / 6 - 30
-  },
-  forgotPasswordHeader: {
-    alignSelf: "center",
-    fontSize: 22,
-    padding: 10,
-    fontWeight: "bold",
-    color: "#FFF",
-    marginTop:
-      Platform.OS === "android" ? deviceHeight / 6 : deviceHeight / 6 + 10
-  },
   background: {
     flex: 1,
     width: null,
-    height: deviceHeight,
-    backgroundColor: colors.error
+    height: null
+  },
+  headerContainer: {
+    flex: 0.1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  headerIcon: {
+    alignSelf: "flex-start",
+    position: "absolute",
+    left: 25
+  },
+  headerIconImage: {
+    resizeMode: "center"
+  },
+  headerLogo: {
+    resizeMode: "center"
+  },
+  contentContainer: {
+    flex: 0.7,
+    width: deviceWidth - 50,
+    alignSelf: "center"
+  },
+  cardContainer: {
+    flex: 1,
+    alignItems: "center",
+    borderRadius: 10,
+    borderColor: "transparent",
+    backgroundColor: "white",
+    padding: 20
+  },
+  formContainer: {
+    flex: 1
+  },
+  labelText: {
+    color: colors.blue,
+    fontSize: 14,
+    fontFamily: "LatoBold",
+    letterSpacing: 1.6
+  },
+  secondaryText: {
+    color: colors.charcoal,
+    fontSize: 13,
+    fontFamily: "LatoRegular",
+    textAlign: "center",
+    letterSpacing: 0.2,
+    paddingVertical: 20,
+    paddingHorizontal: 20
+  },
+  resendButton: {
+    paddingTop: 10,
+    alignSelf: "flex-end"
+  },
+  resendButtonText: {
+    color: colors.blue,
+    fontSize: 12,
+    fontFamily: "LatoRegular"
+  },
+  inputGrp: {
+    height: 30,
+    width: deviceWidth - 100,
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: colors.darkergrey,
+    backgroundColor: "transparent",
+    marginBottom: 10
+  },
+  input: {
+    paddingLeft: 10,
+    marginVertical: 10,
+    color: colors.charcoal,
+    fontSize: 13,
+    fontFamily: "LatoRegular"
   },
   formErrorIcon: {
-    color: "#fff",
-    marginTop: 5,
-    right: 10
+    color: colors.darkergrey,
+    right: 5
   },
   formErrorText1: {
     fontSize: Platform.OS === "android" ? 12 : 15,
     color: colors.error,
     textAlign: "right",
-    top: -10
+    top: -7
   },
   formErrorText2: {
     fontSize: Platform.OS === "android" ? 12 : 15,
     color: "transparent",
     textAlign: "right",
-    top: -10
+    top: -8
   },
-  formSuccessText: {
+  formErrorText3: {
     fontSize: Platform.OS === "android" ? 12 : 15,
     color: colors.error,
     textAlign: "center",
     top: -10
-  },
-  inputGrp: {
-    flexDirection: "row",
-    borderRadius: 25,
-    backgroundColor: "rgba(255,255,255,0.2)",
-    marginBottom: 10,
-    borderWidth: 0,
-    borderColor: "transparent"
-  },
-  input: {
-    paddingLeft: 10,
-    color: "#FFF"
-  },
-  emailBtn: {
-    height: 50,
-    marginTop: 10,
-    borderWidth: 1,
-    borderColor: "#ddd"
-  },
-  helpBtns: {
-    opacity: 0.9,
-    fontSize: 14,
-    fontWeight: "bold",
-    color: "#FFF"
   }
 });

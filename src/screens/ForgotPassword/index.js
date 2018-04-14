@@ -1,63 +1,71 @@
 // @flow
 import React, { Component } from "react";
-import { Image, StatusBar } from "react-native";
+import { Image, StatusBar, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import {
   Container,
   Content,
+  Card,
   Text,
-  Button,
   Icon,
   Item,
   Input,
   View,
-  Toast,
-  Footer,
-  Spinner
+  Toast
 } from "native-base";
 import { Field, reduxForm } from "redux-form";
+
+import SpecialButton from "../../components/SpecialButton";
+
 import styles from "./styles";
+import colors from "../../theme/colors";
 
-import { passwordRequest } from "./state/actions";
+import { clearStorage, passwordRequest, passwordReset } from "./state/actions";
 
-const required = value => (value ? undefined : "Required");
-const email = value =>
-  value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
-    ? "Invalid email address"
-    : undefined;
+import { required, email, numeric, minLength8 } from "../../globals/validators";
+
+const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
+const logo = require("../../../assets/Logo/white.png");
+const backIcon = require("../../../assets/Icons/Back/back.png");
+
+
 type Props = {
   navigation: () => void
 };
 declare type Any = any;
 class ForgotPasswordForm extends Component {
   textInput: Any;
-  state: {
-    offset: {
-      x: 0,
-      y: 0
-    }
-  };
-  props: Props;
   constructor(props: Props) {
     super(props);
+
     this.state = {
-      offset: {
-        x: 0,
-        y: 0
-      },
-      name: ""
+      step: 0,
+      done: 0
     };
+
+    this.goToLogin = this.goToLogin.bind(this);
+    this.request = this.request.bind(this);
+    this.reset = this.reset.bind(this);
+    this.submit = this.submit.bind(this);
   }
 
   renderInput({ input, label, type, meta: { touched, error, warning } }) {
     return (
       <View>
         <Item error={error && touched} rounded style={styles.inputGrp}>
-          <Icon active name="mail" style={{ color: "#fff" }} />
           <Input
-            placeholderTextColor="#FFF"
+            placeholderTextColor={colors.darkergrey}
             style={styles.input}
-            placeholder="Email"
+            placeholder={
+              input.name === "email"
+                ? "Email"
+                : input.name === "code"
+                  ? "Code"
+                  : input.name === "password"
+                    ? "New Password"
+                    : "Confirm Password"
+            }
+            secureTextEntry={input.name === "password" || input.name === "confirmPassword" ? true : false}
             {...input}
             ref={c => (this.textInput = c)}
           />
@@ -79,10 +87,9 @@ class ForgotPasswordForm extends Component {
     );
   }
 
-  forgotPassword() {
-    if (this.props.valid) {
+  request() {
+    if (this.props.valid  && this.props.values) {
       this.props.passwordRequest(this.props.values);
-      //this.props.navigation.goBack();
     } else {
       Toast.show({
         text: "Enter Valid Email",
@@ -93,69 +100,157 @@ class ForgotPasswordForm extends Component {
     }
   }
 
+  reset() {
+    if (this.props.valid  && this.props.values) {
+      const { code, password, confirmPassword } = this.props.values;
+      if (password === confirmPassword) {
+        this.props.passwordReset({ code, password });
+      } else {
+        Toast.show({
+          text: "Passwords don't match",
+          duration: 2500,
+          position: "top",
+          textStyle: { textAlign: "center" }
+        });
+      }
+    } else {
+      Toast.show({
+        text: "Fields are not valid",
+        duration: 2500,
+        position: "top",
+        textStyle: { textAlign: "center" }
+      });
+    }
+  }
+
+  submit() {
+    const { step, done } = this.state;
+    if (done) {
+      this.goToLogin();
+    } else {
+      switch (step) {
+        case 1:
+          this.reset();
+          break;
+        default:
+          this.request();
+          break;
+      }
+    }
+  }
+
+  goToLogin() {
+    this.props.clearStorage();
+    this.props.navigation.goBack();
+  }
+
+  renderRequestForm() {
+    return (
+      <View style={styles.formContainer}>
+        <Text style={styles.secondaryText}>Enter your email address and we’ll send you a link to reset your password.</Text>
+        <Field
+          name="email"
+          component={this.renderInput}
+          type="email"
+          validate={[email, required]}
+        />
+      </View>
+    );
+  }
+
+  renderResetForm() {
+    return (
+      <View style={styles.formContainer}>
+        <Text style={styles.secondaryText}>We have sent a verification code to your email, please type it below along with your new passowrd.</Text>
+        <Field
+          name="code"
+          component={this.renderInput}
+          type="code"
+          validate={numeric}
+        />
+        <Field
+          name="password"
+          component={this.renderInput}
+          type="password"
+          validate={minLength8}
+        />
+        <Field
+          name="confirmPassword"
+          component={this.renderInput}
+          type="confirmPassword"
+          validate={minLength8}
+        />
+      </View>
+    );
+  }
+
+  renderDone() {
+    return (
+      <View style={styles.formContainer}>
+        <Text style={styles.secondaryText}>You have successfully changed your password. Please go back to login screen to proceed.</Text>
+      </View>
+    );
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { requestSucceeded, resetSucceeded } = nextProps.forgotPasswordReducer;
+    if (!this.state.step && requestSucceeded) {
+      this.setState({step : 1});
+    }  else if (this.state.step && resetSucceeded) {
+      this.setState({step: 0, done: 1});
+    }
+  }
+
   render() {
-    const { isRequesting, wasSuccessful, error, errorMessage } = this.props.forgotPasswordReducer;
+    const { isLoading, error, errorMessage } = this.props.forgotPasswordReducer;
 
     let errorText = "";
-    if(error) {
+    if (error) {
       const { errors } = errorMessage;
-      if(errors && errors.constructor === Array && errors.length > 0) {
+      if (errors && errors.constructor === Array && errors.length > 0) {
         errorText = errors[0].value;
       } else {
         errorText = "Server Error!";
       }
     }
 
+    const { done, step } = this.state;
+
     return (
       <Container>
-        <StatusBar barStyle="light-content" />
+        <StatusBar barStyle="light-content" backgroundColor={colors.statusbar}/>
         <Image
-          source={require("../../../assets/bg-signup.png")}
+          source={bg}
           style={styles.background}
         >
-          <Content contentOffset={this.state.offset}>
-            <Content padder scrollEnabled={false}>
-              <Text style={styles.forgotPasswordHeader}>
-                Forgot Your Password?
-              </Text>
-              <View style={styles.forgotPasswordContainer}>
-                <Field
-                  name="email"
-                  component={this.renderInput}
-                  type="email"
-                  validate={[email, required]}
-                />
-
-                {wasSuccessful && <Text style={styles.formSuccessText}>Reset email has been sent! Please follow the instructions to reset your password!</Text>}
-
-                {error && <Text style={styles.formErrorText3}>{errorText}</Text>}
-
-                <Button
-                  rounded
-                  block
-                  bordered
-                  onPress={() => this.forgotPassword()}
-                  style={styles.emailBtn}
-                >
-                  {
-                    isRequesting
-                     ? <Spinner color="white"/>
-                     : <Text style={{ color: "#FFF" }}>Send Email</Text>
-                  }
-                </Button>
-              </View>
-            </Content>
+          <View style={styles.headerContainer}>
+            <TouchableOpacity activeOpacity={0.6} onPress={this.goToLogin} style={styles.headerIcon}>
+              <Image source={backIcon} style={styles.headerIconImage}/>
+            </TouchableOpacity>
+            <Image source={logo} style={styles.headerLogo} />
+          </View>
+          <Content showsVerticalScrollIndicator={false} style={styles.contentContainer}>
+            <Card style={styles.cardContainer}>
+              <Text style={styles.labelText}>RESET PASSWORD</Text>
+              {
+                done
+                  ? this.renderDone()
+                  : step
+                    ? this.renderResetForm()
+                    : this.renderRequestForm()
+              }
+              {error && <Text style={styles.formErrorText3}>{errorText}</Text>}
+              <SpecialButton loading={isLoading} state={1} text={done ? "GO TO LOGIN" : "SUBMIT"} onClick={this.submit}/>
+              {
+                !done &&
+                <TouchableOpacity activeOpacity={0.6} onPress={this.request} style={styles.resendButton} disabled={isLoading}>
+                  <Text style={styles.resendButtonText}>
+                    Resend
+                  </Text>
+                </TouchableOpacity>
+              }
+            </Card>
           </Content>
-          <Footer
-            style={{
-              paddingLeft: 20,
-              paddingRight: 20
-            }}
-          >
-            <Button transparent onPress={() => this.props.navigation.goBack()}>
-              <Text style={styles.helpBtns}>Back To Login</Text>
-            </Button>
-          </Footer>
         </Image>
       </Container>
     );
@@ -166,13 +261,15 @@ function mapStateToProps (state) {
   return {
     values: state.form && state.form.forgotPassword && state.form.forgotPassword.values ? state.form.forgotPassword.values : undefined,
     forgotPasswordReducer: state.forgotPasswordReducer
-  }
+  };
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    passwordRequest: (payload={}) => dispatch(passwordRequest(payload))
-  }
+    clearStorage: () => dispatch(clearStorage()),
+    passwordRequest: (payload = {}) => dispatch(passwordRequest(payload)),
+    passwordReset: (payload = {}) => dispatch(passwordReset(payload))
+  };
 }
 
 ForgotPasswordForm = connect(mapStateToProps, mapDispatchToProps)(ForgotPasswordForm);

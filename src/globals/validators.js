@@ -13,5 +13,9 @@ const alphaNumeric = value =>
   value && /[^a-zA-Z0-9 ]/i.test(value)
     ? "Only alphanumeric characters"
     : undefined;
+const numeric = value =>
+  value && /[^0-9 ]/i.test(value)
+    ? "Only numeric characters"
+    : undefined;
 
-export { required, maxLength15, minLength8, alphaNumeric, email };
+export { required, maxLength15, minLength8, alphaNumeric, numeric, email };

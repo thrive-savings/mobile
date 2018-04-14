@@ -1,5 +1,6 @@
 import { AsyncStorage } from "react-native";
 import { combineReducers } from "redux";
+import { persistReducer } from "redux-persist";
 import { reducer as formReducer } from "redux-form";
 
 import authReducer from "../screens/Login/state/reducer";
@@ -23,7 +24,7 @@ const appReducer = combineReducers({
   savingPreferencesReducer
 });
 
-export default (state, action) => {
+const rootReducer =  (state, action) => {
   if (action.type === `${CLEAR_STORAGE}`) {
     Object.keys(state).forEach(key => {
         AsyncStorage.removeItem(`persist:${key}`);
@@ -31,4 +32,13 @@ export default (state, action) => {
     state = undefined;
   }
   return appReducer(state, action);
-}
+};
+
+const persistConfig = {
+  key: "root",
+  storage: AsyncStorage,
+  blacklist: ["form"]
+};
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+export default persistedReducer;

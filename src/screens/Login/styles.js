@@ -56,6 +56,12 @@ export default StyleSheet.create({
     textAlign: "right",
     top: -8
   },
+  formErrorText3: {
+    fontSize: Platform.OS === "android" ? 12 : 15,
+    color: colors.error,
+    textAlign: "center",
+    top: -10
+  },
   loginBtn: {
     marginTop: 7,
     height: 40,
@@ -67,7 +73,8 @@ export default StyleSheet.create({
     color: colors.blue,
     fontWeight: "bold",
     fontSize: 15,
-    textAlign: "center"
+    textAlign: "center",
+    letterSpacing: 1.25
   },
   forgotPasswordContainer: {
     flex: 1,
@@ -79,7 +86,8 @@ export default StyleSheet.create({
   forgotPasswordBtnText: {
     color: colors.charcoal,
     opacity: 0.5,
-    fontSize: Platform.OS === "android" ? 9 : 9
+    fontSize: Platform.OS === "android" ? 9 : 9,
+    textDecorationLine: "underline"
   },
   signUpContainer: {
      flex: 1,
