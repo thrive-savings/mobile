@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { Image } from "react-native";
 import {
-  Content,
   View,
   Item,
   Input,
   Icon,
   Text,
   Button,
-  Spinner
+  Spinner,
+  Toast
 } from "native-base";
 
 import { connect } from "react-redux";
@@ -19,7 +19,7 @@ import { verifyReferralCode } from "../../state/actions";
 import styles from "./styles";
 import { required } from "../../../../globals/validators";
 
-const logo = require("../../../../../assets/Logo/white.png");
+const logo = require("../../../../../assets/Logo/white-large.png");
 
 const commonColor = require("../../../../theme/variables/commonColor");
 
@@ -56,7 +56,17 @@ class ReferralCodeForm extends Component {
   }
 
   verify() {
-    this.props.verifyReferralCode(this.props.values);
+    if (this.props.valid) {
+      this.props.verifyReferralCode(this.props.values);
+    } else {
+      Toast.show({
+        text: "Valid Code Required",
+        duration: 2500,
+        position: "top",
+        textStyle: { textAlign: "center" }
+      });
+    }
+
   }
 
   render() {
@@ -73,50 +83,31 @@ class ReferralCodeForm extends Component {
     }
 
     return (
-      <Content contentContainerStyle={{ flex: 1 }}>
-        <View style={styles.container}>
-          <Image source={logo} style={styles.logo} />
-          <Text style={styles.text}>Please enter the referral code you received from your employer.</Text>
-          <Field
-            name="code"
-            component={this.renderInput}
-            type="code"
-            validate={[required]}
-          />
-          <Text style={styles.text}>Contact your administrator if there are any issues</Text>
-          {error && <Text style={styles.formErrorText3}>{errorText}</Text>}
-          <Button
-            block
-            style={styles.createAccountBtn}
-            onPress={() => this.verify()}
-          >
-            {
-              isLoading ?
-                <Spinner color={commonColor.customColors.blue} /> :
-                <Text style={styles.createAccountBtnText}>
-                  Create My Account
-                </Text>
-            }
-          </Button>
-          <View style={styles.bottomContainer}>
-            <Text
-              style={styles.bottomLabelText}
-            >
-              Already have an account?
-            </Text>
-            <Button
-              small
-              transparent
-              style={styles.bottomBtn}
-              onPress={() => this.props.navigation.navigate("Login")}
-            >
-              <Text uppercase={false} style={styles.bottomBtnText}>
-                Log In.
+      <View style={styles.container}>
+        <Image source={logo} style={styles.logo} />
+        <Text style={[styles.text, styles.textAbove]}>Please enter the referral code you received from your employer.</Text>
+        <Field
+          name="code"
+          component={this.renderInput}
+          type="code"
+          validate={[required]}
+        />
+        <Text style={[styles.text, styles.textBelow]}>Contact your administrator if there are any issues</Text>
+        {error && <Text style={styles.formErrorText3}>{errorText}</Text>}
+        <Button
+          block
+          style={styles.createAccountBtn}
+          onPress={() => this.verify()}
+        >
+          {
+            isLoading ?
+              <Spinner color={commonColor.customColors.blue} /> :
+              <Text style={styles.createAccountBtnText}>
+                Create My Account
               </Text>
-            </Button>
-          </View>
-        </View>
-      </Content>
+          }
+        </Button>
+      </View>
     );
   }
 }

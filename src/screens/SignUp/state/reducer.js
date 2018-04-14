@@ -1,6 +1,7 @@
 import { SIGN_UP_URL, VERIFY_REFERRAL_URL } from "./constants";
 const initialState = {
   data: {},
+  verifiedEmployeeCode: "",
   step: 0,
   isLoading: false,
   error: false,
@@ -9,6 +10,7 @@ const initialState = {
 
 export default function signUpReducer (state = initialState, action) {
   switch (action.type) {
+    //Sign Up cases
     case `${SIGN_UP_URL}_SUBMIT`:
       return {
         ...state,
@@ -30,16 +32,20 @@ export default function signUpReducer (state = initialState, action) {
         error: true,
         errorMessage: action.error
       };
+
+    //Verify Referral cases
     case `${VERIFY_REFERRAL_URL}_SUBMIT`:
         return {
           ...state,
-          isLoading: true
+          isLoading: true,
+          verifiedEmployeeCode: ""
         };
     case `${VERIFY_REFERRAL_URL}_SUCCEED`:
         const { payload: { data: verifyReferralData } } = action;
         return {
           ...state,
           data: verifyReferralData ? verifyReferralData : {},
+          verifiedEmployeeCode: verifyReferralData.code,
           step: 1,
           isLoading: false,
           error: false,
@@ -49,6 +55,7 @@ export default function signUpReducer (state = initialState, action) {
         return {
           ...state,
           isLoading: false,
+          verifyReferralCode: "",
           error: true,
           errorMessage: action.error
         };

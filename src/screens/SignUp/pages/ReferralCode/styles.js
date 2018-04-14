@@ -7,11 +7,10 @@ const deviceWidth = screen.width;
 
 export default StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop: deviceHeight / 5,
-    paddingBottom: deviceHeight / 5,
-    paddingLeft: deviceWidth / 5,
-    paddingRight: deviceWidth / 5
+    flex: 0.8,
+    alignItems: "center",
+    paddingTop: deviceHeight / 6,
+    paddingHorizontal: deviceWidth / 6
   },
   inputGrp: {
     flexDirection: "row",
@@ -24,18 +23,25 @@ export default StyleSheet.create({
   },
   input: {
     color: "#fff",
-    fontSize: 13,
-    textAlign: "center"
+    fontSize: 13
   },
   logo: {
     resizeMode: "center",
     width: (2 * deviceWidth - 60) / 3,
-    height: deviceHeight / 4
+    height: deviceHeight / 4,
+    marginBottom: 20
+  },
+  textAbove: {
+    fontSize: 13,
+    paddingHorizontal: 20
+  },
+  textBelow: {
+    fontSize: 12
   },
   text: {
     color: colors.lightgrey,
     textAlign: "center",
-    fontSize: 13,
+    fontFamily: "LatoRegular",
     paddingBottom: 20
   },
   formErrorIcon: {
@@ -71,24 +77,5 @@ export default StyleSheet.create({
     color: colors.blue,
     fontSize: 15,
     textAlign: "center"
-  },
-  bottomContainer: {
-     flex: 1,
-     alignSelf: "center",
-     flexDirection: "row",
-     position: "absolute",
-     bottom: 5
-  },
-  bottomLabelText: {
-    color: colors.charcoal,
-    fontSize: 10
-  },
-  bottomBtn: {
-    top: -11,
-    left: -10
-  },
-  bottomBtnText: {
-    color: colors.blue,
-    fontSize: 10,
   }
 });

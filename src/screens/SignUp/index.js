@@ -5,6 +5,9 @@ import { connect } from "react-redux";
 import {
   Container,
   Toast,
+  View,
+  Button,
+  Text
 } from "native-base";
 import { reduxForm } from "redux-form";
 
@@ -70,6 +73,23 @@ class SignUp extends Component {
           style={styles.background}
         >
           {body}
+          <View style={styles.bottomContainer}>
+            <Text
+              style={styles.bottomLabelText}
+            >
+              Already have an account?
+            </Text>
+            <Button
+              small
+              transparent
+              style={styles.bottomBtn}
+              onPress={() => this.props.navigation.navigate("Login")}
+            >
+              <Text uppercase={false} style={styles.bottomBtnText}>
+                Log In.
+              </Text>
+            </Button>
+          </View>
         </Image>
       </Container>
     );
