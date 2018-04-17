@@ -58,10 +58,35 @@ const styles = StyleSheet.create({
     width: (formWidthAfterPadding * 2) / 3 - formSpaceBetween / 2,
   },
   gender: {
-    width: formWidthAfterPadding / 3 - formSpaceBetween / 2
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: colors.darkergrey,
+    justifyContent: "center",
+    width: formWidthAfterPadding / 3 - formSpaceBetween / 2,
+    height: 30,
+    paddingLeft: 10
+  },
+  genderDropdownList: {
+    height: 80,
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: colors.darkergrey
+  },
+  genderText: {
+    fontSize: 13,
+    fontFamily: "LatoRegular"
+  },
+  genderPlaceholder: {
+    color: colors.darkergrey
+  },
+  genderSelected: {
+    color: colors.charcoal
   },
   unit: {
     width: formWidthAfterPadding / 3 - formSpaceBetween / 2
+  },
+  dateGenderRowExtra: {
+    paddingBottom: 12.5
   },
   datePickerInput: {
     height: 30,
@@ -153,6 +178,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
     top: -10
   },
+  separator: {
+    height: 30
+  },
   bottomContainer: {
      flex: 0.08,
      alignSelf: "center",
@@ -194,8 +222,7 @@ const addressFinderStyles = StyleSheet.create({
     color: colors.charcoal,
     fontSize: 13,
     fontFamily: "LatoRegular",
-    padding: 0,
-    margin: 0,
+    marginLeft: 0,
     marginBottom: 5,
     height: 25
   },

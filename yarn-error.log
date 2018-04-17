@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add redux-saga
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add react-native-material-dropdown
 
 PATH: 
   C:\Users\naib_\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\naib_\bin;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client;C:\Program Files\Intel\iCLS Client;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\Program Files (x86)\PuTTY;C:\Program Files\TortoiseGit\bin;C:\Program Files (x86)\Skype\Phone;C:\xampp\php;C:\ProgramData\ComposerSetup\bin;C:\Program Files (x86)\GtkSharp\2.12\bin;C:\Program Files\nodejs;C:\Program Files (x86)\Yarn\bin;C:\ProgramData\chocolatey\bin;C:\Users\naib_\AppData\Local\Microsoft\WindowsApps;C:\Users\naib_\AppData\Roaming\Composer\vendor\bin;C:\Users\naib_\AppData\Roaming\npm;C:\Users\naib_\AppData\Local\atom\bin;C:\Program Files\Heroku\bin;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Docker Toolbox;C:\Users\naib_\AppData\Local\Yarn\bin;C:\Users\naib_\AppData\Local\Android\sdk\platform-tools;%USERPROFILE%\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
@@ -43,8 +43,7 @@ npm manifest:
       "eject": "react-native-scripts eject",
       "android": "react-native-scripts android",
       "ios": "react-native-scripts ios",
-      "test": "jest && flow && eslint .",
-      "precommit": "yarn test"
+      "test": "jest && flow && eslint ."
     },
     "jest": {
       "preset": "jest-expo",
@@ -64,14 +63,16 @@ npm manifest:
       "react-native": "0.48.4",
       "react-native-calendars": "1.5.6",
       "react-native-carousel-view": "^0.5.1",
+      "react-native-datepicker": "^1.7.1",
       "react-native-easy-grid": "0.1.15",
-      "react-native-modalbox": "1.4.2",
+      "react-native-google-places-autocomplete": "^1.3.6",
+      "react-native-modal": "^5.4.0",
       "react-navigation": "1.0.0-beta.11",
       "react-redux": "5.0.5",
       "redux": "3.7.2",
       "redux-form": "7.0.3",
-      "redux-persist": "4.8.3",
-      "redux-thunk": "2.2.0",
+      "redux-persist": "^5.9.1",
+      "redux-saga": "^0.16.0",
       "remote-redux-devtools": "0.5.0",
       "remote-redux-devtools-on-debugger": "^0.8.0"
     }
@@ -4121,7 +4122,7 @@ Lockfile:
     dependencies:
       jsonify "~0.0.0"
   
-  json-stringify-safe@^5.0.1, json-stringify-safe@~5.0.1:
+  json-stringify-safe@~5.0.1:
     version "5.0.1"
     resolved "https://registry.yarnpkg.com/json-stringify-safe/-/json-stringify-safe-5.0.1.tgz#1296a2d58fd45f19a0f6ce01d65701e2c735b6eb"
   
@@ -4282,7 +4283,7 @@ Lockfile:
     version "0.1.4"
     resolved "https://registry.yarnpkg.com/lock/-/lock-0.1.4.tgz#fec7deaef17e7c3a0a55e1da042803e25d91745d"
   
-  lodash-es@^4.17.3, lodash-es@^4.17.4, lodash-es@^4.2.0, lodash-es@^4.2.1:
+  lodash-es@^4.17.3, lodash-es@^4.2.0, lodash-es@^4.2.1:
     version "4.17.4"
     resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.4.tgz#dcc1d7552e150a0640073ba9cb31d70f032950e7"
   
@@ -4333,6 +4334,10 @@ Lockfile:
   lodash.cond@^4.3.0:
     version "4.5.2"
     resolved "https://registry.yarnpkg.com/lodash.cond/-/lodash.cond-4.5.2.tgz#f471a1da486be60f6ab955d17115523dd1d255d5"
+  
+  lodash.debounce@^4.0.8:
+    version "4.0.8"
+    resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
   
   lodash.escape@^3.0.0:
     version "3.2.0"
@@ -4702,6 +4707,10 @@ Lockfile:
   moment@2.13.0, moment@2.x.x, moment@^2.10.6:
     version "2.13.0"
     resolved "https://registry.yarnpkg.com/moment/-/moment-2.13.0.tgz#24162d99521e6d40f99ae6939e806d2139eaac52"
+  
+  moment@^2.22.0:
+    version "2.22.0"
+    resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.0.tgz#7921ade01017dd45186e7fee5f424f0b8663a730"
   
   morgan@~1.6.1:
     version "1.6.1"
@@ -5335,6 +5344,14 @@ Lockfile:
       loose-envify "^1.3.1"
       object-assign "^4.1.1"
   
+  prop-types@^15.6.1:
+    version "15.6.1"
+    resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.1.tgz#36644453564255ddda391191fb3a125cbdf654ca"
+    dependencies:
+      fbjs "^0.8.16"
+      loose-envify "^1.3.1"
+      object-assign "^4.1.1"
+  
   proxy-addr@~2.0.2:
     version "2.0.2"
     resolved "https://registry.yarnpkg.com/proxy-addr/-/proxy-addr-2.0.2.tgz#6571504f47bb988ec8180253f85dd7e14952bdec"
@@ -5391,6 +5408,10 @@ Lockfile:
   qs@6.5.1, qs@^6.2.1, qs@^6.5.0, qs@^6.5.1, qs@~6.5.1:
     version "6.5.1"
     resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.1.tgz#349cdf6eef89ec45c12d7d5eb3fc0c870343a6d8"
+  
+  qs@^5.2.0:
+    version "5.2.1"
+    resolved "https://registry.yarnpkg.com/qs/-/qs-5.2.1.tgz#801fee030e0b9450d6385adc48a4cc55b44aedfc"
   
   qs@~6.4.0:
     version "6.4.0"
@@ -5473,6 +5494,12 @@ Lockfile:
       object-assign "^4.0.1"
       smart-mixin "^2.0.0"
   
+  react-native-animatable@^1.2.4:
+    version "1.2.4"
+    resolved "https://registry.yarnpkg.com/react-native-animatable/-/react-native-animatable-1.2.4.tgz#b5fb7657e8f6edadbc26697057a327fb920b3039"
+    dependencies:
+      prop-types "^15.5.10"
+  
   react-native-branch@2.0.0-beta.3:
     version "2.0.0-beta.3"
     resolved "https://registry.yarnpkg.com/react-native-branch/-/react-native-branch-2.0.0-beta.3.tgz#2167af86bbc9f964bd45bd5f37684e5b54965e32"
@@ -5490,6 +5517,12 @@ Lockfile:
     dependencies:
       react-mixin "^3.0.5"
       react-timer-mixin "^0.13.3"
+  
+  react-native-datepicker@^1.7.1:
+    version "1.7.1"
+    resolved "https://registry.yarnpkg.com/react-native-datepicker/-/react-native-datepicker-1.7.1.tgz#c1442f783b6adebb521217f9ebc94773265a0cec"
+    dependencies:
+      moment "^2.22.0"
   
   react-native-dismiss-keyboard@1.0.0:
     version "1.0.0"
@@ -5526,6 +5559,14 @@ Lockfile:
     dependencies:
       prop-types "^15.5.10"
   
+  react-native-google-places-autocomplete@^1.3.6:
+    version "1.3.6"
+    resolved "https://registry.yarnpkg.com/react-native-google-places-autocomplete/-/react-native-google-places-autocomplete-1.3.6.tgz#352ba0858f647c0c2caba448b6b6296984d8c7af"
+    dependencies:
+      lodash.debounce "^4.0.8"
+      prop-types "^15.5.10"
+      qs "^5.2.0"
+  
   "react-native-keyboard-aware-scroll-view@https://github.com/GeekyAnts/react-native-keyboard-aware-scroll-view":
     version "0.2.9"
     resolved "https://github.com/GeekyAnts/react-native-keyboard-aware-scroll-view#f4805f254d6cc8e3329f5fb224944401f66655db"
@@ -5538,12 +5579,12 @@ Lockfile:
     version "0.15.3"
     resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.15.3.tgz#5d9e0a8e30ecc51dc755b7a3b9d6b6ed5e2dd08c"
   
-  react-native-modalbox@1.4.2:
-    version "1.4.2"
-    resolved "https://registry.yarnpkg.com/react-native-modalbox/-/react-native-modalbox-1.4.2.tgz#818c9354c9b13327ec807c6436e8516b3b419478"
+  react-native-modal@^5.4.0:
+    version "5.4.0"
+    resolved "https://registry.yarnpkg.com/react-native-modal/-/react-native-modal-5.4.0.tgz#95f70b5d68e08824951cd11038b9db2d6fdb9962"
     dependencies:
-      create-react-class "^15.6.0"
-      prop-types "^15.5.10"
+      prop-types "^15.6.1"
+      react-native-animatable "^1.2.4"
   
   react-native-safe-module@^1.1.0:
     version "1.2.0"
@@ -5842,17 +5883,13 @@ Lockfile:
     dependencies:
       deep-diff "0.3.4"
   
-  redux-persist@4.8.3:
-    version "4.8.3"
-    resolved "https://registry.yarnpkg.com/redux-persist/-/redux-persist-4.8.3.tgz#fbad95e7582483635c91a3dd83da4789e7a09107"
-    dependencies:
-      json-stringify-safe "^5.0.1"
-      lodash "^4.17.4"
-      lodash-es "^4.17.4"
+  redux-persist@^5.9.1:
+    version "5.9.1"
+    resolved "https://registry.yarnpkg.com/redux-persist/-/redux-persist-5.9.1.tgz#83bd4abd526ef768f63fceee338fa9d8ed6552d6"
   
-  redux-thunk@2.2.0:
-    version "2.2.0"
-    resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.2.0.tgz#e615a16e16b47a19a515766133d1e3e99b7852e5"
+  redux-saga@^0.16.0:
+    version "0.16.0"
+    resolved "https://registry.yarnpkg.com/redux-saga/-/redux-saga-0.16.0.tgz#0a231db0a1489301dd980f6f2f88d8ced418f724"
   
   redux@3.7.2, redux@^3.6.0:
     version "3.7.2"

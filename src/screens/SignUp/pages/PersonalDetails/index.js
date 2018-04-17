@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, ScrollView, TouchableOpacity } from "react-native";
+import { Image, ScrollView, TouchableOpacity, Picker } from "react-native";
 import {
   Card,
   View,
@@ -13,6 +13,7 @@ import {
 } from "native-base";
 import DatePicker from "react-native-datepicker";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import ModalDropdown from "react-native-modal-dropdown";
 
 import { Field, reduxForm } from "redux-form";
 
@@ -63,13 +64,21 @@ const INPUT_FIELDS = {
   }
 };
 
+
 class PersonalDetails extends Component {
   constructor(props) {
     super(props);
 
+    this.genderSelected = this.genderSelected.bind(this);
+
     this.state = {
-      date: ""
+      date: "",
+      gender: undefined
     };
+  }
+
+  genderSelected(index, gender) {
+    this.setState({ gender });
   }
 
   textInput: any;
@@ -112,7 +121,7 @@ class PersonalDetails extends Component {
         <View style={styles.formContainer}>
           <ScrollView style={styles.formContent} showsVerticalScrollIndicator={false}>
             <Text style={styles.formLabelText}>
-              Please use your legal name as it appears on your bank statements, so that we can verify your account.
+              Please use your legal name as it appears on your bank statements.
             </Text>
             <View style={styles.inputRow}>
               <Field
@@ -128,7 +137,7 @@ class PersonalDetails extends Component {
                 validate={[required]}
               />
             </View>
-            <View style={styles.inputRow}>
+            <View style={[styles.inputRow, styles.dateGenderRowExtra]}>
               <DatePicker
                 customStyles={{
                   placeholderText: styles.datePickerPlaceholder,
@@ -143,15 +152,21 @@ class PersonalDetails extends Component {
                 confirmBtnText="Confirm"
                 cancelBtnText="Cancel"
                 showIcon={false}
-                onDateChange={(date) => {this.setState({date: date});}}
+                androidMode="spinner"
+                onDateChange={date => this.setState({date: date})}
               />
-              <Field
-                name="gender"
-                component={this.renderInput}
-                type="gender"
-                validate={[required]}
+              <ModalDropdown
+                options={["Male", "Female"]}
+                defaultValue="Gender"
+                style={styles.gender}
+                dropdownStyle={styles.genderDropdownList}
+                textStyle={[styles.genderText, this.state.gender ? styles.genderSelected : styles.genderPlaceholder]}
+                dropdownTextStyle={[styles.genderText, styles.genderSelected]}
+                dropdownTextHighlightStyle={[styles.genderText, styles.genderSelected]}
+                onSelect={this.genderSelected}
               />
             </View>
+
             <View style={styles.inputRow}>
               <GooglePlacesAutocomplete
                 placeholder="Address"
@@ -198,12 +213,13 @@ class PersonalDetails extends Component {
               <View style={styles.checkbox} />
               <Text style={styles.checkboxText}>
                 By creating an account you are agreeing to our
-                <Text style={styles.linkTexts}>Terms of Service</Text> and
+                <Text style={styles.linkTexts}> Terms of Service</Text> and
                 <Text style={styles.linkTexts}> Privacy Policy.</Text>
               </Text>
             </View>
 
-            <SpecialButton loading={false} state={0} text={"CREATE MY ACCOUNT"} onClick={this.submit} />
+            <SpecialButton loading={false} state={1} text={"CREATE MY ACCOUNT"} onClick={this.submit} />
+            <View style={styles.separator} />
           </ScrollView>
         </View>
       </View>
