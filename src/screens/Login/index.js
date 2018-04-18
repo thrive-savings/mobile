@@ -80,7 +80,7 @@ class LoginForm extends Component {
   render() {
     const navigation = this.props.navigation;
 
-    const { isFetching, error, errorMessage } = this.props.authReducer;
+    const { isLoading, error, errorMessage } = this.props.authReducer;
 
     let errorText = "";
     if (error) {
@@ -123,7 +123,7 @@ class LoginForm extends Component {
                   onPress={() => this.fastLogin()}
                 >
                   {
-                    isFetching ?
+                    isLoading ?
                       <Spinner color={colors.blue} /> :
                       <Text style={styles.loginBtnText}>
                         Log In

@@ -4,12 +4,10 @@ import { Image, StatusBar } from "react-native";
 import { connect } from "react-redux";
 import {
   Container,
-  Toast,
   View,
   Button,
   Text
 } from "native-base";
-import { reduxForm } from "redux-form";
 
 import styles from "./styles";
 import commonColor from "../../theme/variables/commonColor";
@@ -21,31 +19,6 @@ const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
 
 
 class SignUp extends Component {
-  fastSignUp() {
-    const values = {
-      "email": "naib@thrivesavings.com",
-      "firstName": "Naib",
-      "lastName": "MobileTester",
-      "password": "naibferide8",
-      //"phone": "9991239876"
-      "phone": "6476763323"
-    };
-    this.props.signUpUser(values);
-  }
-
-  signUp() {
-    if (this.props.valid) {
-      this.props.signUpUser(this.props.values);
-    } else {
-      Toast.show({
-        text: "All the fields are compulsory!",
-        duration: 2500,
-        position: "top",
-        textStyle: { textAlign: "center" }
-      });
-    }
-  }
-
   render() {
     const { step } = this.props.signUpReducer;
 
@@ -58,7 +31,6 @@ class SignUp extends Component {
         body = <PersonalDetails navigation={this.props.navigation} />;
         break;
       default:
-        body = <ReferralCode />;
         break;
     }
 
@@ -102,6 +74,4 @@ function mapStateToProps (state) {
   };
 }
 
-export default reduxForm({
-  form: "signup"
-})(connect(mapStateToProps)(SignUp));
+export default connect(mapStateToProps)(SignUp);

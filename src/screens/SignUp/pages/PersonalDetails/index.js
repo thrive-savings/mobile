@@ -1,24 +1,25 @@
 import React, { Component } from "react";
-import { Image, ScrollView, TouchableOpacity, Picker } from "react-native";
+import { Image, ScrollView, TouchableOpacity } from "react-native";
+import { connect } from "react-redux";
 import {
-  Card,
   View,
   Item,
   Input,
   Icon,
   Text,
-  Button,
-  CheckBox,
-  Spinner
+  Toast
 } from "native-base";
 import DatePicker from "react-native-datepicker";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import ModalDropdown from "react-native-modal-dropdown";
+import CheckBox from "react-native-check-box";
 
 import { Field, reduxForm } from "redux-form";
 
 import { styles, addressFinderStyles } from "./styles";
-import { required, maxLength15, minLength8, alphaNumeric, email } from "../../../../globals/validators";
+import { required, minLength8, alphaNumeric, email } from "../../../../globals/validators";
+
+import { signUpUser } from "../../state/actions";
 
 import SpecialButton from "../../../../components/SpecialButton";
 
@@ -27,6 +28,7 @@ import { GooglePlacesApiKey } from "../../../../../config";
 import colors from "../../../../theme/colors";
 
 const logo = require("../../../../../assets/Logo/white.png");
+const tick = require("../../../../../assets/Icons/Checkbox/tick.png");
 
 const INPUT_FIELDS = {
   firstName: {
@@ -69,12 +71,81 @@ class PersonalDetails extends Component {
   constructor(props) {
     super(props);
 
+    this.submit = this.submit.bind(this);
+    this.fastSubmit = this.fastSubmit.bind(this);
+
+    this.addressSelected = this.addressSelected.bind(this);
     this.genderSelected = this.genderSelected.bind(this);
 
     this.state = {
       date: "",
-      gender: undefined
+      gender: undefined,
+      didAgree: false,
+      address: {}
     };
+  }
+
+  submit() {
+    if (this.props.valid) {
+      console.log("-------------STATE------------");
+      console.log(this.state);
+      console.log("----------PROPS VALUES--------------");
+      console.log(this.props.values);
+      //this.props.signUpUser(this.props.values);
+    } else {
+      Toast.show({
+        text: "All the fields are compulsory!",
+        duration: 2500,
+        position: "top",
+        textStyle: { textAlign: "center" }
+      });
+    }
+  }
+
+  fastSubmit() {
+    const data = {
+      "email": "naib@thrivesavings.com",
+      "firstName": "Naib",
+      "lastName": "Baghirov",
+      "password": "naibferide8",
+      "date": "1993-10-05",
+      "gender": "Male",
+      "companyID": "1",
+      "address": {
+        "city": "Toronto",
+        "country": "Canada",
+        "postalCode": "M5J 3A3",
+        "state": "Ontario",
+        "streetName": "Grand Trunk Crescent",
+        "streetNumber": "19",
+        "unit": "3708",
+      }
+    };
+
+    this.props.signUpUser(data);
+  }
+
+
+  // "details" is provided when fetchDetails = true
+  addressSelected(data, details) {
+    let streetNumber, streetName, city, state, country, postalCode;
+    details.address_components.forEach(component => {
+      const { long_name, types } = component;
+      if (types.indexOf("street_number") > -1) {
+        streetNumber = long_name;
+      } else if (types.indexOf("route") > -1) {
+        streetName = long_name;
+      } else if (types.indexOf("locality") > -1) {
+        city = long_name;
+      } else if (types.indexOf("administrative_area_level_1") > -1) {
+        state = long_name;
+      } else if (types.indexOf("country") > -1) {
+        country = long_name;
+      } else if (types.indexOf("postal_code") > -1) {
+        postalCode = long_name;
+      }
+    });
+    this.setState({ address: { streetNumber, streetName, city, state, country, postalCode } });
   }
 
   genderSelected(index, gender) {
@@ -113,6 +184,18 @@ class PersonalDetails extends Component {
   }
 
   render() {
+    const { isLoading, error, errorMessage } = this.props.signUpReducer;
+
+    let errorText = "";
+    if (error) {
+      const { errors } = errorMessage;
+      if (errors && errors.constructor === Array && errors.length > 0) {
+        errorText = errors[0].value;
+      } else {
+        errorText = "Server Error!";
+      }
+    }
+
     return (
       <View style={styles.contentContainerStyle}>
         <View style={styles.logoContainer}>
@@ -153,7 +236,7 @@ class PersonalDetails extends Component {
                 cancelBtnText="Cancel"
                 showIcon={false}
                 androidMode="spinner"
-                onDateChange={date => this.setState({date: date})}
+                onDateChange={date => this.setState({ date })}
               />
               <ModalDropdown
                 options={["Male", "Female"]}
@@ -184,9 +267,7 @@ class PersonalDetails extends Component {
                 }}
                 styles={addressFinderStyles}
                 currentLocation={false}
-                onPress={(data, details = null) => { // "details" is provided when fetchDetails = true
-                  console.log(data, details);
-                }}
+                onPress={this.addressSelected}
               />
               <Field
                 name="unit"
@@ -200,7 +281,7 @@ class PersonalDetails extends Component {
               name="email"
               component={this.renderInput}
               type="email"
-              validate={[required]}
+              validate={[required, email]}
             />
             <Field
               name="password"
@@ -210,7 +291,12 @@ class PersonalDetails extends Component {
             />
 
             <View style={styles.checkboxRow}>
-              <View style={styles.checkbox} />
+              <CheckBox
+                onClick={()=>this.setState({didAgree: !this.state.didAgree})}
+                isChecked={this.state.didAgree}
+                unCheckedImage={<View style={styles.checkbox}/>}
+                checkedImage={<View style={styles.checkbox}><Image source={tick} style={styles.checkboxTick}/></View>}
+              />
               <Text style={styles.checkboxText}>
                 By creating an account you are agreeing to our
                 <Text style={styles.linkTexts}> Terms of Service</Text> and
@@ -218,7 +304,9 @@ class PersonalDetails extends Component {
               </Text>
             </View>
 
-            <SpecialButton loading={false} state={1} text={"CREATE MY ACCOUNT"} onClick={this.submit} />
+            {error && <Text style={styles.formErrorText3}>{errorText}</Text>}
+
+            <SpecialButton loading={isLoading} state={1} text={"CREATE MY ACCOUNT"} onClick={this.fastSubmit} />
             <View style={styles.separator} />
           </ScrollView>
         </View>
@@ -227,4 +315,19 @@ class PersonalDetails extends Component {
   }
 }
 
-export default PersonalDetails;
+function mapStateToProps (state) {
+  return {
+    values: state.form && state.form.signup && state.form.signup.values ? state.form.signup.values : undefined,
+    signUpReducer: state.signUpReducer
+  };
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    signUpUser: (payload = {}) => dispatch(signUpUser(payload))
+  };
+}
+
+export default reduxForm({
+  form: "signup"
+})(connect(mapStateToProps, mapDispatchToProps)(PersonalDetails));

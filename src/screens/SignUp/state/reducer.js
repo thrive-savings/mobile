@@ -1,7 +1,7 @@
 import { SIGN_UP_URL, VERIFY_REFERRAL_URL } from "./constants";
 const initialState = {
   data: {},
-  verifiedEmployeeCode: "",
+  companyID: 1,
   step: 0,
   isLoading: false,
   error: false,
@@ -38,14 +38,14 @@ export default function signUpReducer (state = initialState, action) {
         return {
           ...state,
           isLoading: true,
-          verifiedEmployeeCode: ""
+          companyID: 1
         };
     case `${VERIFY_REFERRAL_URL}_SUCCEED`:
         const { payload: { data: verifyReferralData } } = action;
         return {
           ...state,
           data: verifyReferralData ? verifyReferralData : {},
-          verifiedEmployeeCode: verifyReferralData.code,
+          companyID: verifyReferralData.code,
           step: 1,
           isLoading: false,
           error: false,

@@ -85,14 +85,24 @@ const StackerWithIntegrateBank = StackNavigator(
   }
 );
 
+const StackerWithVerifyCode = StackNavigator(
+  stackScreens,
+  {
+    ...stackerOptions,
+    initialRouteName: "VerifyCode"
+  }
+);
+
 class App extends React.Component {
   render() {
+
     let stacker = <StackerWithLogin />;
 
     const authorized = getAuthorized(this.props.authReducer);
     if (authorized) {
-      //if(authorized.account && authorized.account.flLoginID) {
-      if (true) {
+      if (!authorized.isVerified && false) {
+        stacker = <StackerWithVerifyCode />;
+      } else if ((authorized.account && authorized.account.flLoginID) || true) {
         stacker = <StackerWithDrawer />;
       } else {
         stacker = <StackerWithIntegrateBank />;

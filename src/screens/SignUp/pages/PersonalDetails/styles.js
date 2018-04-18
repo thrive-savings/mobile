@@ -126,6 +126,10 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     backgroundColor: "transparent"
   },
+  checkboxTick: {
+    alignSelf: "center",
+    resizeMode: "center"
+  },
   checkboxText: {
     flex: 1,
     paddingLeft: 15,
