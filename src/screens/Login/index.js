@@ -72,6 +72,7 @@ class LoginForm extends Component {
         text: "Enter Valid Username & password!",
         duration: 2500,
         position: "top",
+        type: "danger",
         textStyle: { textAlign: "center" }
       });
     }

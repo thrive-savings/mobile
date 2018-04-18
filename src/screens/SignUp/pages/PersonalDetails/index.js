@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, ScrollView, TouchableOpacity } from "react-native";
+import { Image, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import {
   View,
@@ -87,19 +87,29 @@ class PersonalDetails extends Component {
 
   submit() {
     if (this.props.valid) {
-      console.log("-------------STATE------------");
-      console.log(this.state);
-      console.log("----------PROPS VALUES--------------");
-      console.log(this.props.values);
-      //this.props.signUpUser(this.props.values);
-    } else {
-      Toast.show({
-        text: "All the fields are compulsory!",
-        duration: 2500,
-        position: "top",
-        textStyle: { textAlign: "center" }
-      });
+      //Check if other inputs fields are provided
+      const { email: userEmail, password, firstName, lastName, unit } = this.props.values;
+      const { date, gender, didAgree, address } = this.state;
+      if (date && gender && didAgree && Object.keys(address).length > 0) {
+        this.props.signUpUser({
+          email: userEmail, firstName, lastName, password, date, gender,
+          companyID: this.props.signUpReducer.companyID.toString(),
+          address: {
+            ...address,
+            unit
+          }
+        });
+        return;
+      }
     }
+
+    Toast.show({
+      text: "All the fields are compulsory!",
+      duration: 2500,
+      position: "top",
+      type: "danger",
+      textStyle: { textAlign: "center" }
+    });
   }
 
   fastSubmit() {
@@ -306,7 +316,7 @@ class PersonalDetails extends Component {
 
             {error && <Text style={styles.formErrorText3}>{errorText}</Text>}
 
-            <SpecialButton loading={isLoading} state={1} text={"CREATE MY ACCOUNT"} onClick={this.fastSubmit} />
+            <SpecialButton loading={isLoading} state={1} text={"CREATE MY ACCOUNT"} onClick={this.submit} />
             <View style={styles.separator} />
           </ScrollView>
         </View>

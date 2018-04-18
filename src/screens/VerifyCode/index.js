@@ -78,6 +78,7 @@ class VerifyCodeForm extends Component {
         text: "All the fields are compulsory!",
         duration: 2500,
         position: "top",
+        type: "danger",
         textStyle: { textAlign: "center" }
       });
     }

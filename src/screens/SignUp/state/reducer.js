@@ -45,7 +45,7 @@ export default function signUpReducer (state = initialState, action) {
         return {
           ...state,
           data: verifyReferralData ? verifyReferralData : {},
-          companyID: verifyReferralData.code,
+          companyID: verifyReferralData.companyID,
           step: 1,
           isLoading: false,
           error: false,

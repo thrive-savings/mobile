@@ -63,6 +63,7 @@ class ReferralCodeForm extends Component {
         text: "Valid Code Required",
         duration: 2500,
         position: "top",
+        type: "danger",
         textStyle: { textAlign: "center" }
       });
     }

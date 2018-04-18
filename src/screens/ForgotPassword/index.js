@@ -95,6 +95,7 @@ class ForgotPasswordForm extends Component {
         text: "Enter Valid Email",
         duration: 2500,
         position: "top",
+        type: "danger",
         textStyle: { textAlign: "center" }
       });
     }
@@ -110,6 +111,7 @@ class ForgotPasswordForm extends Component {
           text: "Passwords don't match",
           duration: 2500,
           position: "top",
+          type: "danger",
           textStyle: { textAlign: "center" }
         });
       }
@@ -118,6 +120,7 @@ class ForgotPasswordForm extends Component {
         text: "Fields are not valid",
         duration: 2500,
         position: "top",
+        type: "danger",
         textStyle: { textAlign: "center" }
       });
     }
