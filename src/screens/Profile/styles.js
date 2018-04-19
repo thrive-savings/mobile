@@ -1,101 +1,83 @@
-const React = require("react-native");
-const { Platform, Dimensions } = React;
+import { StyleSheet, Dimensions } from "react-native";
+import colors from "../../theme/colors";
 
-const deviceWidth = Dimensions.get("window").width;
-const primary = require("../../theme/variables/commonColor").brandPrimary;
+const screen = Dimensions.get("window");
+const deviceWidth = screen.width;
+const deviceHeight = screen.height;
 
-export default {
+export default StyleSheet.create({
   container: {
+    flex: 1
+  },
+  background: {
     flex: 1,
     width: null,
     height: null
   },
-  profileInfoContainer: {
-    backgroundColor: primary,
-    paddingTop: 10
+
+  //Header styles
+  header: {
+    flex: 0.1,
+    justifyContent: "center",
+    alignItems: "center"
   },
-  profileUser: {
-    alignSelf: "center",
-    fontSize: 22,
-    fontWeight: "bold",
-    paddingBottom: 5
-  },
-  profileUserInfo: {
-    alignSelf: "center",
-    opacity: 0.8,
-    fontWeight: "bold",
-    color: "#FFF"
-  },
-  profilePic: {
-    width: 80,
-    height: 80,
-    borderRadius: 40
-  },
-  profileInfo: {
-    alignSelf: "center",
-    paddingTop: 5,
-    paddingBottom: 10
-  },
-  linkTabs: {
-    backgroundColor: "#fff"
-  },
-  linkTabs_header: {
-    padding: 15,
-    alignSelf: "center"
-  },
-  linkTabs_tabCounts: {
-    fontSize: 22,
-    fontWeight: "bold",
-    color: primary,
-    alignSelf: "center",
-    paddingBottom: Platform.OS === "android" ? 3 : 0
-  },
-  linkTabs_tabName: {
-    color: "#444",
-    fontWeight: "bold",
-    fontSize: deviceWidth < 330 ? 13 : 15
-  },
-  newsImage: {
-    width: 100,
-    height: 120
-  },
-  newsContent: {
-    flexDirection: "column",
-    paddingTop: 20,
-    paddingLeft: 20,
-    paddingRight: 20,
-    flex: 1,
-    borderTopWidth: 1,
-    borderTopColor: "#ddd"
-  },
-  newsHeader: {
-    color: "#444",
-    fontWeight: "bold"
-  },
-  newsLink: {
-    color: "#666",
-    fontSize: 12,
+  backIcon: {
     alignSelf: "flex-start",
-    fontWeight: "bold"
+    position: "absolute",
+    left: 20
   },
-  newsTypeView: {
-    borderBottomWidth: 1,
-    borderBottomColor: "#666",
-    alignSelf: "flex-end"
+  titleText: {
+    color: "white",
+    fontSize: 15,
+    fontFamily: "LatoBold",
+    textAlign: "center"
   },
-  newsTypeText: {
-    color: "#666",
-    fontSize: 12,
-    fontWeight: "bold",
-    paddingBottom: 5
+
+  //Content styles
+  contentContainer: {
+    width: deviceWidth - 40,
+    alignSelf: "center",
+    paddingVertical: 10,
+    borderRadius: 8,
+    backgroundColor: "white"
   },
-  textNote: {
-    color: "#777",
-    fontSize: 12
-  },
-  swipeBtn: {
-    flex: 1,
+  photoContainer: {
     alignItems: "center",
-    justifyContent: "center"
+    paddingVertical: 20
+  },
+  photoHolder: {
+    width: 100,
+    height: 100
+  },
+  otherContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: 20
+  },
+  nameText: {
+    color: colors.blue,
+    fontSize: 15,
+    fontFamily: "LatoRegular",
+    letterSpacing: 1.5,
+    paddingTop: 20
+  },
+  labelText: {
+    color: colors.charcoal
+  },
+  buttonText: {
+    color: colors.blue
+  },
+  commonText: {
+    fontSize: 13,
+    fontFamily: "LatoRegular",
+    letterSpacing: 0.2
+  },
+
+  //Separator style
+  separator: {
+    height: 1,
+    alignSelf: "stretch",
+    backgroundColor: colors.mediumGrey
   }
-};
+});

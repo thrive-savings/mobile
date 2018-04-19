@@ -37,7 +37,7 @@ const Drawer = DrawerNavigator(
     Settings: { screen: Settings }
   },
   {
-    initialRouteName: "Home",
+    initialRouteName: "Profile",
     contentComponent: props => <Sidebar {...props} />
   }
 );
