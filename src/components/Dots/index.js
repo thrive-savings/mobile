@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { Svg } from "expo";
 import { View } from "native-base";
 
@@ -6,15 +7,7 @@ import styles from "./styles";
 
 const colors = require("../../theme/colors");
 
-type Props = {
-  step: 1,
-  count: 4
-};
 class Dots extends Component {
-  constructor(props: Props) {
-    super(props);
-  }
-
   renderThree() {
     return (
       <Svg width={40} height={10}>
@@ -57,5 +50,14 @@ class Dots extends Component {
     );
   }
 }
+
+Dots.propTypes = {
+  step: PropTypes.int,
+  count: PropTypes.int
+};
+Dots.defaultProps = {
+  step: 1,
+  count: 4
+};
 
 export default Dots;
