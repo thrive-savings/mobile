@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { TouchableOpacity, Image } from "react-native";
 import {
   View,
@@ -12,27 +13,24 @@ import styles from "./styles";
 
 const closeIcon = require("../../../assets/Icons/Close/close.png");
 
-type Props = {
-  show: false,
-  onClose: () => void,
-  buttonText: "CONTINUE"
-};
+
 class ModalTemplate extends Component {
-  state: {
-    show: false
-  };
-  constructor(props: Props) {
+  constructor(props) {
     super(props);
 
     this.state = {
-      show: props.show
+      show: props.show,
+      buttonLoading: props.buttonLoading
     };
 
     this.close = this.close.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({show: nextProps.show});
+    this.setState({
+      show: nextProps.show,
+      buttonLoading: nextProps.buttonLoading
+    });
   }
 
   close() {
@@ -57,12 +55,31 @@ class ModalTemplate extends Component {
           </TouchableOpacity>
           <View style={styles.contentContainer}>
             {body}
-            <SpecialButton text={this.props.buttonText} onClick={this.close} state={1} />
+            {
+              this.props.buttonVisible &&
+              <SpecialButton loading={this.state.buttonLoading} text={this.props.buttonText} onClick={this.props.onButtonClick ? this.props.onButtonClick : this.close} state={1} />
+            }
           </View>
         </View>
       </Modal>
     );
   }
 }
+
+ModalTemplate.propTypes = {
+  show: PropTypes.bool,
+  onClose: PropTypes.func,
+  buttonVisible: PropTypes.bool,
+  buttonLoading: PropTypes.bool,
+  buttonText: PropTypes.string
+};
+ModalTemplate.defaultProps = {
+  show: false,
+  onClose: () => {},
+  buttonVisible: true,
+  buttonLoading: false,
+  buttonText: "CONTINUE"
+};
+
 
 export default ModalTemplate;

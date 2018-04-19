@@ -1,51 +1,51 @@
 import React, { Component } from "react";
-import { Image, StatusBar } from "react-native";
+import { Image, StatusBar, TextInput } from "react-native";
 import { connect } from "react-redux";
 import {
   Container,
   Content,
+  Card,
   Text,
-  Button,
   Icon,
   Item,
-  Input,
   View,
-  Toast,
-  Left,
-  Right,
-  Footer,
-  Spinner
+  Toast
 } from "native-base";
 import { Field, reduxForm } from "redux-form";
 
-import { verifyCode, resendCode } from "./state/actions";
+import SpecialButton from "../../components/SpecialButton";
+
+import VerifyCodeModal from "./modals/VerifyCodeModal";
 
 import styles from "./styles";
+import colors from "../../theme/colors";
 
-const required = value => (value ? undefined : "Required");
+import { savePhone } from "./state/actions";
+
+import { required, numeric } from "../../globals/validators";
+
+const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
+const logo = require("../../../assets/Logo/white.png");
+const sms = require("../../../assets/Icons/Sms/sms.png");
+
 
 class VerifyCodeForm extends Component {
+  constructor(props) {
+    super(props);
+
+    this.submit = this.submit.bind(this);
+  }
+
   textInput: any;
   renderInput({ input, label, type, meta: { touched, error, warning } }) {
     return (
       <View>
         <Item error={error && touched} rounded style={styles.inputGrp}>
-          <Icon
-            active
-            name={
-              input.name === "code" ? "unlock" : "person"
-            }
-            style={{ color: "#fff" }}
-          />
-          <Input
+          <Text style={styles.inputLabel}>+1</Text>
+          <TextInput
             ref={c => (this.textInput = c)}
-            placeholderTextColor="#FFF"
             style={styles.input}
-            placeholder={
-              input.name === "code"
-                ? "Code"
-                : "Placeholder"
-            }
+            underlineColorAndroid="transparent"
             {...input}
           />
           {touched && error
@@ -66,13 +66,9 @@ class VerifyCodeForm extends Component {
     );
   }
 
-  resendCode() {
-    this.props.resendCode({email: this.props.signUpValues.email, phone: this.props.signUpValues.phone });
-  }
-
-  verifyCode() {
+  submit() {
     if (this.props.valid) {
-      this.props.verifyCode(this.props.values);
+      this.props.savePhone(this.props.values);
     } else {
       Toast.show({
         text: "All the fields are compulsory!",
@@ -85,12 +81,12 @@ class VerifyCodeForm extends Component {
   }
 
   render() {
-    const { data, isVerifying, isResending, error, errorMessage } = this.props.verifyCodeReducer;
+    const { isSetting, setError, setErrorMessage } = this.props.verifyCodeReducer;
 
     let errorText = "";
-    if(error) {
-      const { errors } = errorMessage;
-      if(errors && errors.constructor === Array && errors.length > 0) {
+    if (setError) {
+      const { errors } = setErrorMessage;
+      if (errors && errors.constructor === Array && errors.length > 0) {
         errorText = errors[0].value;
       } else {
         errorText = "Server Error!";
@@ -99,60 +95,27 @@ class VerifyCodeForm extends Component {
 
     return (
       <Container>
-        <StatusBar barStyle="light-content" />
-        <Image
-          source={require("../../../assets/bg-signup.png")}
-          style={styles.background}
-        >
-          <Content padder>
-            <Text style={styles.verifyCodeHeader}>Verify Code</Text>
-            <Text style={styles.verifyCodeDescription}>
-              We have sent a code to your phone number, please type the code on the box below to verify your identity.
-            </Text>
-
-            <Field
-              name="code"
-              component={this.renderInput}
-              type="text"
-              validate={[required]}
-            />
-
-            {error && <Text style={styles.formErrorText3}>{errorText}</Text>}
-
-            <Button
-              rounded
-              bordered
-              block
-              onPress={() => this.verifyCode()}
-              style={styles.verifyBtn}
-            >
-              {
-                isVerifying
-                 ? <Spinner />
-                 : <Text style={{ color: "#FFF" }}>Verify</Text>
-              }
-            </Button>
+        <StatusBar barStyle="light-content" backgroundColor={colors.statusbar}/>
+        <Image source={bg} style={styles.background}>
+          <View style={styles.headerContainer}>
+            <Image source={logo} style={styles.headerLogo} />
+          </View>
+          <Content showsVerticalScrollIndicator={false} style={styles.contentContainer}>
+            <Card style={styles.cardContainer}>
+              <Text style={styles.labelText}>VERIFY YOUR ACCOUNT</Text>
+              <Image source={sms} style={styles.smsIcon} />
+              <Text style={styles.secondaryText}>Enter your phone number and we’ll send you a 4-digit verification code.</Text>
+              <Field
+                name="phone"
+                component={this.renderInput}
+                type="phone"
+                validate={[numeric, required]}
+              />
+              {setError && <Text style={styles.formErrorText3}>{errorText}</Text>}
+              <SpecialButton loading={isSetting} state={1} text={"SUBMIT"} onClick={this.submit}/>
+              <VerifyCodeModal />
+            </Card>
           </Content>
-          <Footer
-            style={{
-              paddingLeft: 20,
-              paddingRight: 20
-            }}
-          >
-            <Right style={{ flex: 1 }}>
-              <Button
-                small
-                transparent
-                onPress={() => this.resendCode()}
-              >
-                {
-                  isResending
-                   ? <Spinner color="white" />
-                   : <Text style={styles.resendBtn}>Resend</Text>
-                }
-              </Button>
-            </Right>
-          </Footer>
         </Image>
       </Container>
     );
@@ -161,22 +124,20 @@ class VerifyCodeForm extends Component {
 
 function mapStateToProps (state) {
   return {
-    values: state.form && state.form.verifyCode && state.form.verifyCode.values ? state.form.verifyCode.values : undefined,
-    signUpValues: state.form && state.form.signup && state.form.signup.values ? state.form.signup.values : undefined,
+    values: state.form && state.form.setPhone && state.form.setPhone.values ? state.form.setPhone.values : undefined,
     verifyCodeReducer: state.verifyCodeReducer
-  }
+  };
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    verifyCode: (payload={}) => dispatch(verifyCode(payload)),
-    resendCode: (payload={}) => dispatch(resendCode(payload))
-  }
+    savePhone: (payload = {}) => dispatch(savePhone(payload))
+  };
 }
 
 VerifyCodeForm = connect(mapStateToProps, mapDispatchToProps)(VerifyCodeForm);
 
 const VerifyCode = reduxForm({
-  form: "verifyCode"
+  form: "setPhone"
 })(VerifyCodeForm);
 export default VerifyCode;

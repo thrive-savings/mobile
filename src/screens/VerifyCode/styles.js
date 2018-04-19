@@ -1,83 +1,102 @@
-const React = require("react-native");
-const { Dimensions, Platform } = React;
-const commonColor = require("../../theme/variables/commonColor");
+import { StyleSheet, Dimensions, Platform } from "react-native";
+import colors from "../../theme/colors";
 
-const deviceHeight = Dimensions.get("window").height;
-const deviceWidth = Dimensions.get("window").width;
+const screen = Dimensions.get("window");
+const deviceWidth = screen.width;
 
-export default {
-  verifyCodeHeader: {
-    alignSelf: "center",
-    fontSize: 22,
-    padding: 5,
-    fontWeight: "bold",
-    color: "#FFF",
-    marginTop:
-      Platform.OS === "android" ? deviceHeight / 15 : deviceHeight / 15 + 10
-  },
-  verifyCodeDescription: {
-    alignSelf: "center",
-    fontSize: 14,
-    padding: 10,
-    marginBottom: 10,
-    fontWeight: "bold",
-    color: "#FFF",
-    marginTop:
-      Platform.OS === "android" ? deviceHeight / 15 : deviceHeight / 15 + 10
-  },
+export default StyleSheet.create({
   background: {
     flex: 1,
     width: null,
-    height: null,
-    backgroundColor: commonColor.brandPrimary
+    height: null
+  },
+  headerContainer: {
+    flex: 0.1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  headerLogo: {
+    resizeMode: "center"
+  },
+  contentContainer: {
+    flex: 1,
+    width: deviceWidth - 50,
+    alignSelf: "center"
+  },
+  cardContainer: {
+    flex: 1,
+    alignItems: "center",
+    borderRadius: 10,
+    borderColor: "transparent",
+    backgroundColor: "white",
+    paddingVertical: 20,
+    paddingHorizontal: 40
+  },
+  smsIcon: {
+    resizeMode: "center",
+    marginLeft: -20
+  },
+  labelText: {
+    color: colors.blue,
+    fontSize: 15,
+    fontFamily: "LatoBold",
+    letterSpacing: 1.6,
+    paddingBottom: 20,
+  },
+  secondaryText: {
+    color: colors.charcoal,
+    fontSize: 13,
+    fontFamily: "LatoRegular",
+    textAlign: "center",
+    lineHeight: 22,
+    letterSpacing: 0.2,
+    paddingVertical: 20
   },
   inputGrp: {
+    height: 30,
+    width: deviceWidth - 140,
     flexDirection: "row",
-    borderRadius: 25,
-    backgroundColor: "rgba(255,255,255,0.2)",
+    alignItems: "center",
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: colors.darkergrey,
+    backgroundColor: "transparent",
     marginBottom: 10,
-    marginTop: 10,
-    borderWidth: 0,
-    borderColor: "transparent"
+    paddingLeft: 20
+  },
+  inputLabel: {
+    fontSize: 13,
+    fontFamily: "LatoBold",
+    color: colors.darkergrey,
+    paddingRight: 20
   },
   input: {
-    paddingLeft: 10,
-    color: "#FFF"
-  },
-  resendBtn: {
-    opacity: 0.9,
-    fontSize: 14,
-    fontWeight: "bold",
-    color: "#FFF"
-  },
-  verifyBtn: {
-    height: 50,
-    marginTop: 10,
-    marginBottom: 10,
-    borderWidth: 1,
-    borderColor: "#ddd"
+    flex: 1,
+    color: colors.charcoal,
+    fontSize: 13,
+    width: 100,
+    fontFamily: "LatoBold"
   },
   formErrorIcon: {
-    color: "#fff",
-    marginTop: 5,
-    right: 10
+    color: colors.darkergrey,
+    right: 5
   },
   formErrorText1: {
     fontSize: Platform.OS === "android" ? 12 : 15,
-    color: commonColor.brandDanger,
+    color: colors.error,
     textAlign: "right",
-    top: -10
+    top: -7
   },
   formErrorText2: {
     fontSize: Platform.OS === "android" ? 12 : 15,
     color: "transparent",
     textAlign: "right",
-    top: -10
+    top: -8
   },
   formErrorText3: {
     fontSize: Platform.OS === "android" ? 12 : 15,
-    color: commonColor.brandDanger,
+    color: colors.error,
     textAlign: "center",
     top: -10
   }
-}
+});

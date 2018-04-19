@@ -1,4 +1,7 @@
 const required = value => (value ? undefined : "Required");
+const exactLength = length => value =>
+  value && value.length !== length ? `Must be ${length} characters` : undefined;
+const exactLength4 = exactLength(4);
 const maxLength = max => value =>
   value && value.length > max ? `Must be ${max} characters or less` : undefined;
 const maxLength15 = maxLength(15);
@@ -18,4 +21,4 @@ const numeric = value =>
     ? "Only numeric characters"
     : undefined;
 
-export { required, maxLength15, minLength8, alphaNumeric, numeric, email };
+export { required, exactLength4, maxLength15, minLength8, alphaNumeric, numeric, email };
