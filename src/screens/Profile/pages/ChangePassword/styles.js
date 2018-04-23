@@ -1,71 +1,53 @@
-import { StyleSheet, Platform } from "react-native";
+import { StyleSheet, Dimensions, Platform } from "react-native";
 import colors from "../../../../theme/colors";
 
+const screen = Dimensions.get("window");
+const deviceWidth = screen.width;
 
 export default StyleSheet.create({
   container: {
-    alignItems: "center"
-  },
-  formContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 10,
-    marginTop: 20
-  },
-  labelText: {
-    color: colors.charcoal,
-    fontSize: 12,
-    fontFamily: "LatoRegular",
-    textAlign: "center"
-  },
-  enabledButton: {
+    width: deviceWidth - 40,
     alignSelf: "center",
-    paddingLeft: 15
-  },
-  enabledButtonGradient: {
-    height: 30,
-    width: 30,
-    justifyContent: "center",
     alignItems: "center",
-    borderRadius: 8
-  },
-  enabledButtonIcon: {
-    resizeMode: "center"
-  },
-  resendText: {
-    color: colors.blue,
-    fontSize: 12,
-    fontFamily: "LatoRegular"
+    paddingVertical: 30,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    backgroundColor: "white"
   },
   inputGrp: {
     height: 30,
-    width: 100,
+    width: deviceWidth - 90,
     flexDirection: "row",
     alignItems: "center",
     borderRadius: 8,
     borderWidth: 1,
     borderColor: colors.darkergrey,
     backgroundColor: "transparent",
-    paddingLeft: 35
+    marginBottom: 10,
+    paddingLeft: 10
   },
   input: {
     flex: 1,
     color: colors.charcoal,
     fontSize: 13,
+    width: 100,
     fontFamily: "LatoBold"
+  },
+  formErrorIcon: {
+    color: colors.darkergrey,
+    right: 5
   },
   formErrorText1: {
     fontSize: Platform.OS === "android" ? 12 : 15,
     color: colors.error,
-    textAlign: "center",
+    textAlign: "right",
     top: -7
   },
   formErrorText2: {
     fontSize: Platform.OS === "android" ? 12 : 15,
     color: "transparent",
-    textAlign: "center",
-    top: -7
+    textAlign: "right",
+    top: -8
   },
   formErrorText3: {
     fontSize: Platform.OS === "android" ? 12 : 15,

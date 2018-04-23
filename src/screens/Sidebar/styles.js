@@ -20,10 +20,9 @@ export default StyleSheet.create({
     backgroundColor: "white"
   },
   avatar: {
-    resizeMode: "center",
     width: 40,
     height: 40,
-    borderRadius: 50,
+    borderRadius: 50
   },
   headerTexts: {
     justifyContent: "center",

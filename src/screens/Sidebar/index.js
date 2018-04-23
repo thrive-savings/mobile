@@ -8,6 +8,7 @@ import {
 } from "native-base";
 
 import { clearStorage } from "../../globals/clearStorage";
+import getAvatar from "../../globals/getAvatar";
 
 import styles from "./styles";
 import colors from "../../theme/colors";
@@ -74,7 +75,8 @@ class SideBar extends Component {
   render() {
     const { navigation } = this.props;
 
-    const { balance, firstName, lastName } = this.props.userData;
+    const avatar = getAvatar(this.props.authReducer, this.props.profileReducer);
+    const { data: { authorized: { balance, firstName, lastName } } } = this.props.authReducer;
     const fullName = firstName + " " + lastName;
     let dollars = balance / 100;
     dollars = dollars % 1 === 0 ? dollars : dollars.toFixed(2);
@@ -83,9 +85,14 @@ class SideBar extends Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity activeOpacity={0.6} style={[styles.header, styles.padder]} onPress={() => navigation.navigate("Profile")}>
-          <Svg width={40} height={40}>
-            <Svg.Circle cx="20" cy="20" r={19} stokeWidth={1} stroke={colors.darkergrey} fill={colors.mediumGrey} />
-          </Svg>
+          {
+            avatar
+              ? <Image source={{uri: `data:image/png;base64,${avatar}`}} style={styles.avatar} />
+              :
+                <Svg width={40} height={40}>
+                  <Svg.Circle cx="20" cy="20" r={19} stokeWidth={1} stroke={colors.darkergrey} fill={colors.mediumGrey} />
+                </Svg>
+          }
           <View style={styles.headerTexts}>
             <Text style={styles.nameText}>{fullName}</Text>
             <Text style={styles.balanceText}>{dollars}</Text>
@@ -107,7 +114,8 @@ class SideBar extends Component {
 
 function mapStateToProps (state) {
   return {
-    userData: state.authReducer.data.authorized
+    profileReducer: state.profileReducer,
+    authReducer: state.authReducer
   };
 }
 

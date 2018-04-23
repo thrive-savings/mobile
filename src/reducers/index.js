@@ -10,6 +10,7 @@ import forgotPasswordReducer from "../screens/ForgotPassword/state/reducer";
 import integrateBankReducer from "../screens/IntegrateBank/state/reducer";
 import homeReducer from "../screens/Home/state/reducer";
 import savingPreferencesReducer from "../screens/SavingPreferences/state/reducer";
+import profileReducer from "../screens/Profile/state/reducer";
 
 import { CLEAR_STORAGE } from "../globals/clearStorage";
 
@@ -21,7 +22,8 @@ const appReducer = combineReducers({
   forgotPasswordReducer,
   integrateBankReducer,
   homeReducer,
-  savingPreferencesReducer
+  savingPreferencesReducer,
+  profileReducer
 });
 
 const rootReducer =  (state, action) => {

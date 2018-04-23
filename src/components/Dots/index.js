@@ -52,8 +52,8 @@ class Dots extends Component {
 }
 
 Dots.propTypes = {
-  step: PropTypes.int,
-  count: PropTypes.int
+  step: PropTypes.number,
+  count: PropTypes.number
 };
 Dots.defaultProps = {
   step: 1,

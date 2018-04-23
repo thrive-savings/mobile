@@ -3,7 +3,6 @@ import colors from "../../theme/colors";
 
 const screen = Dimensions.get("window");
 const deviceWidth = screen.width;
-const deviceHeight = screen.height;
 
 export default StyleSheet.create({
   container: {
@@ -21,7 +20,7 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
-  backIcon: {
+  backButton: {
     alignSelf: "flex-start",
     position: "absolute",
     left: 20
@@ -48,6 +47,11 @@ export default StyleSheet.create({
   photoHolder: {
     width: 100,
     height: 100
+  },
+  avatar: {
+    width: 100,
+    height: 100,
+    borderRadius: 50
   },
   otherContainer: {
     flexDirection: "row",

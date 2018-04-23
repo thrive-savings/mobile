@@ -13,7 +13,7 @@ import {
 import { Field, reduxForm } from "redux-form";
 
 import styles from "./styles";
-const colors = require("../../../../theme/colors");
+import colors from "../../../../theme/colors";
 
 import { verifyCode, resendCode } from "../../state/actions";
 
