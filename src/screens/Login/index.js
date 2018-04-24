@@ -61,7 +61,7 @@ class LoginForm extends Component {
   }
 
   fastLogin() {
-    this.props.authUser({email: "naib@thrivesavings.com", password: "naibferide8"});
+    this.props.authUser({email: "naib@thrivesavings.com", password: "password"});
   }
 
   login() {

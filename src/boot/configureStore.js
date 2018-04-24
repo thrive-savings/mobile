@@ -13,7 +13,7 @@ import { passwordRequestSaga, passwordResetSaga } from "../screens/ForgotPasswor
 import { fetchAccountsSaga, setDefaultSaga } from "../screens/IntegrateBank/state/sagas";
 import fetchHomeSaga from "../screens/Home/state/sagas";
 import { setWorkTypeSaga, setSavingTypeSaga, setSavingDetailsSaga } from "../screens/SavingPreferences/state/sagas";
-import { uploadPhotoSaga, uploadPhotoSucceedSaga } from "../screens/Profile/state/sagas";
+import { uploadPhotoSaga, setPhoneSaga, setPhoneSucceedSaga, setEmailSaga, setEmailSucceedSaga, setPasswordSaga, setPasswordSucceedSaga } from "../screens/Profile/state/sagas";
 
 export default function configureStore(): any {
   const sagaMiddleware = createSagaMiddleware();
@@ -47,7 +47,12 @@ export default function configureStore(): any {
   sagaMiddleware.run(setSavingTypeSaga);
   sagaMiddleware.run(setSavingDetailsSaga);
   sagaMiddleware.run(uploadPhotoSaga);
-  sagaMiddleware.run(uploadPhotoSucceedSaga);
+  sagaMiddleware.run(setPhoneSaga);
+  sagaMiddleware.run(setPhoneSucceedSaga);
+  sagaMiddleware.run(setEmailSaga);
+  sagaMiddleware.run(setEmailSucceedSaga);
+  sagaMiddleware.run(setPasswordSaga);
+  sagaMiddleware.run(setPasswordSucceedSaga);
 
   return { store, persistor };
 }

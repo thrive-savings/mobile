@@ -6,8 +6,10 @@ import {
 } from "react-native";
 import {
   Item,
-  Icon
+  Icon,
+  Toast
 } from "native-base";
+import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 
 import SpecialButton from "../../../../components/SpecialButton";
@@ -47,6 +49,20 @@ class ChangePhoneForm extends Component {
     );
   }
 
+  submit() {
+    if (this.props.valid && this.props.values) {
+      this.props.onSubmit(this.props.values);
+    } else {
+      Toast.show({
+        text: "Enter Valid Phone Number!",
+        duration: 2500,
+        position: "top",
+        type: "danger",
+        textStyle: { textAlign: "center" }
+      });
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -57,11 +73,19 @@ class ChangePhoneForm extends Component {
           type="phone"
           validate={[required, numeric]}
         />
-        <SpecialButton state={1} text={"SUBMIT"} onClick={this.submit}/>
+        <SpecialButton state={1} text={"SUBMIT"} onClick={this.submit.bind(this)}/>
       </View>
     );
   }
 }
+
+function mapStateToProps (state) {
+  return {
+    values: state.form && state.form.changePhone && state.form.changePhone.values ? state.form.changePhone.values : undefined,
+  };
+}
+
+ChangePhoneForm = connect(mapStateToProps)(ChangePhoneForm);
 
 const ChangePhone = reduxForm({
   form: "changePhone"

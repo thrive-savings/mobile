@@ -9,6 +9,8 @@ import getAvatar from "../../globals/getAvatar";
 import styles from "./styles";
 import colors from "../../theme/colors";
 
+import { setPhone, setEmail, setPassword } from "./state/actions";
+
 import ChangePhotoModal from "./modals/ChangePhoto";
 import ChangePhone from "./pages/ChangePhone";
 import ChangeEmail from "./pages/ChangeEmail";
@@ -29,6 +31,21 @@ class Profile extends Component {
 
     this.getDisplayName = this.getDisplayName.bind(this);
     this.onBackPress = this.onBackPress.bind(this);
+  }
+
+  setPhone(payload) {
+    this.props.setPhone(payload);
+    this.setState({ activeContent: "Home" });
+  }
+
+  setEmail(payload) {
+    this.props.setEmail(payload);
+    this.setState({ activeContent: "Home" });
+  }
+
+  setPassword(payload) {
+    this.props.setPassword(payload);
+    this.setState({ activeContent: "Home" });
   }
 
   onBackPress() {
@@ -59,11 +76,11 @@ class Profile extends Component {
       case "Home":
         return this.renderHome();
       case "ChangePhone":
-        return <ChangePhone />;
+        return <ChangePhone onSubmit={this.setPhone.bind(this)} />;
       case "ChangeEmail":
-        return <ChangeEmail />;
+        return <ChangeEmail onSubmit={this.setEmail.bind(this)} />;
       case "ChangePassword":
-        return <ChangePassword />;
+        return <ChangePassword onSubmit={this.setPassword.bind(this)} />;
       default:
         return this.renderHome();
     }
@@ -98,6 +115,20 @@ class Profile extends Component {
   }
 
   renderHome() {
+    const { phone, email } = this.props.authReducer.data.authorized;
+
+    const { isSettingPhone, isSettingEmail, isSettingPassword, error, errorMessage } = this.props.profileReducer;
+
+    let errorText = "";
+    if (error) {
+      const { errors } = errorMessage;
+      if (errors && errors.constructor === Array && errors.length > 0) {
+        errorText = errors[0].value;
+      } else {
+        errorText = "Server Error!";
+      }
+    }
+
     return (
       <View style={styles.contentContainer}>
         {this.renderPhotoContainer()}
@@ -106,28 +137,45 @@ class Profile extends Component {
 
         <View style={styles.otherContainer}>
           <Text style={[styles.labelText, styles.commonText]}>Phone Number:</Text>
-          <TouchableOpacity activeOpacity={0.6} onPress={() => this.setState({activeContent: "ChangePhone"})}>
-            <Text style={[styles.buttonText, styles.commonText]}>(647) 676 3323</Text>
-          </TouchableOpacity>
+          {
+            isSettingPhone
+              ? <Text style={[styles.buttonText, styles.commonText]}>Changing phone ...</Text>
+              :
+                <TouchableOpacity activeOpacity={0.6} onPress={() => this.setState({activeContent: "ChangePhone"})}>
+                  <Text style={[styles.buttonText, styles.commonText]}>{phone}</Text>
+                </TouchableOpacity>
+          }
         </View>
 
         <View style={styles.separator} />
 
         <View style={styles.otherContainer}>
           <Text style={[styles.labelText, styles.commonText]}>Email:</Text>
-          <TouchableOpacity activeOpacity={0.6} onPress={() => this.setState({activeContent: "ChangeEmail"})}>
-            <Text style={[styles.buttonText, styles.commonText]}>naib.baghirov@gmail.com</Text>
-          </TouchableOpacity>
+          {
+            isSettingEmail
+              ? <Text style={[styles.buttonText, styles.commonText]}>Changing email ...</Text>
+              :
+                <TouchableOpacity activeOpacity={0.6} onPress={() => this.setState({activeContent: "ChangeEmail"})}>
+                  <Text style={[styles.buttonText, styles.commonText]}>{email}</Text>
+                </TouchableOpacity>
+          }
         </View>
 
         <View style={styles.separator} />
 
         <View style={styles.otherContainer}>
           <Text style={[styles.labelText, styles.commonText]}>Password:</Text>
-          <TouchableOpacity activeOpacity={0.6} onPress={() => this.setState({activeContent: "ChangePassword"})}>
-            <Text style={[styles.buttonText, styles.commonText]}>Change Password</Text>
-          </TouchableOpacity>
+          {
+            isSettingPassword
+              ? <Text style={[styles.buttonText, styles.commonText]}>Changing password ...</Text>
+              :
+                <TouchableOpacity activeOpacity={0.6} onPress={() => this.setState({activeContent: "ChangePassword"})}>
+                  <Text style={[styles.buttonText, styles.commonText]}>Change Password</Text>
+                </TouchableOpacity>
+          }
         </View>
+
+        {error && <Text style={styles.formErrorText3}>{errorText}</Text>}
       </View>
     );
   }
@@ -163,4 +211,12 @@ function mapStateToProps (state) {
   };
 }
 
-export default connect(mapStateToProps)(Profile);
+function mapDispatchToProps (dispatch) {
+  return {
+    setPhone: (payload) => dispatch(setPhone(payload)),
+    setEmail: (payload) => dispatch(setEmail(payload)),
+    setPassword: (payload) => dispatch(setPassword(payload))
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

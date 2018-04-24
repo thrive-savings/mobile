@@ -6,8 +6,10 @@ import {
 } from "react-native";
 import {
   Item,
-  Icon
+  Icon,
+  Toast
 } from "native-base";
+import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 
 import SpecialButton from "../../../../components/SpecialButton";
@@ -56,6 +58,31 @@ class ChangePasswordForm extends Component {
     );
   }
 
+  submit() {
+    if (this.props.valid && this.props.values) {
+      const { password, newPassword, confirmPassword } = this.props.values;
+      if (newPassword === confirmPassword) {
+        this.props.onSubmit({ password, newPassword });
+      } else {
+        Toast.show({
+          text: "Passwords don't match",
+          duration: 2500,
+          position: "top",
+          type: "danger",
+          textStyle: { textAlign: "center" }
+        });
+      }
+    } else {
+      Toast.show({
+        text: "Enter Valid Password",
+        duration: 2500,
+        position: "top",
+        type: "danger",
+        textStyle: { textAlign: "center" }
+      });
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -77,11 +104,19 @@ class ChangePasswordForm extends Component {
           type="confirmPassword"
           validate={[required, minLength8]}
         />
-        <SpecialButton state={1} text={"SUBMIT"} onClick={this.submit}/>
+        <SpecialButton state={1} text={"SUBMIT"} onClick={this.submit.bind(this)}/>
       </View>
     );
   }
 }
+
+function mapStateToProps (state) {
+  return {
+    values: state.form && state.form.changePassword && state.form.changePassword.values ? state.form.changePassword.values : undefined,
+  };
+}
+
+ChangePasswordForm = connect(mapStateToProps)(ChangePasswordForm);
 
 const ChangePassword = reduxForm({
   form: "changePassword"

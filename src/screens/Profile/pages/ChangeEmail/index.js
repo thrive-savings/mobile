@@ -6,8 +6,10 @@ import {
 } from "react-native";
 import {
   Item,
-  Icon
+  Icon,
+  Toast
 } from "native-base";
+import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 
 import SpecialButton from "../../../../components/SpecialButton";
@@ -49,6 +51,20 @@ class ChangeEmailForm extends Component {
     );
   }
 
+  submit() {
+    if (this.props.valid && this.props.values) {
+      this.props.onSubmit(this.props.values);
+    } else {
+      Toast.show({
+        text: "Enter Valid Email!",
+        duration: 2500,
+        position: "top",
+        type: "danger",
+        textStyle: { textAlign: "center" }
+      });
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -59,11 +75,19 @@ class ChangeEmailForm extends Component {
           type="email"
           validate={[required, email]}
         />
-        <SpecialButton state={1} text={"SUBMIT"} onClick={this.submit}/>
+        <SpecialButton state={1} text={"SUBMIT"} onClick={this.submit.bind(this)}/>
       </View>
     );
   }
 }
+
+function mapStateToProps (state) {
+  return {
+    values: state.form && state.form.changeEmail && state.form.changeEmail.values ? state.form.changeEmail.values : undefined,
+  };
+}
+
+ChangeEmailForm = connect(mapStateToProps)(ChangeEmailForm);
 
 const ChangeEmail = reduxForm({
   form: "changeEmail"

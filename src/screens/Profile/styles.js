@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, Platform } from "react-native";
 import colors from "../../theme/colors";
 
 const screen = Dimensions.get("window");
@@ -83,5 +83,13 @@ export default StyleSheet.create({
     height: 1,
     alignSelf: "stretch",
     backgroundColor: colors.mediumGrey
+  },
+
+  formErrorText3: {
+    fontSize: Platform.OS === "android" ? 12 : 15,
+    color: colors.error,
+    textAlign: "center",
+    top: -10,
+    paddingHorizontal: 20
   }
 });

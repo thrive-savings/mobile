@@ -1,8 +1,11 @@
-import { UPLOAD_PHOTO_URL } from "./constants";
+import { UPLOAD_PHOTO_URL, SET_PHONE_URL, SET_EMAIL_URL, SET_PASSWORD_URL } from "./constants";
 const initialState = {
   data: {},
   uploadedAvatar: undefined,
   isLoading: false,
+  isSettingPhone: false,
+  isSettingEmail: false,
+  isSettingPassword: false,
   error: false,
   errorMessage: "",
   step: 0
@@ -30,6 +33,78 @@ export default function profileReducer(state = initialState, action) {
       return {
         ...state,
         isLoading: false,
+        error: true,
+        errorMessage: action.error
+      };
+
+    // Set Phone cases
+    case `${SET_PHONE_URL}_SUBMIT`:
+      return {
+        ...state,
+        isSettingPhone: true
+      };
+    case `${SET_PHONE_URL}_SUCCEED`:
+      const { payload: { data: setPhoneData } } = action;
+      return {
+        ...state,
+        data: setPhoneData,
+        isSettingPhone: false,
+        step: 1,
+        error: false,
+        errorMessage: ""
+      };
+    case `${SET_PHONE_URL}_FAIL`:
+      return {
+        ...state,
+        isSettingPhone: false,
+        error: true,
+        errorMessage: action.error
+      };
+
+    // Set Email cases
+    case `${SET_EMAIL_URL}_SUBMIT`:
+      return {
+        ...state,
+        isSettingEmail: true
+      };
+    case `${SET_EMAIL_URL}_SUCCEED`:
+      const { payload: { data: setEmailData } } = action;
+      return {
+        ...state,
+        data: setEmailData,
+        isSettingEmail: false,
+        step: 1,
+        error: false,
+        errorMessage: ""
+      };
+    case `${SET_EMAIL_URL}_FAIL`:
+      return {
+        ...state,
+        isSettingEmail: false,
+        error: true,
+        errorMessage: action.error
+      };
+
+    // Set Password cases
+    case `${SET_PASSWORD_URL}_SUBMIT`:
+      return {
+        ...state,
+        isSettingPassword: true
+      };
+    case `${SET_PASSWORD_URL}_SUCCEED`:
+      const { payload: { data: setPasswordData } } = action;
+      return {
+        ...state,
+        data: setPasswordData,
+        isSettingPassword: false,
+        step: 1,
+        error: false,
+        errorMessage: ""
+      };
+    case `${SET_PASSWORD_URL}_FAIL`:
+      return {
+        ...state,
+        isSettingPassword: false,
         error: true,
         errorMessage: action.error
       };

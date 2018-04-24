@@ -1,8 +1,7 @@
-import { AsyncStorage } from "react-native";
-import { UPLOAD_PHOTO_URL } from "./constants";
+import { UPLOAD_PHOTO_URL, SET_PHONE_URL, SET_EMAIL_URL, SET_PASSWORD_URL } from "./constants";
 import { put, takeEvery } from "redux-saga/effects";
 import { requestApi } from "../../../globals/requestApi";
-import { updateAuthData, updateAvatar } from "../../Login/state/actions";
+import { updateAuthData } from "../../Login/state/actions";
 
 
 const uploadPhotoSaga = function * () {
@@ -11,12 +10,40 @@ const uploadPhotoSaga = function * () {
   });
 };
 
-const uploadPhotoSucceedSaga = function * () {
-  yield takeEvery(`${UPLOAD_PHOTO_URL}_SUCCEED`, function * ({ payload: { avatar } }) {
-    console.log("Received the new avatar");
-    //AsyncStorage.removeItem("persist:authReducer.avatar");
-    //yield put(updateAvatar(avatar));
+const setPhoneSaga = function * () {
+  yield takeEvery(`${SET_PHONE_URL}_SUBMIT`, function * ({ payload }) {
+    yield put(requestApi(`${SET_PHONE_URL}`, { data: payload }, { form: "setPhone" }));
   });
 };
 
-export { uploadPhotoSaga, uploadPhotoSucceedSaga };
+const setPhoneSucceedSaga = function * () {
+  yield takeEvery(`${SET_PHONE_URL}_SUCCEED`, function * ({ payload }) {
+    yield put(updateAuthData(payload));
+  });
+};
+
+const setEmailSaga = function * () {
+  yield takeEvery(`${SET_EMAIL_URL}_SUBMIT`, function * ({ payload }) {
+    yield put(requestApi(`${SET_EMAIL_URL}`, { data: payload }, { form: "setEmail" }));
+  });
+};
+
+const setEmailSucceedSaga = function * () {
+  yield takeEvery(`${SET_EMAIL_URL}_SUCCEED`, function * ({ payload }) {
+    yield put(updateAuthData(payload));
+  });
+};
+
+const setPasswordSaga = function * () {
+  yield takeEvery(`${SET_PASSWORD_URL}_SUBMIT`, function * ({ payload }) {
+    yield put(requestApi(`${SET_PASSWORD_URL}`, { data: payload }, { form: "setPassword" }));
+  });
+};
+
+const setPasswordSucceedSaga = function * () {
+  yield takeEvery(`${SET_PASSWORD_URL}_SUCCEED`, function * ({ payload }) {
+    yield put(updateAuthData(payload));
+  });
+};
+
+export { uploadPhotoSaga, setPhoneSaga, setPhoneSucceedSaga, setEmailSaga, setEmailSucceedSaga, setPasswordSaga, setPasswordSucceedSaga };
