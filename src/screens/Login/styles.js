@@ -99,7 +99,8 @@ export default StyleSheet.create({
   },
   signUpLabelText: {
     color: colors.charcoal,
-    fontSize: 10
+    fontSize: 10,
+    fontFamily: "LatoRegular"
   },
   signUpBtn: {
     top: -11,
@@ -108,5 +109,6 @@ export default StyleSheet.create({
   signUpBtnText: {
     color: colors.blue,
     fontSize: 10,
+    fontFamily: "LatoRegular"
   }
 });

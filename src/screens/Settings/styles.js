@@ -1,110 +1,76 @@
-const React = require("react-native");
-const { Dimensions, Platform } = React;
+import { StyleSheet, Dimensions } from "react-native";
+import colors from "../../theme/colors";
 
-const primary = require("../../theme/variables/commonColor").brandPrimary;
+const screen = Dimensions.get("window");
+const deviceWidth = screen.width;
 
-export default {
-  header: {
-    width: Dimensions.get("window").width,
-    paddingLeft: 15,
-    paddingRight: 15,
-    marginLeft: Platform.OS === "ios" ? undefined : -30
-  },
-  rowHeader: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignSelf: "stretch",
-    paddingTop: Platform.OS === "android" ? 0 : 0
-  },
-  btnHeader: {
-    alignSelf: "center"
-  },
-  imageHeader: {
-    height: 25,
-    width: 95,
-    resizeMode: "contain"
-  },
+export default StyleSheet.create({
   container: {
+    flex: 1
+  },
+  background: {
     flex: 1,
     width: null,
     height: null
   },
-  bg: {
-    backgroundColor: primary
-  },
-  signupHeader: {
-    alignSelf: "center",
-    fontSize: 22,
-    fontWeight: "bold",
-    marginTop: 20,
-    padding: 5
-  },
-  roundedButton: {
-    alignSelf: "center",
-    alignItems: "center",
+
+  //Header styles
+  header: {
+    flex: 0.1,
     justifyContent: "center",
-    backgroundColor: "rgba(0,0,0,0.2)",
-    borderRadius: 30,
-    width: 60,
-    height: 60
+    alignItems: "center"
   },
-  profilePic: {
-    width: 60,
-    height: 60,
-    borderRadius: Platform.OS === "android" ? 60 : 30
+  headerIcon: {
+    alignSelf: "flex-start",
+    position: "absolute",
+    left: 25
   },
-  signupContainer: {
-    marginTop: 30,
+  headerText: {
+    color: "white",
+    fontSize: 14,
+    fontFamily: "LatoRegular"
+  },
+
+  // Content styles
+  contentContainer: {
+    flex: 1,
+    width: deviceWidth - 40,
+    alignSelf: "center",
+    paddingVertical: 10,
+  },
+  contentBox: {
+    backgroundColor: "white",
+    borderRadius: 8,
+    paddingTop: 20,
+    marginBottom: 20
+  },
+  contentTitle: {
     paddingLeft: 20,
-    paddingRight: 20
+    color: colors.darkerGrey,
+    fontSize: 15,
+    fontFamily: "LatoRegular",
+    letterSpacing: 1.5
   },
-  inputGrp: {
+  contentRow: {
     flexDirection: "row",
-    borderRadius: 25,
-    backgroundColor: "rgba(0,0,0,0.2)",
-    marginBottom: 20,
-    borderWidth: 0,
-    borderColor: "transparent"
-  },
-  input: {
-    color: "#fff"
-  },
-  notificationSwitchContainer: {
-    backgroundColor: "#fff",
+    justifyContent: "space-between",
+    alignItems: "center",
     padding: 20
   },
-  notificationHeader: {
-    color: primary,
-    fontWeight: "bold",
-    paddingBottom: 20
+  regularText: {
+    color: colors.charcoal,
+    fontSize: 13,
+    fontFamily: "LatoRegular",
+    letterSpacing: 0.2
   },
-  switchText: {
-    color: "#555",
-    fontWeight: "bold",
-    alignSelf: "flex-start"
+  blueText: {
+    color: colors.blue
   },
-  aswitchText: {
-    color: "#555",
-    fontWeight: "bold"
-  },
-  switchContainer: {
-    alignSelf: "flex-end"
-  },
-  aswitchContainer: {},
-  switch: {
-    transform: [{ scaleX: 0.75 }, { scaleY: 0.75 }],
-    alignSelf: "flex-end",
-    marginTop: Platform.OS === "android" ? -2 : -5,
-    paddingTop: Platform.OS === "android" ? 0 : 10,
-    paddingBottom: Platform.OS === "android" ? 0 : 10
-  },
-  child: {
-    marginBottom: Platform.OS === "ios" ? 15 : 15
-  },
-  profileButtons: {
-    flexDirection: "row",
-    marginVertical: 10,
-    justifyContent: "space-around"
+
+  // Separator style
+  separator: {
+    height: 1,
+    alignSelf: "stretch",
+    backgroundColor: colors.mediumGrey
   }
-};
+});

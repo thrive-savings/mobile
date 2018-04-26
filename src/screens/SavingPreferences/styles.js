@@ -23,7 +23,8 @@ export default StyleSheet.create({
   },
   headerText: {
     color: "white",
-    fontSize: 14
+    fontSize: 14,
+    fontFamily: "LatoRegular"
   },
   contentContainer: {
     flex: 0.7,

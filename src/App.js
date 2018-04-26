@@ -37,7 +37,7 @@ const Drawer = DrawerNavigator(
     Settings: { screen: Settings }
   },
   {
-    initialRouteName: "Profile",
+    initialRouteName: "Settings",
     contentComponent: props => <Sidebar {...props} />
   }
 );
@@ -101,7 +101,7 @@ class App extends React.Component {
     if (authorized) {
       if (!authorized.isVerified) {
         stacker = <StackerWithVerifyCode />;
-      } else if ((authorized.account && authorized.account.flLoginID) || false) {
+      } else if ((authorized.account && authorized.account.flLoginID) || true) {
         stacker = <StackerWithDrawer />;
       } else {
         stacker = <StackerWithIntegrateBank />;
