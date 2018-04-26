@@ -1,5 +1,5 @@
-// @flow
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { Image, StatusBar, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import {
@@ -24,17 +24,18 @@ import colors from "../../theme/colors";
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
 const backIcon = require("../../../assets/Icons/Back/back.png");
 
-type Props = {
-  navigation: () => void
-};
+
 class SavingPreferences extends Component {
-  constructor(props: Props) {
-    super(props);
+  onBackArrowClick() {
+    const { navigation, savingPreferencesReducer: { step } } = this.props;
+    if (step) {
+      this.props.changeStep({step: step - 1});
+    } else {
+      navigation.goBack();
+    }
   }
 
   render() {
-    const navigation = this.props.navigation;
-
     const { step, values: { savingType } } = this.props.savingPreferencesReducer;
 
     let body;
@@ -77,7 +78,7 @@ class SavingPreferences extends Component {
           style={styles.background}
         >
           <View style={styles.headerContainer}>
-            <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()} style={styles.headerIcon}>
+            <TouchableOpacity activeOpacity={0.6} onPress={this.onBackArrowClick.bind(this)} style={styles.headerIcon}>
               <Image source={backIcon} style={styles.headerIconImage}/>
             </TouchableOpacity>
             <Text style={styles.headerText}>SAVING PREFERENCES</Text>
@@ -90,6 +91,13 @@ class SavingPreferences extends Component {
     );
   }
 }
+
+SavingPreferences.propTypes = {
+  navigation: PropTypes.object
+};
+SavingPreferences.defaultProps = {
+  navigation: {}
+};
 
 function mapStateToProps(state) {
   return {

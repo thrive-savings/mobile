@@ -66,6 +66,9 @@ export default StyleSheet.create({
   blueText: {
     color: colors.blue
   },
+  disabledText: {
+    color: colors.darkerGrey
+  },
 
   // Separator style
   separator: {

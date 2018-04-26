@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { TouchableOpacity, Image } from "react-native";
 import { LinearGradient } from "expo";
 import {
@@ -19,7 +20,7 @@ const tagManualBg = require("../../../../../assets/Icons/Tags/manual.png");
 
 const SAVING_TYPES = [
   {
-    name: "flex",
+    name: "Thrive Flex",
     displayName: "THRIVE FLEX",
     tag: "AUTOMATIC",
     tagBgImage: tagAutoBg,
@@ -31,7 +32,7 @@ const SAVING_TYPES = [
     }
   },
   {
-    name: "fixed",
+    name: "Thrive Fixed",
     displayName: "THRIVE FIXED",
     tag: "MANUAL",
     tagBgImage: tagManualBg,
@@ -44,16 +45,11 @@ const SAVING_TYPES = [
   }
 ];
 
-type Props = {
-  navigation: () => void
-};
-class SavingType extends Component {
-  state: {
-    savingType: ""
-  };
 
-  constructor(props: Props) {
+class SavingType extends Component {
+  constructor(props) {
     super(props);
+
     this.state = {
       savingType: ""
     };
@@ -63,9 +59,7 @@ class SavingType extends Component {
   }
 
   next() {
-    // TODO: connect api here
     this.props.save({savingType: this.state.savingType});
-    //this.props.changeStep(2);
   }
 
   typeSelected(savingType: string) {
@@ -114,7 +108,7 @@ class SavingType extends Component {
 
     return (
       <Card style={styles.container}>
-        <Dots step={2} />
+        {this.props.showDots && <Dots step={2} />}
 
         <Text style={styles.labelText}>HOW WOULD YOU LIKE TO SAVE?</Text>
         <Text style={styles.secondaryText}>You can come back and update this later.</Text>
@@ -128,5 +122,14 @@ class SavingType extends Component {
     );
   }
 }
+
+SavingType.propTypes = {
+  navigation: PropTypes.object,
+  showDots: PropTypes.bool
+};
+SavingType.defaultProps = {
+  navigation: {},
+  showDots: true
+};
 
 export default SavingType;

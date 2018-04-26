@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { TouchableOpacity } from "react-native";
 import {
   View,
@@ -18,19 +19,9 @@ import getFrequencySetterModalContent from "../../modals/FrequencySetter";
 import styles from "./styles";
 import { FREQUENCY_TYPES } from "./constants";
 
-type Props = {
-  next: () => void
-};
-class FixedPlan extends Component {
-  state = {
-    contribution: "$20.00",
-    setContribution: 0,
-    frequencyIndex: 0,
-    showContributionSetter: false,
-    showFrequencySetter: false
-  };
 
-  constructor(props: Props) {
+class FixedPlan extends Component {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -76,7 +67,7 @@ class FixedPlan extends Component {
   render() {
     return (
       <Card style={styles.container}>
-        <Dots step={3} />
+        {this.props.showDots && <Dots step={3} />}
 
         <Text style={styles.labelText}>HOW MUCH WOULD YOU LIKE TO SAVE?</Text>
         <Text style={styles.secondaryText}>
@@ -155,5 +146,14 @@ class FixedPlan extends Component {
     );
   }
 }
+
+FixedPlan.propTypes = {
+  next: PropTypes.func,
+  showDots: PropTypes.bool
+};
+FixedPlan.defaultProps = {
+  next: () => {},
+  showDots: true
+};
 
 export default FixedPlan;

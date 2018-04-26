@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import {
   View,
   Text,
@@ -10,11 +11,8 @@ import Dots from "../../../../components/Dots";
 
 import styles from "./styles";
 
-type Props = {
-  next: () => void
-};
 class FlexPlan extends Component {
-  constructor(props: Props) {
+  constructor(props) {
     super(props);
 
     this.next = this.next.bind(this);
@@ -50,5 +48,12 @@ class FlexPlan extends Component {
     );
   }
 }
+
+FlexPlan.propTypes = {
+  next: PropTypes.func
+};
+FlexPlan.defaultProps = {
+  next: () => {}
+};
 
 export default FlexPlan;

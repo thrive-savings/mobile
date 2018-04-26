@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { TouchableOpacity, Image } from "react-native";
 import {
   Text,
@@ -20,19 +21,13 @@ const sharingEconomy = require("../../../../../assets/WorkTypes/Sharing.png");
 const contract = require("../../../../../assets/WorkTypes/Contract.png");
 
 const WORK_TYPES = [
-  {text: "FULL-TIME", icon: fullTime},
-  {text: "PART-TIME", icon: partTime},
-  {text: "CONTRACT", icon: contract},
-  {text: "SHARING ECONOMY", icon: sharingEconomy}];
+  {text: "Full Time", displayText: "FULL-TIME", icon: fullTime},
+  {text: "Part Time", displayText: "PART-TIME", icon: partTime},
+  {text: "Contract", displayText: "CONTRACT", icon: contract},
+  {text: "Sharing Economy", displayText: "SHARING ECONOMY", icon: sharingEconomy}];
 
-type Props = {
-  navigation: () => void
-};
+
 class WorkType extends Component {
-  state: {
-    workType: ""
-  };
-
   constructor(props: Props) {
     super(props);
 
@@ -44,9 +39,7 @@ class WorkType extends Component {
   }
 
   next() {
-    // TODO: save workType
     this.props.save({ workType: this.state.workType });
-    //this.props.changeStep(1);
   }
 
   typeSelected(type: string) {
@@ -54,7 +47,7 @@ class WorkType extends Component {
   }
 
   renderGridElem(type: object) {
-    const { text, icon } = type;
+    const { text, displayText, icon } = type;
 
     const anotherOneSelected = this.state.workType && this.state.workType !== text;
     const thisSelected = this.state.workType && this.state.workType === text;
@@ -62,7 +55,7 @@ class WorkType extends Component {
     let body =
       <TouchableOpacity activeOpacity={0.6} style={styles.gridElem} onPress={() => this.typeSelected(text)}>
         <Image source={icon} style={[styles.workTypeImg, (anotherOneSelected && styles.disabledType)]} />
-        <Text style={[styles.workTypeText, (anotherOneSelected && styles.disabledType)]}>{text}</Text>
+        <Text style={[styles.workTypeText, (anotherOneSelected && styles.disabledType)]}>{displayText}</Text>
       </TouchableOpacity>;
 
     if (thisSelected) {
@@ -70,7 +63,7 @@ class WorkType extends Component {
       <TouchableOpacity activeOpacity={0.6} style={styles.gridElem} onPress={() => this.typeSelected(text)}>
         <Image source={border} style={styles.gridElemGradient}>
           <Image source={icon} style={styles.workTypeImg} />
-          <Text style={styles.workTypeText}>{text}</Text>
+          <Text style={styles.workTypeText}>{displayText}</Text>
         </Image>
       </TouchableOpacity>;
     }
@@ -81,7 +74,7 @@ class WorkType extends Component {
   render() {
     return (
       <Card style={styles.container}>
-        <Dots step={1} />
+        {this.props.showDots && <Dots step={1} />}
 
         <Text style={styles.labelText}>WHAT TYPE OF WORK DO YOU DO?</Text>
         <Text style={styles.secondaryText}>Choose your primary income source.</Text>
@@ -110,5 +103,14 @@ class WorkType extends Component {
     );
   }
 }
+
+WorkType.propTypes = {
+  navigation: PropTypes.object,
+  showDots: PropTypes.bool
+};
+WorkType.defaultProps = {
+  navigation: {},
+  showDots: true
+};
 
 export default WorkType;

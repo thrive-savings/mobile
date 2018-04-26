@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { Image } from "react-native";
 import {
   Text,
@@ -47,5 +48,12 @@ class AllSet extends Component {
     );
   }
 }
+
+AllSet.propTypes = {
+  next: PropTypes.func
+};
+AllSet.defaultProps = {
+  next: () => {}
+};
 
 export default AllSet;
