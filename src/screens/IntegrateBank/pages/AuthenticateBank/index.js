@@ -1,13 +1,20 @@
 import React, { Component } from "react";
-import { WebView, Image, StatusBar } from "react-native";
-import { connect } from "react-redux";
 import {
+  WebView,
+  View,
+  ScrollView,
+  Image,
   Text,
-  Spinner
-} from "native-base";
+  TouchableOpacity
+} from "react-native";
+import { connect } from "react-redux";
 
-import { URL, FlinksURL } from "../../../config";
-import { fetchAccounts, setDefault } from "./state/actions";
+import Dots from "../../../../components/Dots";
+
+import { URL, FlinksURL } from "../../../../../config";
+import { fetchAccounts, setDefault } from "../../state/actions";
+
+import styles from "./styles";
 
 class AuthenticateBank extends Component {
   constructor(props) {
@@ -34,7 +41,7 @@ class AuthenticateBank extends Component {
     this.props.fetchAccounts({loginID: this.state.loginId});
   }
 
-  render() {
+  render_old() {
     console.log(`Rendering IntegrateBank component with following state: `);
     console.log(this.state);
 
@@ -51,6 +58,22 @@ class AuthenticateBank extends Component {
         />
       );
     }
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <Dots step={2} />
+
+        <Text style={styles.titleText}>LINK YOUR BANK ACCOUNT</Text>
+
+        <WebView
+          source={{uri: `${FlinksURL}/?demo=true&jsRedirect=true&stringify=true&waitSummary=true&backgroundColor=58cd83&redirectUrl=${URL}/integration`}}
+          onMessage={this.onMessage}
+          style={styles.webViewContainer}
+        />
+      </View>
+    );
   }
 }
 

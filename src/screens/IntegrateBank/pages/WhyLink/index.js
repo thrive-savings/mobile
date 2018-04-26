@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import {
   View,
   ScrollView,
@@ -49,10 +50,17 @@ class WhyLink extends Component {
         <Accordion title={"Take your money out anytime."} description={"Text our chatbot and your funds will be sent back to your chequing account."} />
 
         <View style={styles.separator} />
-        <SpecialButton text={"LINK MY ACCOUNT"} onClick={this.next} state={1} />
+        <SpecialButton text={"LINK MY ACCOUNT"} onClick={this.props.next} state={1} />
       </ScrollView>
     );
   }
 }
+
+WhyLink.propTypes = {
+  next: PropTypes.func
+};
+WhyLink.defaultProps = {
+  next: () => {}
+};
 
 export default WhyLink;
