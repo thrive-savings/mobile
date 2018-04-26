@@ -62,7 +62,7 @@ class VerifyCodeModal extends Component {
               ref={c => (this.textInput = c)}
               style={styles.input}
               placeholder={"0000"}
-              placeholderTextColor={colors.darkergrey}
+              placeholderTextColor={colors.darkerGrey}
               underlineColorAndroid="transparent"
               {...input}
             />

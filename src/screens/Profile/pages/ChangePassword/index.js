@@ -35,7 +35,7 @@ class ChangePasswordForm extends Component {
                   ? "New Password"
                   : "Confirm Password"
             }
-            placeholderTextColor={colors.darkergrey}
+            placeholderTextColor={colors.darkerGrey}
             secureTextEntry={true}
             underlineColorAndroid="transparent"
             {...input}

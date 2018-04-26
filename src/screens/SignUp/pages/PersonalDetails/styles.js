@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   gender: {
     borderWidth: 1,
     borderRadius: 8,
-    borderColor: colors.darkergrey,
+    borderColor: colors.darkerGrey,
     justifyContent: "center",
     width: formWidthAfterPadding / 3 - formSpaceBetween / 2,
     height: 30,
@@ -70,14 +70,14 @@ const styles = StyleSheet.create({
     height: 80,
     borderWidth: 1,
     borderRadius: 8,
-    borderColor: colors.darkergrey
+    borderColor: colors.darkerGrey
   },
   genderText: {
     fontSize: 13,
     fontFamily: "LatoRegular"
   },
   genderPlaceholder: {
-    color: colors.darkergrey
+    color: colors.darkerGrey
   },
   genderSelected: {
     color: colors.charcoal
@@ -95,13 +95,13 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: colors.darkergrey,
+    borderColor: colors.darkerGrey,
     backgroundColor: "transparent",
     marginBottom: 10,
     marginLeft: 2
   },
   datePickerPlaceholder: {
-    color: colors.darkergrey,
+    color: colors.darkerGrey,
     paddingLeft: 10,
     fontSize: 13,
     fontFamily: "LatoRegular"
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     width: 15,
     height: 15,
     borderWidth: 1,
-    borderColor: colors.darkergrey,
+    borderColor: colors.darkerGrey,
     borderRadius: 2,
     backgroundColor: "transparent"
   },
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: colors.darkergrey,
+    borderColor: colors.darkerGrey,
     backgroundColor: "transparent",
     marginBottom: 5
   },
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     fontFamily: "LatoRegular"
   },
   formErrorIcon: {
-    color: colors.darkergrey,
+    color: colors.darkerGrey,
     right: 5
   },
   formErrorText1: {
@@ -213,7 +213,7 @@ const addressFinderStyles = StyleSheet.create({
   },
   textInputContainer: {
     borderWidth: 1,
-    borderColor: colors.darkergrey,
+    borderColor: colors.darkerGrey,
     borderRadius: 8,
     backgroundColor: "transparent",
     height: 30,
@@ -234,7 +234,7 @@ const addressFinderStyles = StyleSheet.create({
     width: formWidthAfterPadding - 10,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: colors.darkergrey,
+    borderColor: colors.darkerGrey,
     backgroundColor: "transparent",
     paddingHorizontal: 10
   },
@@ -242,13 +242,13 @@ const addressFinderStyles = StyleSheet.create({
     paddingHorizontal: 0,
   },
   description: {
-    color: colors.darkergrey,
+    color: colors.darkerGrey,
     fontSize: 13,
     fontFamily: "LatoRegular"
   },
   separator: {
     height: 1,
-    backgroundColor: colors.darkergrey
+    backgroundColor: colors.darkerGrey
   }
 });
 

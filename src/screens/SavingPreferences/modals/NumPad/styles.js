@@ -32,7 +32,7 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 1,
-    borderColor: colors.darkergrey
+    borderColor: colors.darkerGrey
   },
   elemText: {
     color: colors.charcoal

@@ -54,7 +54,7 @@ class ForgotPasswordForm extends Component {
       <View>
         <Item error={error && touched} rounded style={styles.inputGrp}>
           <Input
-            placeholderTextColor={colors.darkergrey}
+            placeholderTextColor={colors.darkerGrey}
             style={styles.input}
             placeholder={
               input.name === "email"

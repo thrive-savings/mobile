@@ -169,7 +169,7 @@ class PersonalDetails extends Component {
         <Item error={error && touched} rounded style={[styles.inputGrp, INPUT_FIELDS[input.name].extraStyle]}>
           <Input
             ref={c => (this.textInput = c)}
-            placeholderTextColor={colors.darkergrey}
+            placeholderTextColor={colors.darkerGrey}
             style={styles.input}
             placeholder={INPUT_FIELDS[input.name].placeholder}
             secureTextEntry={INPUT_FIELDS[input.name].secureEntry}
@@ -263,7 +263,7 @@ class PersonalDetails extends Component {
             <View style={styles.inputRow}>
               <GooglePlacesAutocomplete
                 placeholder="Address"
-                placeholderTextColor={colors.darkergrey}
+                placeholderTextColor={colors.darkerGrey}
                 minLength={2}
                 autoFocus={false}
                 returnKeyType={"default"}

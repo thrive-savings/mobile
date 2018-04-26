@@ -95,14 +95,13 @@ const StackerWithVerifyCode = StackNavigator(
 
 class App extends React.Component {
   render() {
-
     let stacker = <StackerWithLogin />;
 
     const authorized = getAuthorized(this.props.authReducer);
     if (authorized) {
       if (!authorized.isVerified) {
         stacker = <StackerWithVerifyCode />;
-      } else if ((authorized.account && authorized.account.flLoginID) || true) {
+      } else if ((authorized.account && authorized.account.flLoginID) || false) {
         stacker = <StackerWithDrawer />;
       } else {
         stacker = <StackerWithIntegrateBank />;

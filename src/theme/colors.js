@@ -5,7 +5,7 @@ module.exports = {
   lightgrey: "#FDFDFD",
   grey: "#F9F9F9",
   mediumGrey: "#D8D8D8",
-  darkergrey: "#ADB4BE",
+  darkerGrey: "#ADB4BE",
   darkestGrey: "#979797",
   statusbar: "#229CC6",
   error: "#A12938",

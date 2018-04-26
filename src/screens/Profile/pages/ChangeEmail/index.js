@@ -29,7 +29,7 @@ class ChangeEmailForm extends Component {
             ref={c => (this.textInput = c)}
             style={styles.input}
             placeholder="New Email"
-            placeholderTextColor= {colors.darkergrey}
+            placeholderTextColor= {colors.darkerGrey}
             underlineColorAndroid="transparent"
             {...input}
           />

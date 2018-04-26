@@ -90,7 +90,7 @@ class SideBar extends Component {
               ? <Image source={{uri: `data:image/png;base64,${avatar}`}} style={styles.avatar} />
               :
                 <Svg width={40} height={40}>
-                  <Svg.Circle cx="20" cy="20" r={19} stokeWidth={1} stroke={colors.darkergrey} fill={colors.mediumGrey} />
+                  <Svg.Circle cx="20" cy="20" r={19} stokeWidth={1} stroke={colors.darkerGrey} fill={colors.mediumGrey} />
                 </Svg>
           }
           <View style={styles.headerTexts}>

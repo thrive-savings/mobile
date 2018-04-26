@@ -31,7 +31,7 @@ export default StyleSheet.create({
     alignItems: "center",
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: colors.darkergrey,
+    borderColor: colors.darkerGrey,
     backgroundColor: "transparent",
     marginBottom: 10,
     paddingLeft: 20
@@ -39,7 +39,7 @@ export default StyleSheet.create({
   inputLabel: {
     fontSize: 13,
     fontFamily: "LatoBold",
-    color: colors.darkergrey,
+    color: colors.darkerGrey,
     paddingRight: 20
   },
   input: {
@@ -50,7 +50,7 @@ export default StyleSheet.create({
     fontFamily: "LatoBold"
   },
   formErrorIcon: {
-    color: colors.darkergrey,
+    color: colors.darkerGrey,
     right: 5
   },
   formErrorText1: {

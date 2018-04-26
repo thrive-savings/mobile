@@ -21,7 +21,7 @@ export default StyleSheet.create({
     alignItems: "center",
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: colors.darkergrey,
+    borderColor: colors.darkerGrey,
     backgroundColor: "transparent",
     marginBottom: 10,
     paddingLeft: 10
@@ -34,7 +34,7 @@ export default StyleSheet.create({
     fontFamily: "LatoBold"
   },
   formErrorIcon: {
-    color: colors.darkergrey,
+    color: colors.darkerGrey,
     right: 5
   },
   formErrorText1: {
