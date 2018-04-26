@@ -17,8 +17,8 @@ import ChangeEmail from "./pages/ChangeEmail";
 import ChangePassword from "./pages/ChangePassword";
 
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
+const menuIcon = require("../../../assets/Icons/Menu/menu.png");
 const backIcon = require("../../../assets/Icons/Back/back.png");
-
 
 class Profile extends Component {
   constructor(props) {
@@ -50,7 +50,7 @@ class Profile extends Component {
 
   onBackPress() {
     if (this.state.activeContent === "Home") {
-      this.props.navigation.goBack();
+      this.props.navigation.navigate("DrawerOpen");
     } else {
       this.setState({activeContent: "Home"});
     }
@@ -187,7 +187,7 @@ class Profile extends Component {
         <Image source={bg} style={styles.background}>
           <View style={styles.header}>
             <TouchableOpacity activeOpacity={0.6} onPress={this.onBackPress} style={styles.backButton}>
-              <Image source={backIcon} />
+              <Image source={this.state.activeContent === "Home" ? menuIcon : backIcon} />
             </TouchableOpacity>
             <Text style={styles.titleText}>{this.getDisplayName()}</Text>
           </View>
