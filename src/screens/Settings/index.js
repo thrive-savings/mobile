@@ -99,10 +99,28 @@ class Settings extends Component {
       case "linkedBank":
         return <SavingType showDots={false} reducer={this.props.savingPreferencesReducer} save={this.save} />;
       case "legal":
-        return <FixedPlan showDots={false} reducer={this.props.savingPreferencesReducer} save={this.save} />;
+        return this.renderLegal();
       default:
         return this.renderHome();
     }
+  }
+
+  renderLegal() {
+    return (
+      <View>
+        <View style={[styles.contentBox, styles.legalBox]}>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate("TOS")} activeOpacity={0.6} style={styles.contentRow}>
+            <Text style={[styles.regularText, styles.blueText]}>Terms of Service</Text>
+            <Text style={[styles.regularText, styles.blueText]}>></Text>
+          </TouchableOpacity>
+          <View style={styles.separator} />
+          <TouchableOpacity onPress={() => this.props.navigation.navigate("PP")} activeOpacity={0.6} style={styles.contentRow}>
+            <Text style={[styles.regularText, styles.blueText]}>Privacy Policy</Text>
+            <Text style={[styles.regularText, styles.blueText]}>></Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
   }
 
   renderHome() {

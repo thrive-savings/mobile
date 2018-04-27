@@ -17,7 +17,8 @@ const logo = require("../../../assets/Logo/thumbnail.png");
 const savingsIcon = require("../../../assets/Sidebar/House/house.png");
 const historyIcon = require("../../../assets/Sidebar/Fill/fill1.png");
 const settingsIcon = require("../../../assets/Sidebar/Settings/settings1.png");
-const helpIcon = require("../../../assets/Sidebar/ThriveBot/thriveBot.png");
+const contactIcon = require("../../../assets/Sidebar/ThriveBot/thriveBot.png");
+const faqIcon = require("../../../assets/Sidebar/Faq/faq.png");
 
 const MENU_ITEMS = [
   {
@@ -36,8 +37,13 @@ const MENU_ITEMS = [
     screen: "Settings"
   },
   {
-    displayName: "HELP",
-    icon: helpIcon,
+    displayName: "FAQ",
+    icon: faqIcon,
+    screen: "Feedback"
+  },
+  {
+    displayName: "CONTACT",
+    icon: contactIcon,
     screen: "Feedback"
   }
 ];

@@ -22,6 +22,8 @@ import Settings from "./screens/Settings";
 import VerifyCode from "./screens/VerifyCode";
 import IntegrateBank from "./screens/IntegrateBank";
 import SavingPreferences from "./screens/SavingPreferences";
+import PP from "./screens/PP";
+import TOS from "./screens/TOS";
 
 import getAuthorized from "./globals/getAuthorized";
 
@@ -53,6 +55,8 @@ const stackScreens = {
   VerifyCode: { screen: VerifyCode },
   IntegrateBank: { screen: IntegrateBank },
   SavingPreferences: { screen: SavingPreferences },
+  PP: { screen: PP },
+  TOS: { screen: TOS },
   Drawer: { screen: Drawer }
 };
 

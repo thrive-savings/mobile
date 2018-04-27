@@ -33,50 +33,24 @@ export default StyleSheet.create({
 
   // Content styles
   contentContainer: {
-    flex: 1,
     width: deviceWidth - 40,
     alignSelf: "center",
-    paddingVertical: 10,
-  },
-  contentBox: {
-    backgroundColor: "white",
     borderRadius: 8,
-    paddingTop: 20,
-    marginBottom: 20
-  },
-  legalBox: {
-    paddingTop: 0
-  },
-  contentTitle: {
-    paddingLeft: 20,
-    color: colors.darkerGrey,
-    fontSize: 15,
-    fontFamily: "LatoRegular",
-    letterSpacing: 1.5
-  },
-  contentRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    backgroundColor: "white",
     padding: 20
   },
   regularText: {
     color: colors.charcoal,
     fontSize: 13,
     fontFamily: "LatoRegular",
-    letterSpacing: 0.2
+    letterSpacing: 0.2,
+    lineHeight: 20,
+    paddingBottom: 10
   },
   blueText: {
     color: colors.blue
   },
-  disabledText: {
-    color: colors.darkerGrey
-  },
-
-  // Separator style
-  separator: {
-    height: 1,
-    alignSelf: "stretch",
-    backgroundColor: colors.mediumGrey
+  boldText: {
+    fontFamily: "LatoBold"
   }
 });
