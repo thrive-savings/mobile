@@ -11,12 +11,7 @@ import Comments from "./screens/Comments/";
 import Channel from "./screens/Channel";
 import Story from "./screens/Story";
 import Home from "./screens/Home/";
-import Channels from "./screens/Channels";
 import Sidebar from "./screens/Sidebar";
-import Overview from "./screens/Overview";
-import Calendar from "./screens/Calendar/";
-import Timeline from "./screens/Timeline";
-import Feedback from "./screens/Feedback/";
 import Profile from "./screens/Profile/";
 import Settings from "./screens/Settings";
 import VerifyCode from "./screens/VerifyCode";
@@ -24,22 +19,19 @@ import IntegrateBank from "./screens/IntegrateBank";
 import SavingPreferences from "./screens/SavingPreferences";
 import PP from "./screens/PP";
 import TOS from "./screens/TOS";
+import Contact from "./screens/Contact";
 
 import getAuthorized from "./globals/getAuthorized";
 
 const Drawer = DrawerNavigator(
   {
     Home: { screen: Home },
-    Channels: { screen: Channels },
-    Overview: { screen: Overview },
-    Calendar: { screen: Calendar },
-    Timeline: { screen: Timeline },
-    Feedback: { screen: Feedback },
     Profile: { screen: Profile },
-    Settings: { screen: Settings }
+    Settings: { screen: Settings },
+    Contact: { screen: Contact }
   },
   {
-    initialRouteName: "Settings",
+    initialRouteName: "Contact",
     contentComponent: props => <Sidebar {...props} />
   }
 );

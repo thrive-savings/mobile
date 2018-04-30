@@ -39,12 +39,12 @@ const MENU_ITEMS = [
   {
     displayName: "FAQ",
     icon: faqIcon,
-    screen: "Feedback"
+    screen: "Contact"
   },
   {
     displayName: "CONTACT",
     icon: contactIcon,
-    screen: "Feedback"
+    screen: "Contact"
   }
 ];
 
