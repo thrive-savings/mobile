@@ -73,6 +73,29 @@ export default StyleSheet.create({
     color: colors.darkerGrey
   },
 
+  // Linked Bank styles
+  linkedBankBox: {
+    alignItems: "center",
+    padding: 20
+  },
+  linkedBankLabelText: {
+    color: colors.blue,
+    fontSize: 18,
+    fontFamily: "LatoRegular",
+    lineHeight: 30,
+    letterSpacing: 0.2,
+    paddingTop: 20
+  },
+  linkedBankDescText: {
+    color: colors.charcoal,
+    fontSize: 13,
+    fontFamily: "LatoRegular",
+    lineHeight: 22,
+    letterSpacing: 0.2,
+    textAlign: "center",
+    padding: 20
+  },
+
   // Separator style
   separator: {
     height: 1,

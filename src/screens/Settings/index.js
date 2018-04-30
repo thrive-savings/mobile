@@ -9,10 +9,17 @@ import {
 import { Content } from "native-base";
 import { connect } from "react-redux";
 
+import Communications from "react-native-communications";
+
+import SpecialButton from "../../components/SpecialButton";
+import getAuthorized from "../../globals/getAuthorized";
+
 import WorkType from "../SavingPreferences/pages/WorkType";
 import SavingType from "../SavingPreferences/pages/SavingType";
 import FixedPlan from "../SavingPreferences/pages/FixedPlan";
 import { setWorkType, setSavingType, setSavingDetails } from "../SavingPreferences/state/actions";
+
+import BANK_ICONS from "../IntegrateBank/bankIcons";
 
 import styles from "./styles";
 import colors from "../../theme/colors";
@@ -97,12 +104,26 @@ class Settings extends Component {
       case "fixedPlan":
         return <FixedPlan showDots={false} reducer={this.props.savingPreferencesReducer} save={this.save} />;
       case "linkedBank":
-        return <SavingType showDots={false} reducer={this.props.savingPreferencesReducer} save={this.save} />;
+        return this.renderLinkedBank();
       case "legal":
         return this.renderLegal();
       default:
         return this.renderHome();
     }
+  }
+
+  renderLinkedBank() {
+    const { bank, title } = getAuthorized(this.props.authReducer).account;
+    return (
+      <View>
+        <View style={[styles.contentBox, styles.linkedBankBox]}>
+          <Image source={BANK_ICONS[bank]} />
+          <Text style={styles.linkedBankLabelText}>{title}</Text>
+          <Text style={styles.linkedBankDescText}>To change or unlink your bank account, send us a request below and we’ll get in touch with you shortly.</Text>
+          <SpecialButton state={1} text={"CONTACT SUPPORT"} onClick={() => Communications.email(["help@thrivesavings.com", "naib.baghirov@gmail.com"],null,null,"Change or Unlink Bank Account",null)}/>
+        </View>
+      </View>
+    );
   }
 
   renderLegal() {
@@ -132,6 +153,9 @@ class Settings extends Component {
     } = this.props.savingPreferencesReducer;
 
     const isSavingDetailsDisabled = savingType === "Thrive Flex" || !savingType;
+
+    const authorized = getAuthorized(this.props.authReducer);
+    const bankAccount = authorized.account.title;
 
     return (
       <View>
@@ -182,7 +206,7 @@ class Settings extends Component {
           <View style={styles.separator} />
           <TouchableOpacity onPress={() => this.setState({activePage: "linkedBank"})} activeOpacity={0.6} style={styles.contentRow}>
             <Text style={styles.regularText}>Linked Bank Account</Text>
-            <Text style={[styles.regularText, styles.blueText]}>XXX-1234</Text>
+            <Text style={[styles.regularText, styles.blueText]}>{bankAccount}</Text>
           </TouchableOpacity>
           <View style={styles.separator} />
           <View style={styles.contentRow}>
@@ -222,6 +246,7 @@ class Settings extends Component {
 
 function mapStateToProps(state) {
   return {
+    authReducer: state.authReducer,
     savingPreferencesReducer: state.savingPreferencesReducer
   };
 }
