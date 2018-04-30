@@ -31,15 +31,18 @@ class WhyLink extends Component {
 
     return (
       <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
-        <Dots step={1} />
+        <Dots step={1} count={3} />
 
         <Text style={styles.titleText}>LINK YOUR BANK ACCOUNT</Text>
         <Image source={bankSymbol} style={styles.bankSymbol} />
         <Text style={styles.secondaryTitleText}>Why should I link my bank account?</Text>
         <Text style={[styles.regularText, styles.descText]}>Every week Thrive will transfer a small amount of money into your Thrive Savings account.</Text>
-        <TouchableOpacity activeOpacity={0.6} onPress={() => this.setState({descExpanded: !descExpanded})}>
-          <Text style={[styles.regularText, styles.readMoreText]}>Read More</Text>
-        </TouchableOpacity>
+        {
+          !descExpanded &&
+          <TouchableOpacity activeOpacity={0.6} onPress={() => this.setState({descExpanded: !descExpanded})}>
+            <Text style={[styles.regularText, styles.readMoreText]}>Read More</Text>
+          </TouchableOpacity>
+        }
         {
           descExpanded &&
           <Text style={[styles.regularText, styles.descText]}>Each amount is custom-based on your transactions, income, and expenses. We want you to live your best financial life – we will never overdraw you.</Text>

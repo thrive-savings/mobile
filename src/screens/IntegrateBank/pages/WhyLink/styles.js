@@ -10,7 +10,6 @@ export default StyleSheet.create({
     alignSelf: "center",
     alignItems: "center",
     padding: 20,
-    paddingBottom: 10,
     borderRadius: 8,
     backgroundColor: "white"
   },
@@ -48,10 +47,11 @@ export default StyleSheet.create({
   },
   readMoreText: {
     color: colors.darkerGrey,
-    textDecorationLine: "underline"
+    textDecorationLine: "underline",
+    paddingBottom: 10
   },
 
   separator: {
-    height: 5
+    height: 10
   }
 });

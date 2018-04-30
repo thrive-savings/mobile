@@ -10,7 +10,7 @@ import logInSaga from "../screens/Login/state/sagas";
 import { signUpSaga, signUpSucceedSaga, verifyReferralCodeSaga } from "../screens/SignUp/state/sagas";
 import { savePhoneSaga, verifyCodeSaga, verifyCodeSucceedSaga, resendCodeSaga } from "../screens/VerifyCode/state/sagas";
 import { passwordRequestSaga, passwordResetSaga } from "../screens/ForgotPassword/state/sagas";
-import { fetchAccountsSaga, setDefaultSaga } from "../screens/IntegrateBank/state/sagas";
+import { fetchAccountsSaga, setDefaultSaga, updateUserAccountSaga } from "../screens/IntegrateBank/state/sagas";
 import fetchHomeSaga from "../screens/Home/state/sagas";
 import { setWorkTypeSaga, setSavingTypeSaga, setSavingDetailsSaga } from "../screens/SavingPreferences/state/sagas";
 import { uploadPhotoSaga, setPhoneSaga, setPhoneSucceedSaga, setEmailSaga, setEmailSucceedSaga, setPasswordSaga, setPasswordSucceedSaga } from "../screens/Profile/state/sagas";
@@ -42,6 +42,7 @@ export default function configureStore(): any {
   sagaMiddleware.run(passwordResetSaga);
   sagaMiddleware.run(fetchAccountsSaga);
   sagaMiddleware.run(setDefaultSaga);
+  sagaMiddleware.run(updateUserAccountSaga);
   sagaMiddleware.run(fetchHomeSaga);
   sagaMiddleware.run(setWorkTypeSaga);
   sagaMiddleware.run(setSavingTypeSaga);

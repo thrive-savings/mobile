@@ -4,12 +4,15 @@ import {
   Image,
   StatusBar
 } from "react-native";
+import { connect } from "react-redux";
 
 import styles from "./styles";
 import colors from "../../theme/colors";
 
 import WhyLink from "./pages/WhyLink";
 import AuthenticateBank from "./pages/AuthenticateBank";
+import ChooseAccount from "./pages/ChooseAccount";
+import AuthSuccess from "./pages/AuthSuccess";
 
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
 const logo = require("../../../assets/Logo/white.png");
@@ -20,16 +23,31 @@ class IntegrateBank extends Component {
     super(props);
 
     this.state = {
-      step: 0
+      step: 0,
+      loginId: undefined,
+      institution: undefined
     };
   }
 
+  authedBank( loginId, institution) {
+    this.setState({ loginId, institution });
+  }
+
   renderContent() {
-    switch (this.state.step) {
+    const reducerStep = this.props.integrateBankReducer.step;
+    const step = reducerStep ? reducerStep : this.state.step;
+    switch (step) {
       case 0:
         return <WhyLink next={() => this.setState({step: 1})} />;
       case 1:
-        return <AuthenticateBank />;
+        const { loginId, institution } = this.state;
+        if (loginId && institution) {
+          return <ChooseAccount loginId={loginId} institution={institution} />;
+        } else {
+          return <AuthenticateBank next={this.authedBank.bind(this)} />;
+        }
+      case 2:
+        return <AuthSuccess />;
       default:
         return <WhyLink next={() => this.setState({step: 1})} />;
     }
@@ -52,4 +70,10 @@ class IntegrateBank extends Component {
   }
 }
 
-export default IntegrateBank;
+function mapStateToProps (state) {
+  return {
+    integrateBankReducer: state.integrateBankReducer
+  };
+}
+
+export default connect(mapStateToProps)(IntegrateBank);

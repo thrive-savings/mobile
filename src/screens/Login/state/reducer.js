@@ -1,4 +1,4 @@
-import { REQUEST_URL, UPDATE_AUTH_DATA, UPDATE_AVATAR } from "./constants";
+import { REQUEST_URL, UPDATE_AUTH_DATA, UPDATE_ACCOUNT_DATA, UPDATE_AVATAR } from "./constants";
 const initialState = {
   data: {},
   avatar: undefined,
@@ -17,13 +17,24 @@ export default function authReducer (state = initialState, action) {
         data: authData
       };
 
+    // Update Account case
+    case `${UPDATE_ACCOUNT_DATA}`:
+      const { payload: { authorized: { account } } } = action;
+      const curData = state.data.authorized;
+
+      return {
+        ...state,
+        data: {
+          authorized: {
+            ...curData,
+            account
+          }
+        }
+      };
+
     //Update Avatar case
     case `${UPDATE_AVATAR}`:
-      console.log("Reducing UPDATE_AVATAR action");
       const { payload: { avatar: newAvatar } } = action;
-      if (state.avatar === newAvatar) {
-        console.log("Received the same avatar");
-      }
       return {
         ...state,
         avatar: newAvatar

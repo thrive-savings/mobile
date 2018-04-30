@@ -6,12 +6,10 @@ const deviceWidth = screen.width;
 
 export default StyleSheet.create({
   container: {
-    flex: 1,
     width: deviceWidth - 40,
     alignSelf: "center",
     alignItems: "center",
     padding: 20,
-    marginBottom: 20,
     borderRadius: 8,
     backgroundColor: "white"
   },
@@ -23,7 +21,30 @@ export default StyleSheet.create({
     textAlign: "center",
     paddingVertical: 10
   },
-  webViewContainer: {
-    width: deviceWidth - 60
+  secondaryTitleText: {
+    color: colors.blue,
+    fontSize: 15,
+    fontFamily: "LatoBold",
+    lineHeight: 24,
+    letterSpacing: 0.2,
+    textAlign: "center",
+    paddingTop: 10,
+    paddingHorizontal: 10
+  },
+  botSymbol: {
+  },
+  regularText: {
+    fontSize: 13,
+    fontFamily: "LatoRegular",
+    lineHeight: 21,
+    letterSpacing: 0.2,
+    textAlign: "center",
+    color: colors.charcoal,
+    paddingVertical: 10,
+    paddingHorizontal: 20
+  },
+
+  separator: {
+    height: 10
   }
 });

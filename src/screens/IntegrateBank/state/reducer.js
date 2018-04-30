@@ -1,6 +1,7 @@
 import { FETCH_ACCOUNTS_URL, SET_DEFAULT_URL } from "./constants";
 const initialState = {
   data: {},
+  step: undefined,
   isFetching: false,
   isSetting: false,
   error: false,
@@ -9,46 +10,44 @@ const initialState = {
 
 export default function integrateBankReducer (state = initialState, action) {
   switch (action.type) {
+    // Fetch Accounts cases
     case `${FETCH_ACCOUNTS_URL}_SUBMIT`:
       return {
-        ...state,
-        isFetching: true,
+        ...initialState,
+        isFetching: true
       };
     case `${FETCH_ACCOUNTS_URL}_SUCCEED`:
-      console.log("Fetch Accounts Succeeded!");
-      const { payload: { data: verifyPayloadData } } = action;
+      const { payload: { data: fetchPayloadData } } = action;
       return {
         ...state,
-        data: verifyPayloadData ? verifyPayloadData : {},
-        isFetching: false,
-        error: false,
-        errorMessage: ""
+        data: fetchPayloadData ? fetchPayloadData : {},
+        isFetching: false
       };
     case `${FETCH_ACCOUNTS_URL}_FAIL`:
-      console.log("Fetch Accounts Failed!");
       return {
         ...state,
         isFetching: false,
         error: true,
         errorMessage: action.error
       };
+
+      // Set Default cases
       case `${SET_DEFAULT_URL}_SUBMIT`:
         return {
           ...state,
           isSetting: true
         };
       case `${SET_DEFAULT_URL}_SUCCEED`:
-        console.log("Default Account Set Succeeded!");
-        const { payload: { data: resendPayloadData } } = action;
+        const { payload: { data: setDefaultPayloadData } } = action;
         return {
           ...state,
-          data: resendPayloadData ? resendPayloadData : {},
+          data: setDefaultPayloadData ? setDefaultPayloadData : {},
+          step: 2,
           isSetting: false,
           error: false,
           errorMessage: ""
         };
       case `${SET_DEFAULT_URL}_FAIL`:
-        console.log("Default Account Set Failed!");
         return {
           ...state,
           isSetting: false,

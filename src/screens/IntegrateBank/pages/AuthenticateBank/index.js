@@ -1,95 +1,58 @@
 import React, { Component } from "react";
 import {
   WebView,
-  View,
-  ScrollView,
-  Image,
-  Text,
-  TouchableOpacity
+  View
 } from "react-native";
+import { Spinner } from "native-base";
 import { connect } from "react-redux";
 
 import Dots from "../../../../components/Dots";
 
-import { URL, FlinksURL } from "../../../../../config";
-import { fetchAccounts, setDefault } from "../../state/actions";
+import { FlinksURL } from "../../../../../config";
+
+import { fetchAccounts } from "../../state/actions";
 
 import styles from "./styles";
+import colors from "../../../../theme/colors";
 
 class AuthenticateBank extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {savedInfo: false,  text: "value"};
-
     this.onMessage = this.onMessage.bind(this);
   }
 
   onMessage(event) {
-    console.log("Received Message");
-    const data = event.nativeEvent;
-    console.log(data);
-
-    const { requestId, loginId, institution } = data;
+    const { requestId, loginId, institution } = JSON.parse(event.nativeEvent.data);
     if (requestId && loginId && institution) {
-      this.setState({})
-    }
-  }
-
-  fetchBankAccounts() {
-    console.log("Fetching Bank Accounts");
-    this.props.fetchAccounts({loginID: this.state.loginId});
-  }
-
-  render_old() {
-    console.log(`Rendering IntegrateBank component with following state: `);
-    console.log(this.state);
-
-    const { loginId, institution } = this.state;
-
-    if (loginId && institution) {
-      this.fetchBankAccounts();
-      return <Text>Fetching Bank Accounts</Text>;
-    } else {
-      return (
-        <WebView
-          source={{uri: `${FlinksURL}/?demo=true&jsRedirect=true&stringify=true&waitSummary=true&backgroundColor=58cd83&redirectUrl=${URL}/integration`}}
-          onMessage={this.onMessage}
-        />
-      );
+      this.props.fetchAccounts({ loginID: loginId });
+      this.props.next(loginId, institution);
     }
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Dots step={2} />
-
-        <Text style={styles.titleText}>LINK YOUR BANK ACCOUNT</Text>
+        <Dots step={2} count={3} />
 
         <WebView
-          source={{uri: `${FlinksURL}/?demo=true&jsRedirect=true&stringify=true&waitSummary=true&backgroundColor=58cd83&redirectUrl=${URL}/integration`}}
+          source={{
+            uri: `${FlinksURL}/?demo=true&waitSummary=true&stringify=true&backgroundColor=ffffff&foregroundColor1=0089CB&foregroundColor2=414042&redirectUrl=https://example.com`
+          }}
           onMessage={this.onMessage}
           style={styles.webViewContainer}
+          startInLoadingState={true}
+          renderLoading={() => <Spinner color={colors.blue} />}
         />
       </View>
     );
   }
 }
 
-
-function mapStateToProps (state) {
-  return {
-    authReducer: state.authReducer,
-    integrateBankReducer: state.integrateBankReducer
-  };
-}
-
 function mapDispatchToProps (dispatch) {
   return {
-    fetchAccounts: (payload = {}) => dispatch(fetchAccounts(payload)),
-    setDefault: (payload = {}) => dispatch(setDefault(payload))
+    fetchAccounts: (payload = {}) => dispatch(fetchAccounts(payload))
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AuthenticateBank);
+export default connect(null, mapDispatchToProps)(AuthenticateBank);
