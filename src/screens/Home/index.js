@@ -15,32 +15,36 @@ import colors from "../../theme/colors";
 const bg = require("../../../assets/Backgrounds/BackgroundAccount.png");
 const menuIcon = require("../../../assets/Icons/Menu/menu.png");
 const logo = require("../../../assets/Logo/white.png");
+const employerBonusIcon = require("../../../assets/Icons/Notifications/EmployerBonus/bitmap.png");
+const savingPreferencesIcon = require("../../../assets/Icons/Notifications/SavingPreferences/bitmap.png");
+
 
 const NOTIFICATION_TYPES = [
   {
     type: "EmployerBonus",
-    displayName: "EMPLOYER BONUS",
-    description: "Hooray, your employer has contributed $100 to your Rainy Day Fund! Swipe to dismiss."
+    title: "EMPLOYER BONUS",
+    description: "Hooray, your employer has contributed $100 to your Rainy Day Fund! Swipe to dismiss.",
+    icon: employerBonusIcon
   },
   {
     type: "SavingPreferences",
-    displayName: "SAVING PREFERENCES",
-    description: "Click here to set up how you’d like to save!"
+    title: "SAVING PREFERENCES",
+    description: "Click here to set up how you’d like to save!",
+    icon: savingPreferencesIcon
   }
 ];
 
 class Home extends Component {
   renderNotifications() {
-    return NOTIFICATION_TYPES.map(({ type, displayName, description }) => {
+    return NOTIFICATION_TYPES.map(({ type, title, description, icon }) => {
       return (
         <TouchableOpacity key={type} activeOpacity={0.6} style={styles.notificationHolder}>
-          <LinearGradient
-            colors={colors.blueGreenGradient.colors}
-            style={styles.notificationContent}
-          >
-            <Text style={styles.notificationText}>
-              Test
-            </Text>
+          <LinearGradient colors={colors.blueGreenGradient.colors} style={styles.notificationContent}>
+            <Image source={icon} />
+            <View style={styles.notificationTextsContainer}>
+              <Text style={styles.notificationTitle}>{title}</Text>
+              <Text style={styles.notificationDescription}>{description}</Text>
+            </View>
           </LinearGradient>
         </TouchableOpacity>
       );

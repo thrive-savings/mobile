@@ -84,7 +84,7 @@ export default StyleSheet.create({
   // Content styles
   contentContainer: {
     flex: 0.65,
-    paddingHorizontal: 25,
+    paddingHorizontal: 10,
     paddingBottom: 20
   },
   content: {
@@ -94,15 +94,33 @@ export default StyleSheet.create({
   // Notification styles
   notificationHolder: {
     alignSelf: "stretch",
-    elevation: 10,
-    marginBottom: 20
+    paddingHorizontal: 10,
+    paddingBottom: 20
   },
   notificationContent: {
     flexDirection: "row",
     borderRadius: 8,
-    padding: 20
+    padding: 15,
+    paddingBottom: 10,
+    elevation: 5
   },
-  notificationText: {
-    color: "white"
+  notificationTextsContainer: {
+    justifyContent: "flex-start",
+    paddingHorizontal: 20,
+    top: -5
+  },
+  notificationTitle: {
+    color: "white",
+    fontSize: 15,
+    fontFamily: "LatoBold",
+    lineHeight: 22,
+    letterSpacing: 1.6
+  },
+  notificationDescription: {
+    color: "white",
+    fontSize: 13,
+    fontFamily: "LatoRegular",
+    lineHeight: 22,
+    letterSpacing: 0.2
   }
 });
