@@ -7,12 +7,14 @@ import Login from "./screens/Login/";
 import ForgotPassword from "./screens/ForgotPassword";
 import SignUp from "./screens/SignUp/";
 import Walkthrough from "./screens/Walkthrough/";
-import Comments from "./screens/Comments/";
+import Comments from "./screens/Comments";
+import Channels from "./screens/Channels";
 import Channel from "./screens/Channel";
 import Story from "./screens/Story";
-import Home from "./screens/Home/";
+import Home from "./screens/Home";
+import HomeOld from "./screens/HomeOld";
 import Sidebar from "./screens/Sidebar";
-import Profile from "./screens/Profile/";
+import Profile from "./screens/Profile";
 import Settings from "./screens/Settings";
 import VerifyCode from "./screens/VerifyCode";
 import IntegrateBank from "./screens/IntegrateBank";
@@ -26,12 +28,13 @@ import getAuthorized from "./globals/getAuthorized";
 const Drawer = DrawerNavigator(
   {
     Home: { screen: Home },
+    Channels: { screen: Channels },
     Profile: { screen: Profile },
     Settings: { screen: Settings },
     Contact: { screen: Contact }
   },
   {
-    initialRouteName: "Contact",
+    initialRouteName: "Home",
     contentComponent: props => <Sidebar {...props} />
   }
 );
@@ -97,7 +100,7 @@ class App extends React.Component {
     if (authorized) {
       if (!authorized.isVerified) {
         stacker = <StackerWithVerifyCode />;
-      } else if ((authorized.account && authorized.account.flLoginID) || false) {
+      } else if ((authorized.account && authorized.account.flLoginID) || true) {
         stacker = <StackerWithDrawer />;
       } else {
         stacker = <StackerWithIntegrateBank />;

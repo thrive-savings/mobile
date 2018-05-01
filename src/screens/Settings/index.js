@@ -113,7 +113,14 @@ class Settings extends Component {
   }
 
   renderLinkedBank() {
-    const { bank, title } = getAuthorized(this.props.authReducer).account;
+    const account = getAuthorized(this.props.authReducer).account;
+    let bank = "TD";
+    let title = "No Bank Linked";
+    if (account) {
+      bank = account.bank;
+      title = account.title;
+    }
+
     return (
       <View>
         <View style={[styles.contentBox, styles.linkedBankBox]}>
@@ -154,8 +161,11 @@ class Settings extends Component {
 
     const isSavingDetailsDisabled = savingType === "Thrive Flex" || !savingType;
 
-    const authorized = getAuthorized(this.props.authReducer);
-    const bankAccount = authorized.account.title;
+    const account = getAuthorized(this.props.authReducer).account;
+    let title = "No Bank Linked";
+    if (account) {
+      title = account.title;
+    }
 
     return (
       <View>
@@ -206,7 +216,7 @@ class Settings extends Component {
           <View style={styles.separator} />
           <TouchableOpacity onPress={() => this.setState({activePage: "linkedBank"})} activeOpacity={0.6} style={styles.contentRow}>
             <Text style={styles.regularText}>Linked Bank Account</Text>
-            <Text style={[styles.regularText, styles.blueText]}>{bankAccount}</Text>
+            <Text style={[styles.regularText, styles.blueText]}>{title}</Text>
           </TouchableOpacity>
           <View style={styles.separator} />
           <View style={styles.contentRow}>
@@ -230,7 +240,7 @@ class Settings extends Component {
         >
           <View style={styles.header}>
             <TouchableOpacity activeOpacity={0.6} onPress={this.headerIconClicked} style={styles.headerIcon}>
-              <Image source={PAGE_TYPES[activePage].headerIcon} style={styles.headerIconImage}/>
+              <Image source={PAGE_TYPES[activePage].headerIcon} />
             </TouchableOpacity>
             <Text style={styles.headerText}>{PAGE_TYPES[activePage].headerTitle}</Text>
           </View>

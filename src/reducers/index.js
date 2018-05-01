@@ -8,7 +8,7 @@ import signUpReducer from "../screens/SignUp/state/reducer";
 import verifyCodeReducer from "../screens/VerifyCode/state/reducer";
 import forgotPasswordReducer from "../screens/ForgotPassword/state/reducer";
 import integrateBankReducer from "../screens/IntegrateBank/state/reducer";
-import homeReducer from "../screens/Home/state/reducer";
+import homeReducer from "../screens/HomeOld/state/reducer";
 import savingPreferencesReducer from "../screens/SavingPreferences/state/reducer";
 import profileReducer from "../screens/Profile/state/reducer";
 
