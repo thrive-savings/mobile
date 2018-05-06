@@ -7,7 +7,12 @@ import {
   TouchableOpacity,
   StatusBar
 } from "react-native";
+import { Card } from "native-base";
 import { LinearGradient } from "expo";
+
+import ProgressBar from "../../components/ProgressBar";
+
+import GOAL_ICONS from "./goalIcons";
 
 import styles from "./styles";
 import colors from "../../theme/colors";
@@ -23,7 +28,7 @@ const NOTIFICATION_TYPES = [
   {
     type: "EmployerBonus",
     title: "EMPLOYER BONUS",
-    description: "Hooray, your employer has contributed $100 to your Rainy Day Fund! Swipe to dismiss.",
+    description: "Hooray, your employer has contributed $100 to your Rainy Day Fund! Click to dismiss.",
     icon: employerBonusIcon
   },
   {
@@ -31,6 +36,19 @@ const NOTIFICATION_TYPES = [
     title: "SAVING PREFERENCES",
     description: "Click here to set up how you’d like to save!",
     icon: savingPreferencesIcon
+  }
+];
+
+const USER_GOALS = [
+  {
+    category: "RainyDay",
+    name: "RAINY DAY FUND",
+    amount: 5000
+  },
+  {
+    category: "Education",
+    name: "EDUCATION",
+    amount: 10000
   }
 ];
 
@@ -46,6 +64,32 @@ class Home extends Component {
               <Text style={styles.notificationDescription}>{description}</Text>
             </View>
           </LinearGradient>
+        </TouchableOpacity>
+      );
+    });
+  }
+
+  renderGoals() {
+    return USER_GOALS.map(({ category, name, amount }, index) => {
+      return (
+        <TouchableOpacity key={index} activeOpacity={0.6} style={styles.goalHolder}>
+          <Card style={styles.goalCard}>
+            <View style={styles.goalRow}>
+              <Image source={GOAL_ICONS[category]} />
+              <View style={styles.goalTextsContainer}>
+                <Text style={styles.goalLabelText}>{`GOAL ${index + 1}`}</Text>
+                <Text style={styles.goalNameText}>{name}</Text>
+                <Text style={styles.goalAmountText}>$878.52</Text>
+              </View>
+            </View>
+            <View style={styles.goalProgressContainer}>
+              <ProgressBar progress={0.8} />
+              <View style={styles.goalProgressTextsHolder}>
+                <Text style={styles.goalProgressBarText}>$0</Text>
+                <Text style={styles.goalProgressBarText}>$5,000</Text>
+              </View>
+            </View>
+          </Card>
         </TouchableOpacity>
       );
     });
@@ -76,6 +120,12 @@ class Home extends Component {
           <View style={styles.contentContainer}>
             <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
               {this.renderNotifications()}
+              {this.renderGoals()}
+              <TouchableOpacity activeOpacity={0.6} style={styles.addGoalButton}>
+                <LinearGradient colors={colors.blueGreenGradient.colors} style={styles.addGoalGradient}>
+                  <Text style={styles.addGoalButtonText}>+ ADD GOAL</Text>
+                </LinearGradient>
+              </TouchableOpacity>
             </ScrollView>
           </View>
         </Image>

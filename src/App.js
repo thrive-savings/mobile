@@ -12,7 +12,6 @@ import Channels from "./screens/Channels";
 import Channel from "./screens/Channel";
 import Story from "./screens/Story";
 import Home from "./screens/Home";
-import HomeOld from "./screens/HomeOld";
 import Sidebar from "./screens/Sidebar";
 import Profile from "./screens/Profile";
 import Settings from "./screens/Settings";

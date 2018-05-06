@@ -7,7 +7,7 @@ module.exports = {
   mediumGrey: "#D8D8D8",
   darkerGrey: "#ADB4BE",
   darkestGrey: "#979797",
-  statusbar: "#229CC6",
+  statusbar: "#008cd1",
   error: "#A12938",
   blueGreenGradient: {
     colors: ["#0089CB", "#6CC4B9"]

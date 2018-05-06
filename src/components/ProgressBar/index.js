@@ -1,31 +1,31 @@
-// @flow
 import React, { Component } from "react";
-import { Platform, ProgressViewIOS, ProgressBarAndroid } from "react-native";
-import color from "color";
+import PropTypes from "prop-types";
+import {
+  View
+} from "react-native";
+import { LinearGradient } from "expo";
 
-class ProgressBarNB extends Component {
+import styles from "./styles";
+import colors from "../../theme/colors";
+
+class ProgressBar extends Component {
   render() {
-    if (Platform.OS === "ios") {
-      return (
-        <ProgressViewIOS
-          {...this.props}
-          progress={this.props.progress ? this.props.progress / 100 : 0.5}
-          progressTintColor={this.props.color ? this.props.color : "#FFF"}
-          trackTintColor={color(this.props.color).lighten(1).hex()}
+    return (
+      <View style={styles.progressContainer}>
+        <LinearGradient
+          colors={colors.blueGreenGradient.colors}
+          style={[styles.progressFill, {flex: this.props.progress}]}
         />
-      );
-    } else {
-      return (
-        <ProgressBarAndroid
-          {...this.props}
-          styleAttr="Horizontal"
-          indeterminate={false}
-          progress={this.props.progress ? this.props.progress / 100 : 0.5}
-          color={this.props.color ? this.props.color : "#FFF"}
-        />
-      );
-    }
+      </View>
+    );
   }
 }
 
-export default ProgressBarNB;
+ProgressBar.propTypes = {
+  progress: PropTypes.number
+};
+ProgressBar.defaultProps = {
+  progress: 0
+};
+
+export default ProgressBar;

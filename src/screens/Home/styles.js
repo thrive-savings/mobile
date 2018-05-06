@@ -94,15 +94,14 @@ export default StyleSheet.create({
   // Notification styles
   notificationHolder: {
     alignSelf: "stretch",
-    paddingHorizontal: 10,
-    paddingBottom: 20
+    marginHorizontal: 10,
+    marginBottom: 20
   },
   notificationContent: {
     flexDirection: "row",
     borderRadius: 8,
     padding: 15,
-    paddingBottom: 10,
-    elevation: 5
+    paddingBottom: 10
   },
   notificationTextsContainer: {
     justifyContent: "flex-start",
@@ -122,5 +121,79 @@ export default StyleSheet.create({
     fontFamily: "LatoRegular",
     lineHeight: 22,
     letterSpacing: 0.2
+  },
+
+  // Goals styles
+  goalHolder: {
+    alignSelf: "stretch",
+    marginHorizontal: 10,
+    marginBottom: 10
+  },
+  goalCard: {
+    borderRadius: 8,
+    padding: 15,
+    paddingBottom: 10
+  },
+  goalRow: {
+    flexDirection: "row"
+  },
+  goalTextsContainer: {
+    justifyContent: "flex-start",
+    paddingHorizontal: 20,
+    top: -5
+  },
+  goalLabelText: {
+    color: colors.darkerGrey,
+    fontSize: 12,
+    fontFamily: "LatoRegular",
+    lineHeight: 20,
+    letterSpacing: 1
+  },
+  goalNameText: {
+    color: colors.charcoal,
+    fontSize: 15,
+    fontFamily: "LatoRegular",
+    letterSpacing: 1.5
+  },
+  goalAmountText: {
+    color: colors.blue,
+    fontSize: 13,
+    fontFamily: "LatoRegular",
+    lineHeight: 22,
+    letterSpacing: 0.2
+  },
+  goalProgressContainer: {
+    paddingTop: 10
+  },
+  goalProgressTextsHolder: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingTop: 7.5
+  },
+  goalProgressBarText: {
+    color: colors.charcoal,
+    fontSize: 11,
+    fontFamily: "LatoRegular",
+    letterSpacing: 0.1
+  },
+
+  // Add Goal styles
+  addGoalButton: {
+    width: deviceWidth / 3,
+    height: 35
+  },
+  addGoalGradient: {
+    flex: 1,
+    borderRadius: 8,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  addGoalButtonText: {
+    color: "white",
+    fontSize: 15,
+    fontFamily: "LatoBold",
+    lineHeight: 22,
+    letterSpacing: 1.6,
+    top: -1
   }
 });
