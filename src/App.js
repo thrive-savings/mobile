@@ -18,6 +18,7 @@ import Settings from "./screens/Settings";
 import VerifyCode from "./screens/VerifyCode";
 import IntegrateBank from "./screens/IntegrateBank";
 import SavingPreferences from "./screens/SavingPreferences";
+import SavingGoals from "./screens/SavingGoals";
 import PP from "./screens/PP";
 import TOS from "./screens/TOS";
 import Contact from "./screens/Contact";
@@ -49,6 +50,7 @@ const stackScreens = {
   VerifyCode: { screen: VerifyCode },
   IntegrateBank: { screen: IntegrateBank },
   SavingPreferences: { screen: SavingPreferences },
+  SavingGoals: { screen: SavingGoals },
   PP: { screen: PP },
   TOS: { screen: TOS },
   Drawer: { screen: Drawer }

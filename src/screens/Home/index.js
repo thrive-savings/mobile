@@ -12,7 +12,7 @@ import { LinearGradient } from "expo";
 
 import ProgressBar from "../../components/ProgressBar";
 
-import GOAL_ICONS from "./goalIcons";
+import GOAL_CATEGORIES from "../../globals/goalCategories";
 
 import styles from "./styles";
 import colors from "../../theme/colors";
@@ -56,7 +56,7 @@ class Home extends Component {
   renderNotifications() {
     return NOTIFICATION_TYPES.map(({ type, title, description, icon }) => {
       return (
-        <TouchableOpacity key={type} activeOpacity={0.6} style={styles.notificationHolder}>
+        <TouchableOpacity key={type} activeOpacity={0.6} style={styles.notificationHolder} onPress={() => this.props.navigation.navigate("SavingGoals")}>
           <LinearGradient colors={colors.blueGreenGradient.colors} style={styles.notificationContent}>
             <Image source={icon} />
             <View style={styles.notificationTextsContainer}>
@@ -72,10 +72,10 @@ class Home extends Component {
   renderGoals() {
     return USER_GOALS.map(({ category, name, amount }, index) => {
       return (
-        <TouchableOpacity key={index} activeOpacity={0.6} style={styles.goalHolder}>
+        <TouchableOpacity key={index} activeOpacity={0.6} style={styles.goalHolder} onPress={() => this.props.navigation.navigate("SavingGoals", { actionType: "Edit" })}>
           <Card style={styles.goalCard}>
             <View style={styles.goalRow}>
-              <Image source={GOAL_ICONS[category]} />
+              <Image source={GOAL_CATEGORIES[category].icon} />
               <View style={styles.goalTextsContainer}>
                 <Text style={styles.goalLabelText}>{`GOAL ${index + 1}`}</Text>
                 <Text style={styles.goalNameText}>{name}</Text>
@@ -121,7 +121,7 @@ class Home extends Component {
             <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
               {this.renderNotifications()}
               {this.renderGoals()}
-              <TouchableOpacity activeOpacity={0.6} style={styles.addGoalButton}>
+              <TouchableOpacity activeOpacity={0.6} style={styles.addGoalButton} onPress={() => navigation.navigate("SavingGoals", { actionType: "Add" })}>
                 <LinearGradient colors={colors.blueGreenGradient.colors} style={styles.addGoalGradient}>
                   <Text style={styles.addGoalButtonText}>+ ADD GOAL</Text>
                 </LinearGradient>
