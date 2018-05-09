@@ -13,8 +13,8 @@ import SpecialButton from "../../../../components/SpecialButton";
 import ModalTemplate from "../../../../components/ModalTemplate";
 import Dots from "../../../../components/Dots";
 
-import getNumPadModalContent from "../../modals/NumPad";
-import getFrequencySetterModalContent from "../../modals/FrequencySetter";
+import getNumPadModalContent from "../../../../components/NumPad";
+import getFrequencySetterModalContent from "../../../../components/OptionSetter";
 
 import styles from "./styles";
 import { FREQUENCY_TYPES } from "./constants";
@@ -125,6 +125,7 @@ class FixedPlan extends Component {
           buttonText={"SUBMIT"}
           content={
             getNumPadModalContent({
+              label: "Enter contribution amount.",
               value: this.state.setContribution && this.state.contribution,
               onPress: this.numPadClicked
             })
@@ -136,6 +137,7 @@ class FixedPlan extends Component {
           buttonText={"SAVE"}
           content={
             getFrequencySetterModalContent({
+              label: "Frequency",
               types: FREQUENCY_TYPES,
               selectedIndex: this.state.frequencyIndex,
               onPress: this.frequencySelected

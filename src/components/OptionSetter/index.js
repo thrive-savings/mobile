@@ -7,10 +7,13 @@ import {
 
 import styles from "./styles";
 
-const tickIcon = require("../../../../../assets/Icons/TickGradient/tickGradient.png");
+const tickIcon = require("../../../assets/Icons/TickGradient/tickGradient.png");
 
 const getModalContent = (props) => {
-  let { types, selectedIndex, onPress } = props;
+  let { label, types, selectedIndex, onPress } = props;
+  if (!label) {
+    label = "Options";
+  }
   if (!selectedIndex) {
     selectedIndex = 0;
   }
@@ -40,7 +43,7 @@ const getModalContent = (props) => {
 
   return (
     <View>
-      <Text style={styles.labelText}>Frequency</Text>
+      <Text style={styles.labelText}>{label}</Text>
       <View style={styles.optionsContainer}>
         {body}
       </View>

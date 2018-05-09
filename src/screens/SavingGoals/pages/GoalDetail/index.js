@@ -20,7 +20,7 @@ const GOAL_DETAIL = {
 };
 
 class GoalDetail extends Component {
-  renderGoalEditBox() {
+  renderGoalInfoBox() {
     const { category, name } = GOAL_DETAIL;
     return (
       <View style={styles.infoBox}>
@@ -64,7 +64,7 @@ class GoalDetail extends Component {
   render() {
     return (
       <View>
-        {this.renderGoalEditBox()}
+        {this.renderGoalInfoBox()}
       </View>
     );
   }

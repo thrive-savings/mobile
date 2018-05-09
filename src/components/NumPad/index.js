@@ -7,10 +7,13 @@ import {
 
 import styles from "./styles";
 
-const deleteIcon = require("../../../../../assets/Icons/Delete/delete.png");
+const deleteIcon = require("../../../assets/Icons/Delete/delete.png");
 
 const getModalContent = (props) => {
-  let { value, onPress } = props;
+  let { label, value, onPress } = props;
+  if (!label) {
+    label = "Enter amount.";
+  }
   if (!value) {
     value = "$0.00";
   }
@@ -20,7 +23,7 @@ const getModalContent = (props) => {
 
   return (
     <View>
-      <Text style={styles.labelText}>Enter contribution amount.</Text>
+      <Text style={styles.labelText}>{label}</Text>
       <Text style={styles.amountText}>{value}</Text>
       <View style={styles.grid}>
         <View style={styles.row}>

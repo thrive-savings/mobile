@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 
 import ChooseCategory from "./pages/ChooseCategory";
 import GoalDetail from "./pages/GoalDetail";
+import EditGoal from "./pages/EditGoal";
 
 import styles from "./styles";
 import colors from "../../theme/colors";
@@ -23,21 +24,43 @@ class SavingGoals extends Component {
     super(props);
 
     this.state = {
-      activePage: "GoalDetail"
+      step: 0,
+      data: {}
     };
   }
 
-  renderContent() {
-    // const { actionType } = this.props.navigation.state.params;
-    // console.log(`Rendering Saving Goals Content with ${actionType}`);
+  categoryChosen(categoryName) {
+    this.setState({
+      step: 1,
+      data: { categoryName }
+    });
+  }
 
-    switch (this.state.activePage) {
-      case "ChooseCategory":
-        return <ChooseCategory />;
-      case "GoalDetail":
-        return <GoalDetail />;
+  renderContent() {
+    const params = this.props.navigation.state.params;
+    const { step, data } = this.state;
+
+    switch (params.actionType) {
+      case "Add":
+        switch (step) {
+          case 0:
+            return <ChooseCategory submit={this.categoryChosen.bind(this)} />;
+          case 1:
+            return <EditGoal newGoal data={data} />;
+          default:
+            return;
+        }
+      case "Detail":
+        switch (step) {
+          case 0:
+            return <GoalDetail />;
+          case 1:
+            return <EditGoal />;
+          default:
+            return;
+        }
       default:
-        return <ChooseCategory />;
+        return;
     }
   }
 

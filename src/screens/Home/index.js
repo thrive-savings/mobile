@@ -53,10 +53,25 @@ const USER_GOALS = [
 ];
 
 class Home extends Component {
+  notificationClicked(notificationType) {
+    switch (notificationType) {
+      case "SavingPreferences":
+        this.props.navigation.navigate("SavingPreferences");
+        break;
+      case "EmployerBonus":
+        break;
+      default:
+        break;
+    }
+  }
+
   renderNotifications() {
     return NOTIFICATION_TYPES.map(({ type, title, description, icon }) => {
       return (
-        <TouchableOpacity key={type} activeOpacity={0.6} style={styles.notificationHolder} onPress={() => this.props.navigation.navigate("SavingGoals")}>
+        <TouchableOpacity
+          key={type} activeOpacity={0.6} style={styles.notificationHolder}
+          onPress={() => this.notificationClicked(type)}
+        >
           <LinearGradient colors={colors.blueGreenGradient.colors} style={styles.notificationContent}>
             <Image source={icon} />
             <View style={styles.notificationTextsContainer}>
@@ -70,9 +85,13 @@ class Home extends Component {
   }
 
   renderGoals() {
-    return USER_GOALS.map(({ category, name, amount }, index) => {
+    return USER_GOALS.map((goal, index) => {
+      const { category, name, amount } = goal;
       return (
-        <TouchableOpacity key={index} activeOpacity={0.6} style={styles.goalHolder} onPress={() => this.props.navigation.navigate("SavingGoals", { actionType: "Edit" })}>
+        <TouchableOpacity
+          key={index} activeOpacity={0.6} style={styles.goalHolder}
+          onPress={() => this.props.navigation.navigate("SavingGoals", { actionType: "Detail", goal })}
+        >
           <Card style={styles.goalCard}>
             <View style={styles.goalRow}>
               <Image source={GOAL_CATEGORIES[category].icon} />

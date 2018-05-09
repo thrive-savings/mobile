@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-const colors = require("../../../../theme/colors");
+const colors = require("../../theme/colors");
 
 export default StyleSheet.create({
   labelText: {

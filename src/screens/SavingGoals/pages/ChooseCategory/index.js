@@ -16,7 +16,7 @@ class ChooseCategory extends Component {
     const goalCategoryViews = goalCategories.map((category, index) => {
       if (index < goalCategories.length - 1) {
         return (
-          <TouchableOpacity key={index} activeOpacity={0.6} style={styles.categoryHolder}>
+          <TouchableOpacity key={index} activeOpacity={0.6} style={styles.categoryHolder} onPress={() => this.props.submit(category)}>
             <Image source={GOAL_CATEGORIES[category].icon} />
             <Text style={styles.categoryName}>{GOAL_CATEGORIES[category].name}</Text>
           </TouchableOpacity>
