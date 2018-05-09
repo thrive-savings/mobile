@@ -52,6 +52,30 @@ export default StyleSheet.create({
     paddingBottom: 20
   },
 
+  // Date Picker styles
+  datePickerContainer: {
+    marginVertical: -10
+  },
+  datePickerInput: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    borderWidth: 0,
+    backgroundColor: "transparent"
+  },
+  datePickerPlaceholder: {
+    color: colors.blue,
+    paddingLeft: 10,
+    fontSize: 13,
+    fontFamily: "LatoRegular"
+  },
+  datePickerText: {
+    color: colors.charcoal,
+    paddingLeft: 10,
+    fontSize: 13,
+    fontFamily: "LatoRegular"
+  },
+
   //Separator style
   separator: {
     height: 1,
