@@ -9,6 +9,7 @@ import {
 
 import { clearStorage } from "../../globals/clearStorage";
 import getAvatar from "../../globals/getAvatar";
+import { getDollarString } from "../../globals/helpers";
 
 import styles from "./styles";
 import colors from "../../theme/colors";
@@ -84,9 +85,7 @@ class SideBar extends Component {
     const avatar = getAvatar(this.props.authReducer, this.props.profileReducer);
     const { data: { authorized: { balance, firstName, lastName } } } = this.props.authReducer;
     const fullName = firstName + " " + lastName;
-    let dollars = balance / 100;
-    dollars = dollars % 1 === 0 ? dollars : dollars.toFixed(2);
-    dollars = "$" + dollars.toLocaleString("en-US", {style: "currency", currency: "USD"});
+    const dollars = getDollarString(balance);
 
     return (
       <View style={styles.container}>

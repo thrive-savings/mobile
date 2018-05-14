@@ -3,6 +3,7 @@ import colors from "../../../../theme/colors";
 
 const screen = Dimensions.get("window");
 const deviceWidth = screen.width;
+const deviceHeight = screen.height;
 
 export default StyleSheet.create({
   infoBox: {
@@ -104,6 +105,41 @@ export default StyleSheet.create({
     fontSize: 15,
     fontFamily: "LatoBold",
     letterSpacing: 1.5
+  },
+
+  // Delete Goal styles
+  deleteContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+    alignSelf: "center",
+    flexDirection: "row",
+    paddingTop: deviceHeight / 8
+  },
+  deleteBtnText: {
+    color: colors.charcoal,
+    fontSize: 13,
+    fontFamily: "LatoRegular",
+    letterSpacing: 0.2,
+    textDecorationLine: "underline"
+  },
+
+  // Info Button styles
+  infoIconButton: {
+    alignSelf: "flex-end",
+    position: "absolute",
+    right: 10,
+    top: 10
+  },
+  infoContentText: {
+    color: colors.charcoal,
+    fontSize: 12,
+    fontFamily: "LatoRegular",
+    lineHeight: 20,
+    letterSpacing: 0.2,
+    textAlign: "center"
+  },
+  bottomPadder: {
+    paddingBottom: 20
   },
 
   //Separator style

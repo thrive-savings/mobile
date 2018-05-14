@@ -195,5 +195,22 @@ export default StyleSheet.create({
     lineHeight: 22,
     letterSpacing: 1.6,
     top: -1
+  },
+
+  // Info Button styles
+  infoIconButton: {
+    alignSelf: "flex-end",
+    position: "absolute"
+  },
+  infoContentText: {
+    color: colors.charcoal,
+    fontSize: 12,
+    fontFamily: "LatoRegular",
+    lineHeight: 20,
+    letterSpacing: 0.2,
+    textAlign: "center"
+  },
+  bottomPadder: {
+    paddingBottom: 20
   }
 });

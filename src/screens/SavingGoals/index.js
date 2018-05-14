@@ -13,6 +13,8 @@ import ChooseCategory from "./pages/ChooseCategory";
 import GoalDetail from "./pages/GoalDetail";
 import EditGoal from "./pages/EditGoal";
 
+import { getGoals, setSucceedFlagOff } from "./state/actions";
+
 import styles from "./styles";
 import colors from "../../theme/colors";
 
@@ -29,33 +31,45 @@ class SavingGoals extends Component {
     };
   }
 
-  categoryChosen(categoryName) {
+  categoryChosen(category) {
     this.setState({
       step: 1,
-      data: { categoryName }
+      data: { category }
     });
   }
 
-  renderContent() {
-    const params = this.props.navigation.state.params;
-    const { step, data } = this.state;
+  getContent() {
+    const { actionType, data } = this.props.navigation.state.params;
+    const { step, data: newData } = this.state;
 
-    switch (params.actionType) {
+    switch (actionType) {
       case "Add":
         switch (step) {
           case 0:
-            return <ChooseCategory submit={this.categoryChosen.bind(this)} />;
+            return {
+              title: "CREATE A SAVINGS GOAL",
+              component: <ChooseCategory submit={this.categoryChosen.bind(this)} />
+            };
           case 1:
-            return <EditGoal newGoal data={data} />;
+            return {
+              title: "CUSTOMIZE YOUR GOAL",
+              component: <EditGoal newGoal data={newData} />
+            };
           default:
             return;
         }
       case "Detail":
         switch (step) {
           case 0:
-            return <GoalDetail />;
+            return {
+              title: "MY SAVINGS GOAL",
+              component: <GoalDetail data={data} onEditGoal={() => this.setState({step: 1})} />
+            };
           case 1:
-            return <EditGoal />;
+            return {
+              title: "CUSTOMIZE YOUR GOAL",
+              component: <EditGoal data={data} />
+            };
           default:
             return;
         }
@@ -64,20 +78,36 @@ class SavingGoals extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.goalsReducer.serverCallSucceeded) {
+      this.props.setSucceedFlagOff();
+      this.props.navigation.goBack();
+    }
+  }
+
+  backArrowPressed() {
+    if (this.state.step > 0) {
+      this.setState({ step: this.state.step - 1});
+    } else {
+      this.props.navigation.goBack();
+    }
+  }
+
   render() {
-    const navigation = this.props.navigation;
+    const { title, component } = this.getContent();
+
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" backgroundColor={colors.statusbar}/>
         <Image source={bg} style={styles.background}>
           <View style={styles.header}>
-            <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()} style={styles.headerBackButton}>
+            <TouchableOpacity activeOpacity={0.6} onPress={() => this.backArrowPressed()} style={styles.headerBackButton}>
               <Image source={backIcon} />
             </TouchableOpacity>
-            <Text style={styles.headerTitleText}>CREATE A SAVINGS GOAL</Text>
+            <Text style={styles.headerTitleText}>{title}</Text>
           </View>
           <ScrollView contentContainerStyle={styles.contentContainer} showsVerticalScrollIndicator={false}>
-            {this.renderContent()}
+            {component}
           </ScrollView>
         </Image>
       </View>
@@ -88,11 +118,14 @@ class SavingGoals extends Component {
 
 function mapStateToProps (state) {
   return {
+    goalsReducer: state.goalsReducer
   };
 }
 
 function mapDispatchToProps (dispatch) {
   return {
+    getGoals: (payload = {}) => dispatch(getGoals(payload)),
+    setSucceedFlagOff: () => dispatch(setSucceedFlagOff())
   };
 }
 

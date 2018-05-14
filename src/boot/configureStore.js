@@ -14,6 +14,7 @@ import { fetchAccountsSaga, setDefaultSaga, updateUserAccountSaga } from "../scr
 import fetchHomeSaga from "../screens/HomeOld/state/sagas";
 import { setWorkTypeSaga, setSavingTypeSaga, setSavingDetailsSaga } from "../screens/SavingPreferences/state/sagas";
 import { uploadPhotoSaga, setPhoneSaga, setPhoneSucceedSaga, setEmailSaga, setEmailSucceedSaga, setPasswordSaga, setPasswordSucceedSaga } from "../screens/Profile/state/sagas";
+import { getGoalsSaga, addGoalSaga, updateGoalSaga, deleteGoalSaga } from "../screens/SavingGoals/state/sagas";
 
 export default function configureStore(): any {
   const sagaMiddleware = createSagaMiddleware();
@@ -54,6 +55,10 @@ export default function configureStore(): any {
   sagaMiddleware.run(setEmailSucceedSaga);
   sagaMiddleware.run(setPasswordSaga);
   sagaMiddleware.run(setPasswordSucceedSaga);
+  sagaMiddleware.run(getGoalsSaga);
+  sagaMiddleware.run(addGoalSaga);
+  sagaMiddleware.run(updateGoalSaga);
+  sagaMiddleware.run(deleteGoalSaga);
 
   return { store, persistor };
 }

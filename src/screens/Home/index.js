@@ -9,10 +9,15 @@ import {
 } from "react-native";
 import { Card } from "native-base";
 import { LinearGradient } from "expo";
+import { connect } from "react-redux";
 
+import ModalTemplate from "../../components/ModalTemplate";
 import ProgressBar from "../../components/ProgressBar";
 
+import { getDollarString, getSplitDollarStrings } from "../../globals/helpers";
 import GOAL_CATEGORIES from "../../globals/goalCategories";
+
+import { getGoals } from "../SavingGoals/state/actions";
 
 import styles from "./styles";
 import colors from "../../theme/colors";
@@ -22,6 +27,7 @@ const menuIcon = require("../../../assets/Icons/Menu/menu.png");
 const logo = require("../../../assets/Logo/white.png");
 const employerBonusIcon = require("../../../assets/Icons/Notifications/EmployerBonus/bitmap.png");
 const savingPreferencesIcon = require("../../../assets/Icons/Notifications/SavingPreferences/bitmap.png");
+const infoIcon = require("../../../assets/Icons/Info/information.png");
 
 
 const NOTIFICATION_TYPES = [
@@ -39,20 +45,22 @@ const NOTIFICATION_TYPES = [
   }
 ];
 
-const USER_GOALS = [
-  {
-    category: "RainyDay",
-    name: "RAINY DAY FUND",
-    amount: 5000
-  },
-  {
-    category: "Education",
-    name: "EDUCATION",
-    amount: 10000
-  }
-];
-
 class Home extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showRainyDayInfoModal: false
+    };
+  }
+
+  componentWillMount()  {
+    const goals = this.props.goalsReducer.goals;
+    if (!goals || goals.length === 0) {
+      this.props.getGoals();
+    }
+  }
+
   notificationClicked(notificationType) {
     switch (notificationType) {
       case "SavingPreferences":
@@ -63,6 +71,15 @@ class Home extends Component {
       default:
         break;
     }
+  }
+
+  getInfoModalContent() {
+    return (
+      <View>
+        <Text style={[styles.infoContentText, styles.bottomPadder]}>All Thrive users have a default Rainy Day Fund to help reduce their financial anxiety and jumpstart their saving goals!</Text>
+        <Text style={styles.infoContentText}>Your Thrive Savings will automatically go here unless you create additional goals.</Text>
+      </View>
+    );
   }
 
   renderNotifications() {
@@ -85,27 +102,33 @@ class Home extends Component {
   }
 
   renderGoals() {
-    return USER_GOALS.map((goal, index) => {
-      const { category, name, amount } = goal;
+    return this.props.goalsReducer.goals.map((goal, index) => {
+      const { category, name, amount, savedAmount } = goal;
       return (
         <TouchableOpacity
           key={index} activeOpacity={0.6} style={styles.goalHolder}
-          onPress={() => this.props.navigation.navigate("SavingGoals", { actionType: "Detail", goal })}
+          onPress={() => this.props.navigation.navigate("SavingGoals", { actionType: "Detail", data: goal })}
         >
           <Card style={styles.goalCard}>
             <View style={styles.goalRow}>
               <Image source={GOAL_CATEGORIES[category].icon} />
+              {
+                category === "RainyDay" &&
+                <TouchableOpacity activeOpacity={0.6} style={styles.infoIconButton} onPress={() => this.setState({showRainyDayInfoModal: true})}>
+                  <Image source={infoIcon} />
+                </TouchableOpacity>
+              }
               <View style={styles.goalTextsContainer}>
                 <Text style={styles.goalLabelText}>{`GOAL ${index + 1}`}</Text>
                 <Text style={styles.goalNameText}>{name}</Text>
-                <Text style={styles.goalAmountText}>$878.52</Text>
+                <Text style={styles.goalAmountText}>{getDollarString(savedAmount)}</Text>
               </View>
             </View>
             <View style={styles.goalProgressContainer}>
-              <ProgressBar progress={0.8} />
+              <ProgressBar progress={savedAmount / amount} />
               <View style={styles.goalProgressTextsHolder}>
                 <Text style={styles.goalProgressBarText}>$0</Text>
-                <Text style={styles.goalProgressBarText}>$5,000</Text>
+                <Text style={styles.goalProgressBarText}>{getDollarString(amount)}</Text>
               </View>
             </View>
           </Card>
@@ -116,6 +139,7 @@ class Home extends Component {
 
   render() {
     const navigation = this.props.navigation;
+    const { beforeDot: balanceBD, afterDot: balanceAD } = getSplitDollarStrings(this.props.userData.balance);
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" backgroundColor={colors.statusbar}/>
@@ -129,8 +153,8 @@ class Home extends Component {
           <View style={styles.subHeader}>
             <Text style={styles.balanceLabelText}>THRIVE SAVINGS BALANCE</Text>
             <View style={styles.balanceTextHolder}>
-              <Text style={styles.balanceMainText}>$0.</Text>
-              <Text style={styles.balanceRemainderText}>00</Text>
+              <Text style={styles.balanceMainText}>{balanceBD}</Text>
+              <Text style={styles.balanceRemainderText}>{balanceAD}</Text>
             </View>
             <View style={styles.subHeaderLabel}>
               <Text style={styles.subHeaderText}>MY SAVINGS GOALS</Text>
@@ -147,10 +171,29 @@ class Home extends Component {
               </TouchableOpacity>
             </ScrollView>
           </View>
+          <ModalTemplate
+            show={this.state.showRainyDayInfoModal}
+            buttonVisible={false}
+            content={this.getInfoModalContent()}
+            onClose={() => this.setState({showRainyDayInfoModal: false})}
+          />
         </Image>
       </View>
     );
   }
 }
 
-export default Home;
+function mapStateToProps (state) {
+  return {
+    userData: state.authReducer.data.authorized,
+    goalsReducer: state.goalsReducer
+  };
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    getGoals: (payload = {}) => dispatch(getGoals(payload)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

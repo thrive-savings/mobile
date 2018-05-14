@@ -14,13 +14,13 @@ export default StyleSheet.create({
     backgroundColor: "white",
     padding: 20
   },
-  goalNameContainer: {
+  nameContainer: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
     paddingVertical: 20
   },
-  goalNameText: {
+  nameText: {
     color: colors.blue,
     fontSize: 15,
     fontFamily: "LatoRegular",
@@ -70,10 +70,18 @@ export default StyleSheet.create({
     fontFamily: "LatoRegular"
   },
   datePickerText: {
-    color: colors.charcoal,
+    color: colors.blue,
     paddingLeft: 10,
     fontSize: 13,
     fontFamily: "LatoRegular"
+  },
+
+  // Error Text style
+  formErrorText: {
+    fontSize: 12,
+    color: colors.error,
+    textAlign: "center",
+    top: -10
   },
 
   //Separator style

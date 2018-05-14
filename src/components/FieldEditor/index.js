@@ -26,6 +26,7 @@ const getModalContent = (props) => {
         <TextInput
           style={styles.input}
           placeholder={"Goal Name"}
+          autoFocus
           placeholderTextColor={color(colors.darkerGrey).darken(0.1).hex()}
           underlineColorAndroid="transparent"
           onChangeText={onChange}
