@@ -23,7 +23,7 @@ export default StyleSheet.create({
     fontSize: 10
   },
   bottomBtn: {
-    top: -11,
+    top: -8,
     left: -10
   },
   bottomBtnText: {

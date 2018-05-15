@@ -103,7 +103,7 @@ export default StyleSheet.create({
     fontFamily: "LatoRegular"
   },
   signUpBtn: {
-    top: -11,
+    top: -8,
     left: -10
   },
   signUpBtnText: {

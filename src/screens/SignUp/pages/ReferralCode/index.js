@@ -17,11 +17,11 @@ import { Field, reduxForm } from "redux-form";
 import { verifyReferralCode } from "../../state/actions";
 
 import styles from "./styles";
+import colors from "../../../../theme/colors";
+
 import { required } from "../../../../globals/validators";
 
 const logo = require("../../../../../assets/Logo/white-large.png");
-
-const commonColor = require("../../../../theme/variables/commonColor");
 
 class ReferralCodeForm extends Component {
   textInput: Any;
@@ -102,7 +102,7 @@ class ReferralCodeForm extends Component {
         >
           {
             isLoading ?
-              <Spinner color={commonColor.customColors.blue} /> :
+              <Spinner color={colors.blue} /> :
               <Text style={styles.createAccountBtnText}>
                 Create My Account
               </Text>

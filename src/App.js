@@ -6,11 +6,6 @@ import { Root } from "native-base";
 import Login from "./screens/Login/";
 import ForgotPassword from "./screens/ForgotPassword";
 import SignUp from "./screens/SignUp/";
-import Walkthrough from "./screens/Walkthrough/";
-import Comments from "./screens/Comments";
-import Channels from "./screens/Channels";
-import Channel from "./screens/Channel";
-import Story from "./screens/Story";
 import Home from "./screens/Home";
 import Sidebar from "./screens/Sidebar";
 import Profile from "./screens/Profile";
@@ -28,7 +23,6 @@ import getAuthorized from "./globals/getAuthorized";
 const Drawer = DrawerNavigator(
   {
     Home: { screen: Home },
-    Channels: { screen: Channels },
     Profile: { screen: Profile },
     Settings: { screen: Settings },
     Contact: { screen: Contact }
@@ -43,10 +37,6 @@ const stackScreens = {
   Login: { screen: Login },
   SignUp: { screen: SignUp },
   ForgotPassword: { screen: ForgotPassword },
-  Walkthrough: { screen: Walkthrough },
-  Story: { screen: Story },
-  Comments: { screen: Comments },
-  Channel: { screen: Channel },
   VerifyCode: { screen: VerifyCode },
   IntegrateBank: { screen: IntegrateBank },
   SavingPreferences: { screen: SavingPreferences },

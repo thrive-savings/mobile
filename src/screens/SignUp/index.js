@@ -10,7 +10,7 @@ import {
 } from "native-base";
 
 import styles from "./styles";
-import commonColor from "../../theme/variables/commonColor";
+import colors from "../../theme/colors";
 
 import ReferralCode from "./pages/ReferralCode";
 import PersonalDetails from "./pages/PersonalDetails";
@@ -37,7 +37,7 @@ class SignUp extends Component {
     return (
       <Container>
         <StatusBar
-          backgroundColor={commonColor.customColors.statusbar}
+          backgroundColor={colors.statusbar}
           barStyle="light-content"
         />
         <ImageBackground

@@ -1,1 +1,0 @@
-export const FETCH_HOME_DATA = "FETCHING_HOME_DATA";

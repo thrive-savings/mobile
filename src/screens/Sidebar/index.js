@@ -16,7 +16,6 @@ import colors from "../../theme/colors";
 
 const logo = require("../../../assets/Logo/thumbnail.png");
 const savingsIcon = require("../../../assets/Sidebar/House/house.png");
-const historyIcon = require("../../../assets/Sidebar/Fill/fill1.png");
 const settingsIcon = require("../../../assets/Sidebar/Settings/settings1.png");
 const contactIcon = require("../../../assets/Sidebar/ThriveBot/thriveBot.png");
 const faqIcon = require("../../../assets/Sidebar/Faq/faq.png");
@@ -26,11 +25,6 @@ const MENU_ITEMS = [
     displayName: "MY SAVINGS",
     icon: savingsIcon,
     screen: "Home"
-  },
-  {
-    displayName: "SAVINGS HISTORY",
-    icon: historyIcon,
-    screen: "Channels"
   },
   {
     displayName: "SETTINGS",
@@ -58,6 +52,11 @@ class SideBar extends Component {
     };
   }
 
+  onProfileClick() {
+    this.setState({activeMenuItemIndex: -1});
+    this.props.navigation.navigate("Profile");
+  }
+
   onMenuItemClick(index) {
     this.setState({activeMenuItemIndex: index});
     this.props.navigation.navigate(MENU_ITEMS[index].screen);
@@ -80,8 +79,6 @@ class SideBar extends Component {
   }
 
   render() {
-    const { navigation } = this.props;
-
     const avatar = getAvatar(this.props.authReducer, this.props.profileReducer);
     const { data: { authorized: { balance, firstName, lastName } } } = this.props.authReducer;
     const fullName = firstName + " " + lastName;
@@ -89,7 +86,7 @@ class SideBar extends Component {
 
     return (
       <View style={styles.container}>
-        <TouchableOpacity activeOpacity={0.6} style={[styles.header, styles.padder]} onPress={() => navigation.navigate("Profile")}>
+        <TouchableOpacity activeOpacity={0.6} style={[styles.header, styles.padder]} onPress={() => this.onProfileClick()}>
           {
             avatar
               ? <Image source={{uri: `data:image/png;base64,${avatar}`}} style={styles.avatar} />
