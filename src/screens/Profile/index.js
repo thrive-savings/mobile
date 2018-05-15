@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, StatusBar, TouchableOpacity, View, Text } from "react-native";
+import { Image, ImageBackground, StatusBar, TouchableOpacity, View, Text } from "react-native";
 import { connect } from "react-redux";
 import { Spinner } from "native-base";
 import { Svg } from "expo";
@@ -184,7 +184,7 @@ class Profile extends Component {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" backgroundColor={colors.statusbar}/>
-        <Image source={bg} style={styles.background}>
+        <ImageBackground source={bg} style={styles.background}>
           <View style={styles.header}>
             <TouchableOpacity activeOpacity={0.6} onPress={this.onBackPress} style={styles.backButton}>
               <Image source={this.state.activeContent === "Home" ? menuIcon : backIcon} />
@@ -198,7 +198,7 @@ class Profile extends Component {
               onClose={() => this.setState({showModal: false})}
             />
           </View>
-        </Image>
+        </ImageBackground>
       </View>
     );
   }

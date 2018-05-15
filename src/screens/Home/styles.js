@@ -200,7 +200,9 @@ export default StyleSheet.create({
   // Info Button styles
   infoIconButton: {
     alignSelf: "flex-end",
-    position: "absolute"
+    position: "absolute",
+    right: 0,
+    top: 0
   },
   infoContentText: {
     color: colors.charcoal,

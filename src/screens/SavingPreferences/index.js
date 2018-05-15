@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Image, StatusBar, TouchableOpacity } from "react-native";
+import { Image, ImageBackground, StatusBar, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import {
   Container,
@@ -73,7 +73,7 @@ class SavingPreferences extends Component {
     return (
       <Container>
         <StatusBar barStyle="light-content" backgroundColor={colors.statusbar} />
-        <Image
+        <ImageBackground
           source={bg}
           style={styles.background}
         >
@@ -86,7 +86,7 @@ class SavingPreferences extends Component {
           <Content showsVerticalScrollIndicator={false} style={styles.contentContainer}>
             {body}
           </Content>
-        </Image>
+        </ImageBackground>
       </Container>
     );
   }

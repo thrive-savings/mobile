@@ -4,6 +4,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
+  ImageBackground,
   Text,
   StatusBar
 } from "react-native";
@@ -19,7 +20,7 @@ class TOS extends Component {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" backgroundColor={colors.statusbar}/>
-        <Image
+        <ImageBackground
           source={bg}
           style={styles.background}
         >
@@ -33,7 +34,7 @@ class TOS extends Component {
           <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.contentContainer}>
             <Text style={[styles.regularText, styles.boldText]}>Test text</Text>
           </ScrollView>
-        </Image>
+        </ImageBackground>
       </View>
     );
   }

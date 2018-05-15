@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Text,
   Image,
+  ImageBackground,
   StatusBar
 } from "react-native";
 import { connect } from "react-redux";
@@ -99,7 +100,7 @@ class SavingGoals extends Component {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" backgroundColor={colors.statusbar}/>
-        <Image source={bg} style={styles.background}>
+        <ImageBackground source={bg} style={styles.background}>
           <View style={styles.header}>
             <TouchableOpacity activeOpacity={0.6} onPress={() => this.backArrowPressed()} style={styles.headerBackButton}>
               <Image source={backIcon} />
@@ -109,7 +110,7 @@ class SavingGoals extends Component {
           <ScrollView contentContainerStyle={styles.contentContainer} showsVerticalScrollIndicator={false}>
             {component}
           </ScrollView>
-        </Image>
+        </ImageBackground>
       </View>
     );
   }

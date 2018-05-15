@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from "react";
-import { Image, StatusBar } from "react-native";
+import { Image, ImageBackground, StatusBar } from "react-native";
 import { connect } from "react-redux";
 import {
   Container,
@@ -40,7 +40,7 @@ class SignUp extends Component {
           backgroundColor={commonColor.customColors.statusbar}
           barStyle="light-content"
         />
-        <Image
+        <ImageBackground
           source={bg}
           style={styles.background}
         >
@@ -62,7 +62,7 @@ class SignUp extends Component {
               </Text>
             </Button>
           </View>
-        </Image>
+        </ImageBackground>
       </Container>
     );
   }

@@ -3,6 +3,7 @@ import {
   View,
   Text,
   Image,
+  ImageBackground,
   TouchableOpacity,
   StatusBar
 } from "react-native";
@@ -234,7 +235,7 @@ class Settings extends Component {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" backgroundColor={colors.statusbar}/>
-        <Image
+        <ImageBackground
           source={bg}
           style={styles.background}
         >
@@ -248,7 +249,7 @@ class Settings extends Component {
           <Content showsVerticalScrollIndicator={false} style={styles.contentContainer}>
             {this.renderContent()}
           </Content>
-        </Image>
+        </ImageBackground>
       </View>
     );
   }

@@ -3,6 +3,7 @@ import {
   View,
   ScrollView,
   Image,
+  ImageBackground,
   Text,
   TouchableOpacity,
   StatusBar
@@ -143,7 +144,7 @@ class Home extends Component {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" backgroundColor={colors.statusbar}/>
-        <Image source={bg} style={styles.background}>
+        <ImageBackground source={bg} style={styles.background}>
           <View style={styles.header}>
             <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate("DrawerOpen")} style={styles.headerMenuButton}>
               <Image source={menuIcon} />
@@ -177,7 +178,7 @@ class Home extends Component {
             content={this.getInfoModalContent()}
             onClose={() => this.setState({showRainyDayInfoModal: false})}
           />
-        </Image>
+        </ImageBackground>
       </View>
     );
   }

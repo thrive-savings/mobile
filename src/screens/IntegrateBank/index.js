@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {
   View,
   Image,
+  ImageBackground,
   StatusBar
 } from "react-native";
 import { connect } from "react-redux";
@@ -57,14 +58,14 @@ class IntegrateBank extends Component {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" backgroundColor={colors.statusbar}/>
-        <Image source={bg} style={styles.background}>
+        <ImageBackground source={bg} style={styles.background}>
           <View style={styles.header}>
             <Image source={logo} style={styles.headerLogo} />
           </View>
           <View style={{flex: 1}}>
             {this.renderContent()}
           </View>
-        </Image>
+        </ImageBackground>
       </View>
     );
   }

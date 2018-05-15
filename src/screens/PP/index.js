@@ -4,6 +4,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
+  ImageBackground,
   Text,
   StatusBar
 } from "react-native";
@@ -19,7 +20,7 @@ class PP extends Component {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" backgroundColor={colors.statusbar}/>
-        <Image
+        <ImageBackground
           source={bg}
           style={styles.background}
         >
@@ -39,7 +40,7 @@ class PP extends Component {
 
             <Text style={[styles.regularText, styles.blueText]}>Application of this Privacy Policy</Text>
           </ScrollView>
-        </Image>
+        </ImageBackground>
       </View>
     );
   }

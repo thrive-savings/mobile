@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {
   View,
   Image,
+  ImageBackground,
   Text,
   TouchableOpacity,
   StatusBar
@@ -21,7 +22,7 @@ class Contact extends Component {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" backgroundColor={colors.statusbar}/>
-        <Image
+        <ImageBackground
           source={bg}
           style={styles.background}
         >
@@ -45,7 +46,7 @@ class Contact extends Component {
               </TouchableOpacity>
             </View>
           </View>
-        </Image>
+        </ImageBackground>
       </View>
     );
   }
