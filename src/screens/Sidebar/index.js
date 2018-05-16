@@ -14,7 +14,7 @@ import { getDollarString } from "../../globals/helpers";
 import styles from "./styles";
 import colors from "../../theme/colors";
 
-const logo = require("../../../assets/Logo/thumbnail.png");
+const logo = require("../../../assets/ThumbnailLogo/Small/thumbnail.png");
 const savingsIcon = require("../../../assets/Sidebar/House/house.png");
 const settingsIcon = require("../../../assets/Sidebar/Settings/settings1.png");
 const contactIcon = require("../../../assets/Sidebar/ThriveBot/thriveBot.png");
@@ -34,7 +34,7 @@ const MENU_ITEMS = [
   {
     displayName: "FAQ",
     icon: faqIcon,
-    screen: "Contact"
+    screen: "Faq"
   },
   {
     displayName: "CONTACT",

@@ -23,13 +23,13 @@ class Accordion extends Component {
 
   render() {
     const expanded = this.state.expanded;
-    const { title, description } = this.props;
+    const { title, description, showIcon, titleFont } = this.props;
 
     return (
       <Card style={styles.container}>
         <TouchableOpacity activeOpacity={0.6} onPress={() => this.setState({expanded: !expanded})} style={styles.header}>
-          <Image source={tickIcon} />
-          <Text style={styles.titleText}>{title}</Text>
+          {showIcon && <Image source={tickIcon} />}
+          <Text style={[styles.titleText, (titleFont && {fontSize: titleFont})]}>{title}</Text>
           <Right>
             <Text style={[styles.rightIcon, (expanded && styles.rightIconRotated)]}>></Text>
           </Right>
@@ -47,11 +47,15 @@ class Accordion extends Component {
 
 Accordion.propTypes = {
   title: PropTypes.string,
-  description: PropTypes.string
+  description: PropTypes.string,
+  showIcon: PropTypes.bool,
+  titleFont: PropTypes.number
 };
 Accordion.defaultProps = {
   title: "",
-  description: ""
+  description: "",
+  showIcon: false,
+  titleFont: 0
 };
 
 export default Accordion;

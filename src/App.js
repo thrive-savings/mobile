@@ -16,6 +16,7 @@ import SavingPreferences from "./screens/SavingPreferences";
 import SavingGoals from "./screens/SavingGoals";
 import PP from "./screens/PP";
 import TOS from "./screens/TOS";
+import Faq from "./screens/Faq";
 import Contact from "./screens/Contact";
 
 import getAuthorized from "./globals/getAuthorized";
@@ -25,10 +26,11 @@ const Drawer = DrawerNavigator(
     Home: { screen: Home },
     Profile: { screen: Profile },
     Settings: { screen: Settings },
+    Faq: { screen: Faq },
     Contact: { screen: Contact }
   },
   {
-    initialRouteName: "Home",
+    initialRouteName: "Faq",
     contentComponent: props => <Sidebar {...props} />
   }
 );
