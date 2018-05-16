@@ -38,10 +38,12 @@ export default StyleSheet.create({
     alignSelf: "center"
   },
   content: {
-    padding: 20,
+    marginTop: 10,
+    padding: 30,
     borderRadius: 8,
     backgroundColor: "white",
-    alignItems: "center"
+    alignItems: "center",
+    elevation: 5
   },
   descText: {
     color: colors.charcoal,
@@ -50,20 +52,30 @@ export default StyleSheet.create({
     lineHeight: 22,
     letterSpacing: 0.2,
     textAlign: "center",
-    padding: 20,
-    paddingBottom: 0
+    paddingHorizontal: 10,
+    paddingVertical: 20
+  },
+  boldText: {
+    fontFamily: "LatoBold"
+  },
+  helpButtonsContainer: {
+    flexDirection: "row",
+    alignSelf: "stretch",
+    justifyContent: "space-between",
+    alignItems: "center"
   },
   helpButton: {
-    alignSelf: "stretch",
+    width: deviceWidth / 2 - 60,
+    flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 8,
+    borderRadius: 10,
     borderWidth: 2,
     borderColor: colors.blue,
-    height: 40,
-    marginTop: 20
+    height: 40
   },
   blueText: {
+    paddingLeft: 10,
     color: colors.blue,
     fontSize: 15,
     fontFamily: "LatoRegular",

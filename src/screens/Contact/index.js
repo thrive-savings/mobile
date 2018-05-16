@@ -10,12 +10,16 @@ import {
 
 import Communications from "react-native-communications";
 
+import SpecialButton from "../../components/SpecialButton";
+
 import styles from "./styles";
 import colors from "../../theme/colors";
 
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
 const menuIcon = require("../../../assets/Icons/Menu/menu.png");
 const botIcon = require("../../../assets/Icons/ThriveBot/thriveBot.png");
+const phoneIcon = require("../../../assets/Icons/Phone/phone.png");
+const emailIcon = require("../../../assets/Icons/Email/email.png");
 
 class Contact extends Component {
   render() {
@@ -36,14 +40,19 @@ class Contact extends Component {
           <View style={styles.contentContainer}>
             <View style={styles.content}>
               <Image source={botIcon} />
-              <Text style={styles.descText}>We’re more than happy to help with any questions or feedback you may have.</Text>
-              <Text style={styles.descText}>Our office hours are Monday to Friday, 9:00AM - 5:00PM EST.</Text>
-              <TouchableOpacity activeOpacity={0.6} style={styles.helpButton} onPress={() => Communications.phonecall("6476763332", true)}>
-                <Text style={styles.blueText}>Call +1-833-7-THRIVE</Text>
-              </TouchableOpacity>
-              <TouchableOpacity activeOpacity={0.6} style={styles.helpButton} onPress={() => Communications.email(["help@thrivesavings.com", "naib.baghirov@gmail.com"],null,null,"Help Needed",null)}>
-                <Text style={styles.blueText}>HELP@THRIVESAVINGS>COM</Text>
-              </TouchableOpacity>
+              <Text style={styles.descText}>We’re more than happy to help with any questions or feedback you may have.{"\n"}You can chat with ThriveBot and perform basic commands regarding your account.</Text>
+              <SpecialButton state={1} text={"TALK TO THRIVEBOT"} onClick={() => Communications.text("6476763323", "Balance")}/>
+              <Text style={styles.descText}>You can also choose to speak with one of our representatives. Our office hours are <Text style={styles.boldText}> Monday to Friday, 9:00AM - 5:00PM EST.</Text></Text>
+              <View style={styles.helpButtonsContainer}>
+                <TouchableOpacity activeOpacity={0.6} style={styles.helpButton} onPress={() => Communications.phonecall("6476763323", true)}>
+                  <Image source={phoneIcon} />
+                  <Text style={styles.blueText}>CALL</Text>
+                </TouchableOpacity>
+                <TouchableOpacity activeOpacity={0.6} style={styles.helpButton} onPress={() => Communications.email(["help@thrivesavings.com", "naib.baghirov@gmail.com"],null,null,"Help Needed",null)}>
+                  <Image source={emailIcon} />
+                  <Text style={styles.blueText}>EMAIL</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </ImageBackground>
