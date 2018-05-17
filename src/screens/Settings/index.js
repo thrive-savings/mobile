@@ -61,7 +61,7 @@ class Settings extends Component {
     super(props);
 
     this.state = {
-      activePage: "settings"
+      activePage: "legal"
     };
 
     this.headerIconClicked = this.headerIconClicked.bind(this);

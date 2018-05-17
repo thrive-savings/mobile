@@ -30,7 +30,7 @@ const Drawer = DrawerNavigator(
     Contact: { screen: Contact }
   },
   {
-    initialRouteName: "Contact",
+    initialRouteName: "Settings",
     contentComponent: props => <Sidebar {...props} />
   }
 );
