@@ -1,12 +1,11 @@
 // @flow
 import React, { Component } from "react";
-import { Image, ImageBackground, StatusBar } from "react-native";
+import { Image, ImageBackground, StatusBar, TextInput } from "react-native";
 import {
   Container,
   Content,
   Text,
   Item,
-  Input,
   Button,
   Icon,
   View,
@@ -34,19 +33,20 @@ class LoginForm extends Component {
     return (
       <View>
         <Item error={error && touched} rounded style={styles.inputGrp}>
-          <Input
+          <TextInput
             ref={c => (this.textInput = c)}
             placeholderTextColor="#FFF"
             style={styles.input}
             placeholder={input.name === "email" ? "Email" : "Password"}
             secureTextEntry={input.name === "password" ? true : false}
+            underlineColorAndroid="transparent"
             {...input}
           />
           {touched && error
             ? <Icon
                 active
                 style={styles.formErrorIcon}
-                onPress={() => this.textInput._root.clear()}
+                onPress={() => this.textInput.clear()}
                 name="close"
               />
             : <Text />}

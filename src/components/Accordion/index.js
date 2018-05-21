@@ -54,7 +54,7 @@ Accordion.propTypes = {
 Accordion.defaultProps = {
   title: "",
   description: "",
-  showIcon: false,
+  showIcon: true,
   titleFont: 0
 };
 

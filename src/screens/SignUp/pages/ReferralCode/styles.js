@@ -19,11 +19,14 @@ export default StyleSheet.create({
     borderRadius: 8,
     height: 30,
     width: 120,
-    alignSelf: "center"
+    alignSelf: "center",
   },
   input: {
+    flex: 1,
+    paddingHorizontal: 10,
     color: "#fff",
-    fontSize: 13
+    fontSize: 13,
+    textAlign: "center"
   },
   logo: {
     resizeMode: "center",
@@ -36,13 +39,16 @@ export default StyleSheet.create({
     paddingHorizontal: 20
   },
   textBelow: {
-    fontSize: 12
+    fontSize: 12,
+    marginHorizontal: -20
   },
   text: {
-    color: colors.lightgrey,
+    color: "white",
     textAlign: "center",
     fontFamily: "LatoRegular",
-    paddingBottom: 20
+    paddingBottom: 20,
+    letterSpacing: 0.2,
+    lineHeight: 22
   },
   formErrorIcon: {
     color: "#fff",

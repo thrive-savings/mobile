@@ -8,15 +8,5 @@ export default StyleSheet.create({
     flex: 1,
     width: null,
     height: null
-  },
-
-  //Header styles
-  header: {
-    flex: 0.1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  headerLogo: {
-    resizeMode: "center"
   }
 });

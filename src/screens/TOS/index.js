@@ -2,18 +2,17 @@ import React, { Component } from "react";
 import {
   View,
   ScrollView,
-  TouchableOpacity,
-  Image,
   ImageBackground,
   Text,
   StatusBar
 } from "react-native";
 
+import Header from "../../components/Header";
+
 import styles from "./styles";
 import colors from "../../theme/colors";
 
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
-const backIcon = require("../../../assets/Icons/Back/back.png");
 
 class TOS extends Component {
   render() {
@@ -24,12 +23,7 @@ class TOS extends Component {
           source={bg}
           style={styles.background}
         >
-          <View style={styles.header}>
-            <TouchableOpacity activeOpacity={0.6} onPress={() => this.props.navigation.goBack()} style={styles.headerIcon}>
-              <Image source={backIcon} style={styles.headerIconImage}/>
-            </TouchableOpacity>
-            <Text style={styles.headerText}>TERMS OF SERVICE</Text>
-          </View>
+          <Header navigation={this.props.navigation} button="back" content="text" text="TERMS OF SERVICE" />
 
           <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollViewsContainer}>
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={[styles.contentContainer, styles.noBottomBorder]}>

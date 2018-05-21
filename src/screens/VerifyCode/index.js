@@ -13,6 +13,7 @@ import {
 } from "native-base";
 import { Field, reduxForm } from "redux-form";
 
+import Header from "../../components/Header";
 import SpecialButton from "../../components/SpecialButton";
 
 import VerifyCodeModal from "./modals/VerifyCodeModal";
@@ -25,7 +26,6 @@ import { savePhone } from "./state/actions";
 import { required, numeric } from "../../globals/validators";
 
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
-const logo = require("../../../assets/Logo/white.png");
 const sms = require("../../../assets/Icons/Sms/sms.png");
 
 
@@ -97,9 +97,7 @@ class VerifyCodeForm extends Component {
       <Container>
         <StatusBar barStyle="light-content" backgroundColor={colors.statusbar}/>
         <ImageBackground source={bg} style={styles.background}>
-          <View style={styles.headerContainer}>
-            <Image source={logo} style={styles.headerLogo} />
-          </View>
+          <Header button="none" />
           <Content showsVerticalScrollIndicator={false} style={styles.contentContainer}>
             <Card style={styles.cardContainer}>
               <Text style={styles.labelText}>VERIFY YOUR ACCOUNT</Text>

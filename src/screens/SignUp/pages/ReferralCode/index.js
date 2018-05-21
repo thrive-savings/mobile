@@ -1,16 +1,14 @@
 import React, { Component } from "react";
-import { Image } from "react-native";
+import { Image, TextInput } from "react-native";
 import {
   View,
   Item,
-  Input,
   Icon,
   Text,
   Button,
   Spinner,
   Toast
 } from "native-base";
-
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 
@@ -25,23 +23,23 @@ const logo = require("../../../../../assets/Logo/white-large.png");
 
 class ReferralCodeForm extends Component {
   textInput: Any;
-
   renderInput({ input, label, type, meta: { touched, error, warning } }) {
     return (
       <View>
         <Item error={error && touched} rounded style={styles.inputGrp}>
-          <Input
+          <TextInput
             ref={c => (this.textInput = c)}
             placeholderTextColor="#FFF"
             style={styles.input}
             placeholder={input.name === "code" ? "ENTER CODE" : "Placeholder"}
+            underlineColorAndroid="transparent"
             {...input}
           />
           {touched && error
             ? <Icon
                 active
                 style={styles.formErrorIcon}
-                onPress={() => this.textInput._root.clear()}
+                onPress={() => this.textInput.clear()}
                 name="close"
               />
             : <Text />}

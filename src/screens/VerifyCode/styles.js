@@ -10,14 +10,6 @@ export default StyleSheet.create({
     width: null,
     height: null
   },
-  headerContainer: {
-    flex: 0.1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  headerLogo: {
-    resizeMode: "center"
-  },
   contentContainer: {
     flex: 1,
     width: deviceWidth - 50,

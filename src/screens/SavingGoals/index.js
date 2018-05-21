@@ -2,13 +2,12 @@ import React, { Component } from "react";
 import {
   View,
   ScrollView,
-  TouchableOpacity,
-  Text,
-  Image,
   ImageBackground,
   StatusBar
 } from "react-native";
 import { connect } from "react-redux";
+
+import Header from "../../components/Header";
 
 import ChooseCategory from "./pages/ChooseCategory";
 import GoalDetail from "./pages/GoalDetail";
@@ -20,7 +19,6 @@ import styles from "./styles";
 import colors from "../../theme/colors";
 
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
-const backIcon = require("../../../assets/Icons/Back/back.png");
 
 class SavingGoals extends Component {
   constructor(props) {
@@ -101,12 +99,11 @@ class SavingGoals extends Component {
       <View style={styles.container}>
         <StatusBar barStyle="light-content" backgroundColor={colors.statusbar}/>
         <ImageBackground source={bg} style={styles.background}>
-          <View style={styles.header}>
-            <TouchableOpacity activeOpacity={0.6} onPress={() => this.backArrowPressed()} style={styles.headerBackButton}>
-              <Image source={backIcon} />
-            </TouchableOpacity>
-            <Text style={styles.headerTitleText}>{title}</Text>
-          </View>
+          <Header
+            navigation={this.props.navigation}
+            onButtonPress={this.backArrowPressed.bind(this)}
+            button="back" content="text" text={title}
+          />
           <ScrollView contentContainerStyle={styles.contentContainer} showsVerticalScrollIndicator={false}>
             {component}
           </ScrollView>

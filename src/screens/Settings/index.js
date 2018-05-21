@@ -12,6 +12,7 @@ import { connect } from "react-redux";
 
 import Communications from "react-native-communications";
 
+import Header from "../../components/Header";
 import SpecialButton from "../../components/SpecialButton";
 import getAuthorized from "../../globals/getAuthorized";
 
@@ -26,33 +27,31 @@ import styles from "./styles";
 import colors from "../../theme/colors";
 
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
-const menuIcon = require("../../../assets/Icons/Menu/menu.png");
-const backIcon = require("../../../assets/Icons/Back/back.png");
 
 const PAGE_TYPES = {
   settings: {
     headerTitle: "SETTINGS",
-    headerIcon: menuIcon
+    headerButton: "menu"
   },
   workType: {
     headerTitle: "UPDATE SETTINGS",
-    headerIcon: backIcon
+    headerButton: "back"
   },
   savingType: {
     headerTitle: "UPDATE SETTINGS",
-    headerIcon: backIcon
+    headerButton: "back"
   },
   fixedPlan: {
     headerTitle: "UPDATE SETTINGS",
-    headerIcon: backIcon
+    headerButton: "back"
   },
   linkedBank: {
     headerTitle: "LINKED BANK ACCOUNT",
-    headerIcon: backIcon
+    headerButton: "back"
   },
   legal: {
     headerTitle: "LEGAL & PRIVACY",
-    headerIcon: backIcon
+    headerButton: "back"
   }
 };
 
@@ -61,7 +60,7 @@ class Settings extends Component {
     super(props);
 
     this.state = {
-      activePage: "legal"
+      activePage: "settings"
     };
 
     this.headerIconClicked = this.headerIconClicked.bind(this);
@@ -239,13 +238,12 @@ class Settings extends Component {
           source={bg}
           style={styles.background}
         >
-          <View style={styles.header}>
-            <TouchableOpacity activeOpacity={0.6} onPress={this.headerIconClicked} style={styles.headerIcon}>
-              <Image source={PAGE_TYPES[activePage].headerIcon} />
-            </TouchableOpacity>
-            <Text style={styles.headerText}>{PAGE_TYPES[activePage].headerTitle}</Text>
-          </View>
-
+          <Header
+            navigation={this.props.navigation}
+            button={PAGE_TYPES[activePage].headerButton}
+            onButtonPress={this.headerIconClicked}
+            content="text" text={PAGE_TYPES[activePage].headerTitle}
+          />
           <Content showsVerticalScrollIndicator={false} style={styles.contentContainer}>
             {this.renderContent()}
           </Content>

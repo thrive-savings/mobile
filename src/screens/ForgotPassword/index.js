@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from "react";
-import { Image, ImageBackground, StatusBar, TouchableOpacity } from "react-native";
+import { ImageBackground, StatusBar, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import {
   Container,
@@ -15,6 +15,7 @@ import {
 } from "native-base";
 import { Field, reduxForm } from "redux-form";
 
+import Header from "../../components/Header";
 import SpecialButton from "../../components/SpecialButton";
 
 import styles from "./styles";
@@ -25,17 +26,10 @@ import { clearStorage, passwordRequest, passwordReset } from "./state/actions";
 import { required, email, numeric, minLength8 } from "../../globals/validators";
 
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
-const logo = require("../../../assets/Logo/white.png");
-const backIcon = require("../../../assets/Icons/Back/back.png");
 
-
-type Props = {
-  navigation: () => void
-};
-declare type Any = any;
 class ForgotPasswordForm extends Component {
-  textInput: Any;
-  constructor(props: Props) {
+  textInput;
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -226,12 +220,7 @@ class ForgotPasswordForm extends Component {
           source={bg}
           style={styles.background}
         >
-          <View style={styles.headerContainer}>
-            <TouchableOpacity activeOpacity={0.6} onPress={this.goToLogin} style={styles.headerIcon}>
-              <Image source={backIcon} style={styles.headerIconImage}/>
-            </TouchableOpacity>
-            <Image source={logo} style={styles.headerLogo} />
-          </View>
+          <Header navigation={this.props.navigation} button="back" onButtonPress={this.goToLogin} />
           <Content showsVerticalScrollIndicator={false} style={styles.contentContainer}>
             <Card style={styles.cardContainer}>
               <Text style={styles.labelText}>RESET PASSWORD</Text>

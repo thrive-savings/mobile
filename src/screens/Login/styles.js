@@ -36,9 +36,11 @@ export default StyleSheet.create({
     height: 40
   },
   input: {
-    paddingLeft: 10,
-    color: "#fff",
-    fontSize: 13
+    flex: 1,
+    paddingHorizontal: 10,
+    color: "white",
+    fontSize: 13,
+    fontFamily: "LatoRegular"
   },
   formErrorIcon: {
     color: "#fff",

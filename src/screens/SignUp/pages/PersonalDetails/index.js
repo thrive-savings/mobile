@@ -16,18 +16,18 @@ import CheckBox from "react-native-check-box";
 
 import { Field, reduxForm } from "redux-form";
 
+import Header from "../../../../components/Header";
+import SpecialButton from "../../../../components/SpecialButton";
+
 import { styles, addressFinderStyles } from "./styles";
 import { required, minLength8, alphaNumeric, email } from "../../../../globals/validators";
 
 import { signUpUser } from "../../state/actions";
 
-import SpecialButton from "../../../../components/SpecialButton";
-
 import { GooglePlacesApiKey } from "../../../../../config";
 
 import colors from "../../../../theme/colors";
 
-const logo = require("../../../../../assets/Logo/white.png");
 const tick = require("../../../../../assets/Icons/Checkbox/tick.png");
 
 const INPUT_FIELDS = {
@@ -208,9 +208,7 @@ class PersonalDetails extends Component {
 
     return (
       <View style={styles.contentContainerStyle}>
-        <View style={styles.logoContainer}>
-          <Image source={logo} style={styles.logo}/>
-        </View>
+        <Header button="none" />
         <View style={styles.formContainer}>
           <ScrollView style={styles.formContent} showsVerticalScrollIndicator={false}>
             <Text style={styles.formLabelText}>

@@ -2,7 +2,6 @@ import { StyleSheet, Dimensions } from "react-native";
 import colors from "../../theme/colors";
 
 const screen = Dimensions.get("window");
-const deviceHeight = screen.height;
 const deviceWidth = screen.width;
 
 export default StyleSheet.create({
@@ -15,29 +14,12 @@ export default StyleSheet.create({
     height: null
   },
 
-  //Header styles
-  header: {
-    flex: 0.1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  headerMenuButton: {
-    alignSelf: "flex-start",
-    position: "absolute",
-    left: 25
-  },
-  logo: {
-    resizeMode: "center",
-    height: deviceHeight / 8,
-    width: deviceWidth / 4
-  },
-
   // Subheader styles
   subHeader: {
     flex: 0.25,
     paddingTop: 5,
     alignItems: "center",
-    justifyContent: "flex-start"
+    justifyContent: "space-around"
   },
   balanceLabelText: {
     color: "white",

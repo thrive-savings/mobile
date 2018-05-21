@@ -12,6 +12,7 @@ import { Card } from "native-base";
 import { LinearGradient } from "expo";
 import { connect } from "react-redux";
 
+import Header from "../../components/Header";
 import ModalTemplate from "../../components/ModalTemplate";
 import ProgressBar from "../../components/ProgressBar";
 
@@ -24,8 +25,6 @@ import styles from "./styles";
 import colors from "../../theme/colors";
 
 const bg = require("../../../assets/Backgrounds/BackgroundAccount.png");
-const menuIcon = require("../../../assets/Icons/Menu/menu.png");
-const logo = require("../../../assets/Logo/white.png");
 const employerBonusIcon = require("../../../assets/Icons/Notifications/EmployerBonus/bitmap.png");
 const savingPreferencesIcon = require("../../../assets/Icons/Notifications/SavingPreferences/bitmap.png");
 const infoIcon = require("../../../assets/Icons/Info/information.png");
@@ -145,12 +144,7 @@ class Home extends Component {
       <View style={styles.container}>
         <StatusBar barStyle="light-content" backgroundColor={colors.statusbar}/>
         <ImageBackground source={bg} style={styles.background}>
-          <View style={styles.header}>
-            <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate("DrawerOpen")} style={styles.headerMenuButton}>
-              <Image source={menuIcon} />
-            </TouchableOpacity>
-            <Image source={logo} style={styles.logo} />
-          </View>
+          <Header navigation={navigation} />
           <View style={styles.subHeader}>
             <Text style={styles.balanceLabelText}>THRIVE SAVINGS BALANCE</Text>
             <View style={styles.balanceTextHolder}>

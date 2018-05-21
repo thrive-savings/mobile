@@ -14,24 +14,6 @@ export default StyleSheet.create({
     height: null
   },
 
-  //Header styles
-  header: {
-    flex: 0.1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  backButton: {
-    alignSelf: "flex-start",
-    position: "absolute",
-    left: 20
-  },
-  titleText: {
-    color: "white",
-    fontSize: 15,
-    fontFamily: "LatoBold",
-    textAlign: "center"
-  },
-
   //Content styles
   contentContainer: {
     width: deviceWidth - 40,

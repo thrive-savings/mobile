@@ -2,7 +2,6 @@ import { StyleSheet, Dimensions, Platform } from "react-native";
 import colors from "../../../../theme/colors";
 
 const screen = Dimensions.get("window");
-const deviceHeight = screen.height;
 const deviceWidth = screen.width;
 
 const formWidth = deviceWidth - 60;
@@ -15,14 +14,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "flex-start"
-  },
-  logoContainer: {
-    flex: 0.12
-  },
-  logo: {
-    resizeMode: "center",
-    height: deviceHeight / 8,
-    width: deviceWidth / 4
   },
   formContainer: {
     flex: 0.8,

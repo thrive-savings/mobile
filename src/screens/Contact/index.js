@@ -10,13 +10,13 @@ import {
 
 import Communications from "react-native-communications";
 
+import Header from "../../components/Header";
 import SpecialButton from "../../components/SpecialButton";
 
 import styles from "./styles";
 import colors from "../../theme/colors";
 
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
-const menuIcon = require("../../../assets/Icons/Menu/menu.png");
 const botIcon = require("../../../assets/Icons/ThriveBot/thriveBot.png");
 const phoneIcon = require("../../../assets/Icons/Phone/phone.png");
 const emailIcon = require("../../../assets/Icons/Email/email.png");
@@ -30,12 +30,7 @@ class Contact extends Component {
           source={bg}
           style={styles.background}
         >
-          <View style={styles.header}>
-            <TouchableOpacity activeOpacity={0.6} onPress={() => this.props.navigation.navigate("DrawerOpen")} style={styles.headerIcon}>
-              <Image source={menuIcon} style={styles.headerIconImage}/>
-            </TouchableOpacity>
-            <Text style={styles.headerText}>CONTACT</Text>
-          </View>
+          <Header navigation={this.props.navigation} content="text" text="CONTACT" />
 
           <View style={styles.contentContainer}>
             <View style={styles.content}>

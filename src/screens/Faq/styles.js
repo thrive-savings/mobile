@@ -3,7 +3,6 @@ import colors from "../../theme/colors";
 
 const screen = Dimensions.get("window");
 const deviceWidth = screen.width;
-const deviceHeight = screen.height;
 
 export default StyleSheet.create({
   container: {
@@ -13,23 +12,6 @@ export default StyleSheet.create({
     flex: 1,
     width: null,
     height: null
-  },
-
-  //Header styles
-  header: {
-    flex: 0.1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  headerIcon: {
-    alignSelf: "flex-start",
-    position: "absolute",
-    left: 25
-  },
-  headerText: {
-    color: "white",
-    fontSize: 14,
-    fontFamily: "LatoRegular"
   },
 
   // Content styles

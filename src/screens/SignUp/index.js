@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from "react";
-import { Image, ImageBackground, StatusBar } from "react-native";
+import { ImageBackground, StatusBar } from "react-native";
 import { connect } from "react-redux";
 import {
   Container,

@@ -9,6 +9,7 @@ import {
   Text
 } from "react-native";
 
+import Header from "../../components/Header";
 import Accordion from "../../components/Accordion";
 import FAQ_CATEGORIES from "../../globals/faqCategories";
 
@@ -16,8 +17,6 @@ import styles from "./styles";
 import colors from "../../theme/colors";
 
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
-const menuIcon = require("../../../assets/Icons/Menu/menu.png");
-const backIcon = require("../../../assets/Icons/Back/back.png");
 
 class Faq extends Component {
   constructor(props) {
@@ -78,7 +77,7 @@ class Faq extends Component {
   }
 
   render() {
-    const activeStep = this.state.activeStep;
+    const { activeStep, activeFaqIndex } = this.state;
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" backgroundColor={colors.statusbar}/>
@@ -86,12 +85,12 @@ class Faq extends Component {
           source={bg}
           style={styles.background}
         >
-          <View style={styles.header}>
-            <TouchableOpacity activeOpacity={0.6} onPress={() => this.headerIconClicked()} style={styles.headerIcon}>
-              <Image source={(activeStep ? backIcon : menuIcon)} />
-            </TouchableOpacity>
-            <Text style={styles.headerText}>FAQ</Text>
-          </View>
+          <Header
+            navigation={this.props.navigation}
+            button={activeStep ? "back" : "menu"}
+            onButtonPress={this.headerIconClicked.bind(this)}
+            content="text" text={activeFaqIndex < 0 ? "FAQ" : FAQ_CATEGORIES[activeFaqIndex].name}
+          />
 
           <ScrollView showsVerticalScrollIndicator={false} style={styles.contentContainer}>
             {

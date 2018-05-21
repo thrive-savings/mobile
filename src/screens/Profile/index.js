@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { Spinner } from "native-base";
 import { Svg } from "expo";
 
+import Header from "../../components/Header";
+
 import getAvatar from "../../globals/getAvatar";
 
 import styles from "./styles";
@@ -17,8 +19,6 @@ import ChangeEmail from "./pages/ChangeEmail";
 import ChangePassword from "./pages/ChangePassword";
 
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
-const menuIcon = require("../../../assets/Icons/Menu/menu.png");
-const backIcon = require("../../../assets/Icons/Back/back.png");
 
 class Profile extends Component {
   constructor(props) {
@@ -30,7 +30,7 @@ class Profile extends Component {
     };
 
     this.getDisplayName = this.getDisplayName.bind(this);
-    this.onBackPress = this.onBackPress.bind(this);
+    this.onHeaderButtonPress = this.onHeaderButtonPress.bind(this);
   }
 
   setPhone(payload) {
@@ -48,7 +48,7 @@ class Profile extends Component {
     this.setState({ activeContent: "Home" });
   }
 
-  onBackPress() {
+  onHeaderButtonPress() {
     if (this.state.activeContent === "Home") {
       this.props.navigation.navigate("DrawerOpen");
     } else {
@@ -185,12 +185,12 @@ class Profile extends Component {
       <View style={styles.container}>
         <StatusBar barStyle="light-content" backgroundColor={colors.statusbar}/>
         <ImageBackground source={bg} style={styles.background}>
-          <View style={styles.header}>
-            <TouchableOpacity activeOpacity={0.6} onPress={this.onBackPress} style={styles.backButton}>
-              <Image source={this.state.activeContent === "Home" ? menuIcon : backIcon} />
-            </TouchableOpacity>
-            <Text style={styles.titleText}>{this.getDisplayName()}</Text>
-          </View>
+          <Header
+            navigation={this.props.navigation}
+            button={this.state.activeContent === "Home" ? "menu" : "back"}
+            onButtonPress={this.onHeaderButtonPress}
+            content="text" text={this.getDisplayName()}
+          />
           <View style={{flex: 1}}>
             {this.renderContent()}
             <ChangePhotoModal

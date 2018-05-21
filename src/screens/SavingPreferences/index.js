@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Image, ImageBackground, StatusBar, TouchableOpacity } from "react-native";
+import { ImageBackground, StatusBar } from "react-native";
 import { connect } from "react-redux";
 import {
   Container,
-  Content,
-  Text,
-  View
+  Content
 } from "native-base";
+
+import Header from "../../components/Header";
 
 import styles from "./styles";
 
@@ -22,8 +22,6 @@ import AllSet from "./pages/AllSet";
 import colors from "../../theme/colors";
 
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
-const backIcon = require("../../../assets/Icons/Back/back.png");
-
 
 class SavingPreferences extends Component {
   onBackArrowClick() {
@@ -77,12 +75,11 @@ class SavingPreferences extends Component {
           source={bg}
           style={styles.background}
         >
-          <View style={styles.headerContainer}>
-            <TouchableOpacity activeOpacity={0.6} onPress={this.onBackArrowClick.bind(this)} style={styles.headerIcon}>
-              <Image source={backIcon} style={styles.headerIconImage}/>
-            </TouchableOpacity>
-            <Text style={styles.headerText}>SAVING PREFERENCES</Text>
-          </View>
+          <Header
+            navigation={this.props.navigation}
+            button="back" onButtonPress={this.onBackArrowClick.bind(this)}
+            content="text" text="SAVING PREFERENCES"
+          />
           <Content showsVerticalScrollIndicator={false} style={styles.contentContainer}>
             {body}
           </Content>

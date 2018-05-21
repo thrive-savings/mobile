@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import {
   View,
-  Image,
   ImageBackground,
   StatusBar
 } from "react-native";
 import { connect } from "react-redux";
+
+import Header from "../../components/Header";
 
 import styles from "./styles";
 import colors from "../../theme/colors";
@@ -16,8 +17,6 @@ import ChooseAccount from "./pages/ChooseAccount";
 import AuthSuccess from "./pages/AuthSuccess";
 
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
-const logo = require("../../../assets/Logo/white.png");
-
 
 class IntegrateBank extends Component {
   constructor(props) {
@@ -59,9 +58,7 @@ class IntegrateBank extends Component {
       <View style={styles.container}>
         <StatusBar barStyle="light-content" backgroundColor={colors.statusbar}/>
         <ImageBackground source={bg} style={styles.background}>
-          <View style={styles.header}>
-            <Image source={logo} style={styles.headerLogo} />
-          </View>
+          <Header button="none" />
           <View style={{flex: 1}}>
             {this.renderContent()}
           </View>
