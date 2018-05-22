@@ -118,7 +118,7 @@ class FixedPlan extends Component {
         <Text style={styles.promiseText}>
           If your bank account goes below this limit, we’ll stop withdrawing any funds into your Thrive Savings account.
         </Text>
-        <SpecialButton loading={this.props.reducer.isLoading} onClick={this.next} state={1} />
+        <SpecialButton loading={this.props.reducer.isLoading} onClick={this.next} />
 
         <ModalTemplate
           show={this.state.showContributionSetter}

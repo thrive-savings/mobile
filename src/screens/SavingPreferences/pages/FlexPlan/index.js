@@ -43,7 +43,7 @@ class FlexPlan extends Component {
         <Text style={[styles.blueText, styles.desc1]}>
           Don’t worry, we will never overdraw you.
         </Text>
-        <SpecialButton onClick={this.next} state={1} />
+        <SpecialButton onClick={this.next} />
       </Card>
     );
   }

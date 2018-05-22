@@ -4,16 +4,13 @@ import {
   Text,
   TextInput
 } from "react-native";
-import {
-  Item,
-  Icon,
-  Toast
-} from "native-base";
+import { Icon, Toast } from "native-base";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 
 import SpecialButton from "../../../../components/SpecialButton";
 
+import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
 import colors from "../../../../theme/colors";
 
@@ -24,7 +21,7 @@ class ChangePasswordForm extends Component {
   renderInput({ input, label, type, meta: { touched, error, warning } }) {
     return (
       <View>
-        <Item error={error && touched} rounded style={styles.inputGrp}>
+        <View style={styles.inputGrp}>
           <TextInput
             ref={c => (this.textInput = c)}
             style={styles.input}
@@ -43,17 +40,17 @@ class ChangePasswordForm extends Component {
           {touched && error
             ? <Icon
                 active
-                style={styles.formErrorIcon}
+                style={globalStyles.formErrorIcon}
                 onPress={() => this.textInput._root.clear()}
                 name="close"
               />
             : <Text />}
-        </Item>
+        </View>
         {touched && error
-          ? <Text style={styles.formErrorText1}>
+          ? <Text style={globalStyles.formErrorText1}>
               {error}
             </Text>
-          : <Text style={styles.formErrorText2}> error here</Text>}
+          : <Text style={globalStyles.formErrorText2}> error here</Text>}
       </View>
     );
   }
@@ -85,7 +82,7 @@ class ChangePasswordForm extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, globalStyles.shadow]}>
         <Field
           name="password"
           component={this.renderInput}
@@ -104,7 +101,7 @@ class ChangePasswordForm extends Component {
           type="confirmPassword"
           validate={[required, minLength8]}
         />
-        <SpecialButton state={1} text={"SUBMIT"} onClick={this.submit.bind(this)}/>
+        <SpecialButton text={"SUBMIT"} onClick={this.submit.bind(this)}/>
       </View>
     );
   }

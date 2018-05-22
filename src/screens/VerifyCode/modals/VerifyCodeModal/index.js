@@ -1,17 +1,18 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Image, TouchableOpacity, TextInput } from "react-native";
-import { LinearGradient } from "expo";
-import { connect } from "react-redux";
 import {
   View,
-  Text,
-  Item,
-  Toast,
-  Spinner
-} from "native-base";
+  Image,
+  TouchableOpacity,
+  TextInput,
+  Text
+} from "react-native";
+import { LinearGradient } from "expo";
+import { connect } from "react-redux";
+import { Toast, Spinner } from "native-base";
 import { Field, reduxForm } from "redux-form";
 
+import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
 import colors from "../../../../theme/colors";
 
@@ -57,7 +58,7 @@ class VerifyCodeModal extends Component {
     return (
       <View>
         <View style={styles.formContainer}>
-          <Item error={error && touched} rounded style={styles.inputGrp}>
+          <View style={styles.inputGrp}>
             <TextInput
               ref={c => (this.textInput = c)}
               style={styles.input}
@@ -66,7 +67,7 @@ class VerifyCodeModal extends Component {
               underlineColorAndroid="transparent"
               {...input}
             />
-          </Item>
+          </View>
           <TouchableOpacity activeOpacity={0.6} onPress={this.verify} style={styles.enabledButton}>
             <LinearGradient
               colors={colors.blueGreenGradient.colors}
@@ -81,10 +82,10 @@ class VerifyCodeModal extends Component {
           </TouchableOpacity>
         </View>
         {touched && error
-          ? <Text style={styles.formErrorText1}>
+          ? <Text style={globalStyles.formErrorText1}>
               {error}
             </Text>
-          : <Text style={styles.formErrorText2}> error here</Text>}
+          : <Text style={globalStyles.formErrorText2}> error here</Text>}
       </View>
     );
   }
@@ -113,7 +114,7 @@ class VerifyCodeModal extends Component {
           buttonLoading={isVerifying}
         />
 
-        {verifyError && <Text style={styles.formErrorText3}>{errorText}</Text>}
+        {verifyError && <Text style={globalStyles.formErrorText3}>{errorText}</Text>}
         {
           isResending
             ? <Text style={styles.resendText}>Resending...</Text>

@@ -117,7 +117,7 @@ class SavingType extends Component {
           {body}
         </View>
 
-        <SpecialButton loading={this.props.reducer.isLoading} onClick={this.next} state={this.state.savingType ? 1 : 0} />
+        <SpecialButton loading={this.props.reducer.isLoading} onClick={this.next} enabled={this.state.savingType ? true : false} />
       </Card>
     );
   }

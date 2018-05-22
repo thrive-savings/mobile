@@ -25,7 +25,7 @@ class ReferralCodeForm extends Component {
   renderInput({ input, label, type, meta: { touched, error, warning } }) {
     return (
       <View>
-        <Item error={error && touched} rounded style={styles.inputGrp}>
+        <View style={styles.inputGrp}>
           <TextInput
             ref={c => (this.textInput = c)}
             placeholderTextColor="#FFF"
@@ -42,7 +42,7 @@ class ReferralCodeForm extends Component {
                 name="close"
               />
             : <Text />}
-        </Item>
+        </View>
         {touched && error
           ? <Text style={globalStyles.formErrorText1}>
               {error}

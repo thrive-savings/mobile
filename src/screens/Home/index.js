@@ -21,6 +21,7 @@ import GOAL_CATEGORIES from "../../globals/goalCategories";
 
 import { getGoals } from "../SavingGoals/state/actions";
 
+import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
 import colors from "../../theme/colors";
 
@@ -141,9 +142,9 @@ class Home extends Component {
     const navigation = this.props.navigation;
     const { beforeDot: balanceBD, afterDot: balanceAD } = getSplitDollarStrings(this.props.userData.balance);
     return (
-      <View style={styles.container}>
+      <View style={globalStyles.container}>
         <StatusBar barStyle="light-content" backgroundColor={colors.statusbar}/>
-        <ImageBackground source={bg} style={styles.background}>
+        <ImageBackground source={bg} style={globalStyles.background}>
           <Header navigation={navigation} />
           <View style={styles.subHeader}>
             <Text style={styles.balanceLabelText}>THRIVE SAVINGS BALANCE</Text>
@@ -151,7 +152,7 @@ class Home extends Component {
               <Text style={styles.balanceMainText}>{balanceBD}</Text>
               <Text style={styles.balanceRemainderText}>{balanceAD}</Text>
             </View>
-            <View style={styles.subHeaderLabel}>
+            <View style={[styles.subHeaderLabel, globalStyles.shadow]}>
               <Text style={styles.subHeaderText}>MY SAVINGS GOALS</Text>
             </View>
           </View>
@@ -159,7 +160,7 @@ class Home extends Component {
             <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
               {this.renderNotifications()}
               {this.renderGoals()}
-              <TouchableOpacity activeOpacity={0.6} style={styles.addGoalButton} onPress={() => navigation.navigate("SavingGoals", { actionType: "Add" })}>
+              <TouchableOpacity activeOpacity={0.6} style={[styles.addGoalButton, globalStyles.shadow]} onPress={() => navigation.navigate("SavingGoals", { actionType: "Add" })}>
                 <LinearGradient colors={colors.blueGreenGradient.colors} style={styles.addGoalGradient}>
                   <Text style={styles.addGoalButtonText}>+ ADD GOAL</Text>
                 </LinearGradient>

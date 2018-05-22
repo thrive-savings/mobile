@@ -22,6 +22,7 @@ import GOAL_CATEGORIES from "../../../../globals/goalCategories";
 
 import { addGoal, updateGoal } from "../../state/actions";
 
+import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
 
 const editIcon = require("../../../../../assets/Icons/PencilEdit/pencilEditButton.png");
@@ -157,7 +158,7 @@ class EditGoal extends Component {
     const percentageStr = percentage + "%";
 
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, globalStyles.shadow]}>
         <Image source={GOAL_CATEGORIES[category].icon} />
 
         <View style={styles.nameContainer}>
@@ -223,7 +224,7 @@ class EditGoal extends Component {
 
         {error && <Text style={styles.formErrorText}>{errorText}</Text>}
 
-        <SpecialButton loading={isAdding || isUpdating} state={1} text={"SET MY GOAL"} onClick={this.submit} />
+        <SpecialButton loading={isAdding || isUpdating} text={"SET MY GOAL"} onClick={this.submit} />
 
         <ModalTemplate
           show={this.state.showNumPad}

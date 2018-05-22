@@ -96,9 +96,12 @@ export default StyleSheet.create({
     backgroundColor: "white"
   },
   editButtonContainer: {
-    flex: 1,
+    height: 40,
+    alignSelf: "stretch",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    borderRadius: 8,
+    backgroundColor: "white",
   },
   editButtonText: {
     color: colors.blue,

@@ -13,6 +13,7 @@ import Communications from "react-native-communications";
 import Header from "../../components/Header";
 import SpecialButton from "../../components/SpecialButton";
 
+import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
 import colors from "../../theme/colors";
 
@@ -24,19 +25,16 @@ const emailIcon = require("../../../assets/Icons/Email/email.png");
 class Contact extends Component {
   render() {
     return (
-      <View style={styles.container}>
+      <View style={globalStyles.container}>
         <StatusBar barStyle="light-content" backgroundColor={colors.statusbar}/>
-        <ImageBackground
-          source={bg}
-          style={styles.background}
-        >
+        <ImageBackground source={bg} style={globalStyles.background}>
           <Header navigation={this.props.navigation} content="text" text="CONTACT" />
 
           <View style={styles.contentContainer}>
-            <View style={styles.content}>
+            <View style={[styles.content, globalStyles.shadow]}>
               <Image source={botIcon} />
               <Text style={styles.descText}>We’re more than happy to help with any questions or feedback you may have.{"\n"}You can chat with ThriveBot and perform basic commands regarding your account.</Text>
-              <SpecialButton state={1} text={"TALK TO THRIVEBOT"} onClick={() => Communications.text("6476763323", "Balance")}/>
+              <SpecialButton text={"TALK TO THRIVEBOT"} onClick={() => Communications.text("6476763323", "Balance")}/>
               <Text style={styles.descText}>You can also choose to speak with one of our representatives. Our office hours are <Text style={styles.boldText}> Monday to Friday, 9:00AM - 5:00PM EST.</Text></Text>
               <View style={styles.helpButtonsContainer}>
                 <TouchableOpacity activeOpacity={0.6} style={styles.helpButton} onPress={() => Communications.phonecall("6476763323", true)}>

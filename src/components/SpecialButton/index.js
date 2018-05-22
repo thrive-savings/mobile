@@ -1,31 +1,19 @@
 import React, { Component } from "react";
-import { TouchableOpacity } from "react-native";
+import PropTypes from "prop-types";
+import { TouchableOpacity, Text } from "react-native";
 import { LinearGradient } from "expo";
-import {
-  Text,
-  Button,
-  Spinner
-} from "native-base";
+import { Spinner } from "native-base";
 
+import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
+import colors from "../../theme/colors";
 
-const colors = require("../../theme/colors");
-
-type Props = {
-  next: () => void,
-  state: 1,
-  loading: false
-};
 class SpecialButton extends Component {
-  constructor(props: Props) {
-    super(props);
-  }
-
   renderEnabled() {
     let text = this.props.text ? this.props.text : "CONTINUE";
 
     return (
-      <TouchableOpacity activeOpacity={0.6} onPress={() => this.props.onClick()} style={styles.enabledButton}>
+      <TouchableOpacity activeOpacity={0.6} onPress={() => this.props.onClick()} style={[styles.enabledButton, globalStyles.shadow]}>
         <LinearGradient
           colors={colors.blueGreenGradient.colors}
           style={styles.enabledButtonGradient}
@@ -46,10 +34,7 @@ class SpecialButton extends Component {
     let text = this.props.text ? this.props.text : "CONTINUE";
 
     return (
-      <Button
-        block
-        style={styles.disabledButton}
-      >
+      <TouchableOpacity activeOpacity={0.6} style={styles.disabledButton}>
         {
           this.props.loading
             ? <Spinner color="white" />
@@ -57,17 +42,28 @@ class SpecialButton extends Component {
                 {text}
               </Text>
         }
-      </Button>
+      </TouchableOpacity>
     );
   }
 
   render() {
     return (
-      this.props.state
+      this.props.enabled
         ? this.renderEnabled()
         : this.renderDisabled()
     );
   }
 }
+
+SpecialButton.propTypes = {
+  next: PropTypes.func,
+  enabled: PropTypes.bool,
+  loading: PropTypes.bool
+};
+SpecialButton.defaultProps = {
+  next: () => {},
+  enabled: true,
+  loading: false
+};
 
 export default SpecialButton;

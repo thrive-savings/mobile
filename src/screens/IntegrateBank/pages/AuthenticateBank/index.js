@@ -12,6 +12,7 @@ import { FlinksURL } from "../../../../../config";
 
 import { fetchAccounts } from "../../state/actions";
 
+import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
 import colors from "../../../../theme/colors";
 
@@ -32,7 +33,7 @@ class AuthenticateBank extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, globalStyles.shadow]}>
         <Dots step={2} count={3} />
 
         <WebView

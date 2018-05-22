@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 
 import Header from "../../components/Header";
 
-import styles from "./styles";
+import globalStyles from "../../globals/globalStyles";
 import colors from "../../theme/colors";
 
 import WhyLink from "./pages/WhyLink";
@@ -55,11 +55,11 @@ class IntegrateBank extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={globalStyles.container}>
         <StatusBar barStyle="light-content" backgroundColor={colors.statusbar}/>
-        <ImageBackground source={bg} style={styles.background}>
+        <ImageBackground source={bg} style={globalStyles.background}>
           <Header button="none" />
-          <View style={{flex: 1}}>
+          <View style={globalStyles.container}>
             {this.renderContent()}
           </View>
         </ImageBackground>

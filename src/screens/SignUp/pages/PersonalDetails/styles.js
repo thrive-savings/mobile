@@ -11,9 +11,9 @@ const formSpaceBetween = 10;
 
 const styles = StyleSheet.create({
   formContainer: {
-    flex: 0.8,
     alignSelf: "center",
-    width: formWidth
+    width: formWidth,
+    marginBottom: 50
   },
   formContent: {
     backgroundColor: "white",
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10
   },
   genderDropdownList: {
-    height: 80,
+    height: 120,
     borderWidth: 1,
     borderRadius: 8,
     borderColor: colors.darkerGrey

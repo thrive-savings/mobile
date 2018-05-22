@@ -15,6 +15,7 @@ import EditGoal from "./pages/EditGoal";
 
 import { getGoals, setSucceedFlagOff } from "./state/actions";
 
+import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
 import colors from "../../theme/colors";
 
@@ -96,9 +97,9 @@ class SavingGoals extends Component {
     const { title, component } = this.getContent();
 
     return (
-      <View style={styles.container}>
+      <View style={globalStyles.container}>
         <StatusBar barStyle="light-content" backgroundColor={colors.statusbar}/>
-        <ImageBackground source={bg} style={styles.background}>
+        <ImageBackground source={bg} style={globalStyles.background}>
           <Header
             navigation={this.props.navigation}
             onButtonPress={this.backArrowPressed.bind(this)}

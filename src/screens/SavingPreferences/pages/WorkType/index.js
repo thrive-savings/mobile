@@ -98,7 +98,7 @@ class WorkType extends Component {
           </Col>
         </Grid>
 
-        <SpecialButton loading={this.props.reducer.isLoading} onClick={this.next} state={this.state.workType ? 1 : 0} />
+        <SpecialButton loading={this.props.reducer.isLoading} onClick={this.next} enabled={this.state.workType ? true : false} />
       </Card>
     );
   }

@@ -16,6 +16,7 @@ export default StyleSheet.create({
   text: {
     color: "white",
     fontSize: 14,
-    fontFamily: "LatoRegular"
+    fontFamily: "LatoBold",
+    letterSpacing: 0.8
   }
 });

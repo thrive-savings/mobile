@@ -8,6 +8,7 @@ import Header from "../../components/Header";
 
 import getAvatar from "../../globals/getAvatar";
 
+import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
 import colors from "../../theme/colors";
 
@@ -130,7 +131,7 @@ class Profile extends Component {
     }
 
     return (
-      <View style={styles.contentContainer}>
+      <View style={[styles.contentContainer, globalStyles.shadow]}>
         {this.renderPhotoContainer()}
 
         <View style={styles.separator} />
@@ -175,7 +176,7 @@ class Profile extends Component {
           }
         </View>
 
-        {error && <Text style={styles.formErrorText3}>{errorText}</Text>}
+        {error && <Text style={globalStyles.formErrorText3}>{errorText}</Text>}
       </View>
     );
   }
@@ -191,7 +192,7 @@ class Profile extends Component {
             onButtonPress={this.onHeaderButtonPress}
             content="text" text={this.getDisplayName()}
           />
-          <View style={{flex: 1}}>
+          <View style={globalStyles.container}>
             {this.renderContent()}
             <ChangePhotoModal
               showModal={this.state.showModal}

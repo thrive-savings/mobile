@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import {
   View,
-  ScrollView,
   Image,
   Text,
   TextInput
 } from "react-native";
 import { connect } from "react-redux";
-import { Icon, Toast } from "native-base";
+import { Content, Icon, Toast } from "native-base";
 import DatePicker from "react-native-datepicker";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import ModalDropdown from "react-native-modal-dropdown";
@@ -173,8 +172,8 @@ class PersonalDetails extends Component {
     }
 
     return (
-      <View style={[styles.formContainer, globalStyles.shadow]}>
-        <ScrollView style={styles.formContent} showsVerticalScrollIndicator={false}>
+      <Content showsVerticalScrollIndicator={false} style={[styles.formContainer, globalStyles.shadow]}>
+        <View style={styles.formContent}>
           <Text style={styles.formLabelText}>
             Please use your legal name as it appears on your bank statements.
           </Text>
@@ -276,12 +275,11 @@ class PersonalDetails extends Component {
             </Text>
           </View>
 
-          {error && <Text style={styles.formErrorText3}>{errorText}</Text>}
+          {error && <Text style={globalStyles.formErrorText3}>{errorText}</Text>}
 
-          <SpecialButton loading={isLoading} state={1} text={"CREATE MY ACCOUNT"} onClick={this.submit} />
-          <View style={styles.separator} />
-        </ScrollView>
-      </View>
+          <SpecialButton loading={isLoading} enabled={this.state.didAgree} text={"CREATE MY ACCOUNT"} onClick={this.submit} />
+        </View>
+      </Content>
     );
   }
 }

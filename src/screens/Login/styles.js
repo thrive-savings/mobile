@@ -69,8 +69,7 @@ export default StyleSheet.create({
     bottom: 50
   },
   forgotPasswordBtnText: {
-    color: colors.charcoal,
-    opacity: 0.5,
+    color: colors.darkerGrey,
     fontSize: Platform.OS === "android" ? 9 : 9,
     textDecorationLine: "underline"
   }

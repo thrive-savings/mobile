@@ -9,6 +9,7 @@ import {
 
 import Header from "../../components/Header";
 
+import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
 import colors from "../../theme/colors";
 
@@ -17,12 +18,9 @@ const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
 class TOS extends Component {
   render() {
     return (
-      <View style={styles.container}>
+      <View style={globalStyles.container}>
         <StatusBar barStyle="light-content" backgroundColor={colors.statusbar}/>
-        <ImageBackground
-          source={bg}
-          style={styles.background}
-        >
+        <ImageBackground source={bg} style={globalStyles.background}>
           <Header navigation={this.props.navigation} button="back" content="text" text="TERMS OF SERVICE" />
 
           <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollViewsContainer}>

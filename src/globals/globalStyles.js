@@ -20,7 +20,7 @@ export default StyleSheet.create({
     elevation: 2,
     // IOS
     shadowColor: colors.charcoal,
-    shadowOpacity: 0.8,
+    shadowOpacity: 0.3,
     shadowRadius: 2,
     shadowOffset: {
       height: 1,

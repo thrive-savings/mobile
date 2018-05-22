@@ -5,19 +5,11 @@ const screen = Dimensions.get("window");
 const deviceWidth = screen.width;
 
 export default StyleSheet.create({
-  container: {
-    flex: 1
-  },
-  background: {
-    flex: 1,
-    width: null,
-    height: null
-  },
-
   // Subheader styles
   subHeader: {
     flex: 0.25,
     paddingTop: 5,
+    paddingBottom: 10,
     alignItems: "center",
     justifyContent: "space-around"
   },
@@ -49,7 +41,6 @@ export default StyleSheet.create({
   subHeaderLabel: {
     width: deviceWidth / 2,
     height: 40,
-    elevation: 10,
     borderRadius: 8,
     backgroundColor: "white",
     alignItems: "center",

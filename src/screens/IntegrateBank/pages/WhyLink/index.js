@@ -12,6 +12,7 @@ import Dots from "../../../../components/Dots";
 import SpecialButton from "../../../../components/SpecialButton";
 import Accordion from "../../../../components/Accordion";
 
+import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
 
 const bankSymbol = require("../../../../../assets/Icons/BankSymbol/bankSymbolGradient.png");
@@ -30,7 +31,7 @@ class WhyLink extends Component {
     const descExpanded = this.state.descExpanded;
 
     return (
-      <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
+      <ScrollView contentContainerStyle={[styles.container, globalStyles.shadow]} showsVerticalScrollIndicator={false}>
         <Dots step={1} count={3} />
 
         <Text style={styles.titleText}>LINK YOUR BANK ACCOUNT</Text>
@@ -53,7 +54,7 @@ class WhyLink extends Component {
         <Accordion title={"Take your money out anytime."} description={"Text our chatbot and your funds will be sent back to your chequing account."} />
 
         <View style={styles.separator} />
-        <SpecialButton text={"LINK MY ACCOUNT"} onClick={this.props.next} state={1} />
+        <SpecialButton text={"LINK MY ACCOUNT"} onClick={this.props.next} />
       </ScrollView>
     );
   }

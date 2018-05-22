@@ -4,16 +4,13 @@ import {
   Text,
   TextInput
 } from "react-native";
-import {
-  Item,
-  Icon,
-  Toast
-} from "native-base";
+import { Icon, Toast } from "native-base";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 
 import SpecialButton from "../../../../components/SpecialButton";
 
+import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
 
 import { required, numeric } from "../../../../globals/validators";
@@ -23,7 +20,7 @@ class ChangePhoneForm extends Component {
   renderInput({ input, label, type, meta: { touched, error, warning } }) {
     return (
       <View>
-        <Item error={error && touched} rounded style={styles.inputGrp}>
+        <View style={styles.inputGrp}>
           <Text style={styles.inputLabel}>+1</Text>
           <TextInput
             ref={c => (this.textInput = c)}
@@ -34,17 +31,17 @@ class ChangePhoneForm extends Component {
           {touched && error
             ? <Icon
                 active
-                style={styles.formErrorIcon}
+                style={globalStyles.formErrorIcon}
                 onPress={() => this.textInput.clear()}
                 name="close"
               />
             : <Text />}
-        </Item>
+        </View>
         {touched && error
-          ? <Text style={styles.formErrorText1}>
+          ? <Text style={globalStyles.formErrorText1}>
               {error}
             </Text>
-          : <Text style={styles.formErrorText2}> error here</Text>}
+          : <Text style={globalStyles.formErrorText2}> error here</Text>}
       </View>
     );
   }
@@ -65,7 +62,7 @@ class ChangePhoneForm extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, globalStyles.shadow]}>
         <Text style={styles.text}>Enter your new mobile phone number.</Text>
         <Field
           name="phone"
@@ -73,7 +70,7 @@ class ChangePhoneForm extends Component {
           type="phone"
           validate={[required, numeric]}
         />
-        <SpecialButton state={1} text={"SUBMIT"} onClick={this.submit.bind(this)}/>
+        <SpecialButton text={"SUBMIT"} onClick={this.submit.bind(this)}/>
       </View>
     );
   }

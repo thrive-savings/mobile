@@ -5,7 +5,6 @@ import {
   Text,
   Image,
 } from "react-native";
-import { Card } from "native-base";
 import { connect } from "react-redux";
 
 import ModalTemplate from "../../../../components/ModalTemplate";
@@ -16,6 +15,7 @@ import GOAL_CATEGORIES from "../../../../globals/goalCategories";
 
 import { deleteGoal } from "../../state/actions";
 
+import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
 
 const infoIcon = require("../../../../../assets/Icons/Info/information.png");
@@ -45,7 +45,7 @@ class GoalDetail extends Component {
     const createdAtDate = new Date(createdAt);
 
     return (
-      <Card style={styles.infoBox}>
+      <View style={[styles.infoBox, globalStyles.shadow]}>
         <Image source={GOAL_CATEGORIES[category].icon} />
         {
           category === "RainyDay" &&
@@ -80,12 +80,10 @@ class GoalDetail extends Component {
           </View>
         </View>
 
-        <Card style={styles.editButtonCard}>
-          <TouchableOpacity activeOpacity={0.6} style={styles.editButtonContainer} onPress={() => this.props.onEditGoal()}>
-            <Text style={styles.editButtonText}>EDIT GOAL</Text>
-          </TouchableOpacity>
-        </Card>
-      </Card>
+        <TouchableOpacity activeOpacity={0.6} style={[styles.editButtonContainer, globalStyles.shadow]} onPress={() => this.props.onEditGoal()}>
+          <Text style={styles.editButtonText}>EDIT GOAL</Text>
+        </TouchableOpacity>
+      </View>
     );
   }
 

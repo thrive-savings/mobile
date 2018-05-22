@@ -3,7 +3,6 @@ import { TextInput } from "react-native";
 import {
   View,
   Text,
-  Item
 } from "native-base";
 import color from "color";
 
@@ -22,7 +21,7 @@ const getModalContent = (props) => {
   return (
     <View>
       <Text style={styles.labelText}>{label}</Text>
-      <Item rounded style={styles.inputGrp}>
+      <View style={styles.inputGrp}>
         <TextInput
           style={styles.input}
           placeholder={"Goal Name"}
@@ -31,7 +30,7 @@ const getModalContent = (props) => {
           underlineColorAndroid="transparent"
           onChangeText={onChange}
         />
-      </Item>
+      </View>
     </View>
   );
 };

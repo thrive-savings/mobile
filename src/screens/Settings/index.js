@@ -23,37 +23,13 @@ import { setWorkType, setSavingType, setSavingDetails } from "../SavingPreferenc
 
 import BANK_ICONS from "../IntegrateBank/bankIcons";
 
+import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
 import colors from "../../theme/colors";
 
-const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
+import PAGE_TYPES from "./constants";
 
-const PAGE_TYPES = {
-  settings: {
-    headerTitle: "SETTINGS",
-    headerButton: "menu"
-  },
-  workType: {
-    headerTitle: "UPDATE SETTINGS",
-    headerButton: "back"
-  },
-  savingType: {
-    headerTitle: "UPDATE SETTINGS",
-    headerButton: "back"
-  },
-  fixedPlan: {
-    headerTitle: "UPDATE SETTINGS",
-    headerButton: "back"
-  },
-  linkedBank: {
-    headerTitle: "LINKED BANK ACCOUNT",
-    headerButton: "back"
-  },
-  legal: {
-    headerTitle: "LEGAL & PRIVACY",
-    headerButton: "back"
-  }
-};
+const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
 
 class Settings extends Component {
   constructor(props) {
@@ -123,11 +99,11 @@ class Settings extends Component {
 
     return (
       <View>
-        <View style={[styles.contentBox, styles.linkedBankBox]}>
+        <View style={[styles.contentBox, styles.linkedBankBox, globalStyles.shadow]}>
           <Image source={BANK_ICONS[bank]} />
           <Text style={styles.linkedBankLabelText}>{title}</Text>
           <Text style={styles.linkedBankDescText}>To change or unlink your bank account, send us a request below and we’ll get in touch with you shortly.</Text>
-          <SpecialButton state={1} text={"CONTACT SUPPORT"} onClick={() => Communications.email(["help@thrivesavings.com", "naib.baghirov@gmail.com"],null,null,"Change or Unlink Bank Account",null)}/>
+          <SpecialButton text={"CONTACT SUPPORT"} onClick={() => Communications.email(["help@thrivesavings.com", "naib.baghirov@gmail.com"],null,null,"Change or Unlink Bank Account",null)}/>
         </View>
       </View>
     );
@@ -136,7 +112,7 @@ class Settings extends Component {
   renderLegal() {
     return (
       <View>
-        <View style={[styles.contentBox, styles.legalBox]}>
+        <View style={[styles.contentBox, styles.legalBox, globalStyles.shadow]}>
           <TouchableOpacity onPress={() => this.props.navigation.navigate("TOS")} activeOpacity={0.6} style={styles.contentRow}>
             <Text style={[styles.regularText, styles.blueText]}>Terms of Service</Text>
             <Text style={[styles.regularText, styles.blueText]}>></Text>
@@ -169,7 +145,7 @@ class Settings extends Component {
 
     return (
       <View>
-        <View style={styles.contentBox}>
+        <View style={[styles.contentBox, globalStyles.shadow]}>
           <Text style={styles.contentTitle}>SAVING</Text>
           <TouchableOpacity onPress={() => this.setState({activePage: "workType"})} activeOpacity={0.6} style={styles.contentRow}>
             <Text style={styles.regularText}>Primary Work Type</Text>
@@ -207,7 +183,7 @@ class Settings extends Component {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.contentBox}>
+        <View style={[styles.contentBox, globalStyles.shadow]}>
           <Text style={styles.contentTitle}>GENERAL</Text>
           <TouchableOpacity onPress={() => this.setState({activePage: "legal"})} activeOpacity={0.6} style={styles.contentRow}>
             <Text style={styles.regularText}>Legal & Privacy</Text>

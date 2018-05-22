@@ -13,6 +13,7 @@ import Header from "../../components/Header";
 import Accordion from "../../components/Accordion";
 import FAQ_CATEGORIES from "../../globals/faqCategories";
 
+import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
 import colors from "../../theme/colors";
 
@@ -79,12 +80,9 @@ class Faq extends Component {
   render() {
     const { activeStep, activeFaqIndex } = this.state;
     return (
-      <View style={styles.container}>
+      <View style={globalStyles.container}>
         <StatusBar barStyle="light-content" backgroundColor={colors.statusbar}/>
-        <ImageBackground
-          source={bg}
-          style={styles.background}
-        >
+        <ImageBackground source={bg} style={globalStyles.background}>
           <Header
             navigation={this.props.navigation}
             button={activeStep ? "back" : "menu"}

@@ -3,6 +3,8 @@ const colors = require("../../theme/colors");
 
 export default StyleSheet.create({
   disabledButton: {
+    justifyContent: "center",
+    alignItems: "center",
     height: 40,
     backgroundColor: colors.grey,
     borderRadius: 12

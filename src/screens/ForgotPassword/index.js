@@ -1,23 +1,21 @@
 // @flow
 import React, { Component } from "react";
-import { ImageBackground, StatusBar, TouchableOpacity } from "react-native";
-import { connect } from "react-redux";
 import {
-  Container,
-  Content,
-  Card,
-  Text,
-  Icon,
-  Item,
-  Input,
   View,
-  Toast
-} from "native-base";
+  TouchableOpacity,
+  ImageBackground,
+  Text,
+  TextInput,
+  StatusBar
+ } from "react-native";
+import { connect } from "react-redux";
+import { Content, Icon, Toast } from "native-base";
 import { Field, reduxForm } from "redux-form";
 
 import Header from "../../components/Header";
 import SpecialButton from "../../components/SpecialButton";
 
+import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
 import colors from "../../theme/colors";
 
@@ -28,7 +26,6 @@ import { required, email, numeric, minLength8 } from "../../globals/validators";
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
 
 class ForgotPasswordForm extends Component {
-  textInput;
   constructor(props) {
     super(props);
 
@@ -43,13 +40,16 @@ class ForgotPasswordForm extends Component {
     this.submit = this.submit.bind(this);
   }
 
+  textInput;
   renderInput({ input, label, type, meta: { touched, error, warning } }) {
     return (
       <View>
-        <Item error={error && touched} rounded style={styles.inputGrp}>
-          <Input
+        <View style={styles.inputGrp}>
+          <TextInput
+            ref={c => (this.textInput = c)}
             placeholderTextColor={colors.darkerGrey}
             style={styles.input}
+            underlineColorAndroid="transparent"
             placeholder={
               input.name === "email"
                 ? "Email"
@@ -61,22 +61,21 @@ class ForgotPasswordForm extends Component {
             }
             secureTextEntry={input.name === "password" || input.name === "confirmPassword" ? true : false}
             {...input}
-            ref={c => (this.textInput = c)}
           />
           {touched && error
             ? <Icon
                 active
-                style={styles.formErrorIcon}
+                style={globalStyles.formErrorIcon}
                 onPress={() => this.textInput._root.clear()}
                 name="close"
               />
             : <Text />}
-        </Item>
+        </View>
         {touched && error
-          ? <Text style={styles.formErrorText1}>
+          ? <Text style={globalStyles.formErrorText1}>
               {error}
             </Text>
-          : <Text style={styles.formErrorText2}>error here</Text>}
+          : <Text style={globalStyles.formErrorText2}>error here</Text>}
       </View>
     );
   }
@@ -214,15 +213,12 @@ class ForgotPasswordForm extends Component {
     const { done, step } = this.state;
 
     return (
-      <Container>
+      <View style={globalStyles.container}>
         <StatusBar barStyle="light-content" backgroundColor={colors.statusbar}/>
-        <ImageBackground
-          source={bg}
-          style={styles.background}
-        >
+        <ImageBackground source={bg} style={globalStyles.background}>
           <Header navigation={this.props.navigation} button="back" onButtonPress={this.goToLogin} />
           <Content showsVerticalScrollIndicator={false} style={styles.contentContainer}>
-            <Card style={styles.cardContainer}>
+            <View style={[styles.contentView, globalStyles.shadow]}>
               <Text style={styles.labelText}>RESET PASSWORD</Text>
               {
                 done
@@ -231,20 +227,20 @@ class ForgotPasswordForm extends Component {
                     ? this.renderResetForm()
                     : this.renderRequestForm()
               }
-              {error && <Text style={styles.formErrorText3}>{errorText}</Text>}
-              <SpecialButton loading={isLoading} state={1} text={done ? "GO TO LOGIN" : "SUBMIT"} onClick={this.submit}/>
+              {error && <Text style={globalStyles.formErrorText3}>{errorText}</Text>}
+              <SpecialButton loading={isLoading} text={done ? "GO TO LOGIN" : "SUBMIT"} onClick={this.submit}/>
               {
                 !done &&
-                <TouchableOpacity activeOpacity={0.6} onPress={this.request} style={styles.resendButton} disabled={isLoading}>
+                <TouchableOpacity activeOpacity={0.6} onPress={this.request} style={styles.resendButton} disabled={isLoading} hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}>
                   <Text style={styles.resendButtonText}>
                     Resend
                   </Text>
                 </TouchableOpacity>
               }
-            </Card>
+            </View>
           </Content>
         </ImageBackground>
-      </Container>
+      </View>
     );
   }
 }

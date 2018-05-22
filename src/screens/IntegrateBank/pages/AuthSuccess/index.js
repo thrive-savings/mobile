@@ -13,6 +13,7 @@ import SpecialButton from "../../../../components/SpecialButton";
 
 import { updateUserAccount } from "../../state/actions";
 
+import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
 
 const thriveBot = require("../../../../../assets/Icons/ThriveBot/thriveBot.png");
@@ -24,7 +25,7 @@ class AuthSuccess extends Component {
 
   render() {
     return (
-      <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
+      <ScrollView contentContainerStyle={[styles.container, globalStyles.shadow]} showsVerticalScrollIndicator={false}>
         <Dots step={3} count={3} />
 
         <Text style={styles.titleText}>SUCCESS!</Text>
@@ -33,7 +34,7 @@ class AuthSuccess extends Component {
         <Text style={styles.regularText}>Now that your account is all set up, you can create custom saving goals and choose how you prefer to save!</Text>
 
         <View style={styles.separator} />
-        <SpecialButton text={"GO TO ACCOUNT"} onClick={this.continue.bind(this)} state={1} />
+        <SpecialButton text={"GO TO ACCOUNT"} onClick={this.continue.bind(this)} />
       </ScrollView>
     );
   }

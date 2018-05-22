@@ -36,8 +36,28 @@ export default class Setup extends Component {
 
   async _loadAssetsAsync() {
     const imageAssets = cacheImages([
+      // Backgrounds
       require("../../assets/Backgrounds/BackgroundAccount.png"),
       require("../../assets/Backgrounds/BackgroundFull.png"),
+      // Logos
+      require("../../assets/Logo/white.png"),
+      require("../../assets/Logo/white-large.png"),
+      // Goals
+      require("../../assets/Goals/Automobile/bitmap.png"),
+      require("../../assets/Goals/Debt/bitmap.png"),
+      require("../../assets/Goals/Education/bitmap.png"),
+      require("../../assets/Goals/Gadgets/bitmap.png"),
+      require("../../assets/Goals/Health/bitmap.png"),
+      require("../../assets/Goals/Home/bitmap.png"),
+      require("../../assets/Goals/Other/bitmap.png"),
+      require("../../assets/Goals/PetNeeds/bitmap.png"),
+      require("../../assets/Goals/RainyDay/bitmap.png"),
+      require("../../assets/Goals/Retirement/bitmap.png"),
+      require("../../assets/Goals/StudentLoans/bitmap.png"),
+      require("../../assets/Goals/Travel/bitmap.png"),
+      require("../../assets/Goals/Wedding/bitmap.png"),
+
+      // Work Types
       require("../../assets/WorkTypes/Contract.png"),
       require("../../assets/WorkTypes/Fulltime.png"),
       require("../../assets/WorkTypes/Parttime.png"),

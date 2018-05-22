@@ -9,7 +9,7 @@ import {
   TextInput,
   StatusBar
 } from "react-native";
-import { Item, Icon, Toast, Spinner } from "native-base";
+import { Icon, Toast, Spinner } from "native-base";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 
@@ -30,7 +30,7 @@ class LoginForm extends Component {
   renderInput({ input, label, type, meta: { touched, error, warning } }) {
     return (
       <View>
-        <Item error={error && touched} rounded style={styles.inputGrp}>
+        <View style={styles.inputGrp}>
           <TextInput
             ref={c => (this.textInput = c)}
             placeholderTextColor="#FFF"
@@ -48,7 +48,7 @@ class LoginForm extends Component {
                 name="close"
               />
             : <Text />}
-        </Item>
+        </View>
         {touched && error
           ? <Text style={globalStyles.formErrorText1}>
               {error}

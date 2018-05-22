@@ -57,7 +57,7 @@ class ModalTemplate extends Component {
             {body}
             {
               this.props.buttonVisible &&
-              <SpecialButton loading={this.state.buttonLoading} text={this.props.buttonText} onClick={this.props.onButtonClick ? this.props.onButtonClick : this.close} state={1} />
+              <SpecialButton loading={this.state.buttonLoading} text={this.props.buttonText} onClick={this.props.onButtonClick ? this.props.onButtonClick : this.close} />
             }
           </View>
         </View>

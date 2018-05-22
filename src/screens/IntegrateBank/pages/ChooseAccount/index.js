@@ -13,6 +13,7 @@ import Dots from "../../../../components/Dots";
 
 import { setDefault } from "../../state/actions";
 
+import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
 import colors from "../../../../theme/colors";
 
@@ -78,7 +79,7 @@ class ChooseAccount extends Component {
     const bankIcon = BANK_ICONS[bank];
 
     return (
-      <View style={[styles.accountsHolder, {borderColor: bankColor}]}>
+      <View style={[styles.accountsHolder, {borderColor: bankColor}, globalStyles.shadow]}>
         <Image source={bankIcon} />
         <Text style={styles.accountsLabelText}>Please select your primary chequing account. This is where you perform your everyday banking.</Text>
         {accountsView}

@@ -1,14 +1,17 @@
 import React, { Component } from "react";
-import { Image, ImageBackground, StatusBar, TextInput } from "react-native";
+import {
+  View,
+  Image,
+  ImageBackground,
+  StatusBar,
+  TextInput,
+  Text
+} from "react-native";
 import { connect } from "react-redux";
 import {
-  Container,
   Content,
   Card,
-  Text,
   Icon,
-  Item,
-  View,
   Toast
 } from "native-base";
 import { Field, reduxForm } from "redux-form";
@@ -18,6 +21,7 @@ import SpecialButton from "../../components/SpecialButton";
 
 import VerifyCodeModal from "./modals/VerifyCodeModal";
 
+import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
 import colors from "../../theme/colors";
 
@@ -40,7 +44,7 @@ class VerifyCodeForm extends Component {
   renderInput({ input, label, type, meta: { touched, error, warning } }) {
     return (
       <View>
-        <Item error={error && touched} rounded style={styles.inputGrp}>
+        <View style={styles.inputGrp}>
           <Text style={styles.inputLabel}>+1</Text>
           <TextInput
             ref={c => (this.textInput = c)}
@@ -51,17 +55,17 @@ class VerifyCodeForm extends Component {
           {touched && error
             ? <Icon
                 active
-                style={styles.formErrorIcon}
+                style={globalStyles.formErrorIcon}
                 onPress={() => this.textInput._root.clear()}
                 name="close"
               />
             : <Text />}
-        </Item>
+        </View>
         {touched && error
-          ? <Text style={styles.formErrorText1}>
+          ? <Text style={globalStyles.formErrorText1}>
               {error}
             </Text>
-          : <Text style={styles.formErrorText2}> error here</Text>}
+          : <Text style={globalStyles.formErrorText2}> error here</Text>}
       </View>
     );
   }
@@ -94,9 +98,9 @@ class VerifyCodeForm extends Component {
     }
 
     return (
-      <Container>
+      <View style={globalStyles.container}>
         <StatusBar barStyle="light-content" backgroundColor={colors.statusbar}/>
-        <ImageBackground source={bg} style={styles.background}>
+        <ImageBackground source={bg} style={globalStyles.background}>
           <Header button="none" />
           <Content showsVerticalScrollIndicator={false} style={styles.contentContainer}>
             <Card style={styles.cardContainer}>
@@ -109,13 +113,13 @@ class VerifyCodeForm extends Component {
                 type="phone"
                 validate={[numeric, required]}
               />
-              {setError && <Text style={styles.formErrorText3}>{errorText}</Text>}
-              <SpecialButton loading={isSetting} state={1} text={"SUBMIT"} onClick={this.submit}/>
+              {setError && <Text style={globalStyles.formErrorText3}>{errorText}</Text>}
+              <SpecialButton loading={isSetting} text={"SUBMIT"} onClick={this.submit}/>
               <VerifyCodeModal />
             </Card>
           </Content>
         </ImageBackground>
-      </Container>
+      </View>
     );
   }
 }
