@@ -57,7 +57,7 @@ const StackerWithLogin = StackNavigator(
   stackScreens,
   {
     ...stackerOptions,
-    initialRouteName: "SignUp"
+    initialRouteName: "Login"
   }
 );
 

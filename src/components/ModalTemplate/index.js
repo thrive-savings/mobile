@@ -50,7 +50,7 @@ class ModalTemplate extends Component {
         onBackdropPress={this.close}
       >
         <View style={styles.container}>
-          <TouchableOpacity activeOpacity={0.6} style={styles.closeButton} onPress={() => this.close()}>
+          <TouchableOpacity activeOpacity={0.6} style={styles.closeButton} onPress={() => this.close()} hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}>
             <Image source={closeIcon} style={styles.closeIcon} />
           </TouchableOpacity>
           <View style={styles.contentContainer}>

@@ -79,7 +79,7 @@ class SideBar extends Component {
           {this.renderMenuItems()}
         </View>
         <View style={[styles.footer, styles.padder]}>
-          <TouchableOpacity activeOpacity={0.6} onPress={this.props.clearStorage}>
+          <TouchableOpacity activeOpacity={0.6} onPress={this.props.clearStorage} hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}>
             <Text style={styles.logoutText}>Log Out</Text>
           </TouchableOpacity>
           <Image source={logo} style={styles.footerLogo} />

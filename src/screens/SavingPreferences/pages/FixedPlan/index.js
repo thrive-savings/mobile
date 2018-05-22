@@ -82,7 +82,7 @@ class FixedPlan extends Component {
             </Text>
           </Left>
           <Right>
-            <TouchableOpacity activeOpacity={0.6} onPress={() => this.setState({ showContributionSetter: true, showFrequencySetter: false })}>
+            <TouchableOpacity activeOpacity={0.6} onPress={() => this.setState({ showContributionSetter: true, showFrequencySetter: false })} hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}>
               <Text style={styles.inputButtonText}>
                 {this.state.contribution}
               </Text>
@@ -97,7 +97,7 @@ class FixedPlan extends Component {
             </Text>
           </Left>
           <Right>
-            <TouchableOpacity activeOpacity={0.6} onPress={() => this.setState({ showFrequencySetter: true, showContributionSetter: false })}>
+            <TouchableOpacity activeOpacity={0.6} onPress={() => this.setState({ showFrequencySetter: true, showContributionSetter: false })} hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}>
               <Text style={styles.inputButtonText}>
                 {FREQUENCY_TYPES[this.state.frequencyIndex].displayName}
               </Text>

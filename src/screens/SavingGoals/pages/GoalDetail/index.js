@@ -49,7 +49,7 @@ class GoalDetail extends Component {
         <Image source={GOAL_CATEGORIES[category].icon} />
         {
           category === "RainyDay" &&
-          <TouchableOpacity activeOpacity={0.6} style={styles.infoIconButton} onPress={() => this.setState({showInfoModal: true})}>
+          <TouchableOpacity activeOpacity={0.6} style={styles.infoIconButton} onPress={() => this.setState({showInfoModal: true})} hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}>
             <Image source={infoIcon} />
           </TouchableOpacity>
         }
