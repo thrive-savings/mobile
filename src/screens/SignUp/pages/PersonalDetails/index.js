@@ -1,14 +1,13 @@
 import React, { Component } from "react";
-import { Image, ScrollView } from "react-native";
-import { connect } from "react-redux";
 import {
   View,
-  Item,
-  Input,
-  Icon,
+  ScrollView,
+  Image,
   Text,
-  Toast
-} from "native-base";
+  TextInput
+} from "react-native";
+import { connect } from "react-redux";
+import { Icon, Toast } from "native-base";
 import DatePicker from "react-native-datepicker";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import ModalDropdown from "react-native-modal-dropdown";
@@ -16,56 +15,21 @@ import CheckBox from "react-native-check-box";
 
 import { Field, reduxForm } from "redux-form";
 
-import Header from "../../../../components/Header";
 import SpecialButton from "../../../../components/SpecialButton";
 
+import globalStyles from "../../../../globals/globalStyles";
 import { styles, addressFinderStyles } from "./styles";
+import colors from "../../../../theme/colors";
+
 import { required, minLength8, alphaNumeric, email } from "../../../../globals/validators";
 
 import { signUpUser } from "../../state/actions";
 
 import { GooglePlacesApiKey } from "../../../../../config";
 
-import colors from "../../../../theme/colors";
-
 const tick = require("../../../../../assets/Icons/Checkbox/tick.png");
 
-const INPUT_FIELDS = {
-  firstName: {
-    placeholder: "First Name",
-    extraStyle: styles.names
-  },
-  lastName: {
-    placeholder: "Last Name",
-    extraStyle: styles.names
-  },
-  dateOfBirth: {
-    placeholder: "Date of Birth",
-    extraStyle: styles.dateOfBirth
-  },
-  gender: {
-    placeholder: "Gender",
-    extraStyle: styles.gender
-  },
-  address: {
-    placeholder: "Address",
-    extraStyle: styles.address
-  },
-  unit: {
-    placeholder: "Unit",
-    extraStyle: styles.unit
-  },
-  email: {
-    placeholder: "Email",
-    extraStyle: styles.email
-  },
-  password: {
-    placeholder: "Password",
-    secureEntry: true,
-    extraStyle: styles.password
-  }
-};
-
+import INPUT_FIELDS from "./constants";
 
 class PersonalDetails extends Component {
   constructor(props) {
@@ -162,38 +126,40 @@ class PersonalDetails extends Component {
     this.setState({ gender });
   }
 
-  textInput: any;
+  textInput;
   renderInput({ input, label, type, meta: { touched, error, warning } }) {
     return (
       <View>
-        <Item error={error && touched} rounded style={[styles.inputGrp, INPUT_FIELDS[input.name].extraStyle]}>
-          <Input
+        <View style={[styles.inputGrp, INPUT_FIELDS[input.name].extraStyle]}>
+          <TextInput
             ref={c => (this.textInput = c)}
             placeholderTextColor={colors.darkerGrey}
             style={styles.input}
             placeholder={INPUT_FIELDS[input.name].placeholder}
             secureTextEntry={INPUT_FIELDS[input.name].secureEntry}
+            underlineColorAndroid="transparent"
             {...input}
           />
           {touched && error
             ? <Icon
                 active
-                style={styles.formErrorIcon}
+                style={globalStyles.formErrorIcon}
                 onPress={() => this.textInput._root.clear()}
                 name="close"
               />
             : <Text />}
-        </Item>
+        </View>
         {touched && error
-          ? <Text style={styles.formErrorText1}>
+          ? <Text style={globalStyles.formErrorText1}>
               {error}
             </Text>
-          : <Text style={styles.formErrorText2}> error here</Text>}
+          : <Text style={globalStyles.formErrorText2}> error here</Text>}
       </View>
     );
   }
 
   render() {
+    const navigation = this.props.navigation;
     const { isLoading, error, errorMessage } = this.props.signUpReducer;
 
     let errorText = "";
@@ -207,117 +173,114 @@ class PersonalDetails extends Component {
     }
 
     return (
-      <View style={styles.contentContainerStyle}>
-        <Header button="none" />
-        <View style={styles.formContainer}>
-          <ScrollView style={styles.formContent} showsVerticalScrollIndicator={false}>
-            <Text style={styles.formLabelText}>
-              Please use your legal name as it appears on your bank statements.
+      <View style={[styles.formContainer, globalStyles.shadow]}>
+        <ScrollView style={styles.formContent} showsVerticalScrollIndicator={false}>
+          <Text style={styles.formLabelText}>
+            Please use your legal name as it appears on your bank statements.
+          </Text>
+          <View style={styles.inputRow}>
+            <Field
+              name="firstName"
+              component={this.renderInput}
+              type="firstName"
+              validate={[required]}
+            />
+            <Field
+              name="lastName"
+              component={this.renderInput}
+              type="lastName"
+              validate={[required]}
+            />
+          </View>
+          <View style={[styles.inputRow, styles.dateGenderRowExtra]}>
+            <DatePicker
+              customStyles={{
+                placeholderText: styles.datePickerPlaceholder,
+                dateText: styles.datePickerText,
+                dateInput: styles.datePickerInput
+              }}
+              style={styles.dateOfBirth}
+              date={this.state.date}
+              placeholder="Date of birth"
+              format="YYYY-MM-DD"
+              maxDate="2016-06-01"
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              showIcon={false}
+              androidMode="spinner"
+              onDateChange={date => this.setState({ date })}
+            />
+            <ModalDropdown
+              options={["Male", "Female", "Neutral"]}
+              defaultValue="Gender"
+              style={styles.gender}
+              dropdownStyle={styles.genderDropdownList}
+              textStyle={[styles.genderText, this.state.gender ? styles.genderSelected : styles.genderPlaceholder]}
+              dropdownTextStyle={[styles.genderText, styles.genderSelected]}
+              dropdownTextHighlightStyle={[styles.genderText, styles.genderSelected]}
+              onSelect={this.genderSelected}
+            />
+          </View>
+
+          <View style={styles.inputRow}>
+            <GooglePlacesAutocomplete
+              placeholder="Address"
+              placeholderTextColor={colors.darkerGrey}
+              minLength={2}
+              autoFocus={false}
+              returnKeyType={"default"}
+              fetchDetails={true}
+              listUnderlayColor={colors.grey}
+              query={{
+                key: GooglePlacesApiKey,
+                language: "en",
+                types: "address",
+                components: "country:us|country:ca"
+              }}
+              styles={addressFinderStyles}
+              currentLocation={false}
+              onPress={this.addressSelected}
+            />
+            <Field
+              name="unit"
+              component={this.renderInput}
+              type="unit"
+              validate={[required]}
+            />
+          </View>
+
+          <Field
+            name="email"
+            component={this.renderInput}
+            type="email"
+            validate={[required, email]}
+          />
+          <Field
+            name="password"
+            component={this.renderInput}
+            type="password"
+            validate={[required, minLength8, alphaNumeric]}
+          />
+
+          <View style={styles.checkboxRow}>
+            <CheckBox
+              onClick={()=>this.setState({didAgree: !this.state.didAgree})}
+              isChecked={this.state.didAgree}
+              unCheckedImage={<View style={styles.checkbox} hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}/>}
+              checkedImage={<View style={styles.checkbox} hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}><Image source={tick} style={styles.checkboxTick}/></View>}
+            />
+            <Text style={styles.checkboxText}>
+              By creating an account you are agreeing to our
+              <Text style={styles.linkTexts} onPress={() => navigation.navigate("TOS")} suppressHighlighting> Terms of Service</Text> and
+              <Text style={styles.linkTexts} onPress={() => navigation.navigate("PP")} suppressHighlighting> Privacy Policy.</Text>
             </Text>
-            <View style={styles.inputRow}>
-              <Field
-                name="firstName"
-                component={this.renderInput}
-                type="firstName"
-                validate={[required]}
-              />
-              <Field
-                name="lastName"
-                component={this.renderInput}
-                type="lastName"
-                validate={[required]}
-              />
-            </View>
-            <View style={[styles.inputRow, styles.dateGenderRowExtra]}>
-              <DatePicker
-                customStyles={{
-                  placeholderText: styles.datePickerPlaceholder,
-                  dateText: styles.datePickerText,
-                  dateInput: styles.datePickerInput
-                }}
-                style={styles.dateOfBirth}
-                date={this.state.date}
-                placeholder="Date of birth"
-                format="YYYY-MM-DD"
-                maxDate="2016-06-01"
-                confirmBtnText="Confirm"
-                cancelBtnText="Cancel"
-                showIcon={false}
-                androidMode="spinner"
-                onDateChange={date => this.setState({ date })}
-              />
-              <ModalDropdown
-                options={["Male", "Female"]}
-                defaultValue="Gender"
-                style={styles.gender}
-                dropdownStyle={styles.genderDropdownList}
-                textStyle={[styles.genderText, this.state.gender ? styles.genderSelected : styles.genderPlaceholder]}
-                dropdownTextStyle={[styles.genderText, styles.genderSelected]}
-                dropdownTextHighlightStyle={[styles.genderText, styles.genderSelected]}
-                onSelect={this.genderSelected}
-              />
-            </View>
+          </View>
 
-            <View style={styles.inputRow}>
-              <GooglePlacesAutocomplete
-                placeholder="Address"
-                placeholderTextColor={colors.darkerGrey}
-                minLength={2}
-                autoFocus={false}
-                returnKeyType={"default"}
-                fetchDetails={true}
-                listUnderlayColor={colors.grey}
-                query={{
-                  key: GooglePlacesApiKey,
-                  language: "en",
-                  types: "address",
-                  components: "country:us|country:ca"
-                }}
-                styles={addressFinderStyles}
-                currentLocation={false}
-                onPress={this.addressSelected}
-              />
-              <Field
-                name="unit"
-                component={this.renderInput}
-                type="unit"
-                validate={[required]}
-              />
-            </View>
+          {error && <Text style={styles.formErrorText3}>{errorText}</Text>}
 
-            <Field
-              name="email"
-              component={this.renderInput}
-              type="email"
-              validate={[required, email]}
-            />
-            <Field
-              name="password"
-              component={this.renderInput}
-              type="password"
-              validate={[required, minLength8, alphaNumeric]}
-            />
-
-            <View style={styles.checkboxRow}>
-              <CheckBox
-                onClick={()=>this.setState({didAgree: !this.state.didAgree})}
-                isChecked={this.state.didAgree}
-                unCheckedImage={<View style={styles.checkbox}/>}
-                checkedImage={<View style={styles.checkbox}><Image source={tick} style={styles.checkboxTick}/></View>}
-              />
-              <Text style={styles.checkboxText}>
-                By creating an account you are agreeing to our
-                <Text style={styles.linkTexts}> Terms of Service</Text> and
-                <Text style={styles.linkTexts}> Privacy Policy.</Text>
-              </Text>
-            </View>
-
-            {error && <Text style={styles.formErrorText3}>{errorText}</Text>}
-
-            <SpecialButton loading={isLoading} state={1} text={"CREATE MY ACCOUNT"} onClick={this.submit} />
-            <View style={styles.separator} />
-          </ScrollView>
-        </View>
+          <SpecialButton loading={isLoading} state={1} text={"CREATE MY ACCOUNT"} onClick={this.submit} />
+          <View style={styles.separator} />
+        </ScrollView>
       </View>
     );
   }

@@ -9,7 +9,7 @@ export default StyleSheet.create({
   background: {
     flex: 1,
     width: null,
-    height: deviceHeight
+    height: null
   },
   container: {
     flex: 1,
@@ -18,22 +18,23 @@ export default StyleSheet.create({
   },
   logo: {
     resizeMode: "center",
+    alignSelf: "center",
     width: (2 * deviceWidth - 60) / 3,
-    height: deviceHeight / 4,
-    alignSelf: "center"
+    height: deviceHeight / 4
   },
+
+  // Form styles
   form: {
     flex: 1,
-    paddingLeft: deviceWidth / 6,
-    paddingRight: deviceWidth / 6
+    paddingHorizontal: deviceWidth / 6
   },
   inputGrp: {
     flexDirection: "row",
     marginBottom: 8,
-    borderWidth: 1,
+    borderWidth: 1.5,
     borderColor: colors.lightgrey,
     borderRadius: 8,
-    height: 40
+    height: 35
   },
   input: {
     flex: 1,
@@ -42,32 +43,12 @@ export default StyleSheet.create({
     fontSize: 13,
     fontFamily: "LatoRegular"
   },
-  formErrorIcon: {
-    color: "#fff",
-    right: 6
-  },
-  formErrorText1: {
-    fontSize: Platform.OS === "android" ? 12 : 15,
-    color: colors.error,
-    textAlign: "right",
-    top: -7
-  },
-  formErrorText2: {
-    fontSize: Platform.OS === "android" ? 12 : 15,
-    color: "transparent",
-    textAlign: "right",
-    top: -8
-  },
-  formErrorText3: {
-    fontSize: Platform.OS === "android" ? 12 : 15,
-    color: colors.error,
-    textAlign: "center",
-    top: -10
-  },
+
+  // Login Button styles
   loginBtn: {
-    marginTop: 7,
+    justifyContent: "center",
+    marginTop: 20,
     height: 40,
-    borderColor: colors.charcoal,
     borderRadius: 8,
     backgroundColor: colors.lightgrey
   },
@@ -78,39 +59,19 @@ export default StyleSheet.create({
     textAlign: "center",
     letterSpacing: 1.25
   },
+
+  // Forgot Password styles
   forgotPasswordContainer: {
     flex: 1,
     alignSelf: "center",
     flexDirection: "row",
     position: "absolute",
-    bottom: 40
+    bottom: 50
   },
   forgotPasswordBtnText: {
     color: colors.charcoal,
     opacity: 0.5,
     fontSize: Platform.OS === "android" ? 9 : 9,
     textDecorationLine: "underline"
-  },
-  signUpContainer: {
-     flex: 1,
-     alignSelf: "center",
-     flexDirection: "row",
-     position: "absolute",
-     bottom: 5,
-     left: (deviceWidth) / 4 + 20
-  },
-  signUpLabelText: {
-    color: colors.charcoal,
-    fontSize: 10,
-    fontFamily: "LatoRegular"
-  },
-  signUpBtn: {
-    top: -8,
-    left: -10
-  },
-  signUpBtnText: {
-    color: colors.blue,
-    fontSize: 10,
-    fontFamily: "LatoRegular"
   }
 });

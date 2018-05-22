@@ -1,19 +1,18 @@
 import React, { Component } from "react";
-import { Image, TextInput } from "react-native";
 import {
   View,
-  Item,
-  Icon,
+  TouchableOpacity,
+  Image,
   Text,
-  Button,
-  Spinner,
-  Toast
-} from "native-base";
+  TextInput
+} from "react-native";
+import { Item, Icon, Spinner, Toast } from "native-base";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 
 import { verifyReferralCode } from "../../state/actions";
 
+import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
 import colors from "../../../../theme/colors";
 
@@ -22,7 +21,7 @@ import { required } from "../../../../globals/validators";
 const logo = require("../../../../../assets/Logo/white-large.png");
 
 class ReferralCodeForm extends Component {
-  textInput: Any;
+  textInput;
   renderInput({ input, label, type, meta: { touched, error, warning } }) {
     return (
       <View>
@@ -38,17 +37,17 @@ class ReferralCodeForm extends Component {
           {touched && error
             ? <Icon
                 active
-                style={styles.formErrorIcon}
+                style={globalStyles.formErrorIcon}
                 onPress={() => this.textInput.clear()}
                 name="close"
               />
             : <Text />}
         </Item>
         {touched && error
-          ? <Text style={styles.formErrorText1}>
+          ? <Text style={globalStyles.formErrorText1}>
               {error}
             </Text>
-          : <Text style={styles.formErrorText2}>error here</Text>}
+          : <Text style={globalStyles.formErrorText2}>error here</Text>}
       </View>
     );
   }
@@ -92,20 +91,16 @@ class ReferralCodeForm extends Component {
           validate={[required]}
         />
         <Text style={[styles.text, styles.textBelow]}>Contact your administrator if there are any issues</Text>
-        {error && <Text style={styles.formErrorText3}>{errorText}</Text>}
-        <Button
-          block
-          style={styles.createAccountBtn}
-          onPress={() => this.verify()}
-        >
+        {error && <Text style={globalStyles.formErrorText3}>{errorText}</Text>}
+        <TouchableOpacity activeOpacity={0.6} style={[styles.createAccountBtn, globalStyles.shadow]} onPress={this.verify.bind(this)}>
           {
             isLoading ?
               <Spinner color={colors.blue} /> :
-              <Text style={styles.createAccountBtnText}>
-                Create My Account
+              <Text uppercase style={styles.createAccountBtnText}>
+                CREATE MY ACCOUNT
               </Text>
           }
-        </Button>
+        </TouchableOpacity>
       </View>
     );
   }

@@ -1,30 +1,25 @@
-import { StyleSheet, Dimensions, Platform } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import colors from "../../../../theme/colors";
 
 const screen = Dimensions.get("window");
 const deviceWidth = screen.width;
 
 const formWidth = deviceWidth - 60;
-const formHorizontalPadding = 10;
+const formHorizontalPadding = 15;
 const formWidthAfterPadding = formWidth - 2 * formHorizontalPadding;
 const formSpaceBetween = 10;
 
 const styles = StyleSheet.create({
-  contentContainerStyle: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "flex-start"
-  },
   formContainer: {
     flex: 0.8,
-    width: formWidth,
+    alignSelf: "center",
+    width: formWidth
+  },
+  formContent: {
     backgroundColor: "white",
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: "transparent"
-  },
-  formContent: {
-    flex: 1,
+    borderColor: "transparent",
     paddingHorizontal: formHorizontalPadding,
     paddingVertical: 20
   },
@@ -46,7 +41,8 @@ const styles = StyleSheet.create({
     width: formWidthAfterPadding / 2 - formSpaceBetween / 2
   },
   dateOfBirth: {
-    width: (formWidthAfterPadding * 2) / 3 - formSpaceBetween / 2,
+    width: (formWidthAfterPadding * 2) / 3 - formSpaceBetween / 2 + 2,
+    marginLeft: -2
   },
   gender: {
     borderWidth: 1,
@@ -143,67 +139,24 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.darkerGrey,
     backgroundColor: "transparent",
-    marginBottom: 5
+    marginBottom: 7
   },
   input: {
+    flex: 1,
     paddingLeft: 10,
     color: colors.charcoal,
     fontSize: 13,
     fontFamily: "LatoRegular"
   },
-  formErrorIcon: {
-    color: colors.darkerGrey,
-    right: 5
-  },
-  formErrorText1: {
-    fontSize: Platform.OS === "android" ? 12 : 15,
-    color: colors.error,
-    textAlign: "right",
-    top: -7
-  },
-  formErrorText2: {
-    fontSize: Platform.OS === "android" ? 12 : 15,
-    color: "transparent",
-    textAlign: "right",
-    top: -8
-  },
-  formErrorText3: {
-    fontSize: Platform.OS === "android" ? 12 : 15,
-    color: colors.error,
-    textAlign: "center",
-    top: -10
-  },
   separator: {
     height: 30
-  },
-  bottomContainer: {
-     flex: 0.08,
-     alignSelf: "center",
-     flexDirection: "row",
-     position: "absolute",
-     bottom: 5
-  },
-  bottomLabelText: {
-    color: colors.charcoal,
-    fontSize: 10
-  },
-  bottomBtn: {
-    top: -11,
-    left: -10
-  },
-  bottomBtnText: {
-    color: colors.blue,
-    fontSize: 10,
   }
 });
 
 const addressFinderStyles = StyleSheet.create({
-  container: {
-    paddingBottom: 20,
-    marginLeft: 2
-  },
   textInputContainer: {
     borderWidth: 1,
+    borderBottomWidth: 1.2,
     borderColor: colors.darkerGrey,
     borderRadius: 8,
     backgroundColor: "transparent",
@@ -218,11 +171,11 @@ const addressFinderStyles = StyleSheet.create({
     fontSize: 13,
     fontFamily: "LatoRegular",
     marginLeft: 0,
-    marginBottom: 5,
+    marginBottom: 7,
     height: 25
   },
   listView: {
-    width: formWidthAfterPadding - 10,
+    width: formWidthAfterPadding,
     borderRadius: 8,
     borderWidth: 1,
     borderColor: colors.darkerGrey,

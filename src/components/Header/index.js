@@ -34,7 +34,7 @@ class Header extends Component {
       <View style={styles.container}>
         {
           button !== "none" &&
-          <TouchableOpacity activeOpacity={0.6} onPress={this._onButtonPress.bind(this)} style={styles.button}>
+          <TouchableOpacity activeOpacity={0.6} onPress={this._onButtonPress.bind(this)} style={styles.button} hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}>
             <Image source={button === "menu" ?  menuIcon : backIcon} />
           </TouchableOpacity>
         }

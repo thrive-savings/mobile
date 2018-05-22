@@ -14,34 +14,9 @@ import { getDollarString } from "../../globals/helpers";
 import styles from "./styles";
 import colors from "../../theme/colors";
 
-const logo = require("../../../assets/ThumbnailLogo/Small/thumbnail.png");
-const savingsIcon = require("../../../assets/Sidebar/House/house.png");
-const settingsIcon = require("../../../assets/Sidebar/Settings/settings1.png");
-const contactIcon = require("../../../assets/Sidebar/ThriveBot/thriveBot.png");
-const faqIcon = require("../../../assets/Sidebar/Faq/faq.png");
+import MENU_ITEMS from "./constants";
 
-const MENU_ITEMS = [
-  {
-    displayName: "MY SAVINGS",
-    icon: savingsIcon,
-    screen: "Home"
-  },
-  {
-    displayName: "SETTINGS",
-    icon: settingsIcon,
-    screen: "Settings"
-  },
-  {
-    displayName: "FAQ",
-    icon: faqIcon,
-    screen: "Faq"
-  },
-  {
-    displayName: "CONTACT",
-    icon: contactIcon,
-    screen: "Contact"
-  }
-];
+const logo = require("../../../assets/ThumbnailLogo/Small/thumbnail.png");
 
 class SideBar extends Component {
   constructor(props) {

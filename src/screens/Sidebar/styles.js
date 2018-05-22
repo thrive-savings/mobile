@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 import colors from "../../theme/colors";
 
 export default StyleSheet.create({
@@ -22,7 +22,7 @@ export default StyleSheet.create({
   avatar: {
     width: 40,
     height: 40,
-    borderRadius: 50
+    borderRadius: Platform.OS === "android" ? 40 : 20
   },
   headerTexts: {
     justifyContent: "center",

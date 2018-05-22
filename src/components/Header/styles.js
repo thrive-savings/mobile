@@ -3,7 +3,7 @@ import { Constants } from "expo";
 
 export default StyleSheet.create({
   container: {
-    paddingTop: Platform.OS === "android" ? 0 : Constants.statusBarHeight,
+    marginTop: Platform.OS === "android" ? 0 : Constants.statusBarHeight,
     flex: 0.1,
     justifyContent: "center",
     alignItems: "center"

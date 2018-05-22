@@ -1,15 +1,17 @@
 // @flow
 import React, { Component } from "react";
-import { ImageBackground, StatusBar } from "react-native";
-import { connect } from "react-redux";
 import {
-  Container,
   View,
-  Button,
-  Text
-} from "native-base";
+  TouchableOpacity,
+  ImageBackground,
+  Text,
+  StatusBar
+} from "react-native";
+import { connect } from "react-redux";
 
-import styles from "./styles";
+import Header from "../../components/Header";
+
+import globalStyles from "../../globals/globalStyles";
 import colors from "../../theme/colors";
 
 import ReferralCode from "./pages/ReferralCode";
@@ -22,12 +24,13 @@ class SignUp extends Component {
   render() {
     const { step } = this.props.signUpReducer;
 
-    let body;
+    let body, header;
     switch (step) {
       case 0:
         body = <ReferralCode navigation={this.props.navigation} />;
         break;
       case 1:
+        header = <Header button="none" />;
         body = <PersonalDetails navigation={this.props.navigation} />;
         break;
       default:
@@ -35,35 +38,19 @@ class SignUp extends Component {
     }
 
     return (
-      <Container>
-        <StatusBar
-          backgroundColor={colors.statusbar}
-          barStyle="light-content"
-        />
-        <ImageBackground
-          source={bg}
-          style={styles.background}
-        >
+      <View style={globalStyles.container}>
+        <StatusBar backgroundColor={colors.statusbar} barStyle="light-content" />
+        <ImageBackground source={bg} style={globalStyles.background}>
+          {header}
           {body}
-          <View style={styles.bottomContainer}>
-            <Text
-              style={styles.bottomLabelText}
-            >
-              Already have an account?
-            </Text>
-            <Button
-              small
-              transparent
-              style={styles.bottomBtn}
-              onPress={() => this.props.navigation.navigate("Login")}
-            >
-              <Text uppercase={false} style={styles.bottomBtnText}>
-                Log In.
-              </Text>
-            </Button>
+          <View style={globalStyles.bottomContainer}>
+            <Text style={globalStyles.bottomLabelText}>Already have an account?</Text>
+            <TouchableOpacity activeOpacity={0.6} onPress={() => this.props.navigation.navigate("Login")}>
+              <Text style={globalStyles.bottomBtnText}>Log In.</Text>
+            </TouchableOpacity>
           </View>
         </ImageBackground>
-      </Container>
+      </View>
     );
   }
 }

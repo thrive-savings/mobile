@@ -1,22 +1,21 @@
 // @flow
 import React, { Component } from "react";
-import { Image, ImageBackground, StatusBar, TextInput } from "react-native";
 import {
-  Container,
-  Content,
-  Text,
-  Item,
-  Button,
-  Icon,
   View,
-  Toast,
-  Spinner
-} from "native-base";
+  TouchableOpacity,
+  Image,
+  ImageBackground,
+  Text,
+  TextInput,
+  StatusBar
+} from "react-native";
+import { Item, Icon, Toast, Spinner } from "native-base";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 
 import { authUser } from "./state/actions";
 
+import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
 import colors from "../../theme/colors";
 
@@ -25,9 +24,8 @@ import { required, maxLength15, minLength8, alphaNumeric, email } from "../../gl
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
 const logo = require("../../../assets/Logo/white-large.png");
 
-declare type Any = any;
 class LoginForm extends Component {
-  textInput: Any;
+  textInput;
 
   renderInput({ input, label, type, meta: { touched, error, warning } }) {
     return (
@@ -45,17 +43,17 @@ class LoginForm extends Component {
           {touched && error
             ? <Icon
                 active
-                style={styles.formErrorIcon}
+                style={globalStyles.formErrorIcon}
                 onPress={() => this.textInput.clear()}
                 name="close"
               />
             : <Text />}
         </Item>
         {touched && error
-          ? <Text style={styles.formErrorText1}>
+          ? <Text style={globalStyles.formErrorText1}>
               {error}
             </Text>
-          : <Text style={styles.formErrorText2}>error here</Text>}
+          : <Text style={globalStyles.formErrorText2}>error here</Text>}
       </View>
     );
   }
@@ -94,76 +92,54 @@ class LoginForm extends Component {
     }
 
     return (
-      <Container>
+      <View style={globalStyles.container}>
         <StatusBar barStyle="light-content" backgroundColor={colors.statusbar} />
-        <ImageBackground source={bg} style={styles.background}>
-          <Content contentContainerStyle={{ flex: 1 }}>
-            <View style={styles.container}>
-              <Image source={logo} style={styles.logo} />
-            </View>
-            <View style={styles.container}>
-              <View style={styles.form}>
-                <Field
-                  name="email"
-                  component={this.renderInput}
-                  type="email"
-                  validate={[email, required]}
-                />
-                <Field
-                  name="password"
-                  component={this.renderInput}
-                  type="password"
-                  validate={[alphaNumeric, minLength8, maxLength15, required]}
-                />
+        <ImageBackground source={bg} style={globalStyles.background}>
+          <View style={styles.container}>
+            <Image source={logo} style={styles.logo} />
+          </View>
+          <View style={styles.container}>
+            <View style={styles.form}>
+              <Field
+                name="email"
+                component={this.renderInput}
+                type="email"
+                validate={[email, required]}
+              />
+              <Field
+                name="password"
+                component={this.renderInput}
+                type="password"
+                validate={[alphaNumeric, minLength8, maxLength15, required]}
+              />
 
-                {error && <Text style={styles.formErrorText3}>{errorText}</Text>}
+              {error && <Text style={globalStyles.formErrorText3}>{errorText}</Text>}
 
-                <Button
-                  block
-                  style={styles.loginBtn}
-                  onPress={() => this.fastLogin()}
-                >
-                  {
-                    isLoading ?
-                      <Spinner color={colors.blue} /> :
-                      <Text style={styles.loginBtnText}>
-                        Log In
-                      </Text>
-                  }
-                </Button>
-
-                <View style={styles.forgotPasswordContainer}>
-                  <Button
-                    small
-                    transparent
-                    onPress={() => navigation.navigate("ForgotPassword")}
-                  >
-                    <Text uppercase={false} style={styles.forgotPasswordBtnText}>Forgot Password?</Text>
-                  </Button>
-                </View>
-
-                <View style={styles.signUpContainer}>
-                  <Text
-                    style={styles.signUpLabelText}
-                  >
-                    Don't have an account?
-                  </Text>
-                  <Button
-                    small
-                    transparent
-                    style={styles.signUpBtn}
-                    onPress={() => navigation.navigate("SignUp")}
-                  >
-                    <Text uppercase={false} style={styles.signUpBtnText}>
-                      Sign Up.
+              <TouchableOpacity activeOpacity={0.6} style={[styles.loginBtn, globalStyles.shadow]} onPress={this.fastLogin.bind(this)}>
+                {
+                  isLoading ?
+                    <Spinner color={colors.blue} /> :
+                    <Text uppercase style={styles.loginBtnText}>
+                      LOG IN
                     </Text>
-                  </Button>
-                </View>
+                }
+              </TouchableOpacity>
+
+
+              <TouchableOpacity style={styles.forgotPasswordContainer} activeOpacity={0.6} onPress={() => navigation.navigate("ForgotPassword")} hitSlop={{top: 10, bottom: 10, left: 20, right: 20}}>
+                <Text uppercase={false} style={styles.forgotPasswordBtnText}>Forgot Password?</Text>
+              </TouchableOpacity>
+
+              <View style={globalStyles.bottomContainer}>
+                <Text style={globalStyles.bottomLabelText}>Don't have an account?</Text>
+                <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate("SignUp")}>
+                  <Text style={globalStyles.bottomBtnText}>Sign Up.</Text>
+                </TouchableOpacity>
               </View>
             </View>
-          </Content>
+          </View>
         </ImageBackground>
-      </Container>
+      </View>
     );
   }
 }

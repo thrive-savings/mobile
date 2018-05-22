@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions, Platform } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import colors from "../../../../theme/colors";
 
 const screen = Dimensions.get("window");
@@ -12,6 +12,8 @@ export default StyleSheet.create({
     paddingTop: deviceHeight / 6,
     paddingHorizontal: deviceWidth / 6
   },
+
+  // Input styles
   inputGrp: {
     flexDirection: "row",
     borderWidth: 1,
@@ -28,12 +30,16 @@ export default StyleSheet.create({
     fontSize: 13,
     textAlign: "center"
   },
+
+  // Logo style
   logo: {
     resizeMode: "center",
     width: (2 * deviceWidth - 60) / 3,
     height: deviceHeight / 4,
     marginBottom: 20
   },
+
+  // Text styles
   textAbove: {
     fontSize: 13,
     paddingHorizontal: 20
@@ -50,32 +56,13 @@ export default StyleSheet.create({
     letterSpacing: 0.2,
     lineHeight: 22
   },
-  formErrorIcon: {
-    color: "#fff",
-    right: 6
-  },
-  formErrorText1: {
-    fontSize: Platform.OS === "android" ? 12 : 15,
-    color: colors.error,
-    textAlign: "right",
-    top: -8
-  },
-  formErrorText2: {
-    fontSize: Platform.OS === "android" ? 12 : 15,
-    color: "transparent",
-    textAlign: "right",
-    top: -8
-  },
-  formErrorText3: {
-    fontSize: Platform.OS === "android" ? 12 : 15,
-    color: colors.error,
-    textAlign: "center",
-    top: -10
-  },
+
+  // Create Account Button styles
   createAccountBtn: {
+    alignSelf: "stretch",
+    justifyContent: "center",
     marginTop: 7,
     height: 40,
-    borderColor: colors.charcoal,
     borderRadius: 8,
     backgroundColor: colors.lightgrey
   },
