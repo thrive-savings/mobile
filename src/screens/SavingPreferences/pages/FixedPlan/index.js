@@ -1,13 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { TouchableOpacity } from "react-native";
-import {
-  View,
-  Text,
-  Card,
-  Left,
-  Right
-} from "native-base";
+import { View, TouchableOpacity, Text } from "react-native";
+import { Left, Right } from "native-base";
 
 import SpecialButton from "../../../../components/SpecialButton";
 import ModalTemplate from "../../../../components/ModalTemplate";
@@ -16,6 +10,7 @@ import Dots from "../../../../components/Dots";
 import getNumPadModalContent from "../../../../components/NumPad";
 import getFrequencySetterModalContent from "../../../../components/OptionSetter";
 
+import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
 import { FREQUENCY_TYPES } from "./constants";
 
@@ -66,10 +61,10 @@ class FixedPlan extends Component {
 
   render() {
     return (
-      <Card style={styles.container}>
+      <View style={[styles.container, globalStyles.shadow]}>
         {this.props.showDots && <Dots step={3} />}
 
-        <Text style={styles.labelText}>HOW MUCH WOULD YOU LIKE TO SAVE?</Text>
+        <Text style={[styles.labelText, (this.props.showDots && styles.topPadder)]}>HOW MUCH WOULD YOU LIKE TO SAVE?</Text>
         <Text style={styles.secondaryText}>
           You are currently on the <Text style={styles.planNameText}>Thrive Fixed</Text> plan
         </Text>
@@ -144,7 +139,7 @@ class FixedPlan extends Component {
             })
           }
         />
-      </Card>
+      </View>
     );
   }
 }

@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 const colors = require("../../../../theme/colors");
 
 export default StyleSheet.create({
@@ -10,11 +10,15 @@ export default StyleSheet.create({
     backgroundColor: "white",
     padding: 20
   },
+  topPadder: {
+    marginTop: 20
+  },
+
+  // Texts
   labelText: {
     color: colors.blue,
     fontSize: 14,
     fontFamily: "LatoBold",
-    paddingTop: 20,
     paddingBottom: 10,
     paddingLeft: 60,
     paddingRight: 60,
@@ -27,11 +31,14 @@ export default StyleSheet.create({
     textAlign: "center",
     paddingBottom: 10
   },
+
+  // Grid styles
   typesContainer: {
     flex: 1,
-    paddingVertical: 10
+    paddingVertical: 20,
+    justifyContent: "space-between"
   },
-  savingTypeCard: {
+  savingTypeContainer: {
     borderRadius: 12
   },
   savingTypeTouchable: {
@@ -48,11 +55,15 @@ export default StyleSheet.create({
   tagGradient: {
     alignSelf: "flex-end",
     position: "absolute",
-    resizeMode: "center",
-    paddingTop: 5,
+    paddingRight: 10,
+    paddingLeft: 20,
+    paddingVertical: 5,
     top: 5,
-    right: -5,
-    zIndex: 1
+    right: Platform.OS === "android" ? 0 : -5,
+    borderRadius: 5,
+    borderTopLeftRadius: 30,
+    borderBottomLeftRadius: 30,
+    overflow: "hidden"
   },
   tagText: {
     backgroundColor: "transparent",

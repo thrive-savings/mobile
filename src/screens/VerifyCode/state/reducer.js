@@ -1,7 +1,6 @@
 import { SAVE_PHONE_URL, CODE_VERIFY_URL, CODE_RESEND_URL } from "./constants";
 const initialState = {
   data: {},
-  savedPhone: undefined,
   showModal: false,
   isSetting: false,
   setError: false,
@@ -12,13 +11,12 @@ const initialState = {
   verifyErrorMessage: ""
 };
 
-export default function signUpReducer (state = initialState, action) {
+export default function verifyCodeReducer(state = initialState, action) {
   switch (action.type) {
     //Save Phone cases
     case `${SAVE_PHONE_URL}_SUBMIT`:
       return {
         ...state,
-        savedPhone: undefined,
         isSetting: true,
         showModal: false,
       };
@@ -27,7 +25,6 @@ export default function signUpReducer (state = initialState, action) {
       return {
         ...state,
         data: savePhoneData ? savePhoneData : {},
-        savedPhone: savePhoneData.phone,
         showModal: true,
         isSetting: false,
         setError: false,
@@ -36,7 +33,6 @@ export default function signUpReducer (state = initialState, action) {
     case `${SAVE_PHONE_URL}_FAIL`:
       return {
         ...state,
-        savedPhone: undefined,
         showModal: false,
         isSetting: false,
         setError: true,

@@ -3,6 +3,7 @@ const colors = require("../../theme/colors");
 
 export default StyleSheet.create({
   disabledButton: {
+    alignSelf: "stretch",
     justifyContent: "center",
     alignItems: "center",
     height: 40,

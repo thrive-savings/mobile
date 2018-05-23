@@ -45,6 +45,7 @@ export default StyleSheet.create({
     alignSelf: "stretch",
     height: 2,
     backgroundColor: color(colors.grey).darken(0.005).hex(),
-    marginVertical: 15
+    marginVertical: 15,
+    marginHorizontal: -20
   }
 });

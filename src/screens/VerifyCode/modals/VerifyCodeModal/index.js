@@ -50,7 +50,7 @@ class VerifyCodeModal extends Component {
   }
 
   resend() {
-    this.props.resendCode({phone: this.props.verifyCodeReducer.savedPhone});
+    this.props.resendCode({phone: this.props.userData.phone});
   }
 
   textInput: any;
@@ -114,7 +114,8 @@ class VerifyCodeModal extends Component {
           buttonLoading={isVerifying}
         />
 
-        {verifyError && <Text style={globalStyles.formErrorText3}>{errorText}</Text>}
+        {verifyError && <Text style={[globalStyles.formErrorText3, styles.topPadder]}>{errorText}</Text>}
+
         {
           isResending
             ? <Text style={styles.resendText}>Resending...</Text>
@@ -151,7 +152,8 @@ VerifyCodeModal.defaultProps = {
 function mapStateToProps (state) {
   return {
     values: state.form && state.form.verifyCode && state.form.verifyCode.values ? state.form.verifyCode.values : undefined,
-    verifyCodeReducer: state.verifyCodeReducer
+    verifyCodeReducer: state.verifyCodeReducer,
+    userData: state.verifyCodeReducer.data && state.verifyCodeReducer.data.authorized ? state.verifyCodeReducer.data.authorized : undefined
   };
 }
 

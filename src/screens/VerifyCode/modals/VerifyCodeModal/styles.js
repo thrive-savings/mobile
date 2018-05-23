@@ -1,4 +1,4 @@
-import { StyleSheet, Platform } from "react-native";
+import { StyleSheet } from "react-native";
 import colors from "../../../../theme/colors";
 
 
@@ -55,22 +55,7 @@ export default StyleSheet.create({
     fontSize: 13,
     fontFamily: "LatoBold"
   },
-  formErrorText1: {
-    fontSize: Platform.OS === "android" ? 12 : 15,
-    color: colors.error,
-    textAlign: "center",
-    top: -7
-  },
-  formErrorText2: {
-    fontSize: Platform.OS === "android" ? 12 : 15,
-    color: "transparent",
-    textAlign: "center",
-    top: -7
-  },
-  formErrorText3: {
-    fontSize: Platform.OS === "android" ? 12 : 15,
-    color: colors.error,
-    textAlign: "center",
-    top: -10
+  topPadder: {
+    paddingTop: 10
   }
 });

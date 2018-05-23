@@ -1,7 +1,6 @@
 import { StyleSheet, Dimensions } from "react-native";
 const colors = require("../../../../theme/colors");
 
-const deviceHeight = Dimensions.get("window").height;
 const deviceWidth = Dimensions.get("window").width;
 
 export default StyleSheet.create({
@@ -13,11 +12,15 @@ export default StyleSheet.create({
     backgroundColor: "white",
     padding: 20
   },
+  topPadder: {
+    marginTop: 20
+  },
+
+  // Texts
   labelText: {
     color: colors.blue,
     fontSize: 14,
     fontFamily: "LatoBold",
-    paddingTop: 20,
     paddingBottom: 10,
     paddingLeft: 60,
     paddingRight: 60,
@@ -28,38 +31,41 @@ export default StyleSheet.create({
     fontSize: 12,
     fontFamily: "LatoRegular"
   },
-  grid: {
-    height: deviceHeight / 2,
-    paddingTop: 30,
-    paddingBottom: 40
+
+  // Grid styl;es
+  typesContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    paddingVertical: 20
   },
-  gridCol: {
-    justifyContent: "space-around"
+  typeGradientView: {
+    borderRadius: 12,
+    margin: 10
   },
-  gridRow: {
-    flex: 0.45
+  typeRegularView: {
+    margin: 10
   },
-  gridElem: {
-    alignItems: "center",
-    width: deviceWidth / 2 - 50
-  },
-  gridElemGradient: {
+  typeTouchable: {
     flex: 1,
-    resizeMode: "contain",
-    alignItems: "center"
+    alignSelf: "center",
+    alignItems: "center",
+    width: deviceWidth / 2 - 70,
+    paddingVertical: 20,
+    margin: 2,
+    borderRadius: 12,
+    backgroundColor: "white"
   },
   workTypeImg: {
     flex: 0.75,
-    resizeMode: "center"
+    resizeMode: "contain"
   },
   workTypeText: {
     color: colors.charcoal,
     fontSize: 13,
     fontFamily: "LatoRegular",
     textAlign: "center",
-    position: "absolute",
     width: 100,
-    bottom: 10
+    paddingTop: 5
   },
   disabledType: {
     opacity: 0.6

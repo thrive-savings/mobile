@@ -33,7 +33,7 @@ export default StyleSheet.create({
 
   // Logo style
   logo: {
-    resizeMode: "center",
+    resizeMode: "contain",
     width: (2 * deviceWidth - 60) / 3,
     height: deviceHeight / 4,
     marginBottom: 20

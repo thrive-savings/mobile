@@ -60,7 +60,7 @@ class Faq extends Component {
   renderCategories() {
     const body = FAQ_CATEGORIES.map(({ icon, name }, index) => {
       return (
-        <TouchableOpacity key={index} activeOpacity={0.6} style={styles.categoryHolder} onPress={() => this.setState({activeStep: 1, activeFaqIndex: index})}>
+        <TouchableOpacity key={index} activeOpacity={0.6} style={[styles.categoryHolder, globalStyles.shadow]} onPress={() => this.setState({activeStep: 1, activeFaqIndex: index})}>
           <Image source={icon} />
           <Text style={styles.categoryName}>{name}</Text>
         </TouchableOpacity>
@@ -68,7 +68,7 @@ class Faq extends Component {
     });
 
     return (
-      <View style={styles.contentBox}>
+      <View style={[styles.contentBox, globalStyles.shadow]}>
         <Text style={styles.labelText}>What do you need help with?</Text>
         <View style={styles.categories}>
           {body}

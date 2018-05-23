@@ -43,8 +43,7 @@ export default StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     paddingTop: 15,
-    paddingBottom: 10,
-    elevation: 5
+    paddingBottom: 10
   },
   categoryName: {
     paddingTop: 10,

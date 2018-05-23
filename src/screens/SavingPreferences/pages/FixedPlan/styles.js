@@ -12,11 +12,22 @@ export default StyleSheet.create({
     backgroundColor: "white",
     padding: 20
   },
+  separator: {
+    alignSelf: "stretch",
+    height: 2,
+    backgroundColor: color(colors.grey).darken(0.005).hex(),
+    marginVertical: 15,
+    marginHorizontal: -20
+  },
+  topPadder: {
+    marginTop: 20
+  },
+
+  // Texts
   labelText: {
     color: colors.blue,
     fontSize: 14,
     fontFamily: "LatoBold",
-    paddingTop: 20,
     paddingBottom: 10,
     paddingLeft: 50,
     paddingRight: 50,
@@ -40,12 +51,8 @@ export default StyleSheet.create({
     paddingTop: 15,
     paddingBottom: 30
   },
-  separator: {
-    alignSelf: "stretch",
-    height: 2,
-    backgroundColor: color(colors.grey).darken(0.005).hex(),
-    marginVertical: 10
-  },
+
+  // Input styles
   inputContainer: {
     flexDirection: "row"
   },

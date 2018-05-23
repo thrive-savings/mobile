@@ -17,7 +17,7 @@ export default StyleSheet.create({
     alignSelf: "center"
   },
   logo: {
-    resizeMode: "center",
+    resizeMode: "contain",
     alignSelf: "center",
     width: (2 * deviceWidth - 60) / 3,
     height: deviceHeight / 4

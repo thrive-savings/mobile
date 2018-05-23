@@ -1,31 +1,21 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { TouchableOpacity, Image } from "react-native";
 import {
-  Text,
-  Card,
-  Grid,
-  Col,
-  Row
-} from "native-base";
+  View,
+  TouchableOpacity,
+  Image,
+  Text
+} from "react-native";
+import { LinearGradient } from "expo";
 
 import SpecialButton from "../../../../components/SpecialButton";
 import Dots from "../../../../components/Dots";
 
+import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
+import colors from "../../../../theme/colors";
 
-const border = require("../../../../../assets/Icons/Borders/box/box.png");
-const fullTime = require("../../../../../assets/WorkTypes/Fulltime.png");
-const partTime = require("../../../../../assets/WorkTypes/Parttime.png");
-const sharingEconomy = require("../../../../../assets/WorkTypes/Sharing.png");
-const contract = require("../../../../../assets/WorkTypes/Contract.png");
-
-const WORK_TYPES = [
-  {text: "Full Time", displayText: "FULL-TIME", icon: fullTime},
-  {text: "Part Time", displayText: "PART-TIME", icon: partTime},
-  {text: "Contract", displayText: "CONTRACT", icon: contract},
-  {text: "Sharing Economy", displayText: "SHARING ECONOMY", icon: sharingEconomy}];
-
+import WORK_TYPES from "./constants";
 
 class WorkType extends Component {
   constructor(props: Props) {
@@ -42,64 +32,61 @@ class WorkType extends Component {
     this.props.save({ workType: this.state.workType });
   }
 
-  typeSelected(type: string) {
+  typeSelected(type) {
     this.setState({ workType: type });
   }
 
-  renderGridElem(type: object) {
+  renderType(type) {
     const { text, displayText, icon } = type;
 
     const anotherOneSelected = this.state.workType && this.state.workType !== text;
     const thisSelected = this.state.workType && this.state.workType === text;
 
     let body =
-      <TouchableOpacity activeOpacity={0.6} style={styles.gridElem} onPress={() => this.typeSelected(text)}>
+      <TouchableOpacity key={text} activeOpacity={0.6} style={styles.typeTouchable} onPress={() => this.typeSelected(text)}>
         <Image source={icon} style={[styles.workTypeImg, (anotherOneSelected && styles.disabledType)]} />
         <Text style={[styles.workTypeText, (anotherOneSelected && styles.disabledType)]}>{displayText}</Text>
       </TouchableOpacity>;
 
     if (thisSelected) {
       body =
-      <TouchableOpacity activeOpacity={0.6} style={styles.gridElem} onPress={() => this.typeSelected(text)}>
-        <Image source={border} style={styles.gridElemGradient}>
-          <Image source={icon} style={styles.workTypeImg} />
-          <Text style={styles.workTypeText}>{displayText}</Text>
-        </Image>
-      </TouchableOpacity>;
+        <LinearGradient
+          key={text}
+          colors={colors.blueGreenGradient.colors}
+          style={styles.typeGradientView}
+        >
+          {body}
+        </LinearGradient>;
+    } else {
+      body =
+        <View key={text} style={[styles.typeRegularView, globalStyles.shadow]}>
+          {body}
+        </View>;
     }
 
     return body;
   }
 
+  renderWorkTypes() {
+    return WORK_TYPES.map(this.renderType.bind(this));
+  }
+
   render() {
+    const { showDots, reducer: { isLoading } } = this.props;
+
     return (
-      <Card style={styles.container}>
+      <View style={[styles.container, globalStyles.shadow]}>
         {this.props.showDots && <Dots step={1} />}
 
-        <Text style={styles.labelText}>WHAT TYPE OF WORK DO YOU DO?</Text>
+        <Text style={[styles.labelText, (showDots && styles.topPadder)]}>WHAT TYPE OF WORK DO YOU DO?</Text>
         <Text style={styles.secondaryText}>Choose your primary income source.</Text>
 
-        <Grid style={styles.grid}>
-          <Col style={styles.gridCol}>
-            <Row style={styles.gridRow}>
-              {this.renderGridElem(WORK_TYPES[0])}
-            </Row>
-            <Row style={styles.gridRow}>
-              {this.renderGridElem(WORK_TYPES[2])}
-            </Row>
-          </Col>
-          <Col style={styles.gridCol}>
-            <Row style={styles.gridRow}>
-              {this.renderGridElem(WORK_TYPES[1])}
-            </Row>
-            <Row style={styles.gridRow}>
-              {this.renderGridElem(WORK_TYPES[3])}
-            </Row>
-          </Col>
-        </Grid>
+        <View style={styles.typesContainer}>
+          {this.renderWorkTypes()}
+        </View>
 
-        <SpecialButton loading={this.props.reducer.isLoading} onClick={this.next} enabled={this.state.workType ? true : false} />
-      </Card>
+        <SpecialButton loading={isLoading} onClick={this.next} enabled={this.state.workType ? true : false} />
+      </View>
     );
   }
 }

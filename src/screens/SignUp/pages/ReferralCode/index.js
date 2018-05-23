@@ -6,7 +6,7 @@ import {
   Text,
   TextInput
 } from "react-native";
-import { Item, Icon, Spinner, Toast } from "native-base";
+import { Icon, Spinner, Toast } from "native-base";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 
@@ -18,7 +18,7 @@ import colors from "../../../../theme/colors";
 
 import { required } from "../../../../globals/validators";
 
-const logo = require("../../../../../assets/Logo/white-large.png");
+const logo = require("../../../../../assets/Logo/white.png");
 
 class ReferralCodeForm extends Component {
   textInput;

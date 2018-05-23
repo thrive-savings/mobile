@@ -1,14 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { ImageBackground, StatusBar } from "react-native";
+import { View, ImageBackground, StatusBar } from "react-native";
 import { connect } from "react-redux";
-import {
-  Container,
-  Content
-} from "native-base";
+import { Content } from "native-base";
 
 import Header from "../../components/Header";
 
+import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
 
 import { changeStep, setWorkType, setSavingType, setSavingDetails } from "./state/actions";
@@ -53,7 +51,7 @@ class SavingPreferences extends Component {
           />;
         break;
       case 2:
-        body = savingType === "flex"
+        body = savingType === "Thrive Flex"
           ? <FlexPlan
               changeStep={this.props.changeStep}
             />
@@ -69,12 +67,9 @@ class SavingPreferences extends Component {
     }
 
     return (
-      <Container>
+      <View style={globalStyles.container}>
         <StatusBar barStyle="light-content" backgroundColor={colors.statusbar} />
-        <ImageBackground
-          source={bg}
-          style={styles.background}
-        >
+        <ImageBackground source={bg} style={globalStyles.background}>
           <Header
             navigation={this.props.navigation}
             button="back" onButtonPress={this.onBackArrowClick.bind(this)}
@@ -84,7 +79,7 @@ class SavingPreferences extends Component {
             {body}
           </Content>
         </ImageBackground>
-      </Container>
+      </View>
     );
   }
 }

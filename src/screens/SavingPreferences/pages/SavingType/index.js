@@ -1,50 +1,20 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { TouchableOpacity, Image } from "react-native";
-import { LinearGradient } from "expo";
 import {
   View,
-  Text,
-  Card
-} from "native-base";
+  TouchableOpacity,
+  Text
+} from "react-native";
+import { LinearGradient } from "expo";
 
 import SpecialButton from "../../../../components/SpecialButton";
 import Dots from "../../../../components/Dots";
 
+import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
+import colors from "../../../../theme/colors";
 
-const colors = require("../../../../theme/colors");
-
-const tagAutoBg = require("../../../../../assets/Icons/Tags/auto.png");
-const tagManualBg = require("../../../../../assets/Icons/Tags/manual.png");
-
-const SAVING_TYPES = [
-  {
-    name: "Thrive Flex",
-    displayName: "THRIVE FLEX",
-    tag: "AUTOMATIC",
-    tagBgImage: tagAutoBg,
-    description: "We will automatically find spare change based on your income/spending and save for you.",
-    footer: "Optimal for freelance/part-time workers",
-    styles: {
-      headerStyle: styles.blueHeader,
-      footerStyle: styles.blueFooter
-    }
-  },
-  {
-    name: "Thrive Fixed",
-    displayName: "THRIVE FIXED",
-    tag: "MANUAL",
-    tagBgImage: tagManualBg,
-    description: "You set a recurring amount that will be withdrawn on a regular basis.",
-    footer: "Optimal for steady earners",
-    styles: {
-      headerStyle: styles.greenHeader,
-      footerStyle: styles.greenFooter
-    }
-  }
-];
-
+import SAVING_TYPES from "./constants";
 
 class SavingType extends Component {
   constructor(props) {
@@ -55,29 +25,25 @@ class SavingType extends Component {
     };
 
     this.next = this.next.bind(this);
-    this.renderSavingType = this.renderSavingType.bind(this);
+    this.renderType = this.renderType.bind(this);
   }
 
   next() {
     this.props.save({savingType: this.state.savingType});
   }
 
-  typeSelected(savingType: string) {
+  typeSelected(savingType) {
     this.setState({ savingType });
   }
 
-  renderSavingType(type: object) {
-    const { name, displayName, tag, tagBgImage, description, footer, styles: { headerStyle, footerStyle } } = type;
+  renderType(type, index) {
+    const { name, displayName, tag, description, footer, styles: { headerStyle, footerStyle } } = type;
     const { savingType } = this.state;
 
     const notSelected = savingType && savingType !== name;
 
     let body =
-      <TouchableOpacity
-        style={styles.savingTypeTouchable}
-        activeOpacity={0.6}
-        onPress={() => this.typeSelected(name)}
-      >
+      <TouchableOpacity style={styles.savingTypeTouchable} activeOpacity={0.6} onPress={() => this.typeSelected(name)}>
         <Text style={[headerStyle, (notSelected && styles.disabledType)]}>{displayName}</Text>
         <Text style={[styles.bodyText, (notSelected && styles.disabledType)]}>{description}</Text>
         <Text style={[footerStyle, (notSelected && styles.disabledType)]}>{footer}</Text>
@@ -85,40 +51,41 @@ class SavingType extends Component {
 
     if (savingType === name) {
       body =
-        <LinearGradient
-          colors={colors.blueGreenGradient.colors}
-          style={styles.borderGradient}
-        >
-          {body}
-        </LinearGradient>;
+      <LinearGradient colors={colors.blueGreenGradient.colors} style={styles.borderGradient}>
+        {body}
+      </LinearGradient>;
     }
 
     return (
-      <Card style={styles.savingTypeCard} key={name}>
+      <View style={[styles.savingTypeContainer, globalStyles.shadow, (index && styles.topPadder)]} key={name}>
         {body}
-        <Image source={tagBgImage} style={[styles.tagGradient, (notSelected && styles.disabledType)]}>
+        <LinearGradient colors={colors.blueGreenGradient.colors} style={[styles.tagGradient, (notSelected && styles.disabledType)]}>
           <Text style={styles.tagText}>{tag}</Text>
-        </Image>
-      </Card>
+        </LinearGradient>
+      </View>
     );
   }
 
+  renderSavingTypes() {
+    return SAVING_TYPES.map(this.renderType);
+  }
+
   render() {
-    const body = SAVING_TYPES.map(this.renderSavingType);
+    const { showDots, reducer: { isLoading } } = this.props;
 
     return (
-      <Card style={styles.container}>
-        {this.props.showDots && <Dots step={2} />}
+      <View style={[styles.container, globalStyles.shadow]}>
+        {showDots && <Dots step={2} />}
 
-        <Text style={styles.labelText}>HOW WOULD YOU LIKE TO SAVE?</Text>
+        <Text style={[styles.labelText, (showDots && styles.topPadder)]}>HOW WOULD YOU LIKE TO SAVE?</Text>
         <Text style={styles.secondaryText}>You can come back and update this later.</Text>
 
         <View style={styles.typesContainer}>
-          {body}
+          {this.renderSavingTypes()}
         </View>
 
-        <SpecialButton loading={this.props.reducer.isLoading} onClick={this.next} enabled={this.state.savingType ? true : false} />
-      </Card>
+        <SpecialButton loading={isLoading} onClick={this.next} enabled={this.state.savingType ? true : false} />
+      </View>
     );
   }
 }

@@ -22,7 +22,7 @@ import colors from "../../theme/colors";
 import { required, maxLength15, minLength8, alphaNumeric, email } from "../../globals/validators";
 
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
-const logo = require("../../../assets/Logo/white-large.png");
+const logo = require("../../../assets/Logo/white.png");
 
 class LoginForm extends Component {
   textInput;

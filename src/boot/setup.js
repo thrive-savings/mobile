@@ -39,9 +39,10 @@ export default class Setup extends Component {
       // Backgrounds
       require("../../assets/Backgrounds/BackgroundAccount.png"),
       require("../../assets/Backgrounds/BackgroundFull.png"),
+
       // Logos
       require("../../assets/Logo/white.png"),
-      require("../../assets/Logo/white-large.png"),
+
       // Goals
       require("../../assets/Goals/Automobile/bitmap.png"),
       require("../../assets/Goals/Debt/bitmap.png"),
@@ -58,10 +59,10 @@ export default class Setup extends Component {
       require("../../assets/Goals/Wedding/bitmap.png"),
 
       // Work Types
-      require("../../assets/WorkTypes/Contract.png"),
-      require("../../assets/WorkTypes/Fulltime.png"),
-      require("../../assets/WorkTypes/Parttime.png"),
-      require("../../assets/WorkTypes/Sharing.png"),
+      require("../../assets/WorkTypes/Contract/bitmap.png"),
+      require("../../assets/WorkTypes/Fulltime/bitmap.png"),
+      require("../../assets/WorkTypes/Parttime/bitmap.png"),
+      require("../../assets/WorkTypes/Sharing/bitmap.png"),
     ]);
     await Promise.all([...imageAssets]);
 

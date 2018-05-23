@@ -17,7 +17,7 @@ export default StyleSheet.create({
   // Shadow style
   shadow: {
     // Android
-    elevation: 2,
+    elevation: 2.5,
     // IOS
     shadowColor: colors.charcoal,
     shadowOpacity: 0.3,
