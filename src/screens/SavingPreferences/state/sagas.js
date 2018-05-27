@@ -1,4 +1,4 @@
-import { SET_WORK_TYPE_URL, SET_SAVING_TYPE_URL, SET_SAVING_DETAILS_URL } from "./constants";
+import { SET_WORK_TYPE_URL, SET_SAVING_TYPE_URL, SET_SAVING_DETAILS_URL, PREFERENCES_INITIAL_SET_DONE } from "./constants";
 import { put, takeEvery } from "redux-saga/effects";
 import { requestApi } from "../../../globals/requestApi";
 
@@ -20,4 +20,10 @@ const setSavingDetailsSaga = function * () {
   });
 };
 
-export { setWorkTypeSaga, setSavingTypeSaga, setSavingDetailsSaga };
+const preferencesInitialSetDoneSaga = function * () {
+  yield takeEvery(`${PREFERENCES_INITIAL_SET_DONE}_SUBMIT`, function * () {
+    yield put(requestApi(`${PREFERENCES_INITIAL_SET_DONE}`));
+  });
+};
+
+export { setWorkTypeSaga, setSavingTypeSaga, setSavingDetailsSaga, preferencesInitialSetDoneSaga };

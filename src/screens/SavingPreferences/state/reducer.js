@@ -1,4 +1,4 @@
-import { CHANGE_STEP, SET_WORK_TYPE_URL, SET_SAVING_TYPE_URL, SET_SAVING_DETAILS_URL } from "./constants";
+import { CHANGE_STEP, SET_WORK_TYPE_URL, SET_SAVING_TYPE_URL, SET_SAVING_DETAILS_URL, PREFERENCES_INITIAL_SET_DONE } from "./constants";
 const initialState = {
   data: {},
   values: {
@@ -11,6 +11,8 @@ const initialState = {
   isSettingWorkType: false,
   isSettingSavingType: false,
   isSettingSavingDetails: false,
+  isSettingDone: false,
+  initialSetDone: false,
   error: false,
   errorMessage: "",
   step: 0
@@ -116,6 +118,31 @@ export default function savingPreferencesReducer(state = initialState, action) {
         ...state,
         isLoading: false,
         isSettingSavingDetails: false,
+        error: true,
+        errorMessage: action.error
+      };
+
+    // Initial Set Done cases
+    case `${PREFERENCES_INITIAL_SET_DONE}_SUBMIT`:
+      return {
+        ...state,
+        isLoading: true,
+        isSettingDone: true
+      };
+    case `${PREFERENCES_INITIAL_SET_DONE}_SUCCEED`:
+      return {
+        ...state,
+        isLoading: false,
+        isSettingDone: false,
+        initialSetDone: true,
+        error: false,
+        errorMessage: ""
+      };
+    case `${PREFERENCES_INITIAL_SET_DONE}_FAIL`:
+      return {
+        ...state,
+        isLoading: false,
+        isSettingDone: false,
         error: true,
         errorMessage: action.error
       };

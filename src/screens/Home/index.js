@@ -70,10 +70,22 @@ class Home extends Component {
   }
 
   renderNotifications() {
-    const { isSeeingBonus, userData: { notifications } } = this.props;
+    const {
+      isSeeingBonus,
+      isSettingPreferencesDone,
+      preferencesInitialSetDone,
+      userData: { notifications }
+    } = this.props;
+
     return NOTIFICATION_TYPES.map(({ type, title, getDescription, icon }) => {
       if (type === "EmployerBonus" && notifications.bonus <= 0) { return; }
-      const description = type === "EmployerBonus" ? getDescription(getDollarString(notifications.bonus)) : getDescription();
+      else if (type === "SavingPreferences" && (preferencesInitialSetDone || notifications.savingPreferencesSet)) { return; }
+
+      const description =
+        type === "EmployerBonus"
+          ? isSeeingBonus ? "Dismissing ... " : getDescription(getDollarString(notifications.bonus))
+          : isSettingPreferencesDone ? "Setting up ..." : getDescription();
+
       return (
         <TouchableOpacity
           key={type} activeOpacity={0.6} style={styles.notificationHolder}
@@ -172,6 +184,8 @@ function mapStateToProps (state) {
   return {
     userData: state.authReducer.data.authorized,
     isSeeingBonus: state.authReducer.isSeeingBonus,
+    isSettingPreferencesDone: state.savingPreferencesReducer.isSettingDone,
+    preferencesInitialSetDone: state.savingPreferencesReducer.initialSetDone,
     goalsReducer: state.goalsReducer
   };
 }

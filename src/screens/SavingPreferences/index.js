@@ -9,7 +9,7 @@ import Header from "../../components/Header";
 import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
 
-import { changeStep, setWorkType, setSavingType, setSavingDetails } from "./state/actions";
+import { changeStep, setWorkType, setSavingType, setSavingDetails, preferencesInitialSetDone } from "./state/actions";
 
 import WorkType from "./pages/WorkType";
 import SavingType from "./pages/SavingType";
@@ -62,7 +62,11 @@ class SavingPreferences extends Component {
             />;
         break;
       case 3:
-        body = <AllSet navigation={this.props.navigation}/>;
+        body =
+          <AllSet
+            navigation={this.props.navigation}
+            save={this.props.preferencesInitialSetDone}
+          />;
         break;
     }
 
@@ -102,7 +106,8 @@ function mapDispatchToProps(dispatch) {
     changeStep: (payload = { step: 0 }) => dispatch(changeStep(payload)),
     setWorkType: (payload = {}) => dispatch(setWorkType(payload)),
     setSavingType: (payload = {}) => dispatch(setSavingType(payload)),
-    setSavingDetails: (payload = {}) => dispatch(setSavingDetails(payload))
+    setSavingDetails: (payload = {}) => dispatch(setSavingDetails(payload)),
+    preferencesInitialSetDone: () => dispatch(preferencesInitialSetDone())
   };
 }
 

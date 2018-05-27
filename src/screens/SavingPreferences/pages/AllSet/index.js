@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Image } from "react-native";
-import {
-  Text,
-  Card
-} from "native-base";
+import { Image, Text } from "react-native";
+import { Card } from "native-base";
 
 import SpecialButton from "../../../../components/SpecialButton";
 import Dots from "../../../../components/Dots";
@@ -13,17 +10,15 @@ import styles from "./styles";
 
 const thriveBotIcon = require("../../../../../assets/Icons/ThriveBot/thriveBot.png");
 
-type Props = {
-  next: () => void
-};
 class AllSet extends Component {
-  constructor(props: Props) {
+  constructor(props) {
     super(props);
 
     this.next = this.next.bind(this);
   }
 
   next() {
+    this.props.save();
     this.props.navigation.navigate("Home");
   }
 
