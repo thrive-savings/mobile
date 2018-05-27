@@ -77,13 +77,19 @@ class Home extends Component {
       userData: { notifications }
     } = this.props;
 
+    let notifPreferencesSet = false, notifBonus = 0;
+    if (notifications && notifications.savingPreferencesSet) {
+      notifPreferencesSet = notifications.savingPreferencesSet;
+      notifBonus = notifications.bonus;
+    }
+
     return NOTIFICATION_TYPES.map(({ type, title, getDescription, icon }) => {
-      if (type === "EmployerBonus" && notifications.bonus <= 0) { return; }
-      else if (type === "SavingPreferences" && (preferencesInitialSetDone || notifications.savingPreferencesSet)) { return; }
+      if (type === "EmployerBonus" && notifBonus <= 0) { return; }
+      else if (type === "SavingPreferences" && (preferencesInitialSetDone || notifPreferencesSet)) { return; }
 
       const description =
         type === "EmployerBonus"
-          ? isSeeingBonus ? "Dismissing ... " : getDescription(getDollarString(notifications.bonus))
+          ? isSeeingBonus ? "Dismissing ... " : getDescription(getDollarString(notifBonus))
           : isSettingPreferencesDone ? "Setting up ..." : getDescription();
 
       return (

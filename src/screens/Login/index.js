@@ -132,7 +132,7 @@ class LoginForm extends Component {
 
               <View style={globalStyles.bottomContainer}>
                 <Text style={globalStyles.bottomLabelText}>Don't have an account?</Text>
-                <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate("SignUp")}>
+                <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate("SignUp")} hitSlop={{top: 10, bottom: 10, left: 20, right: 20}}>
                   <Text style={globalStyles.bottomBtnText}>Sign Up.</Text>
                 </TouchableOpacity>
               </View>

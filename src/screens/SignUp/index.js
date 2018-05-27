@@ -45,7 +45,7 @@ class SignUp extends Component {
           {body}
           <View style={globalStyles.bottomContainer}>
             <Text style={globalStyles.bottomLabelText}>Already have an account?</Text>
-            <TouchableOpacity activeOpacity={0.6} onPress={() => this.props.navigation.navigate("Login")}>
+            <TouchableOpacity activeOpacity={0.6} onPress={() => this.props.navigation.navigate("Login")} hitSlop={{top: 10, bottom: 10, left: 20, right: 20}}>
               <Text style={globalStyles.bottomBtnText}>Log In.</Text>
             </TouchableOpacity>
           </View>
