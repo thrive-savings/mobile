@@ -1,8 +1,9 @@
-import { REQUEST_URL, UPDATE_AUTH_DATA, UPDATE_ACCOUNT_DATA, UPDATE_AVATAR } from "./constants";
+import { REQUEST_URL, GET_UPDATES, BONUS_NOTIFICATION_SEEN, UPDATE_AUTH_DATA, UPDATE_ACCOUNT_DATA, UPDATE_AVATAR } from "./constants";
 const initialState = {
   data: {},
   avatar: undefined,
   isLoading: false,
+  isSeeingBonus: false,
   error: false,
   errorMessage: ""
 };
@@ -40,7 +41,7 @@ export default function authReducer (state = initialState, action) {
         avatar: newAvatar
       };
 
-    //Server call cases
+    //Log In cases
     case `${REQUEST_URL}_SUBMIT`:
       return {
         ...state,
@@ -60,6 +61,52 @@ export default function authReducer (state = initialState, action) {
       return {
         ...state,
         isLoading: false,
+        error: true,
+        errorMessage: action.error
+      };
+
+    //Get Updates cases
+    case `${GET_UPDATES}_SUBMIT`:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case `${GET_UPDATES}_SUCCEED`:
+      const { payload: { data: getUpdatesData } } = action;
+      return {
+        ...state,
+        data: getUpdatesData,
+        isLoading: false,
+        error: false,
+        errorMessage: ""
+      };
+    case `${GET_UPDATES}_FAIL`:
+      return {
+        ...state,
+        isLoading: false,
+        error: true,
+        errorMessage: action.error
+      };
+
+    //Bonus Notification Seen cases
+    case `${BONUS_NOTIFICATION_SEEN}_SUBMIT`:
+      return {
+        ...state,
+        isSeeingBonus: true
+      };
+    case `${BONUS_NOTIFICATION_SEEN}_SUCCEED`:
+      const { payload: { data: bonusNotificationSeenData } } = action;
+      return {
+        ...state,
+        data: bonusNotificationSeenData,
+        isSeeingBonus: false,
+        error: false,
+        errorMessage: ""
+      };
+    case `${BONUS_NOTIFICATION_SEEN}_FAIL`:
+      return {
+        ...state,
+        isSeeingBonus: false,
         error: true,
         errorMessage: action.error
       };

@@ -5,7 +5,8 @@ import {
   Text,
   TouchableOpacity
 } from "react-native";
-import { ImagePicker } from "expo";
+import { Toast } from "native-base";
+import { ImagePicker, Permissions } from "expo";
 import { connect } from "react-redux";
 
 import styles from "./styles";
@@ -47,23 +48,43 @@ class ChangePhotoModal extends Component {
   }
 
   async takePhoto() {
-    const pickerResult = await ImagePicker.launchCameraAsync({
-      exif: true,
-      base64: true,
-      allowsEditing: true
-    });
-
-    this.handleImagePicked(pickerResult);
+    const { status } = await Permissions.askAsync(Permissions.CAMERA);
+    if (status === "granted") {
+      const pickerResult = await ImagePicker.launchCameraAsync({
+        exif: true,
+        base64: true,
+        allowsEditing: true
+      });
+      this.handleImagePicked(pickerResult);
+    } else {
+      Toast.show({
+        text: "Camera Permission not granted.",
+        duration: 2500,
+        position: "top",
+        type: "danger",
+        textStyle: { textAlign: "center" }
+      });
+    }
   }
 
   async chooseFromLibrary() {
-    const pickerResult = await ImagePicker.launchImageLibraryAsync({
-      exif: true,
-      base64: true,
-      allowsEditing: true
-    });
-
-    this.handleImagePicked(pickerResult);
+    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    if (status === "granted") {
+      const pickerResult = await ImagePicker.launchImageLibraryAsync({
+        exif: true,
+        base64: true,
+        allowsEditing: true
+      });
+      this.handleImagePicked(pickerResult);
+    } else {
+      Toast.show({
+        text: "Camera Roll Permission not granted.",
+        duration: 2500,
+        position: "top",
+        type: "danger",
+        textStyle: { textAlign: "center" }
+      });
+    }
   }
 
   renderContent() {

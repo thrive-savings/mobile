@@ -6,7 +6,7 @@ import { persistStore } from "redux-persist";
 import persistedReducer from "../reducers";
 
 import { requestApiSaga } from "../globals/requestApi";
-import logInSaga from "../screens/Login/state/sagas";
+import { loginSaga, getUpdatesSaga, bonusNotificationSeenSaga } from "../screens/Login/state/sagas";
 import { signUpSaga, signUpSucceedSaga, verifyReferralCodeSaga } from "../screens/SignUp/state/sagas";
 import { savePhoneSaga, verifyCodeSaga, verifyCodeSucceedSaga, resendCodeSaga } from "../screens/VerifyCode/state/sagas";
 import { passwordRequestSaga, passwordResetSaga } from "../screens/ForgotPassword/state/sagas";
@@ -15,7 +15,7 @@ import { setWorkTypeSaga, setSavingTypeSaga, setSavingDetailsSaga } from "../scr
 import { uploadPhotoSaga, setPhoneSaga, setPhoneSucceedSaga, setEmailSaga, setEmailSucceedSaga, setPasswordSaga, setPasswordSucceedSaga } from "../screens/Profile/state/sagas";
 import { getGoalsSaga, addGoalSaga, updateGoalSaga, deleteGoalSaga } from "../screens/SavingGoals/state/sagas";
 
-export default function configureStore(): any {
+export default function configureStore() {
   const sagaMiddleware = createSagaMiddleware();
 
   const composeEnhancers = composeWithDevTools({
@@ -30,7 +30,9 @@ export default function configureStore(): any {
   const persistor = persistStore(store);
 
   sagaMiddleware.run(requestApiSaga);
-  sagaMiddleware.run(logInSaga);
+  sagaMiddleware.run(loginSaga);
+  sagaMiddleware.run(getUpdatesSaga);
+  sagaMiddleware.run(bonusNotificationSeenSaga);
   sagaMiddleware.run(signUpSaga);
   sagaMiddleware.run(signUpSucceedSaga);
   sagaMiddleware.run(savePhoneSaga);

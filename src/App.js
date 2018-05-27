@@ -21,6 +21,8 @@ import Contact from "./screens/Contact";
 
 import getAuthorized from "./globals/getAuthorized";
 
+import { getUpdates } from "./screens/Login/state/actions";
+
 const Drawer = DrawerNavigator(
   {
     Home: { screen: Home },
@@ -86,6 +88,13 @@ const StackerWithVerifyCode = StackNavigator(
 );
 
 class App extends React.Component {
+  componentWillMount() {
+    const authorized = getAuthorized(this.props.authReducer);
+    if (authorized) {
+      this.props.getUpdates();
+    }
+  }
+
   render() {
     let stacker = <StackerWithLogin />;
 
@@ -114,4 +123,10 @@ function mapStateToProps (state) {
   };
 }
 
-export default connect(mapStateToProps)(App);
+function mapDispatchToProps (dispatch) {
+  return {
+    getUpdates: () => dispatch(getUpdates())
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -19,32 +19,17 @@ import ProgressBar from "../../components/ProgressBar";
 import { getDollarString, getSplitDollarStrings } from "../../globals/helpers";
 import GOAL_CATEGORIES from "../../globals/goalCategories";
 
+import { bonusNotificationSeen } from "../Login/state/actions";
 import { getGoals } from "../SavingGoals/state/actions";
 
 import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
 import colors from "../../theme/colors";
 
+import NOTIFICATION_TYPES from "./constants";
+
 const bg = require("../../../assets/Backgrounds/BackgroundAccount.png");
-const employerBonusIcon = require("../../../assets/Icons/Notifications/EmployerBonus/bitmap.png");
-const savingPreferencesIcon = require("../../../assets/Icons/Notifications/SavingPreferences/bitmap.png");
 const infoIcon = require("../../../assets/Icons/Info/information.png");
-
-
-const NOTIFICATION_TYPES = [
-  {
-    type: "EmployerBonus",
-    title: "EMPLOYER BONUS",
-    description: "Hooray, your employer has contributed $100 to your Rainy Day Fund! Click to dismiss.",
-    icon: employerBonusIcon
-  },
-  {
-    type: "SavingPreferences",
-    title: "SAVING PREFERENCES",
-    description: "Click here to set up how you’d like to save!",
-    icon: savingPreferencesIcon
-  }
-];
 
 class Home extends Component {
   constructor(props) {
@@ -68,6 +53,7 @@ class Home extends Component {
         this.props.navigation.navigate("SavingPreferences");
         break;
       case "EmployerBonus":
+        this.props.bonusNotificationSeen();
         break;
       default:
         break;
@@ -84,7 +70,10 @@ class Home extends Component {
   }
 
   renderNotifications() {
-    return NOTIFICATION_TYPES.map(({ type, title, description, icon }) => {
+    const { isSeeingBonus, userData: { notifications } } = this.props;
+    return NOTIFICATION_TYPES.map(({ type, title, getDescription, icon }) => {
+      if (type === "EmployerBonus" && notifications.bonus <= 0) { return; }
+      const description = type === "EmployerBonus" ? getDescription(getDollarString(notifications.bonus)) : getDescription();
       return (
         <TouchableOpacity
           key={type} activeOpacity={0.6} style={styles.notificationHolder}
@@ -94,7 +83,7 @@ class Home extends Component {
             <Image source={icon} />
             <View style={styles.notificationTextsContainer}>
               <Text style={styles.notificationTitle}>{title}</Text>
-              <Text style={styles.notificationDescription}>{description}</Text>
+              <Text style={styles.notificationDescription}>{isSeeingBonus ? "Dismissing ..." : description}</Text>
             </View>
           </LinearGradient>
         </TouchableOpacity>
@@ -182,6 +171,7 @@ class Home extends Component {
 function mapStateToProps (state) {
   return {
     userData: state.authReducer.data.authorized,
+    isSeeingBonus: state.authReducer.isSeeingBonus,
     goalsReducer: state.goalsReducer
   };
 }
@@ -189,6 +179,7 @@ function mapStateToProps (state) {
 function mapDispatchToProps (dispatch) {
   return {
     getGoals: (payload = {}) => dispatch(getGoals(payload)),
+    bonusNotificationSeen: (payload = {}) => dispatch(bonusNotificationSeen(payload))
   };
 }
 
