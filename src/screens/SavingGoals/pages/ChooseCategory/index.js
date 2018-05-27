@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {
-  View,
+  ScrollView,
   TouchableOpacity,
   Text,
   Image,
@@ -26,9 +26,9 @@ class ChooseCategory extends Component {
     });
 
     return (
-      <View style={styles.categories}>
+      <ScrollView contentContainerStyle={styles.categories} showsVerticalScrollIndicator={false}>
         {goalCategoryViews}
-      </View>
+      </ScrollView>
     );
   }
 }

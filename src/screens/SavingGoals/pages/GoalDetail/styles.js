@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, Platform } from "react-native";
 import colors from "../../../../theme/colors";
 
 const screen = Dimensions.get("window");
@@ -115,8 +115,7 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: "flex-end",
     alignSelf: "center",
-    flexDirection: "row",
-    paddingTop: deviceHeight / 8
+    paddingBottom: 20
   },
   deleteBtnText: {
     color: colors.charcoal,

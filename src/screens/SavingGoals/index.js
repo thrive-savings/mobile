@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import {
   View,
-  ScrollView,
   ImageBackground,
   StatusBar
 } from "react-native";
@@ -105,9 +104,9 @@ class SavingGoals extends Component {
             onButtonPress={this.backArrowPressed.bind(this)}
             button="back" content="text" text={title}
           />
-          <ScrollView contentContainerStyle={styles.contentContainer} showsVerticalScrollIndicator={false}>
+          <View style={styles.contentContainer}>
             {component}
-          </ScrollView>
+          </View>
         </ImageBackground>
       </View>
     );
