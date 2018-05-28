@@ -12,7 +12,7 @@ import { savePhoneSaga, verifyCodeSaga, verifyCodeSucceedSaga, resendCodeSaga } 
 import { passwordRequestSaga, passwordResetSaga } from "../screens/ForgotPassword/state/sagas";
 import { fetchAccountsSaga, setDefaultSaga, updateUserAccountSaga } from "../screens/IntegrateBank/state/sagas";
 import { setWorkTypeSaga, setSavingTypeSaga, setSavingDetailsSaga, preferencesInitialSetDoneSaga } from "../screens/SavingPreferences/state/sagas";
-import { uploadPhotoSaga, setPhoneSaga, setPhoneSucceedSaga, setEmailSaga, setEmailSucceedSaga, setPasswordSaga, setPasswordSucceedSaga } from "../screens/Profile/state/sagas";
+import { uploadPhotoSaga, deletePhotoSaga, setPhoneSaga, setPhoneSucceedSaga, setEmailSaga, setEmailSucceedSaga, setPasswordSaga, setPasswordSucceedSaga } from "../screens/Profile/state/sagas";
 import { getGoalsSaga, addGoalSaga, updateGoalSaga, deleteGoalSaga } from "../screens/SavingGoals/state/sagas";
 
 export default function configureStore() {
@@ -50,6 +50,7 @@ export default function configureStore() {
   sagaMiddleware.run(setSavingDetailsSaga);
   sagaMiddleware.run(preferencesInitialSetDoneSaga);
   sagaMiddleware.run(uploadPhotoSaga);
+  sagaMiddleware.run(deletePhotoSaga);
   sagaMiddleware.run(setPhoneSaga);
   sagaMiddleware.run(setPhoneSucceedSaga);
   sagaMiddleware.run(setEmailSaga);

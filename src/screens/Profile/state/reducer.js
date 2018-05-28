@@ -1,7 +1,8 @@
-import { UPLOAD_PHOTO_URL, SET_PHONE_URL, SET_EMAIL_URL, SET_PASSWORD_URL } from "./constants";
+import { UPLOAD_PHOTO_URL, DELETE_PHOTO_URL, SET_PHONE_URL, SET_EMAIL_URL, SET_PASSWORD_URL } from "./constants";
 const initialState = {
   data: {},
   uploadedAvatar: undefined,
+  deletedAvatar: false,
   isLoading: false,
   isSettingPhone: false,
   isSettingEmail: false,
@@ -17,7 +18,8 @@ export default function profileReducer(state = initialState, action) {
     case `${UPLOAD_PHOTO_URL}_SUBMIT`:
       return {
         ...state,
-        isLoading: true
+        isLoading: true,
+        deletedAvatar: false
       };
     case `${UPLOAD_PHOTO_URL}_SUCCEED`:
       const { payload: { avatar: newAvatar } } = action;
@@ -33,6 +35,31 @@ export default function profileReducer(state = initialState, action) {
       return {
         ...state,
         isLoading: false,
+        error: true,
+        errorMessage: action.error
+      };
+
+    // Delete Photo cases
+    case `${DELETE_PHOTO_URL}_SUBMIT`:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case `${DELETE_PHOTO_URL}_SUCCEED`:
+      return {
+        ...state,
+        uploadedAvatar: undefined,
+        deletedAvatar: true,
+        isLoading: false,
+        step: 1,
+        error: false,
+        errorMessage: ""
+      };
+    case `${DELETE_PHOTO_URL}_FAIL`:
+      return {
+        ...state,
+        isLoading: false,
+        deletedAvatar: false,
         error: true,
         errorMessage: action.error
       };

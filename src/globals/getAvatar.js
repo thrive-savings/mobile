@@ -1,5 +1,5 @@
 const getAvatar = (authReducer, profileReducer) => {
-  if (profileReducer.uploadedAvatar) {
+  if (profileReducer.uploadedAvatar || profileReducer.deletedAvatar) {
     return profileReducer.uploadedAvatar;
   }
 

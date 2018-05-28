@@ -11,7 +11,7 @@ import { connect } from "react-redux";
 
 import styles from "./styles";
 
-import { uploadPhoto } from "../../state/actions";
+import { uploadPhoto, deletePhoto } from "../../state/actions";
 
 import ModalTemplate from "../../../../components/ModalTemplate";
 
@@ -28,6 +28,8 @@ class ChangePhotoModal extends Component {
     this.handleImagePicked = this.handleImagePicked.bind(this);
     this.takePhoto = this.takePhoto.bind(this);
     this.chooseFromLibrary = this.chooseFromLibrary.bind(this);
+
+    this.deletePhoto = this.deletePhoto.bind(this);
   }
 
   async handleImagePicked(pickerResult) {
@@ -87,12 +89,17 @@ class ChangePhotoModal extends Component {
     }
   }
 
+  deletePhoto() {
+    this.props.deletePhoto();
+    this.props.onClose();
+  }
+
   renderContent() {
     return (
       <View>
         <Text style={styles.regularText}>Change Profile Photo.</Text>
         <View style={styles.optionsContainer}>
-          <TouchableOpacity activeOpacity={0.6} style={styles.optionRow}>
+          <TouchableOpacity activeOpacity={0.6} style={styles.optionRow} onPress={this.deletePhoto}>
             <Text style={[styles.regularText, styles.redText]}>Remove Current Photo</Text>
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={0.6} style={styles.optionRow} onPress={this.takePhoto}>
@@ -130,7 +137,8 @@ ChangePhotoModal.defaultProps = {
 
 function mapDispatchToProps (dispatch) {
   return {
-    uploadPhoto: (payload = {}) => dispatch(uploadPhoto(payload))
+    uploadPhoto: (payload = {}) => dispatch(uploadPhoto(payload)),
+    deletePhoto: () => dispatch(deletePhoto())
   };
 }
 
