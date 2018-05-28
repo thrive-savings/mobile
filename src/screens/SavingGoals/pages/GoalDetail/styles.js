@@ -1,9 +1,8 @@
-import { StyleSheet, Dimensions, Platform } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import colors from "../../../../theme/colors";
 
 const screen = Dimensions.get("window");
 const deviceWidth = screen.width;
-const deviceHeight = screen.height;
 
 export default StyleSheet.create({
   infoBox: {
