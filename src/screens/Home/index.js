@@ -78,7 +78,7 @@ class Home extends Component {
     } = this.props;
 
     let notifPreferencesSet = false, notifBonus = 0;
-    if (notifications && notifications.savingPreferencesSet) {
+    if (notifications) {
       notifPreferencesSet = notifications.savingPreferencesSet;
       notifBonus = notifications.bonus;
     }

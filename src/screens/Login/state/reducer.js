@@ -22,7 +22,6 @@ export default function authReducer (state = initialState, action) {
     case `${UPDATE_ACCOUNT_DATA}`:
       const { payload: { authorized: { account } } } = action;
       const curData = state.data.authorized;
-
       return {
         ...state,
         data: {

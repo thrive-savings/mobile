@@ -20,7 +20,8 @@ const thriveBot = require("../../../../../assets/Icons/ThriveBot/thriveBot.png")
 
 class AuthSuccess extends Component {
   continue() {
-    this.props.updateUserAccount(this.props.integrateBankReducer.data);
+    this.props.updateUserAccount(this.props.integrateBankReducer.defaultAccountData);
+    this.props.next();
   }
 
   render() {

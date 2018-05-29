@@ -161,12 +161,14 @@ class EditGoal extends Component {
       <View style={[styles.container, globalStyles.shadow]}>
         <Image source={GOAL_CATEGORIES[category].icon} />
 
-        <View style={styles.nameContainer}>
+        <TouchableOpacity
+          activeOpacity={0.6} style={styles.nameContainer}
+          onPress={() => this.setState({ showNameEditor: true, showNumPad: false, showPercentPad: false })}
+          hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
+        >
           <Text style={styles.nameText}>{name.toUpperCase()}</Text>
-          <TouchableOpacity activeOpacity={0.6} onPress={() => this.setState({ showNameEditor: true, showNumPad: false, showPercentPad: false })} hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}>
-            <Image source={editIcon} />
-          </TouchableOpacity>
-        </View>
+          <Image source={editIcon} />
+        </TouchableOpacity>
 
         <View style={styles.separator} />
 
@@ -175,7 +177,7 @@ class EditGoal extends Component {
             <Text style={styles.fieldLabel}>Savings Goal:</Text>
           </Left>
           <Right>
-            <TouchableOpacity activeOpacity={0.6} onPress={() => this.setState({ showNumPad : true, showNameEditor: false, showPercentPad: false })} hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}>
+            <TouchableOpacity activeOpacity={0.6} onPress={() => this.setState({ showNumPad : true, showNameEditor: false, showPercentPad: false })}>
               <Text style={styles.fieldButtonText}>{amountDollars}</Text>
             </TouchableOpacity>
           </Right>
