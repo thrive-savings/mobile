@@ -115,7 +115,7 @@ class LoginForm extends Component {
 
               {error && <Text style={globalStyles.formErrorText3}>{errorText}</Text>}
 
-              <TouchableOpacity activeOpacity={0.6} style={[styles.loginBtn, globalStyles.shadow]} onPress={this.fastLogin.bind(this)}>
+              <TouchableOpacity activeOpacity={0.6} style={[styles.loginBtn, globalStyles.shadow]} onPress={this.login.bind(this)}>
                 {
                   isLoading ?
                     <Spinner color={colors.blue} /> :

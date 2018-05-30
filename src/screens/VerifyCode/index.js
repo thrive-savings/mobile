@@ -34,13 +34,7 @@ const sms = require("../../../assets/Icons/Sms/sms.png");
 
 
 class VerifyCodeForm extends Component {
-  constructor(props) {
-    super(props);
-
-    this.submit = this.submit.bind(this);
-  }
-
-  textInput: any;
+  textInput;
   renderInput({ input, label, type, meta: { touched, error, warning } }) {
     return (
       <View>
@@ -71,7 +65,9 @@ class VerifyCodeForm extends Component {
   }
 
   submit() {
-    if (this.props.valid) {
+    console.log("Calling Submit");
+    console.log(this.props.verifyCodeReducer);
+    if (!this.props.verifyCodeReducer.isSetting && this.props.valid) {
       this.props.savePhone(this.props.values);
     } else {
       Toast.show({
@@ -114,7 +110,7 @@ class VerifyCodeForm extends Component {
                 validate={[numeric, required]}
               />
               {setError && <Text style={globalStyles.formErrorText3}>{errorText}</Text>}
-              <SpecialButton loading={isSetting} text={"SUBMIT"} onClick={this.submit}/>
+              <SpecialButton loading={isSetting} text={"SUBMIT"} onClick={this.submit.bind(this)}/>
               <VerifyCodeModal />
             </Card>
           </Content>

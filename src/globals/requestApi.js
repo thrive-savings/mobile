@@ -40,8 +40,6 @@ export const requestApiSaga = function * () {
     const { payload, error } = yield call(request, method, url, params, config);
 
     const type = `${url}_${payload ? "SUCCEED" : "FAIL"}`;
-    // TODO: get Flinks response codes
-
     yield put({ error, meta, payload, type });
-  })
+  });
 };

@@ -8,7 +8,7 @@ import persistedReducer from "../reducers";
 import { requestApiSaga } from "../globals/requestApi";
 import { loginSaga, getUpdatesSaga, bonusNotificationSeenSaga } from "../screens/Login/state/sagas";
 import { signUpSaga, signUpSucceedSaga, verifyReferralCodeSaga } from "../screens/SignUp/state/sagas";
-import { savePhoneSaga, verifyCodeSaga, verifyCodeSucceedSaga, resendCodeSaga } from "../screens/VerifyCode/state/sagas";
+import { verifyCodeSaga, verifyCodeSucceedSaga, resendCodeSaga } from "../screens/VerifyCode/state/sagas";
 import { passwordRequestSaga, passwordResetSaga } from "../screens/ForgotPassword/state/sagas";
 import { fetchAccountsSaga, setDefaultSaga, updateUserAccountSaga } from "../screens/IntegrateBank/state/sagas";
 import { setWorkTypeSaga, setSavingTypeSaga, setSavingDetailsSaga, preferencesInitialSetDoneSaga } from "../screens/SavingPreferences/state/sagas";
@@ -35,7 +35,6 @@ export default function configureStore() {
   sagaMiddleware.run(bonusNotificationSeenSaga);
   sagaMiddleware.run(signUpSaga);
   sagaMiddleware.run(signUpSucceedSaga);
-  sagaMiddleware.run(savePhoneSaga);
   sagaMiddleware.run(verifyReferralCodeSaga);
   sagaMiddleware.run(verifyCodeSaga);
   sagaMiddleware.run(verifyCodeSucceedSaga);
