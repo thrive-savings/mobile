@@ -68,7 +68,7 @@ class Faq extends Component {
     });
 
     return (
-      <View style={[styles.contentBox, globalStyles.shadow]}>
+      <View style={styles.contentBox}>
         <Text style={styles.labelText}>What do you need help with?</Text>
         <View style={styles.categories}>
           {body}

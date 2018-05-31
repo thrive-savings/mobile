@@ -4,7 +4,6 @@ import { TouchableOpacity, Text } from "react-native";
 import { LinearGradient } from "expo";
 import { Spinner } from "native-base";
 
-import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
 import colors from "../../theme/colors";
 
@@ -13,7 +12,7 @@ class SpecialButton extends Component {
     let text = this.props.text ? this.props.text : "CONTINUE";
 
     return (
-      <TouchableOpacity activeOpacity={0.6} onPress={() => this.props.onClick()} style={[styles.enabledButton, globalStyles.shadow]}>
+      <TouchableOpacity activeOpacity={0.6} onPress={() => this.props.onClick()} style={styles.enabledButton}>
         <LinearGradient
           colors={colors.blueGreenGradient.colors}
           style={styles.enabledButtonGradient}

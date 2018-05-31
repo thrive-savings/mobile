@@ -218,7 +218,7 @@ class ForgotPasswordForm extends Component {
         <ImageBackground source={bg} style={globalStyles.background}>
           <Header navigation={this.props.navigation} button="back" onButtonPress={this.goToLogin} />
           <Content showsVerticalScrollIndicator={false} style={styles.contentContainer}>
-            <View style={[styles.contentView, globalStyles.shadow]}>
+            <View style={styles.contentView}>
               <Text style={styles.labelText}>RESET PASSWORD</Text>
               {
                 done

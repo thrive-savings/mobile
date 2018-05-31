@@ -75,7 +75,7 @@ class SavingType extends Component {
     const { showDots, reducer: { isLoading } } = this.props;
 
     return (
-      <View style={[styles.container, globalStyles.shadow]}>
+      <View style={styles.container}>
         {showDots && <Dots step={2} />}
 
         <Text style={[styles.labelText, (showDots && styles.topPadder)]}>HOW WOULD YOU LIKE TO SAVE?</Text>

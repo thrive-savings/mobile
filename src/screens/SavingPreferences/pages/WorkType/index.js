@@ -76,7 +76,7 @@ class WorkType extends Component {
     const { showDots, reducer: { isLoading } } = this.props;
 
     return (
-      <View style={[styles.container, globalStyles.shadow]}>
+      <View style={styles.container}>
         {this.props.showDots && <Dots step={1} />}
 
         <Text style={[styles.labelText, (showDots && styles.topPadder)]}>WHAT TYPE OF WORK DO YOU DO?</Text>

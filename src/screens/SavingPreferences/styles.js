@@ -1,11 +1,9 @@
-import { StyleSheet, Dimensions } from "react-native";
-
-const deviceWidth = Dimensions.get("window").width;
+import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   contentContainer: {
     flex: 0.7,
-    width: deviceWidth - 50,
+    paddingHorizontal: 25,
     alignSelf: "center"
   }
 });

@@ -13,7 +13,6 @@ import getFrequencySetterModalContent from "../../../../components/OptionSetter"
 
 import { getDollarString } from "../../../../globals/helpers";
 
-import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
 import { FREQUENCY_TYPES, getFrequencyIndex } from "./constants";
 
@@ -66,7 +65,7 @@ class FixedPlan extends Component {
 
   render() {
     return (
-      <View style={[styles.container, globalStyles.shadow]}>
+      <View style={styles.container}>
         {this.props.showDots && <Dots step={3} />}
 
         <Text style={[styles.labelText, (this.props.showDots && styles.topPadder)]}>HOW MUCH WOULD YOU LIKE TO SAVE?</Text>

@@ -5,7 +5,6 @@ import { View, Text } from "react-native";
 import SpecialButton from "../../../../components/SpecialButton";
 import Dots from "../../../../components/Dots";
 
-import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
 
 class FlexPlan extends Component {
@@ -21,7 +20,7 @@ class FlexPlan extends Component {
 
   render() {
     return (
-      <View style={[styles.container, globalStyles.shadow]}>
+      <View style={styles.container}>
         <Dots step={3} />
 
         <Text style={styles.labelText}>HOW MUCH WOULD YOU LIKE TO SAVE?</Text>
