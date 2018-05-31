@@ -22,6 +22,7 @@ export default StyleSheet.create({
     height: 30,
     width: 120,
     alignSelf: "center",
+    marginBottom: 10
   },
   input: {
     flex: 1,
@@ -55,6 +56,12 @@ export default StyleSheet.create({
     paddingBottom: 20,
     letterSpacing: 0.2,
     lineHeight: 22
+  },
+  formErrorText1: {
+    fontSize: 12,
+    color: colors.error,
+    textAlign: "center",
+    top: -7
   },
 
   // Create Account Button styles

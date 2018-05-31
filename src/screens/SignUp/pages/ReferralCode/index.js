@@ -6,7 +6,7 @@ import {
   Text,
   TextInput
 } from "react-native";
-import { Icon, Spinner, Toast } from "native-base";
+import { Spinner, Toast } from "native-base";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 
@@ -34,17 +34,9 @@ class ReferralCodeForm extends Component {
             underlineColorAndroid="transparent"
             {...input}
           />
-          {touched && error
-            ? <Icon
-                active
-                style={globalStyles.formErrorIcon}
-                onPress={() => this.textInput.clear()}
-                name="close"
-              />
-            : <Text />}
         </View>
         {touched && error
-          ? <Text style={globalStyles.formErrorText1}>
+          ? <Text style={styles.formErrorText1}>
               {error}
             </Text>
           : <Text style={globalStyles.formErrorText2}>error here</Text>}

@@ -7,7 +7,8 @@ import {
   ImageBackground,
   Text,
   TextInput,
-  StatusBar
+  StatusBar,
+  Keyboard
 } from "react-native";
 import { Icon, Toast, Spinner } from "native-base";
 import { connect } from "react-redux";
@@ -25,6 +26,31 @@ const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
 const logo = require("../../../assets/Logo/white.png");
 
 class LoginForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showFooter: true
+    };
+  }
+
+  componentDidMount () {
+    this.keyboardDidShowListener = Keyboard.addListener("keyboardDidShow", this._keyboardDidShow.bind(this));
+    this.keyboardDidHideListener = Keyboard.addListener("keyboardDidHide", this._keyboardDidHide.bind(this));
+  }
+
+  componentWillUnmount () {
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
+  }
+
+  _keyboardDidShow () {
+    this.setState({showFooter: false});
+  }
+
+  _keyboardDidHide () {
+    this.setState({showFooter: true});
+  }
+
   textInput;
 
   renderInput({ input, label, type, meta: { touched, error, warning } }) {
@@ -121,17 +147,22 @@ class LoginForm extends Component {
                 }
               </TouchableOpacity>
 
-
-              <TouchableOpacity style={styles.forgotPasswordContainer} activeOpacity={0.6} onPress={() => navigation.navigate("ForgotPassword")} hitSlop={{top: 10, bottom: 10, left: 20, right: 20}}>
-                <Text uppercase={false} style={styles.forgotPasswordBtnText}>Forgot Password?</Text>
-              </TouchableOpacity>
-
-              <View style={globalStyles.bottomContainer}>
-                <Text style={globalStyles.bottomLabelText}>Don't have an account?</Text>
-                <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.navigate("SignUp")} hitSlop={{top: 10, bottom: 10, left: 20, right: 20}}>
-                  <Text style={globalStyles.bottomBtnText}>Sign Up.</Text>
+              {
+                this.state.showFooter &&
+                <TouchableOpacity style={styles.forgotPasswordContainer} activeOpacity={0.6} onPress={() => navigation.navigate("ForgotPassword")} hitSlop={{top: 10, bottom: 10, left: 20, right: 20}}>
+                  <Text uppercase={false} style={styles.forgotPasswordBtnText}>Forgot Password?</Text>
                 </TouchableOpacity>
-              </View>
+              }
+
+              {
+                this.state.showFooter &&
+                <TouchableOpacity activeOpacity={0.6} style={globalStyles.bottomContainer} onPress={() => navigation.navigate("SignUp")} hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}>
+                  <Text style={globalStyles.bottomLabelText}>
+                    Don't have an account?
+                    <Text style={globalStyles.bottomBtnText}> Sign Up.</Text>
+                  </Text>
+                </TouchableOpacity>
+              }
             </View>
           </View>
         </ImageBackground>

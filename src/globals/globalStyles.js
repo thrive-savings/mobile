@@ -1,8 +1,5 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet } from "react-native";
 import colors from "../theme/colors";
-
-const screen = Dimensions.get("window");
-const deviceWidth = screen.width;
 
 export default StyleSheet.create({
   container: {
@@ -54,20 +51,19 @@ export default StyleSheet.create({
 
   // Bottom Container styles
   bottomContainer: {
-     flex: 1,
-     alignSelf: "center",
-     flexDirection: "row",
-     position: "absolute",
-     bottom: 20,
-     left: (deviceWidth) / 4 + 20
+    alignSelf: "center",
+    position: "absolute",
+    bottom: 20
   },
   bottomLabelText: {
+    alignSelf: "center",
     color: colors.charcoal,
     fontSize: 10,
     fontFamily: "LatoRegular",
     paddingRight: 5
   },
   bottomBtnText: {
+    marginLeft: 20,
     color: colors.blue,
     fontSize: 10,
     fontFamily: "LatoRegular"

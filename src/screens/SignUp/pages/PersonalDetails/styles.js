@@ -12,8 +12,7 @@ const formSpaceBetween = 10;
 const styles = StyleSheet.create({
   formContainer: {
     alignSelf: "center",
-    width: formWidth,
-    marginBottom: 50
+    width: formWidth
   },
   formContent: {
     backgroundColor: "white",
