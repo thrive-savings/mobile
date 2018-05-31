@@ -32,13 +32,14 @@ class AuthenticateBank extends Component {
   }
 
   render() {
+    const companyID = this.props.companyID;
     return (
       <View style={[styles.container, globalStyles.shadow]}>
         <Dots step={2} count={3} />
 
         <WebView
           source={{
-            uri: `${FlinksURL}/?demo=true&waitSummary=true&stringify=true&backgroundColor=ffffff&foregroundColor1=0089CB&foregroundColor2=414042&redirectUrl=https://google.com`
+            uri: `${FlinksURL}/?${companyID > 0 ? "" : "demo=true&"}waitSummary=true&stringify=true&backgroundColor=ffffff&foregroundColor1=0089CB&foregroundColor2=414042&redirectUrl=https://google.com`
           }}
           onMessage={this.onMessage}
           style={styles.webViewContainer}
@@ -50,10 +51,16 @@ class AuthenticateBank extends Component {
   }
 }
 
+function mapStateToProps (state) {
+  return {
+    companyID: state.signUpReducer.companyID
+  };
+}
+
 function mapDispatchToProps (dispatch) {
   return {
     fetchAccounts: (payload = {}) => dispatch(fetchAccounts(payload))
   };
 }
 
-export default connect(null, mapDispatchToProps)(AuthenticateBank);
+export default connect(mapStateToProps, mapDispatchToProps)(AuthenticateBank);

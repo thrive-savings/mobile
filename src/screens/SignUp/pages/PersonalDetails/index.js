@@ -50,12 +50,15 @@ class PersonalDetails extends Component {
   submit() {
     if (this.props.valid) {
       //Check if other inputs fields are provided
+      let companyID = this.props.signUpReducer.companyID;
+      companyID = companyID > 0 ? companyID : 1;
+
       const { email: userEmail, password, firstName, lastName, unit } = this.props.values;
       const { date, gender, didAgree, address } = this.state;
       if (date && gender && didAgree && Object.keys(address).length > 0) {
         this.props.signUpUser({
           email: userEmail, firstName, lastName, password, date, gender,
-          companyID: this.props.signUpReducer.companyID.toString(),
+          companyID: companyID.toString(),
           address: {
             ...address,
             unit
