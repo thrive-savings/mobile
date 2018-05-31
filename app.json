@@ -1,8 +1,10 @@
 {
 	"expo": {
-		"sdkVersion": "26.0.0",
+		"name": "Thrive Savings",
 		"icon": "./assets/icon.png",
+		"version": "1.0.0",
 		"slug": "thriveapp",
+		"sdkVersion": "26.0.0",
 		"splash": {
 			"image": "./assets/LaunchImages/splash.png",
 			"resizeMode": "cover"
@@ -13,10 +15,10 @@
 			"assetExts": ["ttf"]
 		},
 		"ios": {
-			"bundleIdentifier": "thrivesavings.mobileapp"
+			"bundleIdentifier": "com.thrivesavings.mobileapp"
 		},
 		"android": {
-			"package": "thrivesavings.mobileapp"
+			"package": "com.thrivesavings.mobileapp"
 		},
 		"androidStatusBarColor": "#008cd1",
 		"androidStatusBar": {

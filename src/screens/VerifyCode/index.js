@@ -65,8 +65,6 @@ class VerifyCodeForm extends Component {
   }
 
   submit() {
-    console.log("Calling Submit");
-    console.log(this.props.verifyCodeReducer);
     if (!this.props.verifyCodeReducer.isSetting && this.props.valid) {
       this.props.savePhone(this.props.values);
     } else {

@@ -35,7 +35,6 @@ class PersonalDetails extends Component {
     super(props);
 
     this.submit = this.submit.bind(this);
-    this.fastSubmit = this.fastSubmit.bind(this);
 
     this.addressSelected = this.addressSelected.bind(this);
     this.genderSelected = this.genderSelected.bind(this);
@@ -74,30 +73,6 @@ class PersonalDetails extends Component {
       textStyle: { textAlign: "center" }
     });
   }
-
-  fastSubmit() {
-    const data = {
-      "email": "naib@thrivesavings.com",
-      "firstName": "Naib",
-      "lastName": "Baghirov",
-      "password": "naibferide8",
-      "date": "1993-10-05",
-      "gender": "Male",
-      "companyID": "1",
-      "address": {
-        "city": "Toronto",
-        "country": "Canada",
-        "postalCode": "M5J 3A3",
-        "state": "Ontario",
-        "streetName": "Grand Trunk Crescent",
-        "streetNumber": "19",
-        "unit": "3708",
-      }
-    };
-
-    this.props.signUpUser(data);
-  }
-
 
   // "details" is provided when fetchDetails = true
   addressSelected(data, details) {

@@ -58,10 +58,6 @@ class LoginForm extends Component {
     );
   }
 
-  fastLogin() {
-    this.props.authUser({email: "naib@thrivesavings.com", password: "password"});
-  }
-
   login() {
     if (this.props.valid && this.props.values) {
       this.props.authUser(this.props.values);
