@@ -222,7 +222,6 @@ class PersonalDetails extends Component {
               name="unit"
               component={this.renderInput}
               type="unit"
-              validate={[required]}
             />
           </View>
 

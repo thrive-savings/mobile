@@ -34,14 +34,14 @@ class Contact extends Component {
             <View style={[styles.content, globalStyles.shadow]}>
               <Image source={botIcon} />
               <Text style={styles.descText}>We’re more than happy to help with any questions or feedback you may have.{"\n"}You can chat with ThriveBot and perform basic commands regarding your account.</Text>
-              <SpecialButton text={"TALK TO THRIVEBOT"} onClick={() => Communications.text("6476763323", "Balance")}/>
+              <SpecialButton text={"TALK TO THRIVEBOT"} onClick={() => Communications.text("6476941740", "Balance")}/>
               <Text style={styles.descText}>You can also choose to speak with one of our representatives. Our office hours are <Text style={styles.boldText}> Monday to Friday, 9:00AM - 5:00PM EST.</Text></Text>
               <View style={styles.helpButtonsContainer}>
-                <TouchableOpacity activeOpacity={0.6} style={styles.helpButton} onPress={() => Communications.phonecall("6476763323", true)}>
+                <TouchableOpacity activeOpacity={0.6} style={styles.helpButton} onPress={() => Communications.phonecall("8332433223", true)}>
                   <Image source={phoneIcon} />
                   <Text style={styles.blueText}>CALL</Text>
                 </TouchableOpacity>
-                <TouchableOpacity activeOpacity={0.6} style={styles.helpButton} onPress={() => Communications.email(["help@thrivesavings.com", "naib.baghirov@gmail.com"],null,null,"Help Needed",null)}>
+                <TouchableOpacity activeOpacity={0.6} style={styles.helpButton} onPress={() => Communications.email(["help@thrivesavings.com"],null,null,"Help Needed",null)}>
                   <Image source={emailIcon} />
                   <Text style={styles.blueText}>EMAIL</Text>
                 </TouchableOpacity>
