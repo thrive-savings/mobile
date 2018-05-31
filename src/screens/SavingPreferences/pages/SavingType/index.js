@@ -6,6 +6,7 @@ import {
   Text
 } from "react-native";
 import { LinearGradient } from "expo";
+import { connect } from "react-redux";
 
 import SpecialButton from "../../../../components/SpecialButton";
 import Dots from "../../../../components/Dots";
@@ -99,4 +100,10 @@ SavingType.defaultProps = {
   showDots: true
 };
 
-export default SavingType;
+function mapStateToProps(state) {
+  return {
+    reducer: state.savingPreferencesReducer
+  };
+}
+
+export default connect(mapStateToProps)(SavingType);

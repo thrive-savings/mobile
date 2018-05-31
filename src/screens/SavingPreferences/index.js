@@ -39,14 +39,12 @@ class SavingPreferences extends Component {
       case 0:
         body =
           <WorkType
-            reducer={this.props.savingPreferencesReducer}
             save={this.props.setWorkType}
           />;
         break;
       case 1:
         body =
           <SavingType
-            reducer={this.props.savingPreferencesReducer}
             save={this.props.setSavingType}
           />;
         break;
@@ -58,7 +56,6 @@ class SavingPreferences extends Component {
           : <FixedPlan
               changeStep={this.props.changeStep}
               save={this.props.setSavingDetails}
-              reducer={this.props.savingPreferencesReducer}
             />;
         break;
       case 3:

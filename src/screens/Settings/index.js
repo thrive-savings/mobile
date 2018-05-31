@@ -14,7 +14,6 @@ import Communications from "react-native-communications";
 
 import Header from "../../components/Header";
 import SpecialButton from "../../components/SpecialButton";
-import getAuthorized from "../../globals/getAuthorized";
 
 import WorkType from "../SavingPreferences/pages/WorkType";
 import SavingType from "../SavingPreferences/pages/SavingType";
@@ -74,11 +73,11 @@ class Settings extends Component {
       case "settings":
         return this.renderHome();
       case "workType":
-        return <WorkType showDots={false} reducer={this.props.savingPreferencesReducer} save={this.save} />;
+        return <WorkType showDots={false} save={this.save} />;
       case "savingType":
-        return <SavingType showDots={false} reducer={this.props.savingPreferencesReducer} save={this.save} />;
+        return <SavingType showDots={false} save={this.save} />;
       case "fixedPlan":
-        return <FixedPlan showDots={false} reducer={this.props.savingPreferencesReducer} save={this.save} />;
+        return <FixedPlan showDots={false} save={this.save} />;
       case "linkedBank":
         return this.renderLinkedBank();
       case "legal":
@@ -89,7 +88,7 @@ class Settings extends Component {
   }
 
   renderLinkedBank() {
-    const account = getAuthorized(this.props.authReducer).account;
+    const account = this.props.userData.account;
     let bank = "TD";
     let title = "No Bank Linked";
     if (account) {
@@ -131,13 +130,23 @@ class Settings extends Component {
     const {
       isSettingWorkType, isSettingSavingType, isSettingSavingDetails,
       values: {
-        workType, savingType
+        workType: workTypeSaved,
+        savingType: savingTypeSaved
       }
     } = this.props.savingPreferencesReducer;
 
+    let workType = workTypeSaved, savingType = savingTypeSaved;
+    const userPrefrencesData = this.props.userData.savingPreferences;
+    if (!workType) {
+      workType = userPrefrencesData.workType;
+    }
+    if (!savingType) {
+      savingType = userPrefrencesData.savingType;
+    }
+
     const isSavingDetailsDisabled = savingType === "Thrive Flex" || !savingType;
 
-    const account = getAuthorized(this.props.authReducer).account;
+    const account = this.props.userData.account;
     let title = "No Bank Linked";
     if (account) {
       title = account.title;
@@ -231,7 +240,7 @@ class Settings extends Component {
 
 function mapStateToProps(state) {
   return {
-    authReducer: state.authReducer,
+    userData: state.authReducer.data.authorized,
     savingPreferencesReducer: state.savingPreferencesReducer
   };
 }

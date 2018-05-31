@@ -7,6 +7,7 @@ import {
   Text
 } from "react-native";
 import { LinearGradient } from "expo";
+import { connect } from "react-redux";
 
 import SpecialButton from "../../../../components/SpecialButton";
 import Dots from "../../../../components/Dots";
@@ -100,4 +101,10 @@ WorkType.defaultProps = {
   showDots: true
 };
 
-export default WorkType;
+function mapStateToProps(state) {
+  return {
+    reducer: state.savingPreferencesReducer
+  };
+}
+
+export default connect(mapStateToProps)(WorkType);

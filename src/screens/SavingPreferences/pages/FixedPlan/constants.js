@@ -17,4 +17,13 @@ const FREQUENCY_TYPES = [
   }
 ];
 
-export { FREQUENCY_TYPES };
+const getFrequencyIndex = identifier => {
+  let i = 0;
+  for (const type of FREQUENCY_TYPES) {
+    if (type.identifier === identifier) { break; }
+    i++;
+  }
+  return i;
+};
+
+export { FREQUENCY_TYPES, getFrequencyIndex };

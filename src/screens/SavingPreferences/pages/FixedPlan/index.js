@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { View, TouchableOpacity, Text } from "react-native";
 import { Left, Right } from "native-base";
+import { connect } from "react-redux";
 
 import SpecialButton from "../../../../components/SpecialButton";
 import ModalTemplate from "../../../../components/ModalTemplate";
@@ -10,19 +11,26 @@ import Dots from "../../../../components/Dots";
 import getNumPadModalContent from "../../../../components/NumPad";
 import getFrequencySetterModalContent from "../../../../components/OptionSetter";
 
+import { getDollarString } from "../../../../globals/helpers";
+
 import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
-import { FREQUENCY_TYPES } from "./constants";
+import { FREQUENCY_TYPES, getFrequencyIndex } from "./constants";
 
 
 class FixedPlan extends Component {
   constructor(props) {
     super(props);
 
+    let { values: { fixedContribution: contribution, frequency: frequencyIndex } } = props.reducer;
+    const { savingPreferences: { savingDetails: { fetchFrequency, fixedContribution } } } = props.userData;
+    if (!contribution) { contribution = fixedContribution; }
+    if (!frequencyIndex) { frequencyIndex = fetchFrequency; }
+
     this.state = {
-      contribution: "$20.00",
+      contribution: getDollarString(contribution),
       setContribution: 0,
-      frequencyIndex: 0,
+      frequencyIndex: getFrequencyIndex(frequencyIndex),
       showContributionSetter: false,
       showFrequencySetter: false
     };
@@ -47,10 +55,7 @@ class FixedPlan extends Component {
     let setContribution = this.state.setContribution;
     setContribution = value >= 0 ? setContribution * 10 + value : Math.floor(setContribution / 10);
 
-    let contribution = setContribution / 100;
-    contribution = contribution.toFixed(2);
-    contribution.toLocaleString("en-US", {style: "currency", currency: "USD"});
-    contribution = "$" + contribution;
+    const contribution = getDollarString(setContribution);
 
     this.setState({ setContribution, contribution });
   }
@@ -153,4 +158,11 @@ FixedPlan.defaultProps = {
   showDots: true
 };
 
-export default FixedPlan;
+function mapStateToProps(state) {
+  return {
+    userData: state.authReducer.data.authorized,
+    reducer: state.savingPreferencesReducer
+  };
+}
+
+export default connect(mapStateToProps)(FixedPlan);
