@@ -76,7 +76,7 @@ class VerifyCodeModal extends Component {
               {
                 this.props.verifyCodeReducer.isVerifying
                   ? <Spinner color="white" />
-                  : <Image source={tick} style={styles.enabledButtonIcon} />
+                  : <Image source={tick} />
               }
             </LinearGradient>
           </TouchableOpacity>

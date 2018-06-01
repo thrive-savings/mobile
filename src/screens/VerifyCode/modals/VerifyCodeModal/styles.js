@@ -30,9 +30,6 @@ export default StyleSheet.create({
     alignItems: "center",
     borderRadius: 8
   },
-  enabledButtonIcon: {
-    resizeMode: "center"
-  },
   resendText: {
     color: colors.blue,
     fontSize: 12,

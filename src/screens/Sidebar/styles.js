@@ -55,9 +55,6 @@ export default StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: colors.grey
   },
-  menuItemIcon: {
-    resizeMode: "center"
-  },
   menuItemIconActive: {
     tintColor: colors.blue,
   },
@@ -84,8 +81,5 @@ export default StyleSheet.create({
     fontSize: 13,
     fontFamily: "LatoRegular",
     textDecorationLine: "underline"
-  },
-  footerLogo: {
-    resizeMode: "center"
   }
 });

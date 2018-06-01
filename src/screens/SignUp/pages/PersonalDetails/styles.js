@@ -113,8 +113,7 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent"
   },
   checkboxTick: {
-    alignSelf: "center",
-    resizeMode: "center"
+    alignSelf: "center"
   },
   checkboxText: {
     flex: 1,

@@ -48,8 +48,5 @@ export default StyleSheet.create({
   },
   transparentTop: {
     borderTopWidth: 0
-  },
-  deleteIcon: {
-    resizeMode: "center"
   }
 });

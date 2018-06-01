@@ -88,7 +88,7 @@ const getModalContent = (props) => {
           </View>
           <View style={[styles.elem, styles.transparentRight, styles.transparentBottom]}>
             <TouchableOpacity activeOpacity={0.6} onPress={() => onPress(-1)} hitSlop={hitSlopAmounts}>
-              <Image source={deleteIcon} style={styles.deleteIcon} />
+              <Image source={deleteIcon} />
             </TouchableOpacity>
           </View>
         </View>

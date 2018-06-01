@@ -32,8 +32,5 @@ export default StyleSheet.create({
     fontFamily: "LatoRegular",
     textAlign: "center",
     paddingBottom: 20
-  },
-  thriveBotIcon: {
-    resizeMode: "center"
   }
 });

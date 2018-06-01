@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions, Platform } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import colors from "../../theme/colors";
 
 const screen = Dimensions.get("window");
@@ -25,7 +25,6 @@ export default StyleSheet.create({
     paddingHorizontal: 40
   },
   smsIcon: {
-    resizeMode: "center",
     marginLeft: -20
   },
   labelText: {

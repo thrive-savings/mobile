@@ -46,7 +46,7 @@ class SideBar extends Component {
           style={[styles.menuItem, styles.padder, index === this.state.activeMenuItemIndex && styles.menuItemActive]}
           onPress={() => this.onMenuItemClick(index)}
         >
-          <Image source={icon}  style={[styles.menuItemIcon, index === this.state.activeMenuItemIndex && styles.menuItemIconActive]} />
+          <Image source={icon}  style={index === this.state.activeMenuItemIndex && styles.menuItemIconActive} />
           <Text style={[styles.menuItemText, index === this.state.activeMenuItemIndex && styles.menuItemTextActive]}>{displayName}</Text>
         </TouchableOpacity>
       );
@@ -82,7 +82,7 @@ class SideBar extends Component {
           <TouchableOpacity activeOpacity={0.6} onPress={this.props.clearStorage} hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}>
             <Text style={styles.logoutText}>Log Out</Text>
           </TouchableOpacity>
-          <Image source={logo} style={styles.footerLogo} />
+          <Image source={logo} />
         </View>
       </View>
     );

@@ -23,8 +23,7 @@ export default StyleSheet.create({
     top: 15
   },
   closeIcon: {
-    alignSelf: "flex-end",
-    resizeMode: "center"
+    alignSelf: "flex-end"
   },
   contentPlaceholderText: {
     color: colors.charcoal,

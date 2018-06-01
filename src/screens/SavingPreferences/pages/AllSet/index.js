@@ -29,7 +29,7 @@ class AllSet extends Component {
 
         <Text style={styles.labelText}>YOU'RE ALL SET!</Text>
 
-        <Image source={thriveBotIcon} style={styles.thriveBotIcon} />
+        <Image source={thriveBotIcon} />
 
         <Text style={styles.greyText}>
           Way to go! Your saving preferences are all set up and you can expect your first transfer in the next 2-3 business days.
