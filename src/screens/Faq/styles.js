@@ -35,8 +35,16 @@ export default StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center"
   },
+  categoryHolderNew: {
+    alignSelf: "center",
+    alignItems: "center",
+    width: deviceWidth / 2 - 70,
+    paddingVertical: 20,
+    borderRadius: 12,
+    backgroundColor: "white"
+  },
   categoryHolder: {
-    width: deviceWidth / 3 - 10,
+    width: deviceWidth / 2 - 70,
     marginVertical: 10,
     borderRadius: 8,
     backgroundColor: "white",
