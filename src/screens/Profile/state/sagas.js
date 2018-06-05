@@ -1,4 +1,4 @@
-import { UPLOAD_PHOTO_URL, DELETE_PHOTO_URL, SET_PHONE_URL, SET_EMAIL_URL, SET_PASSWORD_URL } from "./constants";
+import { UPLOAD_PHOTO_URL, DELETE_PHOTO_URL, SET_EMAIL_URL, SET_PASSWORD_URL } from "./constants";
 import { put, takeEvery } from "redux-saga/effects";
 import { requestApi } from "../../../globals/requestApi";
 import { updateAuthData } from "../../Login/state/actions";
@@ -13,18 +13,6 @@ const uploadPhotoSaga = function * () {
 const deletePhotoSaga = function * () {
   yield takeEvery(`${DELETE_PHOTO_URL}_SUBMIT`, function * ({ payload }) {
     yield put(requestApi(`${DELETE_PHOTO_URL}`, { data: payload }));
-  });
-};
-
-const setPhoneSaga = function * () {
-  yield takeEvery(`${SET_PHONE_URL}_SUBMIT`, function * ({ payload }) {
-    yield put(requestApi(`${SET_PHONE_URL}`, { data: payload }, { form: "setPhone" }));
-  });
-};
-
-const setPhoneSucceedSaga = function * () {
-  yield takeEvery(`${SET_PHONE_URL}_SUCCEED`, function * ({ payload }) {
-    yield put(updateAuthData(payload));
   });
 };
 
@@ -52,4 +40,4 @@ const setPasswordSucceedSaga = function * () {
   });
 };
 
-export { uploadPhotoSaga, deletePhotoSaga, setPhoneSaga, setPhoneSucceedSaga, setEmailSaga, setEmailSucceedSaga, setPasswordSaga, setPasswordSucceedSaga };
+export { uploadPhotoSaga, deletePhotoSaga, setEmailSaga, setEmailSucceedSaga, setPasswordSaga, setPasswordSucceedSaga };

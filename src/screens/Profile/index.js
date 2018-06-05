@@ -12,10 +12,9 @@ import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
 import colors from "../../theme/colors";
 
-import { setPhone, setEmail, setPassword } from "./state/actions";
+import { setEmail, setPassword } from "./state/actions";
 
 import ChangePhotoModal from "./modals/ChangePhoto";
-import ChangePhone from "./pages/ChangePhone";
 import ChangeEmail from "./pages/ChangeEmail";
 import ChangePassword from "./pages/ChangePassword";
 
@@ -32,11 +31,6 @@ class Profile extends Component {
 
     this.getDisplayName = this.getDisplayName.bind(this);
     this.onHeaderButtonPress = this.onHeaderButtonPress.bind(this);
-  }
-
-  setPhone(payload) {
-    this.props.setPhone(payload);
-    this.setState({ activeContent: "Home" });
   }
 
   setEmail(payload) {
@@ -61,8 +55,6 @@ class Profile extends Component {
     switch (this.state.activeContent) {
       case "Home":
         return "MY PROFILE";
-      case "ChangePhone":
-        return "CHANGE PHONE NUMBER";
       case "ChangeEmail":
         return "CHANGE EMAIL";
       case "ChangePassword":
@@ -76,8 +68,6 @@ class Profile extends Component {
     switch (this.state.activeContent) {
       case "Home":
         return this.renderHome();
-      case "ChangePhone":
-        return <ChangePhone onSubmit={this.setPhone.bind(this)} />;
       case "ChangeEmail":
         return <ChangeEmail onSubmit={this.setEmail.bind(this)} />;
       case "ChangePassword":
@@ -142,7 +132,7 @@ class Profile extends Component {
             isSettingPhone
               ? <Text style={[styles.buttonText, styles.commonText]}>Changing phone ...</Text>
               :
-                <TouchableOpacity activeOpacity={0.6} onPress={() => this.setState({activeContent: "ChangePhone"})}>
+                <TouchableOpacity activeOpacity={0.6} onPress={() => this.props.navigation.navigate("SetPhone", { showBack: true })}>
                   <Text style={[styles.buttonText, styles.commonText]}>{phone}</Text>
                 </TouchableOpacity>
           }
@@ -214,7 +204,6 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    setPhone: (payload) => dispatch(setPhone(payload)),
     setEmail: (payload) => dispatch(setEmail(payload)),
     setPassword: (payload) => dispatch(setPassword(payload))
   };

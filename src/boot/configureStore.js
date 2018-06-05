@@ -8,11 +8,11 @@ import persistedReducer from "../reducers";
 import { requestApiSaga } from "../globals/requestApi";
 import { loginSaga, getUpdatesSaga, bonusNotificationSeenSaga } from "../screens/Login/state/sagas";
 import { signUpSaga, signUpSucceedSaga, verifyReferralCodeSaga } from "../screens/SignUp/state/sagas";
-import { verifyCodeSaga, verifyCodeSucceedSaga, resendCodeSaga } from "../screens/VerifyCode/state/sagas";
+import { setPhoneSaga, setPhoneSucceedSaga, verifyCodeSaga, verifyCodeSucceedSaga, resendCodeSaga } from "../screens/SetPhone/state/sagas";
 import { passwordRequestSaga, passwordResetSaga } from "../screens/ForgotPassword/state/sagas";
 import { fetchAccountsSaga, setDefaultSaga, updateUserAccountSaga } from "../screens/IntegrateBank/state/sagas";
 import { setWorkTypeSaga, setSavingTypeSaga, setSavingDetailsSaga, preferencesInitialSetDoneSaga } from "../screens/SavingPreferences/state/sagas";
-import { uploadPhotoSaga, deletePhotoSaga, setPhoneSaga, setPhoneSucceedSaga, setEmailSaga, setEmailSucceedSaga, setPasswordSaga, setPasswordSucceedSaga } from "../screens/Profile/state/sagas";
+import { uploadPhotoSaga, deletePhotoSaga, setEmailSaga, setEmailSucceedSaga, setPasswordSaga, setPasswordSucceedSaga } from "../screens/Profile/state/sagas";
 import { getGoalsSaga, addGoalSaga, updateGoalSaga, deleteGoalSaga } from "../screens/SavingGoals/state/sagas";
 
 export default function configureStore() {
@@ -36,6 +36,8 @@ export default function configureStore() {
   sagaMiddleware.run(signUpSaga);
   sagaMiddleware.run(signUpSucceedSaga);
   sagaMiddleware.run(verifyReferralCodeSaga);
+  sagaMiddleware.run(setPhoneSaga);
+  sagaMiddleware.run(setPhoneSucceedSaga);
   sagaMiddleware.run(verifyCodeSaga);
   sagaMiddleware.run(verifyCodeSucceedSaga);
   sagaMiddleware.run(resendCodeSaga);
@@ -50,8 +52,6 @@ export default function configureStore() {
   sagaMiddleware.run(preferencesInitialSetDoneSaga);
   sagaMiddleware.run(uploadPhotoSaga);
   sagaMiddleware.run(deletePhotoSaga);
-  sagaMiddleware.run(setPhoneSaga);
-  sagaMiddleware.run(setPhoneSucceedSaga);
   sagaMiddleware.run(setEmailSaga);
   sagaMiddleware.run(setEmailSucceedSaga);
   sagaMiddleware.run(setPasswordSaga);

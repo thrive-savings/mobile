@@ -114,6 +114,7 @@ class PersonalDetails extends Component {
             style={styles.input}
             placeholder={INPUT_FIELDS[input.name].placeholder}
             secureTextEntry={INPUT_FIELDS[input.name].secureEntry}
+            keyboardType={input.name === "email" ? "email-address" : "default"}
             underlineColorAndroid="transparent"
             {...input}
           />

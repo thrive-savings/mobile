@@ -10,7 +10,7 @@ import {
   StatusBar,
   Keyboard
 } from "react-native";
-import { Icon, Toast, Spinner } from "native-base";
+import { Content, Icon, Toast, Spinner } from "native-base";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 
@@ -52,7 +52,6 @@ class LoginForm extends Component {
   }
 
   textInput;
-
   renderInput({ input, label, type, meta: { touched, error, warning } }) {
     return (
       <View>
@@ -62,6 +61,7 @@ class LoginForm extends Component {
             placeholderTextColor="#FFF"
             style={styles.input}
             placeholder={input.name === "email" ? "Email" : "Password"}
+            keyboardType={input.name === "email" ? "email-address" : "default"}
             secureTextEntry={input.name === "password" ? true : false}
             underlineColorAndroid="transparent"
             {...input}
@@ -120,7 +120,7 @@ class LoginForm extends Component {
           <View style={styles.container}>
             <Image source={logo} style={styles.logo} />
           </View>
-          <View style={styles.container}>
+          <Content showsVerticalScrollIndicator={false} contentContainerStyle={styles.container}>
             <View style={styles.form}>
               <Field
                 name="email"
@@ -164,7 +164,7 @@ class LoginForm extends Component {
                 </TouchableOpacity>
               }
             </View>
-          </View>
+          </Content>
         </ImageBackground>
       </View>
     );

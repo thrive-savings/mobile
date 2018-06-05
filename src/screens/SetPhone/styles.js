@@ -5,11 +5,6 @@ const screen = Dimensions.get("window");
 const deviceWidth = screen.width;
 
 export default StyleSheet.create({
-  background: {
-    flex: 1,
-    width: null,
-    height: null
-  },
   contentContainer: {
     flex: 1,
     width: deviceWidth - 50,
@@ -27,6 +22,8 @@ export default StyleSheet.create({
   smsIcon: {
     marginLeft: -20
   },
+
+  // Text styles
   labelText: {
     color: colors.blue,
     fontSize: 15,
@@ -43,7 +40,9 @@ export default StyleSheet.create({
     letterSpacing: 0.2,
     paddingVertical: 20
   },
-  inputGrp: {
+
+  // Phone Field styles
+  phoneInputGrp: {
     height: 30,
     width: deviceWidth - 140,
     flexDirection: "row",
@@ -61,11 +60,45 @@ export default StyleSheet.create({
     color: colors.darkerGrey,
     paddingRight: 20
   },
-  input: {
+  phoneInput: {
     flex: 1,
     color: colors.charcoal,
     fontSize: 13,
     width: 100,
     fontFamily: "LatoBold"
+  },
+
+  // Code Field styles
+  codeInputGrp: {
+    height: 30,
+    width: 100,
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: colors.darkerGrey,
+    backgroundColor: "transparent",
+    paddingLeft: 35,
+    marginBottom: 5
+  },
+  codeInput: {
+    flex: 1,
+    color: colors.charcoal,
+    fontSize: 13,
+    fontFamily: "LatoBold"
+  },
+  formErrorText: {
+    fontSize: 12,
+    color: colors.error,
+    textAlign: "center",
+    top: -7
+  },
+
+  // Resend Button styles
+  resendText: {
+    color: colors.blue,
+    fontSize: 12,
+    fontFamily: "LatoRegular",
+    paddingTop: 10
   }
 });

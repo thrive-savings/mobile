@@ -28,6 +28,7 @@ class ChangeEmailForm extends Component {
             placeholder="New Email"
             placeholderTextColor= {colors.darkerGrey}
             underlineColorAndroid="transparent"
+            keyboardType="email-address"
             {...input}
           />
           {touched && error

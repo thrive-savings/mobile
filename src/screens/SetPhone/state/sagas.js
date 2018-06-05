@@ -1,7 +1,19 @@
-import { CODE_VERIFY_URL, CODE_RESEND_URL } from "./constants";
+import { SAVE_PHONE_URL, CODE_VERIFY_URL, CODE_RESEND_URL } from "./constants";
 import { put, takeEvery } from "redux-saga/effects";
 import { requestApi } from "../../../globals/requestApi";
 import { updateAuthData } from "../../Login/state/actions";
+
+const setPhoneSaga = function * () {
+  yield takeEvery(`${SAVE_PHONE_URL}_SUBMIT`, function * ({ payload }) {
+    yield put(requestApi(`${SAVE_PHONE_URL}`, { data: payload }, { form: "setPhone" }));
+  });
+};
+
+const setPhoneSucceedSaga = function * () {
+  yield takeEvery(`${SAVE_PHONE_URL}_SUCCEED`, function * ({ payload }) {
+    yield put(updateAuthData(payload));
+  });
+};
 
 const verifyCodeSaga = function * () {
   yield takeEvery(`${CODE_VERIFY_URL}_SUBMIT`, function * ({ payload }) {
@@ -21,4 +33,4 @@ const resendCodeSaga = function * () {
   });
 };
 
-export { verifyCodeSaga, verifyCodeSucceedSaga, resendCodeSaga };
+export { setPhoneSaga, setPhoneSucceedSaga, verifyCodeSaga, verifyCodeSucceedSaga, resendCodeSaga };

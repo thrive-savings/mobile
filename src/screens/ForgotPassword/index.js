@@ -59,6 +59,7 @@ class ForgotPasswordForm extends Component {
                     ? "New Password"
                     : "Confirm Password"
             }
+            keyboardType={input.name === "email" ? "email-address" : "default"}
             secureTextEntry={input.name === "password" || input.name === "confirmPassword" ? true : false}
             {...input}
           />

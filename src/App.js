@@ -10,7 +10,7 @@ import Home from "./screens/Home";
 import Sidebar from "./screens/Sidebar";
 import Profile from "./screens/Profile";
 import Settings from "./screens/Settings";
-import VerifyCode from "./screens/VerifyCode";
+import SetPhone from "./screens/SetPhone";
 import IntegrateBank from "./screens/IntegrateBank";
 import SavingPreferences from "./screens/SavingPreferences";
 import SavingGoals from "./screens/SavingGoals";
@@ -41,7 +41,7 @@ const stackScreens = {
   Login: { screen: Login },
   SignUp: { screen: SignUp },
   ForgotPassword: { screen: ForgotPassword },
-  VerifyCode: { screen: VerifyCode },
+  SetPhone: { screen: SetPhone },
   IntegrateBank: { screen: IntegrateBank },
   SavingPreferences: { screen: SavingPreferences },
   SavingGoals: { screen: SavingGoals },
@@ -79,11 +79,11 @@ const StackerWithIntegrateBank = StackNavigator(
   }
 );
 
-const StackerWithVerifyCode = StackNavigator(
+const StackerWithSetPhone = StackNavigator(
   stackScreens,
   {
     ...stackerOptions,
-    initialRouteName: "VerifyCode"
+    initialRouteName: "SetPhone"
   }
 );
 
@@ -101,8 +101,8 @@ class App extends React.Component {
     const authorized = getAuthorized(this.props.authReducer);
     if (authorized) {
       if (!authorized.isVerified) {
-        stacker = <StackerWithVerifyCode />;
-      } else if ((authorized.account && authorized.account.flLoginID) || false) {
+        stacker = <StackerWithSetPhone />;
+      } else if ((authorized.account && authorized.account.flLoginID) || true) {
         stacker = <StackerWithDrawer />;
       } else {
         stacker = <StackerWithIntegrateBank />;

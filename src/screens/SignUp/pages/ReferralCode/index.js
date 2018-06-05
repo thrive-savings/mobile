@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {
   View,
+  ScrollView,
   TouchableOpacity,
   Image,
   Text,
@@ -73,7 +74,7 @@ class ReferralCodeForm extends Component {
     }
 
     return (
-      <View style={styles.container}>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.container}>
         <Image source={logo} style={styles.logo} />
         <Text style={[styles.text, styles.textAbove]}>Please enter the referral code you received from your employer.</Text>
         <Field
@@ -93,7 +94,7 @@ class ReferralCodeForm extends Component {
               </Text>
           }
         </TouchableOpacity>
-      </View>
+      </ScrollView>
     );
   }
 }

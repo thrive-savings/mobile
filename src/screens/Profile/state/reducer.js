@@ -83,9 +83,7 @@ export default function profileReducer(state = initialState, action) {
     case `${SET_PHONE_URL}_FAIL`:
       return {
         ...state,
-        isSettingPhone: false,
-        error: true,
-        errorMessage: action.error
+        isSettingPhone: false
       };
 
     // Set Email cases
