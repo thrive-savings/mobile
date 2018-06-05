@@ -8,6 +8,10 @@ const FAQ_CATEGORIES = [
         answer: "Thrive Savings is a savings and goal-setting app for employers to offer their employees. "
       },
       {
+        question: "How does Thrive Savings make money?",
+        answer: "Your employer or affiliated organization may pay Thrive a monthly subscription fee on your behalf to use the Thrive wellness tool. From time to time, we may present you with special offers or discounts from our partner providers who may pay Thrive a fee."
+      },
+      {
         question: "Who can use Thrive?",
         answer: "Thrive is available for almost everyone! You’ll need to be a resident of Canada, at least 18 years of age, with an existing chequing account at a Canadian bank or credit union. Unfortunately, we are currently unavailable in Quebec, but stay tuned! US residents will be able to join Thrive later this year. "
       },
@@ -29,7 +33,7 @@ const FAQ_CATEGORIES = [
       },
       {
         question: "What are the full list of commands that I can send to ThriveBot?",
-        answer: "Here they are. Missing a command you’d like to see? Text in with any feedback.\n\nBalance → Lets you know the balance in your savings\n\nWithdraw →  Just tell us how much and the money will be back into your chequing\n\nSave →  Do one-off savings transfer to your savings. Just tell us how much!\n\nPause →  Pauses your automated deposits to your savings. Just tell us how long!\n\nStart →  Restarts your automated savings program. Welcome back!\n\nInvite →  Invites a friend to save with Thrive. You’ll get VIP status with us and them!"
+        answer: "Here they are. Missing a command you’d like to see? Text in with any feedback.\n\nBalance → Lets you know the balance in your savings\n\nWithdraw →  Just tell us how much and the money will be back into your chequing\n   - Example: Withdraw 10.00\n\nSave →  Do one-off savings transfer to your savings. Just tell us how much!\n   - Example: Save 10.00\n\nPause →  Pauses your automated deposits to your savings. Just tell us how long!\n   - Example: Pause 1 week\n\nStart →  Restarts your automated savings program. Welcome back!\n\nInvite →  Invites a friend to save with Thrive. You’ll get VIP status with us and them!"
       },
       {
         question: "Why do I automatically have a Rainy Day Fund in my Savings Goals?",
@@ -86,6 +90,14 @@ const FAQ_CATEGORIES = [
       {
         question: "Is my data safe?",
         answer: "Safe and secure. We employ 256-bit bank-level security to keep your information safe. We also use Secure Socket Layer (SSL) to help ensure all information is protected. Our technology service providers have equally tough physical, electronic, and procedural safeguards to protect your data."
+      },
+      {
+        question: "Do you sell my personal information?",
+        answer: "Security is our priority. We will never sell, publish or share your contact information or any identifiable personal information to third parties."
+      },
+      {
+        question: "What information are you sharing with my employer or affiliated organization",
+        answer: "Thrive never shares details about your personal goal setting, spending, income, or lifestyle. Any data provided to your employer or affiliated organization will be anonymized and aggregated."
       }
     ]
   },
@@ -94,7 +106,7 @@ const FAQ_CATEGORIES = [
     name: "MY ACCOUNT",
     questions: [
       {
-        question: "I no longer work for my employer. Can I still save with Thrive?",
+        question: "I am no longer affiliated with my employer/organization. Can I still save with Thrive?",
         answer: "Absolutely. Your savings are your savings, and you can take them with you regardless of who you work for or where you work. Just let us know when you move employers and we’ll set it all up for you.  As a bonus, if you introduce us to your new company and they join Thrive, we’ll add a cash bonus to your favourite savings goal as a thank-you! "
       },
       {

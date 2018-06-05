@@ -102,7 +102,7 @@ class App extends React.Component {
     if (authorized) {
       if (!authorized.isVerified) {
         stacker = <StackerWithSetPhone />;
-      } else if ((authorized.account && authorized.account.flLoginID) || true) {
+      } else if (authorized.bankLinked || true) {
         stacker = <StackerWithDrawer />;
       } else {
         stacker = <StackerWithIntegrateBank />;
