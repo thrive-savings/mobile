@@ -102,7 +102,7 @@ class Settings extends Component {
           <Image source={BANK_ICONS[bank]} />
           <Text style={styles.linkedBankLabelText}>{title}</Text>
           <Text style={styles.linkedBankDescText}>To change or unlink your bank account, send us a request below and we’ll get in touch with you shortly.</Text>
-          <SpecialButton text={"CONTACT SUPPORT"} onClick={() => Communications.email(["help@thrivesavings.com", "naib.baghirov@gmail.com"],null,null,"Change or Unlink Bank Account",null)}/>
+          <SpecialButton text={"CONTACT SUPPORT"} onClick={() => Communications.email(["help@thrivesavings.com"],null,null,"Change or Unlink Bank Account",null)}/>
         </View>
       </View>
     );

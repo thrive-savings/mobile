@@ -6,6 +6,7 @@ import {
   Text,
   StatusBar
 } from "react-native";
+import Communications from "react-native-communications";
 
 import Header from "../../components/Header";
 
@@ -17,6 +18,7 @@ const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
 
 class PP extends Component {
   render() {
+    const navigation = this.props.navigation;
     return (
       <View style={globalStyles.container}>
         <StatusBar barStyle="light-content" backgroundColor={colors.statusbar}/>
@@ -25,9 +27,9 @@ class PP extends Component {
 
           <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollViewsContainer}>
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={[styles.contentContainer, styles.noBottomBorder]}>
-              <Text style={[styles.regularText, styles.boldText]}>Last Updated: May 01, 2018</Text>
+              <Text style={[styles.regularText, styles.boldText]}>Last Updated: June 01, 2018</Text>
               <Text style={[styles.regularText]}>Thrive Savings Inc. ("Thrive," "we," "us," and "our") is committed to protecting and respecting your privacy. </Text>
-              <Text style={[styles.regularText]}>The purpose of Thrive is to try to help you save money with limited effort. This privacy policy explains what personal information we collect and why, with whom we share this information, and how we store and protect it. This Privacy Policy applies to users (individually referred to as "you") of our websites, applications, and other online services to which this Privacy Policy is posted (collectively, our "Services"). This Privacy Policy is part of our Terms of Service.</Text>
+              <Text style={[styles.regularText]}>The purpose of Thrive is to try to help you save money with limited effort. This privacy policy explains what personal information we collect and why, with whom we share this information, and how we store and protect it. This Privacy Policy applies to users (individually referred to as "you") of our websites, applications, and other online services to which this Privacy Policy is posted (collectively, our "Services"). This Privacy Policy is part of our <Text onPress={() => navigation.navigate("TOS")}>Terms of Service.</Text></Text>
               <Text style={[styles.regularText]}>By accessing or using our Services, you agree to this Privacy Policy and our Terms of Service. The provisions contained in this Privacy Policy supersede all previous notices and statements regarding our privacy practices with respect to our Services.</Text>
               <Text style={[styles.regularText, styles.boldText]}>IF YOU DO NOT AGREE TO EVERY PROVISION OF THIS PRIVACY POLICY AND OUR TERMS OF SERVICE, YOU MAY NOT ACCESS OR USE OUR SERVICES.</Text>
 
@@ -35,7 +37,7 @@ class PP extends Component {
               <Text style={[styles.regularText]}>This Privacy Policy applies to your use of (regardless of means of access) our Services. You may access or use our Services through a desktop, laptop, mobile phone, tablet, or other consumer electronic device (each, a "Device").</Text>
 
               <Text style={[styles.regularText, styles.blueText]}>Information We Collect</Text>
-              <Text style={[styles.regularText]}>In general, you can visit <Text style={styles.blueInnerText}>thrivesavings.com</Text> without telling us who you are or revealing any information about yourself. When you submit an inquiry via our Services or register for a Thrive account, you are invited to provide us with detailed personal information. “Personal Information” is information about an identifiable individual. </Text>
+              <Text style={[styles.regularText]}>In general, you can visit <Text style={styles.blueInnerText} onPress={() => Communications.web("https://thrivesavings.com")}>thrivesavings.com</Text> without telling us who you are or revealing any information about yourself. When you submit an inquiry via our Services or register for a Thrive account, you are invited to provide us with detailed personal information. “Personal Information” is information about an identifiable individual. </Text>
               <Text style={[styles.regularText]}>We may collect the following categories of personal information in connection with your use of our Site and Services, including but not limited to:</Text>
               <Text style={[styles.regularText]}>
                 <Text style={[styles.boldText]}>REGISTRATION INFORMATION:</Text>{"\n"}
@@ -44,6 +46,10 @@ class PP extends Component {
               <Text style={[styles.regularText]}>
                 <Text style={[styles.boldText]}>IDENTIFICATION INFORMATION:</Text>{"\n"}
                 We collect your name, address, gender, mobile phone number and email address to contact you, open and maintain your account and provide you with better customer service when you contact us.
+              </Text>
+              <Text style={[styles.regularText]}>
+                <Text style={[styles.boldText]}>LIFESTYLE AND FINANCIAL GOALS:</Text>{"\n"}
+                We collect your self-identified goals and objectives that you may wish to save for.
               </Text>
               <Text style={[styles.regularText]}>
                 <Text style={[styles.boldText]}>THIRD PARTY CREDENTIALS:</Text>{"\n"}
@@ -61,9 +67,10 @@ class PP extends Component {
                 <Text style={[styles.boldText]}>OTHER INFORMATION:</Text>{"\n"}
                 We may request or receive other personal information such as feedback, questions, comments, suggestions, or ideas to provide you with other benefits or to improve upon the Services. In such instances, you will be given the opportunity to provide or decline that information.
               </Text>
-
-              <Text style={[styles.regularText, styles.blueText]}>How We Share Your Information</Text>
-              <Text style={[styles.regularText]}>We do not sell or otherwise disclose the Personal Information we collect about you, except as described herein or otherwise disclose to you at the time the data is collected.</Text>
+            </ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={[styles.contentContainer, styles.noBottomBorder, styles.noTopBorder]}>
+              <Text style={[styles.regularText, styles.blueText]}>How We Use The Information We Collect</Text>
+              <Text style={[styles.regularText]}>We use your personal information for the purposes of:</Text>
               <View style={styles.listContainer}>
                 <View style={styles.listRow}>
                   <Text style={styles.regularText}>•  </Text>
@@ -138,9 +145,11 @@ class PP extends Component {
                   </Text>
                 </View>
               </View>
-
+            </ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={[styles.contentContainer, styles.noBottomBorder, styles.noTopBorder]}>
               <Text style={[styles.regularText, styles.blueText]}>How We Share Your Information</Text>
               <Text style={[styles.regularText]}>We do not sell or otherwise disclose the Personal Information we collect about you, except as described herein or otherwise disclose to you at the time the data is collected.</Text>
+              <Text style={[styles.regularText, styles.boldText]}>Thrive never shares details about your personal goal-setting, spending, income, or lifestyle with your employer, workplace, or affiliated organization. We may provide your employer or affiliated organization with group anonymized and aggregated information from time to time.</Text>
               <Text style={[styles.regularText]}>
                 <Text style={[styles.boldText]}>SERVICE PROVIDERS</Text>{"\n"}
                 In connection with our Services, we may transfer (or otherwise make available) Personal Information to third parties who provide services on our behalf. For example, we may use service providers, including without limitation, for hosting or operating this Site and analyzing data. These service providers have committed to appropriately safeguard the privacy and security of personal information they process on our behalf. Our service providers are given the information they need to perform their designated functions, and we do not authorize them to use or disclose personal information for their own marketing or other purposes.
@@ -153,8 +162,6 @@ class PP extends Component {
                 <Text style={[styles.boldText]}>LEGAL</Text>{"\n"}
                 Thrive and our Canadian service providers and affiliates may disclose your personal information in response to a search warrant or other legally valid inquiry or order (which may include lawful access by Canadian, US or other foreign governmental authorities, courts or law enforcement agencies), to other organizations in the case of investigating a breach of an agreement or contravention of law or detecting, suppressing or preventing fraud, or as otherwise required or permitted by applicable Canadian, US or other law.
               </Text>
-            </ScrollView>
-            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={[styles.contentContainer, styles.noTopBorder]}>
               <Text style={[styles.regularText, styles.blueText]}>How We Protect The Information We Collect</Text>
               <Text style={[styles.regularText]}>
                 Our security measures are in line with best practices in the financial services industry. Your personal information is maintained on a confidential basis on our servers in Canada. We maintain appropriate administrative, technical and physical safeguards in an effort to protect personal information in our custody and control against accidental, unlawful or unauthorized destruction, loss, theft, alteration, access, disclosure or use and other unlawful forms of processing, including limiting access to personal information to employees and authorized service providers on a need-to-know basis.
@@ -163,9 +170,10 @@ class PP extends Component {
                 {"\n\n"}
                 No method of electronic transmission or storage is 100% secure. Therefore, we cannot guarantee absolute security of your Personal Information. You also play a role in protecting your Personal Information. Please safeguard your username and password for your Thrive account and do not share them with others. If we receive instructions using your Thrive account login information, we will consider that you have authorized the instructions. You agree to notify us immediately of any unauthorized use of your Thrive account or any other breach of security. We reserve the right, in our sole discretion, to refuse to provide our Services, terminate Thrive accounts, and to remove or edit content.
                 {"\n\n"}
-                <Text style={styles.boldText}>Thrive will NEVER ask you for your usernames and passwords or any other confidential information in an email or text message.</Text> While a message asking for such information may look like it was sent from Thrive, please delete it immediately. If you've clicked on such a link and entered your username and password, we recommend you change your password at <Text style={styles.blueInnerText}>www.thrivesavings.com</Text>. Please report any suspicious messages to <Text style={styles.blueInnerText}>help@thrivesavings.com</Text>.
+                <Text style={styles.boldText}>Thrive will NEVER ask you for your usernames and passwords or any other confidential information in an email or text message.</Text> While a message asking for such information may look like it was sent from Thrive, please delete it immediately. If you've clicked on such a link and entered your username and password, we recommend you change your password at <Text style={styles.blueInnerText} onPress={() => Communications.web("https://thrivesavings.com")}>www.thrivesavings.com</Text>. Please report any suspicious messages to <Text style={styles.blueInnerText} onPress={() => Communications.email(["help@thrivesavings.com"],null,null,"Help Needed",null)}>help@thrivesavings.com</Text>.
               </Text>
-
+            </ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={[styles.contentContainer, styles.noTopBorder]}>
               <Text style={[styles.regularText, styles.blueText]}>How We Use Cookies And Similar Technologies</Text>
               <Text style={[styles.regularText]}>
                 To help operate the Site, enhance you experience, and collect information about online activity, we may place small data files on your computer or other device. These data files may be in the form of cookies, pixel tags, local shared objects, or other similar technologies. Cookies and similar technologies enable us to personalize our Site and Services for you. These technologies allow us to store and manage your preferences and settings, measure and analyze how you use our Site and effectiveness of our communications, offer targeted products, programs and services, and help us improve our products, services, and security. Information collected includes internet protocol address, operating system, browser specifics of your device, device characteristics, user ID, and specifics regarding your interactions with (i.e., the path you take through) our Site and Services.
@@ -185,7 +193,7 @@ class PP extends Component {
 
               <Text style={[styles.regularText, styles.blueText]}>Opting Out</Text>
               <Text style={[styles.regularText]}>
-                You have the option to sign up to receive periodic Site or Services related alerts, weekly summaries, notifications, newsletters, promotions, or other information via email. It is your choice to sign-up or to stop receiving alerts, summaries, newsletters or promotions. You may unsubscribe at any time from any email or text message you receive. Please note that you may withdraw your consent to receive Communications electronically at any time by contacting us at <Text style={styles.blueInnerText}>help@thrivesavings.com</Text>.
+                You have the option to sign up to receive periodic Site or Services related alerts, weekly summaries, notifications, newsletters, promotions, or other information via email. It is your choice to sign-up or to stop receiving alerts, summaries, newsletters or promotions. You may unsubscribe at any time from any email or text message you receive. Please note that you may withdraw your consent to receive Communications electronically at any time by contacting us at <Text style={styles.blueInnerText} onPress={() => Communications.email(["help@thrivesavings.com"],null,null,"Help Needed",null)}>help@thrivesavings.com</Text>.
                 {"\n\n"}
                 If you withdraw your consent to receive Communications electronically, we may still have a legal obligation to send you account updates by law. Any withdrawal of your consent to receive Communications electronically will be effective within 10 business days of your withdrawal. Please note that withdrawal of your consent to receive Communications electronically will not apply to Communications electronically provided by us to you before the withdrawal of your consent becomes effective.
               </Text>
@@ -197,7 +205,7 @@ class PP extends Component {
 
               <Text style={[styles.regularText, styles.blueText]}>Contacting Us</Text>
               <Text style={[styles.regularText]}>
-                If you have any questions regarding this Privacy Policy, please contact our Privacy Officer at <Text style={styles.blueInnerText}>help@thrivesavings.com</Text>, or <Text style={styles.boldText}>Thrive Savings Inc., Attn: Privacy Officer, 10 Dundas Street East, 6th Floor, Toronto ON M5B 2G9</Text>.
+                If you have any questions regarding this Privacy Policy, please contact our Privacy Officer at <Text style={styles.blueInnerText} onPress={() => Communications.email(["help@thrivesavings.com"],null,null,"Help Needed",null)}>help@thrivesavings.com</Text>, or <Text style={styles.boldText}>Thrive Savings Inc., Attn: Privacy Officer, 10 Dundas Street East, 6th Floor, Toronto ON M5B 2G9</Text>.
               </Text>
             </ScrollView>
           </ScrollView>
