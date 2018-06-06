@@ -50,17 +50,29 @@ class ChangePhotoModal extends Component {
   }
 
   async takePhoto() {
-    const { status } = await Permissions.askAsync(Permissions.CAMERA);
-    if (status === "granted") {
-      const pickerResult = await ImagePicker.launchCameraAsync({
-        exif: true,
-        base64: true,
-        allowsEditing: true
-      });
-      this.handleImagePicked(pickerResult);
+    let showToast = false;
+
+    const { status: cameraStatus } = await Permissions.askAsync(Permissions.CAMERA);
+    if (cameraStatus === "granted") {
+      const { status: cameraRollStatus } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      if (cameraRollStatus === "granted") {
+        const pickerResult = await ImagePicker.launchCameraAsync({
+          exif: true,
+          base64: true,
+          allowsEditing: true
+        });
+        this.handleImagePicked(pickerResult);
+      } else {
+        showToast = true;
+      }
     } else {
+      showToast = true;
+    }
+
+
+    if (showToast) {
       Toast.show({
-        text: "Camera Permission not granted.",
+        text: "Camera & Camera Roll Permissions should be granted.",
         duration: 2500,
         position: "top",
         type: "danger",

@@ -18,8 +18,6 @@ const setDefaultSaga = function * () {
 
 const updateUserAccountSaga = function * () {
   yield takeEvery(`${UPDATE_USER_ACCOUNT}`, function * ({ payload }) {
-    console.log("Dispatching UPDATE_USER_ACCOUNT");
-    console.log(payload);
     yield put(updateAccountData(payload));
   });
 };

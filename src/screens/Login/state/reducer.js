@@ -27,7 +27,8 @@ export default function authReducer (state = initialState, action) {
         data: {
           authorized: {
             ...curData,
-            account
+            account,
+            bankLinked: true
           }
         }
       };

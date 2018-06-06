@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   StatusBar
 } from "react-native";
+import { Constants } from "expo";
 import { Content } from "native-base";
 import { connect } from "react-redux";
 
@@ -206,7 +207,7 @@ class Settings extends Component {
           <View style={styles.separator} />
           <View style={styles.contentRow}>
             <Text style={styles.regularText}>App Version</Text>
-            <Text style={[styles.regularText, styles.blueText]}>v0.0</Text>
+            <Text style={[styles.regularText, styles.blueText]}>{"v" + Constants.manifest.version}</Text>
           </View>
         </View>
       </View>
