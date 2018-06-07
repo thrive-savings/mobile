@@ -20,7 +20,6 @@ import { getDollarString, getSplitDollarStrings } from "../../globals/helpers";
 import GOAL_CATEGORIES from "../../globals/goalCategories";
 
 import { bonusNotificationSeen } from "../Login/state/actions";
-import { getGoals } from "../SavingGoals/state/actions";
 
 import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
@@ -38,13 +37,6 @@ class Home extends Component {
     this.state = {
       showRainyDayInfoModal: false
     };
-  }
-
-  componentWillMount()  {
-    const goals = this.props.goalsReducer.goals;
-    if (!goals || goals.length === 0) {
-      this.props.getGoals();
-    }
   }
 
   notificationClicked(notificationType) {
@@ -110,7 +102,7 @@ class Home extends Component {
   }
 
   renderGoals() {
-    return this.props.goalsReducer.goals.map((goal, index) => {
+    return this.props.userData.goals.map((goal, index) => {
       const { category, name, amount, savedAmount } = goal;
       return (
         <TouchableOpacity
@@ -191,14 +183,12 @@ function mapStateToProps (state) {
     userData: state.authReducer.data.authorized,
     isSeeingBonus: state.authReducer.isSeeingBonus,
     isSettingPreferencesDone: state.savingPreferencesReducer.isSettingDone,
-    preferencesInitialSetDone: state.savingPreferencesReducer.initialSetDone,
-    goalsReducer: state.goalsReducer
+    preferencesInitialSetDone: state.savingPreferencesReducer.initialSetDone
   };
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    getGoals: (payload = {}) => dispatch(getGoals(payload)),
     bonusNotificationSeen: (payload = {}) => dispatch(bonusNotificationSeen(payload))
   };
 }

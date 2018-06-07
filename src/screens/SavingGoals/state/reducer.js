@@ -1,6 +1,5 @@
-import { SET_SUCCEED_FLAG_OFF, GET_GOALS_URL, ADD_GOAL_URL, UPDATE_GOAL_URL, DELETE_GOAL_URL } from "./constants";
+import { SET_SUCCEED_FLAG_OFF, ADD_GOAL_URL, UPDATE_GOAL_URL, DELETE_GOAL_URL } from "./constants";
 const initialState = {
-  goals: [],
   successCB: undefined,
   isGetting: false,
   isAdding: false,
@@ -20,29 +19,6 @@ export default function goalsReducer (state = initialState, action) {
         serverCallSucceeded: false
       };
 
-    // Getting Goals cases
-    case `${GET_GOALS_URL}_SUBMIT`:
-      return {
-        ...state,
-        isGetting: true
-      };
-    case `${GET_GOALS_URL}_SUCCEED`:
-      const { payload: { data: getGoalsData } } = action;
-      return {
-        ...state,
-        goals: getGoalsData.goals,
-        isGetting: false,
-        error: false,
-        errorMessage: ""
-      };
-    case `${GET_GOALS_URL}_FAIL`:
-      return {
-        ...state,
-        isGetting: false,
-        error: true,
-        errorMessage: action.error
-      };
-
     // Adding Goal cases
     case `${ADD_GOAL_URL}_SUBMIT`:
       return {
@@ -51,10 +27,8 @@ export default function goalsReducer (state = initialState, action) {
         isAdding: true
       };
     case `${ADD_GOAL_URL}_SUCCEED`:
-      const { payload: { data: addGoalData } } = action;
       return {
         ...state,
-        goals: addGoalData.goals,
         serverCallSucceeded: true,
         isAdding: false,
         error: false,
@@ -77,10 +51,8 @@ export default function goalsReducer (state = initialState, action) {
         isUpdating: true
       };
     case `${UPDATE_GOAL_URL}_SUCCEED`:
-      const { payload: { data: updateGoalData } } = action;
       return {
         ...state,
-        goals: updateGoalData.goals,
         serverCallSucceeded: true,
         isUpdating: false,
         error: false,
@@ -103,10 +75,8 @@ export default function goalsReducer (state = initialState, action) {
         isDeleting: true
       };
     case `${DELETE_GOAL_URL}_SUCCEED`:
-      const { payload: { data: deleteGoalData } } = action;
       return {
         ...state,
-        goals: deleteGoalData.goals,
         serverCallSucceeded: true,
         isDeleting: false,
         error: false,

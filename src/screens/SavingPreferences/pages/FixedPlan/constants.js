@@ -23,7 +23,7 @@ const getFrequencyIndex = identifier => {
     if (type.identifier === identifier) { break; }
     i++;
   }
-  return i;
+  return i >= FREQUENCY_TYPES.length ? 0 : i;
 };
 
 export { FREQUENCY_TYPES, getFrequencyIndex };

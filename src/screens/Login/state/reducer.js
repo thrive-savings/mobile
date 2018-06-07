@@ -1,4 +1,4 @@
-import { REQUEST_URL, GET_UPDATES, BONUS_NOTIFICATION_SEEN, UPDATE_AUTH_DATA, UPDATE_ACCOUNT_DATA, UPDATE_AVATAR } from "./constants";
+import { REQUEST_URL, GET_UPDATES, BONUS_NOTIFICATION_SEEN, UPDATE_AUTH_DATA, UPDATE_ACCOUNT_DATA, UPDATE_GOALS_DATA, UPDATE_AVATAR } from "./constants";
 const initialState = {
   data: {},
   avatar: undefined,
@@ -21,14 +21,28 @@ export default function authReducer (state = initialState, action) {
     // Update Account case
     case `${UPDATE_ACCOUNT_DATA}`:
       const { payload: { authorized: { account } } } = action;
-      const curData = state.data.authorized;
+      const dataOnAccountUpdate = state.data.authorized;
       return {
         ...state,
         data: {
           authorized: {
-            ...curData,
+            ...dataOnAccountUpdate,
             account,
             bankLinked: true
+          }
+        }
+      };
+
+    // Update Goals case
+    case `${UPDATE_GOALS_DATA}`:
+      const { payload: { data: { goals } } } = action;
+      const dataOnGoalsUpdate = state.data.authorized;
+      return {
+        ...state,
+        data: {
+          authorized: {
+            ...dataOnGoalsUpdate,
+            goals
           }
         }
       };

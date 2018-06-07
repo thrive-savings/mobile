@@ -13,7 +13,7 @@ import { passwordRequestSaga, passwordResetSaga } from "../screens/ForgotPasswor
 import { fetchAccountsSaga, setDefaultSaga, updateUserAccountSaga } from "../screens/IntegrateBank/state/sagas";
 import { setWorkTypeSaga, setSavingTypeSaga, setSavingDetailsSaga, preferencesInitialSetDoneSaga } from "../screens/SavingPreferences/state/sagas";
 import { uploadPhotoSaga, deletePhotoSaga, setEmailSaga, setEmailSucceedSaga, setPasswordSaga, setPasswordSucceedSaga } from "../screens/Profile/state/sagas";
-import { getGoalsSaga, addGoalSaga, updateGoalSaga, deleteGoalSaga } from "../screens/SavingGoals/state/sagas";
+import { addGoalSaga, addGoalSucceedSaga, updateGoalSaga, updateGoalSucceedSaga, deleteGoalSaga, deleteGoalSucceedSaga } from "../screens/SavingGoals/state/sagas";
 
 export default function configureStore() {
   const sagaMiddleware = createSagaMiddleware();
@@ -56,10 +56,12 @@ export default function configureStore() {
   sagaMiddleware.run(setEmailSucceedSaga);
   sagaMiddleware.run(setPasswordSaga);
   sagaMiddleware.run(setPasswordSucceedSaga);
-  sagaMiddleware.run(getGoalsSaga);
   sagaMiddleware.run(addGoalSaga);
+  sagaMiddleware.run(addGoalSucceedSaga);
   sagaMiddleware.run(updateGoalSaga);
+  sagaMiddleware.run(updateGoalSucceedSaga);
   sagaMiddleware.run(deleteGoalSaga);
+  sagaMiddleware.run(deleteGoalSucceedSaga);
 
   return { store, persistor };
 }

@@ -12,7 +12,7 @@ import ChooseCategory from "./pages/ChooseCategory";
 import GoalDetail from "./pages/GoalDetail";
 import EditGoal from "./pages/EditGoal";
 
-import { getGoals, setSucceedFlagOff } from "./state/actions";
+import { setSucceedFlagOff } from "./state/actions";
 
 import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
@@ -122,7 +122,6 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    getGoals: (payload = {}) => dispatch(getGoals(payload)),
     setSucceedFlagOff: () => dispatch(setSucceedFlagOff())
   };
 }
