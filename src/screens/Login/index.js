@@ -51,18 +51,33 @@ class LoginForm extends Component {
     this.setState({showFooter: true});
   }
 
-  textInput;
+  emailTextInput; passwordTextInput;
   renderInput({ input, label, type, meta: { touched, error, warning } }) {
     return (
       <View>
         <View style={styles.inputGrp}>
           <TextInput
-            ref={c => (this.textInput = c)}
+            ref={c => {
+              switch (input.name) {
+                case "email":
+                  this.emailTextInput = c; break;
+                case "password":
+                  this.passwordTextInput = c; break;
+              }
+            }}
             placeholderTextColor="#FFF"
             style={styles.input}
             placeholder={input.name === "email" ? "Email" : "Password"}
             keyboardType={input.name === "email" ? "email-address" : "default"}
-            secureTextEntry={input.name === "password" ? true : false}
+            returnKeyType={input.name === "password" ? "done" : "next"}
+            onSubmitEditing={() => {
+              switch (input.name) {
+                case "email":
+                  this.passwordTextInput.focus(); break;
+              }
+            }}
+            blurOnSubmit={input.name === "password"}
+            secureTextEntry={input.name === "password"}
             underlineColorAndroid="transparent"
             {...input}
           />
@@ -70,7 +85,14 @@ class LoginForm extends Component {
             ? <Icon
                 active
                 style={globalStyles.formErrorIcon}
-                onPress={() => this.textInput.clear()}
+                onPress={() => {
+                  switch (input.name) {
+                    case "email":
+                      this.emailTextInput.clear(); break;
+                    case "password":
+                      this.passwordTextInput.clear(); break;
+                  }
+                }}
                 name="close"
               />
             : <Text />}

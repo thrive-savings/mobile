@@ -36,7 +36,6 @@ export const requestApiSaga = function * () {
       config.headers = { ...headers, authorization: `Bearer ${jwt}` };
     }
 
-    console.log(`Calling the API for URL ${url} and jwt ${jwt}`);
     const { payload, error } = yield call(request, method, url, params, config);
 
     const type = `${url}_${payload ? "SUCCEED" : "FAIL"}`;

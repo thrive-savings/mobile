@@ -6,7 +6,7 @@ import {
   TextInput
 } from "react-native";
 import { connect } from "react-redux";
-import { Content, Icon, Toast } from "native-base";
+import { Content, Toast } from "native-base";
 import DatePicker from "react-native-datepicker";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import ModalDropdown from "react-native-modal-dropdown";
@@ -103,29 +103,48 @@ class PersonalDetails extends Component {
     this.setState({ gender });
   }
 
-  textInput;
+  firstNameTextInput; lastNameTextInput; unitTextInput; emailTextInput; passwordTextInput;
   renderInput({ input, label, type, meta: { touched, error, warning } }) {
     return (
       <View>
         <View style={[styles.inputGrp, INPUT_FIELDS[input.name].extraStyle]}>
           <TextInput
-            ref={c => (this.textInput = c)}
+            ref={c => {
+              switch (input.name) {
+                case "firstName":
+                  this.firstNameTextInput = c; break;
+                case "lastName":
+                  this.lastNameTextInput = c; break;
+                case "unit":
+                  this.unitTextInput = c; break;
+                case "email":
+                  this.emailTextInput = c; break;
+                case "password":
+                  this.passwordTextInput = c; break;
+              }
+            }}
             placeholderTextColor={colors.darkerGrey}
             style={styles.input}
             placeholder={INPUT_FIELDS[input.name].placeholder}
             secureTextEntry={INPUT_FIELDS[input.name].secureEntry}
             keyboardType={input.name === "email" ? "email-address" : "default"}
+            returnKeyType={input.name === "password" ? "done" : "next"}
+            onSubmitEditing={() => {
+              switch (input.name) {
+                case "firstName":
+                  this.lastNameTextInput.focus(); break;
+                case "lastName":
+                  this.unitTextInput.focus(); break;
+                case "unit":
+                  this.emailTextInput.focus(); break;
+                case "email":
+                  this.passwordTextInput.focus(); break;
+              }
+            }}
+            blurOnSubmit={input.name === "password"}
             underlineColorAndroid="transparent"
             {...input}
           />
-          {touched && error
-            ? <Icon
-                active
-                style={globalStyles.formErrorIcon}
-                onPress={() => this.textInput._root.clear()}
-                name="close"
-              />
-            : <Text />}
         </View>
         {touched && error
           ? <Text style={globalStyles.formErrorText1}>
@@ -206,7 +225,7 @@ class PersonalDetails extends Component {
               placeholderTextColor={colors.darkerGrey}
               minLength={2}
               autoFocus={false}
-              returnKeyType={"default"}
+              returnKeyType={"next"}
               fetchDetails={true}
               listUnderlayColor={colors.grey}
               query={{
