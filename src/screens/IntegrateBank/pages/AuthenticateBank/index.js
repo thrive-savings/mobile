@@ -39,7 +39,7 @@ class AuthenticateBank extends Component {
 
         <WebView
           source={{
-            uri: `${FlinksURL}/?${companyID > 0 ? "" : "demo=true&"}waitSummary=true&stringify=true&backgroundColor=ffffff&foregroundColor1=0089CB&foregroundColor2=414042&redirectUrl=https://google.com`
+            uri: `${FlinksURL}/?${companyID > 0 ? "" : "demo=true&"}waitSummary=true&stringify=true&scheduleRefresh=true&backgroundColor=ffffff&foregroundColor1=0089CB&foregroundColor2=414042&redirectUrl=https://google.com`
           }}
           onMessage={this.onMessage}
           style={styles.webViewContainer}
