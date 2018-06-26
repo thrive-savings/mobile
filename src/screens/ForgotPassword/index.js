@@ -158,7 +158,7 @@ class ForgotPasswordForm extends Component {
   renderResetForm() {
     return (
       <View style={styles.formContainer}>
-        <Text style={styles.secondaryText}>We have sent a verification code to your email, please type it below along with your new passowrd.</Text>
+        <Text style={styles.secondaryText}>We have sent a verification code to your email, please type it below along with your new password.</Text>
         <Field
           name="code"
           component={this.renderInput}

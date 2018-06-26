@@ -20,7 +20,7 @@ import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
 import colors from "../../theme/colors";
 
-import { required, maxLength15, minLength8, alphaNumeric, email } from "../../globals/validators";
+import { required, maxLength15, minLength8, email } from "../../globals/validators";
 
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
 const logo = require("../../../assets/Logo/white.png");
@@ -154,7 +154,7 @@ class LoginForm extends Component {
                 name="password"
                 component={this.renderInput}
                 type="password"
-                validate={[alphaNumeric, minLength8, maxLength15, required]}
+                validate={[minLength8, maxLength15, required]}
               />
 
               {error && <Text style={globalStyles.formErrorText3}>{errorText}</Text>}
