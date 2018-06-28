@@ -14,6 +14,8 @@ import { Content, Icon, Toast, Spinner } from "native-base";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 
+import Amplitude from "../../globals/amplitude";
+
 import { authUser } from "./state/actions";
 
 import globalStyles from "../../globals/globalStyles";
@@ -36,6 +38,7 @@ class LoginForm extends Component {
   componentDidMount () {
     this.keyboardDidShowListener = Keyboard.addListener("keyboardDidShow", this._keyboardDidShow.bind(this));
     this.keyboardDidHideListener = Keyboard.addListener("keyboardDidHide", this._keyboardDidHide.bind(this));
+    Amplitude.track(Amplitude.events.VIEW_LOGIN_SCREEN);
   }
 
   componentWillUnmount () {

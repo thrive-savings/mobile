@@ -1,3 +1,4 @@
+import amplitude from "../../../globals/amplitude";
 import { REQUEST_URL, GET_UPDATES, BONUS_NOTIFICATION_SEEN, UPDATE_AUTH_DATA, UPDATE_ACCOUNT_DATA, UPDATE_GOALS_DATA, UPDATE_AVATAR } from "./constants";
 const initialState = {
   data: {},
@@ -63,6 +64,10 @@ export default function authReducer (state = initialState, action) {
       };
     case `${REQUEST_URL}_SUCCEED`:
       const { payload: { data, avatar } } = action;
+      amplitude.track(amplitude.events.LOGIN_SUCCESS, {
+        userId: data.authorized.email,
+        userProperties: data.authorized
+      })      
       return {
         ...state,
         data,
