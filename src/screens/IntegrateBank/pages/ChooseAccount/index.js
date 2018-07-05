@@ -58,7 +58,7 @@ class ChooseAccount extends Component {
       const accounts = data.PageIntegration.accounts;
       if (accounts.length > 0) {
         bank = accounts[0].bank;
-        accountsView = accounts.map(({ id, title }) => {
+        accountsView = accounts.map(({ id, title, number }) => {
           const isSelected = this.state.selectedAccountID === id;
           return (
             <TouchableOpacity key={id} activeOpacity={0.6} style={styles.accountRow} onPress={()=>this.setState({selectedAccountID: id})}>
@@ -74,7 +74,7 @@ class ChooseAccount extends Component {
                       <Svg.Circle cx="8" cy="8" r={7} stokeWidth={1} stroke={colors.darkerGrey} fill={"white"} />
                     </Svg>
               }
-              <Text style={[styles.accountTitleText, (isSelected && styles.selectedTitleText)]}>{title}</Text>
+              <Text style={[styles.accountTitleText, (isSelected && styles.selectedTitleText)]}>{title + " xxx" + number.substr(Math.max(0, number.length - 3))}</Text>
             </TouchableOpacity>
           );
         });
