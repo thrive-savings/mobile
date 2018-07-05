@@ -12,6 +12,8 @@ import { Card } from "native-base";
 import { LinearGradient } from "expo";
 import { connect } from "react-redux";
 
+import amplitude from "../../globals/amplitude";
+
 import Header from "../../components/Header";
 import ModalTemplate from "../../components/ModalTemplate";
 import ProgressBar from "../../components/ProgressBar";
@@ -42,6 +44,7 @@ class Home extends Component {
   notificationClicked(notificationType) {
     switch (notificationType) {
       case "SavingPreferences":
+        amplitude.track(amplitude.events.SAVING_PREFERENCES_NOTIFICATION_CLICKED);
         this.props.navigation.navigate("SavingPreferences");
         break;
       case "EmployerBonus":

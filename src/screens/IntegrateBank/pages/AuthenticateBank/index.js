@@ -6,6 +6,8 @@ import {
 import { Spinner } from "native-base";
 import { connect } from "react-redux";
 
+import amplitude from "../../../../globals/amplitude";
+
 import Dots from "../../../../components/Dots";
 
 import { FlinksURL } from "../../../../../config";
@@ -21,6 +23,10 @@ class AuthenticateBank extends Component {
     super(props);
 
     this.onMessage = this.onMessage.bind(this);
+  }
+
+  componentDidMount() {
+    amplitude.track(amplitude.events.AUTH_BANK_VIEW);
   }
 
   onMessage(event) {

@@ -14,6 +14,7 @@ import CheckBox from "react-native-check-box";
 
 import { Field, reduxForm } from "redux-form";
 
+import amplitude from "../../../../globals/amplitude";
 import SpecialButton from "../../../../components/SpecialButton";
 
 import globalStyles from "../../../../globals/globalStyles";
@@ -45,6 +46,10 @@ class PersonalDetails extends Component {
       didAgree: false,
       address: {}
     };
+  }
+
+  componentDidMount() {
+    amplitude.track(amplitude.events.PERSONAL_DETAILS_VIEW);
   }
 
   submit() {

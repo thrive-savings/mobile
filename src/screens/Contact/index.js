@@ -10,6 +10,8 @@ import {
 
 import Communications from "react-native-communications";
 
+import amplitude from "../../globals/amplitude";
+
 import Header from "../../components/Header";
 import SpecialButton from "../../components/SpecialButton";
 
@@ -23,6 +25,21 @@ const phoneIcon = require("../../../assets/Icons/Phone/phone.png");
 const emailIcon = require("../../../assets/Icons/Email/email.png");
 
 class Contact extends Component {
+  textThriveBot() {
+    amplitude.track(amplitude.events.CLICKED_TALK_TO_BOT);
+    Communications.text("6476941740", "Balance");
+  }
+
+  callSupport() {
+    amplitude.track(amplitude.events.CLICKED_CALL_SUPPORT);
+    Communications.phonecall("8332433223", true);
+  }
+
+  emailSupport() {
+    amplitude.track(amplitude.events.CLICKED_EMAIL_SUPPORT);
+    Communications.email(["help@thrivesavings.com"],null,null,"Help Needed",null)
+  }
+
   render() {
     return (
       <View style={globalStyles.container}>
@@ -34,14 +51,14 @@ class Contact extends Component {
             <View style={[styles.content, globalStyles.shadow]}>
               <Image source={botIcon} />
               <Text style={styles.descText}>We’re more than happy to help with any questions or feedback you may have.{"\n"}You can chat with ThriveBot and perform basic commands regarding your account.</Text>
-              <SpecialButton text={"TALK TO THRIVEBOT"} onClick={() => Communications.text("6476941740", "Balance")}/>
+              <SpecialButton text={"TALK TO THRIVEBOT"} onClick={() => this.textThriveBot()}/>
               <Text style={styles.descText}>You can also choose to speak with one of our representatives. Our office hours are <Text style={styles.boldText}> Monday to Friday, 9:00AM - 5:00PM EST.</Text></Text>
               <View style={styles.helpButtonsContainer}>
-                <TouchableOpacity activeOpacity={0.6} style={styles.helpButton} onPress={() => Communications.phonecall("8332433223", true)}>
+                <TouchableOpacity activeOpacity={0.6} style={styles.helpButton} onPress={() => this.callSupport()}>
                   <Image source={phoneIcon} />
                   <Text style={styles.blueText}>CALL</Text>
                 </TouchableOpacity>
-                <TouchableOpacity activeOpacity={0.6} style={styles.helpButton} onPress={() => Communications.email(["help@thrivesavings.com"],null,null,"Help Needed",null)}>
+                <TouchableOpacity activeOpacity={0.6} style={styles.helpButton} onPress={() => this.emailSupport()}>
                   <Image source={emailIcon} />
                   <Text style={styles.blueText}>EMAIL</Text>
                 </TouchableOpacity>

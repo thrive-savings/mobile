@@ -8,6 +8,8 @@ import {
 } from "react-native";
 import Communications from "react-native-communications";
 
+import amplitude from "../../globals/amplitude";
+
 import Header from "../../components/Header";
 
 import globalStyles from "../../globals/globalStyles";
@@ -17,6 +19,10 @@ import colors from "../../theme/colors";
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
 
 class TOS extends Component {
+  componentDidMount() {
+    amplitude.track(amplitude.events.TOS_VIEW);
+  }
+
   render() {
     const navigation = this.props.navigation;
     return (

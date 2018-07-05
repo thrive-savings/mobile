@@ -9,6 +9,8 @@ import {
   Text
 } from "react-native";
 
+import amplitude from "../../globals/amplitude";
+
 import Header from "../../components/Header";
 import Accordion from "../../components/Accordion";
 import FAQ_CATEGORIES from "../../globals/faqCategories";
@@ -29,12 +31,21 @@ class Faq extends Component {
     };
   }
 
+  componentDidMount() {
+    amplitude.track(amplitude.events.FAQ_VIEW);
+  }
+
   headerIconClicked() {
     if (this.state.activeStep) {
       this.setState({activeStep: 0, activeFaqIndex: -1});
     } else {
       this.props.navigation.navigate("DrawerOpen");
     }
+  }
+
+  categoryClicked(index) {
+    amplitude.track(amplitude.events.FAQ_CATEGORY_VIEW, { 'Category Name': FAQ_CATEGORIES[index].name })
+    this.setState({activeStep: 1, activeFaqIndex: index});
   }
 
   renderQuestions() {
@@ -60,7 +71,7 @@ class Faq extends Component {
   renderCategories() {
     const body = FAQ_CATEGORIES.map(({ icon, name }, index) => {
       return (
-        <TouchableOpacity key={index} activeOpacity={0.6} style={[styles.categoryHolder, globalStyles.shadow]} onPress={() => this.setState({activeStep: 1, activeFaqIndex: index})}>
+        <TouchableOpacity key={index} activeOpacity={0.6} style={[styles.categoryHolder, globalStyles.shadow]} onPress={() => this.categoryClicked(index)}>
           <Image source={icon} />
           <Text style={styles.categoryName}>{name}</Text>
         </TouchableOpacity>

@@ -8,6 +8,8 @@ import {
 import { LinearGradient } from "expo";
 import { connect } from "react-redux";
 
+import amplitude from "../../../../globals/amplitude";
+
 import SpecialButton from "../../../../components/SpecialButton";
 import Dots from "../../../../components/Dots";
 
@@ -27,6 +29,10 @@ class SavingType extends Component {
 
     this.next = this.next.bind(this);
     this.renderType = this.renderType.bind(this);
+  }
+
+  componentDidMount() {
+    amplitude.track(amplitude.events.SAVING_TYPE_VIEW);
   }
 
   next() {

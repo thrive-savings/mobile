@@ -11,6 +11,8 @@ import { Spinner, Toast } from "native-base";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 
+import amplitude from "../../../../globals/amplitude";
+
 import { verifyReferralCode } from "../../state/actions";
 
 import globalStyles from "../../../../globals/globalStyles";
@@ -22,6 +24,10 @@ import { required } from "../../../../globals/validators";
 const logo = require("../../../../../assets/Logo/white.png");
 
 class ReferralCodeForm extends Component {
+  componentDidMount() {
+    amplitude.track(amplitude.events.EMPLOYER_CODE_VIEW);
+  }
+
   textInput;
   renderInput({ input, label, type, meta: { touched, error, warning } }) {
     return (

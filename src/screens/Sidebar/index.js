@@ -7,6 +7,7 @@ import {
   Text,
 } from "native-base";
 
+import amplitude from "../../globals/amplitude";
 import { clearStorage } from "../../globals/clearStorage";
 import getAvatar from "../../globals/getAvatar";
 import { getDollarString } from "../../globals/helpers";
@@ -35,6 +36,12 @@ class SideBar extends Component {
   onMenuItemClick(index) {
     this.setState({activeMenuItemIndex: index});
     this.props.navigation.navigate(MENU_ITEMS[index].screen);
+  }
+
+  onLogout() {
+    amplitude.identify("N/A");
+    amplitude.track(amplitude.events.LOGOUT);    
+    this.props.clearStorage();
   }
 
   renderMenuItems() {
@@ -79,7 +86,7 @@ class SideBar extends Component {
           {this.renderMenuItems()}
         </View>
         <View style={[styles.footer, styles.padder]}>
-          <TouchableOpacity activeOpacity={0.6} onPress={this.props.clearStorage} hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}>
+          <TouchableOpacity activeOpacity={0.6} onPress={() => this.onLogout()} hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}>
             <Text style={styles.logoutText}>Log Out</Text>
           </TouchableOpacity>
           <Image source={logo} />

@@ -1,8 +1,10 @@
-// @flow
 import React from "react";
+import { AppState } from "react-native";
 import { connect } from "react-redux";
 import { StackNavigator, DrawerNavigator } from "react-navigation";
 import { Root } from "native-base";
+import amplitude from "./globals/amplitude";
+
 import Login from "./screens/Login/";
 import ForgotPassword from "./screens/ForgotPassword";
 import SignUp from "./screens/SignUp/";
@@ -88,6 +90,22 @@ const StackerWithSetPhone = StackNavigator(
 );
 
 class App extends React.Component {
+  componentDidMount() {
+    if (AppState.currentState) {
+      this._handleAppStateChange(AppState.currentState);
+    }
+    AppState.addEventListener('change', this._handleAppStateChange);
+  }
+
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this._handleAppStateChange);
+  }
+
+  _handleAppStateChange(nextAppState) {
+    const appStateEvent = nextAppState === "active" ? amplitude.events.APP_ACTIVE : nextAppState === "background" ? amplitude.events.APP_IN_BACKGROUND : amplitude.events.APP_INACTIVE;
+    amplitude.track(appStateEvent);
+  }
+
   componentWillMount() {
     const authorized = getAuthorized(this.props.authReducer);
     if (authorized) {

@@ -1,3 +1,4 @@
+import amplitude from "../../../globals/amplitude";
 import { SIGN_UP_URL, VERIFY_REFERRAL_URL } from "./constants";
 const initialState = {
   data: {},
@@ -42,6 +43,7 @@ export default function signUpReducer (state = initialState, action) {
         };
     case `${VERIFY_REFERRAL_URL}_SUCCEED`:
         const { payload: { data: verifyReferralData } } = action;
+        amplitude.track(amplitude.events.EMPLOYER_CODE_VERIFIED, verifyReferralData);
         return {
           ...state,
           data: verifyReferralData ? verifyReferralData : {},

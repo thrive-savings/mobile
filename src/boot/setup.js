@@ -10,12 +10,6 @@ import { imageAssets, cacheImages } from "./images";
 import fontAssets from "./fonts";
 
 export default class Setup extends Component {
-  state: {
-    store: Object,
-    persistor: Object,
-    isReady: boolean
-  };
-
   constructor() {
     super();
     const { store, persistor } = configureStore();

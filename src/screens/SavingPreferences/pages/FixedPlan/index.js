@@ -4,6 +4,8 @@ import { View, TouchableOpacity, Text } from "react-native";
 import { Left, Right } from "native-base";
 import { connect } from "react-redux";
 
+import amplitude from "../../../../globals/amplitude";
+
 import SpecialButton from "../../../../components/SpecialButton";
 import ModalTemplate from "../../../../components/ModalTemplate";
 import Dots from "../../../../components/Dots";
@@ -37,6 +39,10 @@ class FixedPlan extends Component {
     this.next = this.next.bind(this);
     this.numPadClicked = this.numPadClicked.bind(this);
     this.frequencySelected = this.frequencySelected.bind(this);
+  }
+
+  componentDidMount() {
+    amplitude.track(amplitude.events.SAVING_DETAILS_VIEW);
   }
 
   next() {

@@ -12,6 +12,8 @@ import { connect } from "react-redux";
 import { Content, Card, Toast } from "native-base";
 import { Field, reduxForm } from "redux-form";
 
+import amplitude from "../../globals/amplitude";
+
 import Header from "../../components/Header";
 import SpecialButton from "../../components/SpecialButton";
 
@@ -34,6 +36,10 @@ class SetPhoneForm extends Component {
     super(props);
 
     this.renderInput = this.renderInput.bind(this);
+  }
+
+  componentDidMount() {
+    amplitude.track(amplitude.events.SET_PHONE_VIEW, { step: this.props.setPhoneReducer.step });
   }
 
   renderInput({ input, label, type, meta: { touched, error, warning } }) {

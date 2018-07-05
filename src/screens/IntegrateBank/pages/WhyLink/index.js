@@ -8,6 +8,8 @@ import {
   TouchableOpacity
 } from "react-native";
 
+import amplitude from "../../../../globals/amplitude";
+
 import Dots from "../../../../components/Dots";
 import SpecialButton from "../../../../components/SpecialButton";
 import Accordion from "../../../../components/Accordion";
@@ -25,6 +27,10 @@ class WhyLink extends Component {
     this.state = {
       descExpanded: false
     };
+  }
+
+  componentDidMount() {
+    amplitude.track(amplitude.events.WHY_LINK_VIEW);
   }
 
   render() {

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { put, takeEvery, select, call } from "redux-saga/effects";
 import { API } from "../../config";
+import amplitude from "./amplitude";
 import getAuthorized from "./getAuthorized";
 
 const API_REQUEST = "API_REQUEST";
@@ -37,6 +38,19 @@ export const requestApiSaga = function * () {
     }
 
     const { payload, error } = yield call(request, method, url, params, config);
+
+    if (error) {
+      const { errors, status } = error;
+      let errorContent = {}
+      if (errors) {
+        errorContent.key = errors[0].key;
+        errorContent.value = errors[0].value;
+        if (status) { errorContent.status = status; }
+      } else {
+        errorContent = error;
+      }
+      amplitude.track(amplitude.events.SERVER_ERROR, { url, error: errorContent })
+    }
 
     const type = `${url}_${payload ? "SUCCEED" : "FAIL"}`;
     yield put({ error, meta, payload, type });

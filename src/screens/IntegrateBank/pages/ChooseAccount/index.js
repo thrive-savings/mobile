@@ -9,6 +9,8 @@ import { Spinner, Toast } from "native-base";
 import { connect } from "react-redux";
 import { Svg } from "expo";
 
+import amplitude from "../../../../globals/amplitude";
+
 import Dots from "../../../../components/Dots";
 
 import { setDefault } from "../../state/actions";
@@ -27,6 +29,10 @@ class ChooseAccount extends Component {
     this.state = {
       selectedAccountID: undefined
     };
+  }
+
+  componentDidMount() {
+    amplitude.track(amplitude.events.CHOOSE_DEFAULT_ACCOUNT_VIEW);
   }
 
   setDefault() {
