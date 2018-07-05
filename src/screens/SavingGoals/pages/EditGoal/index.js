@@ -11,6 +11,8 @@ import { connect } from "react-redux";
 
 import DatePicker from "react-native-datepicker";
 
+import amplitude from "../../../../globals/amplitude";
+
 import SpecialButton from "../../../../components/SpecialButton";
 import ModalTemplate from "../../../../components/ModalTemplate";
 
@@ -53,6 +55,10 @@ class EditGoal extends Component {
     this.numPadClicked = this.numPadClicked.bind(this);
     this.nameSet = this.nameSet.bind(this);
     this.percentagePadClicked = this.percentagePadClicked.bind(this);
+  }
+
+  componentDidMount() {
+    amplitude.track(amplitude.events.EDIT_GOAL_VIEW, { "New Goal": this.props.newGoal });
   }
 
   submit() {

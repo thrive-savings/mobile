@@ -7,6 +7,8 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 
+import amplitude from "../../../../globals/amplitude";
+
 import ModalTemplate from "../../../../components/ModalTemplate";
 import ProgressBar from "../../../../components/ProgressBar";
 
@@ -28,6 +30,10 @@ class GoalDetail extends Component {
     this.state = {
       showInfoModal: false
     };
+  }
+
+  componentDidMount() {
+    amplitude.track(amplitude.events.GOAL_DETAIL_VIEW);
   }
 
   getInfoModalContent() {

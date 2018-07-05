@@ -4,7 +4,7 @@ import {
   Text,
   TextInput
 } from "react-native";
-import { Icon, Toast } from "native-base";
+import { Toast } from "native-base";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 
@@ -17,13 +17,22 @@ import colors from "../../../../theme/colors";
 import { required, minLength8 } from "../../../../globals/validators";
 
 class ChangePasswordForm extends Component {
-  textInput: any;
+  passwordTextInput; newPasswordTextInput; confirmPasswordTextInput;
   renderInput({ input, label, type, meta: { touched, error, warning } }) {
     return (
       <View>
         <View style={styles.inputGrp}>
           <TextInput
-            ref={c => (this.textInput = c)}
+            ref={c => {
+              switch (input.name) {
+                case "password":
+                  this.passwordTextInput = c; break;
+                case "newPassword":
+                  this.newPasswordTextInput = c; break;
+                case "confirmPassword":
+                  this.confirmPasswordTextInput = c; break;
+              }
+            }}
             style={styles.input}
             placeholder={
               input.name === "password"
@@ -32,19 +41,20 @@ class ChangePasswordForm extends Component {
                   ? "New Password"
                   : "Confirm Password"
             }
+            returnKeyType={input.name === "confirmPassword" ? "done" : "next"}
+            onSubmitEditing={() => {
+              switch (input.name) {
+                case "password":
+                  this.newPasswordTextInput.focus(); break;
+                case "newPassword":
+                  this.confirmPasswordTextInput.focus(); break;
+              }
+            }}
             placeholderTextColor={colors.darkerGrey}
             secureTextEntry={true}
             underlineColorAndroid="transparent"
             {...input}
           />
-          {touched && error
-            ? <Icon
-                active
-                style={globalStyles.formErrorIcon}
-                onPress={() => this.textInput._root.clear()}
-                name="close"
-              />
-            : <Text />}
         </View>
         {touched && error
           ? <Text style={globalStyles.formErrorText1}>

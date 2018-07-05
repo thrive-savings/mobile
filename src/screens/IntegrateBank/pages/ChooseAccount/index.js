@@ -74,7 +74,7 @@ class ChooseAccount extends Component {
                       <Svg.Circle cx="8" cy="8" r={7} stokeWidth={1} stroke={colors.darkerGrey} fill={"white"} />
                     </Svg>
               }
-              <Text style={[styles.accountTitleText, (isSelected && styles.selectedTitleText)]}>{title + " xxx" + number.substr(Math.max(0, number.length - 3))}</Text>
+              <Text style={[styles.accountTitleText, (isSelected && styles.selectedTitleText)]}>{title + " ***" + number.substr(Math.max(0, number.length - 4))}</Text>
             </TouchableOpacity>
           );
         });

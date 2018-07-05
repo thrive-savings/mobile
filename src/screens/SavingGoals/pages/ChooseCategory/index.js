@@ -6,12 +6,17 @@ import {
   Image,
 } from "react-native";
 
+import amplitude from "../../../../globals/amplitude";
 import GOAL_CATEGORIES from "../../../../globals/goalCategories";
 
 import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
 
 class ChooseCategory extends Component {
+  componentDidMount() {
+    amplitude.track(amplitude.events.CHOOSE_GOAL_CATEGORY_VIEW);
+  }
+
   render() {
     const goalCategories = Object.keys(GOAL_CATEGORIES);
     const goalCategoryViews = goalCategories.map((category, index) => {
