@@ -150,7 +150,7 @@ class EditGoal extends Component {
 
     const { data } = this.props;
 
-    let { category, name, amount, percentage } = data;
+    let { category, name, amount, percentage, desiredDate } = data;
     if (!category) { category = NEW_GOAL_DEFAULTS.category; }
     if (!name) { name = NEW_GOAL_DEFAULTS.name; }
     if (this.state.newName) { name = this.state.newName; }
@@ -162,6 +162,8 @@ class EditGoal extends Component {
     if (!percentage) { percentage = NEW_GOAL_DEFAULTS.percentage; }
     if (this.state.newPercentage) { percentage = this.state.newPercentage; }
     const percentageStr = percentage + "%";
+
+    if (this.state.newDate) { desiredDate = this.state.newDate; }
 
     return (
       <View style={[styles.container, globalStyles.shadow]}>
@@ -203,7 +205,7 @@ class EditGoal extends Component {
                 dateInput: styles.datePickerInput
               }}
               style={styles.dateOfBirth}
-              date={this.state.newDate}
+              date={desiredDate}
               placeholder="Choose Date"
               format="YYYY-MM-DD"
               confirmBtnText="Confirm"
