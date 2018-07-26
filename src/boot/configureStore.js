@@ -10,7 +10,7 @@ import { loginSaga, getUpdatesSaga, bonusNotificationSeenSaga } from "../screens
 import { signUpSaga, signUpSucceedSaga, verifyReferralCodeSaga } from "../screens/SignUp/state/sagas";
 import { setPhoneSaga, setPhoneSucceedSaga, verifyCodeSaga, verifyCodeSucceedSaga, resendCodeSaga } from "../screens/SetPhone/state/sagas";
 import { passwordRequestSaga, passwordResetSaga } from "../screens/ForgotPassword/state/sagas";
-import { fetchAccountsSaga, setDefaultSaga, updateUserAccountSaga } from "../screens/IntegrateBank/state/sagas";
+import { fetchAccountsSaga, setDefaultSaga, getUiTokenSaga, updateUserAccountSaga } from "../screens/IntegrateBank/state/sagas";
 import { setWorkTypeSaga, setSavingTypeSaga, setSavingDetailsSaga, preferencesInitialSetDoneSaga } from "../screens/SavingPreferences/state/sagas";
 import { uploadPhotoSaga, deletePhotoSaga, setEmailSaga, setEmailSucceedSaga, setPasswordSaga, setPasswordSucceedSaga } from "../screens/Profile/state/sagas";
 import { addGoalSaga, addGoalSucceedSaga, updateGoalSaga, updateGoalSucceedSaga, deleteGoalSaga, deleteGoalSucceedSaga } from "../screens/SavingGoals/state/sagas";
@@ -45,6 +45,7 @@ export default function configureStore() {
   sagaMiddleware.run(passwordResetSaga);
   sagaMiddleware.run(fetchAccountsSaga);
   sagaMiddleware.run(setDefaultSaga);
+  sagaMiddleware.run(getUiTokenSaga);
   sagaMiddleware.run(updateUserAccountSaga);
   sagaMiddleware.run(setWorkTypeSaga);
   sagaMiddleware.run(setSavingTypeSaga);

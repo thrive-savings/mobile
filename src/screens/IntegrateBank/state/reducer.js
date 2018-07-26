@@ -1,8 +1,10 @@
-import { FETCH_ACCOUNTS_URL, SET_DEFAULT_URL, CHANGE_BANK_STEP } from "./constants";
+import { FETCH_ACCOUNTS_URL, SET_DEFAULT_URL, GET_UI_TOKEN, CHANGE_BANK_STEP } from "./constants";
 const initialState = {
   data: {},
+  quovoUiToken: undefined,
   defaultAccountData: {},
   step: undefined,
+  isGetting: false,
   isFetching: false,
   isSetting: false,
   error: false,
@@ -53,6 +55,29 @@ export default function integrateBankReducer (state = initialState, action) {
       return {
         ...state,
         isSetting: false,
+        error: true,
+        errorMessage: action.error
+      };
+
+    // Get Quovo Token cases
+    case `${GET_UI_TOKEN}_SUBMIT`:
+      return {
+        ...state,
+        isGetting: true
+      };
+    case `${GET_UI_TOKEN}_SUCCEED`:
+      const { payload: { data: { token } } } = action;
+      return {
+        ...state,
+        quovoUiToken: token,
+        isGetting: false,
+        error: false,
+        errorMessage: ""
+      };
+    case `${GET_UI_TOKEN}_FAIL`:
+      return {
+        ...state,
+        isGetting: false,
         error: true,
         errorMessage: action.error
       };
