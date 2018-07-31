@@ -5,6 +5,7 @@ import { StackNavigator, DrawerNavigator } from "react-navigation";
 import { Root } from "native-base";
 import amplitude from "./globals/amplitude";
 
+import Landing from "./screens/Landing";
 import Login from "./screens/Login/";
 import ForgotPassword from "./screens/ForgotPassword";
 import SignUp from "./screens/SignUp/";
@@ -40,6 +41,7 @@ const Drawer = DrawerNavigator(
 );
 
 const stackScreens = {
+  Landing: { screen: Landing },
   Login: { screen: Login },
   SignUp: { screen: SignUp },
   ForgotPassword: { screen: ForgotPassword },
@@ -57,11 +59,11 @@ const stackerOptions = {
   headerMode: "none"
 };
 
-const StackerWithLogin = StackNavigator(
+const StackerWithLanding = StackNavigator(
   stackScreens,
   {
     ...stackerOptions,
-    initialRouteName: "Login"
+    initialRouteName: "Landing"
   }
 );
 
@@ -114,13 +116,13 @@ class App extends React.Component {
   }
 
   render() {
-    let stacker = <StackerWithLogin />;
+    let stacker = <StackerWithLanding />;
 
     const authorized = getAuthorized(this.props.authReducer);
     if (authorized) {
       if (!authorized.isVerified) {
         stacker = <StackerWithSetPhone />;
-      } else if (authorized.bankLinked || true) {
+      } else if (authorized.bankLinked) {
         stacker = <StackerWithDrawer />;
       } else {
         stacker = <StackerWithIntegrateBank />;
