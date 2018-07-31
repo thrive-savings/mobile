@@ -37,7 +37,7 @@ class LoginForm extends Component {
 
   componentDidMount () {
     this.keyboardDidShowListener = Keyboard.addListener("keyboardDidShow", this._keyboardDidShow.bind(this));
-    this.keyboardDidHideListener = Keyboard.addListener("keyboardDidHide", this._keyboardDidHide.bind(this));    
+    this.keyboardDidHideListener = Keyboard.addListener("keyboardDidHide", this._keyboardDidHide.bind(this));
     amplitude.track(amplitude.events.LOGIN_VIEW);
   }
 
@@ -157,7 +157,7 @@ class LoginForm extends Component {
                 name="password"
                 component={this.renderInput}
                 type="password"
-                validate={[minLength8, maxLength15, required]}
+                validate={[minLength8, required]}
               />
 
               {error && <Text style={globalStyles.formErrorText3}>{errorText}</Text>}

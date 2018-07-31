@@ -169,13 +169,13 @@ class ForgotPasswordForm extends Component {
           name="password"
           component={this.renderInput}
           type="password"
-          validate={minLength8}
+          validate={minLength8, required}
         />
         <Field
           name="confirmPassword"
           component={this.renderInput}
           type="confirmPassword"
-          validate={minLength8}
+          validate={minLength8, required}
         />
       </View>
     );

@@ -260,7 +260,7 @@ class PersonalDetails extends Component {
             name="password"
             component={this.renderInput}
             type="password"
-            validate={[required, minLength8, alphaNumeric]}
+            validate={[required, minLength8]}
           />
 
           <View style={styles.checkboxRow}>
