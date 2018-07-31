@@ -1,4 +1,4 @@
-import { styles } from "./styles";
+import styles from "./styles";
 
 const INPUT_FIELDS = {
   firstName: {
@@ -8,22 +8,6 @@ const INPUT_FIELDS = {
   lastName: {
     placeholder: "Last Name",
     extraStyle: styles.names
-  },
-  dateOfBirth: {
-    placeholder: "Date of Birth",
-    extraStyle: styles.dateOfBirth
-  },
-  gender: {
-    placeholder: "Gender",
-    extraStyle: styles.gender
-  },
-  address: {
-    placeholder: "Address",
-    extraStyle: styles.address
-  },
-  unit: {
-    placeholder: "Unit",
-    extraStyle: styles.unit
   },
   email: {
     placeholder: "Email",

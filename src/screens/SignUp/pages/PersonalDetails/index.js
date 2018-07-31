@@ -18,7 +18,7 @@ import amplitude from "../../../../globals/amplitude";
 import SpecialButton from "../../../../components/SpecialButton";
 
 import globalStyles from "../../../../globals/globalStyles";
-import { styles, addressFinderStyles } from "./styles";
+import styles from "./styles";
 import colors from "../../../../theme/colors";
 
 import { required, minLength8, alphaNumeric, email } from "../../../../globals/validators";
@@ -37,14 +37,8 @@ class PersonalDetails extends Component {
 
     this.submit = this.submit.bind(this);
 
-    this.addressSelected = this.addressSelected.bind(this);
-    this.genderSelected = this.genderSelected.bind(this);
-
     this.state = {
-      date: "",
-      gender: undefined,
-      didAgree: false,
-      address: {}
+      didAgree: false
     };
   }
 
@@ -58,7 +52,7 @@ class PersonalDetails extends Component {
       let companyID = this.props.signUpReducer.companyID;
       companyID = companyID > 0 ? companyID : 1;
 
-      const { email: userEmail, password, firstName, lastName, unit } = this.props.values;
+      const { email: userEmail, password, firstName, lastName } = this.props.values;
       this.props.signUpUser({
         email: userEmail, firstName, lastName, password,
         companyID: companyID.toString()
@@ -75,33 +69,8 @@ class PersonalDetails extends Component {
     });
   }
 
-  // "details" is provided when fetchDetails = true
-  addressSelected(data, details) {
-    let streetNumber, streetName, city, state, country, postalCode;
-    details.address_components.forEach(component => {
-      const { long_name, types } = component;
-      if (types.indexOf("street_number") > -1) {
-        streetNumber = long_name;
-      } else if (types.indexOf("route") > -1) {
-        streetName = long_name;
-      } else if (types.indexOf("locality") > -1) {
-        city = long_name;
-      } else if (types.indexOf("administrative_area_level_1") > -1) {
-        state = long_name;
-      } else if (types.indexOf("country") > -1) {
-        country = long_name;
-      } else if (types.indexOf("postal_code") > -1) {
-        postalCode = long_name;
-      }
-    });
-    this.setState({ address: { streetNumber, streetName, city, state, country, postalCode } });
-  }
 
-  genderSelected(index, gender) {
-    this.setState({ gender });
-  }
-
-  firstNameTextInput; lastNameTextInput; unitTextInput; emailTextInput; passwordTextInput;
+  firstNameTextInput; lastNameTextInput; emailTextInput; passwordTextInput;
   renderInput({ input, label, type, meta: { touched, error, warning } }) {
     return (
       <View>
@@ -113,8 +82,6 @@ class PersonalDetails extends Component {
                   this.firstNameTextInput = c; break;
                 case "lastName":
                   this.lastNameTextInput = c; break;
-                case "unit":
-                  this.unitTextInput = c; break;
                 case "email":
                   this.emailTextInput = c; break;
                 case "password":
@@ -132,8 +99,6 @@ class PersonalDetails extends Component {
                 case "firstName":
                   this.lastNameTextInput.focus(); break;
                 case "lastName":
-                  this.unitTextInput.focus(); break;
-                case "unit":
                   this.emailTextInput.focus(); break;
                 case "email":
                   this.passwordTextInput.focus(); break;

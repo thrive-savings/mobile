@@ -9,7 +9,7 @@ const formHorizontalPadding = 15;
 const formWidthAfterPadding = formWidth - 2 * formHorizontalPadding;
 const formSpaceBetween = 10;
 
-const styles = StyleSheet.create({
+export default StyleSheet.create({
   formContainer: {
     alignSelf: "center",
     width: formWidth
@@ -38,65 +38,6 @@ const styles = StyleSheet.create({
   },
   names: {
     width: formWidthAfterPadding / 2 - formSpaceBetween / 2
-  },
-  dateOfBirth: {
-    width: (formWidthAfterPadding * 2) / 3 - formSpaceBetween / 2 + 2,
-    marginLeft: -2
-  },
-  gender: {
-    borderWidth: 1,
-    borderRadius: 8,
-    borderColor: colors.darkerGrey,
-    justifyContent: "center",
-    width: formWidthAfterPadding / 3 - formSpaceBetween / 2,
-    height: 30,
-    paddingLeft: 10
-  },
-  genderDropdownList: {
-    height: 120,
-    borderWidth: 1,
-    borderRadius: 8,
-    borderColor: colors.darkerGrey
-  },
-  genderText: {
-    fontSize: 13,
-    fontFamily: "LatoRegular"
-  },
-  genderPlaceholder: {
-    color: colors.darkerGrey
-  },
-  genderSelected: {
-    color: colors.charcoal
-  },
-  unit: {
-    width: formWidthAfterPadding / 3 - formSpaceBetween / 2
-  },
-  dateGenderRowExtra: {
-    paddingBottom: 12.5
-  },
-  datePickerInput: {
-    height: 30,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: colors.darkerGrey,
-    backgroundColor: "transparent",
-    marginBottom: 10,
-    marginLeft: 2
-  },
-  datePickerPlaceholder: {
-    color: colors.darkerGrey,
-    paddingLeft: 10,
-    fontSize: 13,
-    fontFamily: "LatoRegular"
-  },
-  datePickerText: {
-    color: colors.charcoal,
-    paddingLeft: 10,
-    fontSize: 13,
-    fontFamily: "LatoRegular"
   },
   checkboxRow: {
     flexDirection: "row",
@@ -150,48 +91,3 @@ const styles = StyleSheet.create({
     height: 30
   }
 });
-
-const addressFinderStyles = StyleSheet.create({
-  textInputContainer: {
-    borderWidth: 1,
-    borderBottomWidth: 1.2,
-    borderColor: colors.darkerGrey,
-    borderRadius: 8,
-    backgroundColor: "transparent",
-    height: 30,
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    width: (formWidthAfterPadding * 2) / 3 - formSpaceBetween / 2
-  },
-  textInput: {
-    color: colors.charcoal,
-    fontSize: 13,
-    fontFamily: "LatoRegular",
-    marginLeft: 0,
-    marginBottom: 7,
-    height: 25
-  },
-  listView: {
-    width: formWidthAfterPadding,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: colors.darkerGrey,
-    backgroundColor: "transparent",
-    paddingHorizontal: 10
-  },
-  row: {
-    paddingHorizontal: 0,
-  },
-  description: {
-    color: colors.darkerGrey,
-    fontSize: 13,
-    fontFamily: "LatoRegular"
-  },
-  separator: {
-    height: 1,
-    backgroundColor: colors.darkerGrey
-  }
-});
-
-export { styles, addressFinderStyles };
