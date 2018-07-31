@@ -59,18 +59,11 @@ class PersonalDetails extends Component {
       companyID = companyID > 0 ? companyID : 1;
 
       const { email: userEmail, password, firstName, lastName, unit } = this.props.values;
-      const { date, gender, didAgree, address } = this.state;
-      if (date && gender && didAgree && Object.keys(address).length > 0) {
-        this.props.signUpUser({
-          email: userEmail, firstName, lastName, password, date, gender,
-          companyID: companyID.toString(),
-          address: {
-            ...address,
-            unit
-          }
-        });
-        return;
-      }
+      this.props.signUpUser({
+        email: userEmail, firstName, lastName, password,
+        companyID: companyID.toString()
+      });
+      return;
     }
 
     Toast.show({
@@ -192,61 +185,6 @@ class PersonalDetails extends Component {
               component={this.renderInput}
               type="lastName"
               validate={[required]}
-            />
-          </View>
-          <View style={[styles.inputRow, styles.dateGenderRowExtra]}>
-            <DatePicker
-              customStyles={{
-                placeholderText: styles.datePickerPlaceholder,
-                dateText: styles.datePickerText,
-                dateInput: styles.datePickerInput
-              }}
-              style={styles.dateOfBirth}
-              date={this.state.date}
-              placeholder="Date of birth"
-              format="YYYY-MM-DD"
-              maxDate="2016-06-01"
-              confirmBtnText="Confirm"
-              cancelBtnText="Cancel"
-              showIcon={false}
-              androidMode="spinner"
-              onDateChange={date => this.setState({ date })}
-            />
-            <ModalDropdown
-              options={["Male", "Female", "Neutral"]}
-              defaultValue="Gender"
-              style={styles.gender}
-              dropdownStyle={styles.genderDropdownList}
-              textStyle={[styles.genderText, this.state.gender ? styles.genderSelected : styles.genderPlaceholder]}
-              dropdownTextStyle={[styles.genderText, styles.genderSelected]}
-              dropdownTextHighlightStyle={[styles.genderText, styles.genderSelected]}
-              onSelect={this.genderSelected}
-            />
-          </View>
-
-          <View style={styles.inputRow}>
-            <GooglePlacesAutocomplete
-              placeholder="Address"
-              placeholderTextColor={colors.darkerGrey}
-              minLength={2}
-              autoFocus={false}
-              returnKeyType={"next"}
-              fetchDetails={true}
-              listUnderlayColor={colors.grey}
-              query={{
-                key: GooglePlacesApiKey,
-                language: "en",
-                types: "address",
-                components: "country:us|country:ca"
-              }}
-              styles={addressFinderStyles}
-              currentLocation={false}
-              onPress={this.addressSelected}
-            />
-            <Field
-              name="unit"
-              component={this.renderInput}
-              type="unit"
             />
           </View>
 
