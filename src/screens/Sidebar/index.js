@@ -18,6 +18,7 @@ import colors from "../../theme/colors";
 import MENU_ITEMS from "./constants";
 
 const logo = require("../../../assets/ThumbnailLogo/Small/thumbnail.png");
+const creditCanadaLogo = require("../../../assets/CompanyLogos/CreditCanada/logo.png");
 
 class SideBar extends Component {
   constructor(props) {
@@ -40,7 +41,7 @@ class SideBar extends Component {
 
   onLogout() {
     amplitude.identify("N/A");
-    amplitude.track(amplitude.events.LOGOUT);    
+    amplitude.track(amplitude.events.LOGOUT);
     this.props.clearStorage();
   }
 
@@ -62,24 +63,27 @@ class SideBar extends Component {
 
   render() {
     const avatar = getAvatar(this.props.authReducer, this.props.profileReducer);
-    const { data: { authorized: { balance, firstName, lastName } } } = this.props.authReducer;
+    const { data: { authorized: { balance, firstName, lastName, company: { brandLogoUrl: companyLogoUrl } } } } = this.props.authReducer;
     const fullName = firstName + " " + lastName;
     const dollars = getDollarString(balance);
 
     return (
       <View style={styles.container}>
-        <TouchableOpacity activeOpacity={0.6} style={[styles.header, styles.padder]} onPress={() => this.onProfileClick()}>
-          {
-            avatar
-              ? <Image source={{uri: `data:image/png;base64,${avatar}`}} style={styles.avatar} />
-              :
-                <Svg width={40} height={40}>
-                  <Svg.Circle cx="20" cy="20" r={19} stokeWidth={1} stroke={colors.darkerGrey} fill={colors.mediumGrey} />
-                </Svg>
-          }
-          <View style={styles.headerTexts}>
-            <Text style={styles.nameText}>{fullName}</Text>
-            <Text style={styles.balanceText}>{dollars}</Text>
+        <TouchableOpacity activeOpacity= {0.6} style={[styles.header, styles.padder]} onPress={() => this.onProfileClick()}>
+          {companyLogoUrl === 'CreditCanada' && <Image source={creditCanadaLogo} style={styles.brandLogo}/>}
+          <View style={styles.profileContainer}>
+            {
+              avatar
+                ? <Image source={{uri: `data:image/png;base64,${avatar}`}} style={styles.avatar} />
+                :
+                  <Svg width={40} height={40}>
+                    <Svg.Circle cx="20" cy="20" r={19} stokeWidth={1} stroke={colors.darkerGrey} fill={colors.mediumGrey} />
+                  </Svg>
+            }
+            <View style={styles.headerTexts}>
+              <Text style={styles.nameText}>{fullName}</Text>
+              <Text style={styles.balanceText}>{dollars}</Text>
+            </View>
           </View>
         </TouchableOpacity>
         <View style={styles.body}>

@@ -3,6 +3,7 @@ import { SIGN_UP_URL, VERIFY_REFERRAL_URL } from "./constants";
 const initialState = {
   data: {},
   companyID: 1,
+  companyLogoUrl: undefined,
   step: 0,
   isLoading: false,
   error: false,
@@ -48,6 +49,7 @@ export default function signUpReducer (state = initialState, action) {
           ...state,
           data: verifyReferralData ? verifyReferralData : {},
           companyID: verifyReferralData.companyID,
+          companyLogoUrl: verifyReferralData.companyLogoUrl,
           step: 1,
           isLoading: false,
           error: false,

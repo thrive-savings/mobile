@@ -14,10 +14,21 @@ export default StyleSheet.create({
   //Header styles
   header:{
     flex: 0.2,
+    justifyContent: "center",
+    alignItems: "flex-start",
+    backgroundColor: "white"
+  },
+  brandLogo: {
+    resizeMode: "center",
+    marginTop: -10,
+    marginLeft: -5,
+    width: 180,
+    height: 80
+  },
+  profileContainer: {
     flexDirection: "row",
     justifyContent: "flex-start",
-    alignItems: "center",
-    backgroundColor: "white"
+    alignItems: "center"
   },
   avatar: {
     width: 40,

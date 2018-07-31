@@ -22,6 +22,13 @@ export default StyleSheet.create({
     paddingHorizontal: formHorizontalPadding,
     paddingVertical: 20
   },
+  brandLogo: {
+    marginTop: -20,
+    alignSelf: "center",
+    resizeMode: "center",
+    width: deviceWidth / 2,
+    height: 100
+  },
   formLabelText: {
     paddingHorizontal: 20,
     paddingBottom: 20,

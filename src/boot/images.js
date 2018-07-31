@@ -5,11 +5,15 @@ const imageAssets = [
   // Backgrounds
   require("../../assets/Backgrounds/BackgroundAccount.png"),
   require("../../assets/Backgrounds/BackgroundFull.png"),
+  require("../../assets/Backgrounds/BackgroundCover.png"),
 
   // Logos
   require("../../assets/Logo/white.png"),
   require("../../assets/ThumbnailLogo/Large/thumbnail.png"),
   require("../../assets/ThumbnailLogo/Small/thumbnail.png"),
+
+  // Partner Company logos
+  require("../../assets/CompanyLogos/CreditCanada/logo.png"),
 
   // Launch Images
   require("../../assets/LaunchImages/splash.png"),

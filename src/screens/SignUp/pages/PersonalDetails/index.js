@@ -27,9 +27,10 @@ import { signUpUser } from "../../state/actions";
 
 import { GooglePlacesApiKey } from "../../../../../config";
 
-const tick = require("../../../../../assets/Icons/Checkbox/tick.png");
-
 import INPUT_FIELDS from "./constants";
+
+const tick = require("../../../../../assets/Icons/Checkbox/tick.png");
+const creditCanadaLogo = require(`../../../../../assets/CompanyLogos/CreditCanada/logo.png`);;
 
 class PersonalDetails extends Component {
   constructor(props) {
@@ -120,7 +121,7 @@ class PersonalDetails extends Component {
 
   render() {
     const navigation = this.props.navigation;
-    const { isLoading, error, errorMessage } = this.props.signUpReducer;
+    const { companyLogoUrl, isLoading, error, errorMessage } = this.props.signUpReducer;
 
     let errorText = "";
     if (error) {
@@ -135,8 +136,12 @@ class PersonalDetails extends Component {
     return (
       <Content showsVerticalScrollIndicator={false} style={[styles.formContainer, globalStyles.shadow]}>
         <View style={styles.formContent}>
+          {
+            companyLogoUrl === 'CreditCanada' &&
+            <Image source={creditCanadaLogo} style={styles.brandLogo}/>
+          }
           <Text style={styles.formLabelText}>
-            Please use your legal name as it appears on your bank statements.
+            Please use your legal name as it appears on your bank statements, so that we can verify your account.
           </Text>
           <View style={styles.inputRow}>
             <Field
