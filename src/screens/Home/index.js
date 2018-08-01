@@ -6,7 +6,8 @@ import {
   ImageBackground,
   Text,
   TouchableOpacity,
-  StatusBar
+  StatusBar,
+  Animated
 } from "react-native";
 import { Card } from "native-base";
 import { LinearGradient } from "expo";
@@ -36,9 +37,31 @@ class Home extends Component {
   constructor(props) {
     super(props);
 
+    this.cycleAnimation = this.cycleAnimation.bind(this);
+
     this.state = {
-      showRainyDayInfoModal: false
+      showRainyDayInfoModal: false,
+      notifFadeAnim: new Animated.Value(1)
     };
+  }
+
+  cycleAnimation() {
+    Animated.sequence([
+      Animated.timing(this.state.notifFadeAnim, {
+        toValue: 0.6,
+        duration: 1000
+      }),
+      Animated.timing(this.state.notifFadeAnim, {
+        toValue: 1,
+        duration: 1000
+      })
+    ]).start(() => {
+      this.cycleAnimation();
+    });
+  }
+
+  componentDidMount() {
+    this.cycleAnimation();
   }
 
   notificationClicked(notificationType) {
@@ -78,6 +101,8 @@ class Home extends Component {
       notifBonus = notifications.bonus;
     }
 
+    const notifFadeAnim = this.state.notifFadeAnim;
+
     return NOTIFICATION_TYPES.map(({ type, title, getDescription, icon }) => {
       if (type === "EmployerBonus" && notifBonus <= 0) { return; }
       else if (type === "SavingPreferences" && (preferencesInitialSetDone || notifPreferencesSet)) { return; }
@@ -88,18 +113,23 @@ class Home extends Component {
           : isSettingPreferencesDone ? "Setting up ..." : getDescription();
 
       return (
-        <TouchableOpacity
-          key={type} activeOpacity={0.6} style={styles.notificationHolder}
-          onPress={() => this.notificationClicked(type)}
-        >
-          <LinearGradient colors={colors.blueGreenGradient.colors} style={styles.notificationContent}>
-            <Image source={icon} />
-            <View style={styles.notificationTextsContainer}>
-              <Text style={styles.notificationTitle}>{title}</Text>
-              <Text style={styles.notificationDescription}>{isSeeingBonus ? "Dismissing ..." : description}</Text>
-            </View>
-          </LinearGradient>
-        </TouchableOpacity>
+        <Animated.View key={type} style={{
+          alignSelf: "stretch",
+          opacity: this.state.notifFadeAnim
+        }}>
+          <TouchableOpacity
+            activeOpacity={0.6} style={styles.notificationHolder}
+            onPress={() => this.notificationClicked(type)}
+          >
+            <LinearGradient colors={colors.blueGreenGradient.colors} style={styles.notificationContent}>
+              <Image source={icon} />
+              <View style={styles.notificationTextsContainer}>
+                <Text style={styles.notificationTitle}>{title}</Text>
+                <Text style={styles.notificationDescription}>{isSeeingBonus ? "Dismissing ..." : description}</Text>
+              </View>
+            </LinearGradient>
+          </TouchableOpacity>
+        </Animated.View>
       );
     });
   }
