@@ -23,11 +23,10 @@ export default StyleSheet.create({
     paddingVertical: 20
   },
   brandLogo: {
-    marginTop: -20,
+    marginBottom: 20,
     alignSelf: "center",
-    resizeMode: "center",
-    width: deviceWidth / 2,
-    height: 100
+    width: 200,
+    height: 40
   },
   formLabelText: {
     paddingHorizontal: 20,
