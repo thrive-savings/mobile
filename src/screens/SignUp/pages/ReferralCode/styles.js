@@ -76,6 +76,7 @@ export default StyleSheet.create({
   createAccountBtnText: {
     color: colors.blue,
     fontSize: 15,
-    textAlign: "center"
+    textAlign: "center",
+    fontFamily: "LatoBold"
   }
 });

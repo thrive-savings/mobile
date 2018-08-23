@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions, Platform } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import colors from "../../theme/colors";
 
 const screen = Dimensions.get("window");
@@ -24,7 +24,7 @@ export default StyleSheet.create({
     alignItems: "center",
     borderRadius: 8,
     backgroundColor: "white",
-    width: (deviceWidth * 2) / 3,
+    width: deviceWidth * 2 / 3,
     height: 50
   },
 
@@ -36,7 +36,7 @@ export default StyleSheet.create({
     color: "white",
     fontFamily: "LatoBold",
     fontWeight: "bold",
-    fontSize: 18,
+    fontSize: 16,
     textAlign: "center",
     lineHeight: 22,
     letterSpacing: 1.5
@@ -44,7 +44,7 @@ export default StyleSheet.create({
   descText: {
     fontFamily: "LatoRegular",
     color: "white",
-    fontSize: 15,
+    fontSize: 13,
     textAlign: "center",
     lineHeight: 22,
     letterSpacing: 0.75
@@ -53,7 +53,7 @@ export default StyleSheet.create({
     fontFamily: "LatoRegular",
     color: "white",
     fontWeight: "bold",
-    fontSize: 14,
+    fontSize: 12,
     textAlign: "center",
     lineHeight: 22,
     letterSpacing: 1.5
