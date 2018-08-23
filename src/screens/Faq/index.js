@@ -44,7 +44,7 @@ class Faq extends Component {
   }
 
   categoryClicked(index) {
-    amplitude.track(amplitude.events.FAQ_CATEGORY_VIEW, { 'Category Name': FAQ_CATEGORIES[index].name })
+    amplitude.track(amplitude.events.FAQ_CATEGORY_VIEW, { "Category Name": FAQ_CATEGORIES[index].name });
     this.setState({activeStep: 1, activeFaqIndex: index});
   }
 

@@ -14,7 +14,7 @@ export default function authReducer (state = initialState, action) {
     //Update Data case
     case `${UPDATE_AUTH_DATA}`:
       const { payload: { data: authData } } = action;
-      amplitude.identify(authData.authorized.id.toString())
+      amplitude.identify(authData.authorized.id.toString());
       return {
         ...state,
         data: authData
@@ -65,7 +65,7 @@ export default function authReducer (state = initialState, action) {
       };
     case `${REQUEST_URL}_SUCCEED`:
       const { payload: { data, avatar } } = action;
-      amplitude.identify(data.authorized.id.toString())
+      amplitude.identify(data.authorized.id.toString());
       return {
         ...state,
         data,
@@ -90,7 +90,7 @@ export default function authReducer (state = initialState, action) {
       };
     case `${GET_UPDATES}_SUCCEED`:
       const { payload: { data: getUpdatesData } } = action;
-      amplitude.identify(getUpdatesData.authorized.id.toString())
+      amplitude.identify(getUpdatesData.authorized.id.toString());
       return {
         ...state,
         data: getUpdatesData,

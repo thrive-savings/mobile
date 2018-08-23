@@ -3,3 +3,4 @@ keys.js
 .expo
 npm-debug.*
 .DS_Store
+.vscode

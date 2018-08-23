@@ -37,7 +37,7 @@ class Contact extends Component {
 
   emailSupport() {
     amplitude.track(amplitude.events.CLICKED_EMAIL_SUPPORT);
-    Communications.email(["help@thrivesavings.com"],null,null,"Help Needed",null)
+    Communications.email(["help@thrivesavings.com"],null,null,"Help Needed",null);
   }
 
   render() {

@@ -70,7 +70,7 @@ class SideBar extends Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity activeOpacity= {0.6} style={[styles.header, styles.padder]} onPress={() => this.onProfileClick()}>
-          {companyLogoUrl === 'CreditCanada' && <Image source={creditCanadaLogo} style={styles.brandLogo}/>}
+          {companyLogoUrl === "CreditCanada" && <Image source={creditCanadaLogo} style={styles.brandLogo}/>}
           <View style={styles.profileContainer}>
             {
               avatar

@@ -30,7 +30,7 @@ import { GooglePlacesApiKey } from "../../../../../config";
 import INPUT_FIELDS from "./constants";
 
 const tick = require("../../../../../assets/Icons/Checkbox/tick.png");
-const creditCanadaLogo = require(`../../../../../assets/CompanyLogos/CreditCanada/logo.png`);;
+const creditCanadaLogo = require("../../../../../assets/CompanyLogos/CreditCanada/logo.png");
 
 class PersonalDetails extends Component {
   constructor(props) {
@@ -137,7 +137,7 @@ class PersonalDetails extends Component {
       <Content showsVerticalScrollIndicator={false} style={[styles.formContainer, globalStyles.shadow]}>
         <View style={styles.formContent}>
           {
-            companyLogoUrl === 'CreditCanada' &&
+            companyLogoUrl === "CreditCanada" &&
             <Image source={creditCanadaLogo} style={styles.brandLogo}/>
           }
           <Text style={styles.formLabelText}>

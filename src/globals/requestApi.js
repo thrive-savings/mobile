@@ -41,7 +41,7 @@ export const requestApiSaga = function * () {
 
     if (error) {
       const { errors, status } = error;
-      let errorContent = {}
+      let errorContent = {};
       if (errors) {
         errorContent.key = errors[0].key;
         errorContent.value = errors[0].value;
@@ -49,7 +49,7 @@ export const requestApiSaga = function * () {
       } else {
         errorContent = error;
       }
-      amplitude.track(amplitude.events.SERVER_ERROR, { url, error: errorContent })
+      amplitude.track(amplitude.events.SERVER_ERROR, { url, error: errorContent });
     }
 
     const type = `${url}_${payload ? "SUCCEED" : "FAIL"}`;

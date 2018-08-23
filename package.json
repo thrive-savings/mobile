@@ -1,6 +1,6 @@
 {
   "name": "ThriveApp",
-  "version": "8.1.0",
+  "version": "1.0.0",
   "private": true,
   "devDependencies": {
     "babel-eslint": "7.2.3",
@@ -27,7 +27,8 @@
     "eject": "react-native-scripts eject",
     "android": "react-native-scripts android",
     "ios": "react-native-scripts ios",
-    "test": "jest && flow && eslint ."
+    "test": "jest && flow && eslint .",
+    "eslint:fix": "eslint . --fix"
   },
   "jest": {
     "preset": "jest-expo",
