@@ -22,7 +22,7 @@ import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
 import colors from "../../theme/colors";
 
-import { required, maxLength15, minLength8, email } from "../../globals/validators";
+import { required, minLength8, email } from "../../globals/validators";
 
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
 const logo = require("../../../assets/Logo/white.png");
@@ -35,26 +35,33 @@ class LoginForm extends Component {
     };
   }
 
-  componentDidMount () {
-    this.keyboardDidShowListener = Keyboard.addListener("keyboardDidShow", this._keyboardDidShow.bind(this));
-    this.keyboardDidHideListener = Keyboard.addListener("keyboardDidHide", this._keyboardDidHide.bind(this));
+  componentDidMount() {
+    this.keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      this._keyboardDidShow.bind(this)
+    );
+    this.keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      this._keyboardDidHide.bind(this)
+    );
     amplitude.track(amplitude.events.LOGIN_VIEW);
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.keyboardDidShowListener.remove();
     this.keyboardDidHideListener.remove();
   }
 
-  _keyboardDidShow () {
-    this.setState({showFooter: false});
+  _keyboardDidShow() {
+    this.setState({ showFooter: false });
   }
 
-  _keyboardDidHide () {
-    this.setState({showFooter: true});
+  _keyboardDidHide() {
+    this.setState({ showFooter: true });
   }
 
-  emailTextInput; passwordTextInput;
+  emailTextInput;
+  passwordTextInput;
   renderInput({ input, label, type, meta: { touched, error, warning } }) {
     return (
       <View>
@@ -63,9 +70,11 @@ class LoginForm extends Component {
             ref={c => {
               switch (input.name) {
                 case "email":
-                  this.emailTextInput = c; break;
+                  this.emailTextInput = c;
+                  break;
                 case "password":
-                  this.passwordTextInput = c; break;
+                  this.passwordTextInput = c;
+                  break;
               }
             }}
             placeholderTextColor="#FFF"
@@ -76,7 +85,8 @@ class LoginForm extends Component {
             onSubmitEditing={() => {
               switch (input.name) {
                 case "email":
-                  this.passwordTextInput.focus(); break;
+                  this.passwordTextInput.focus();
+                  break;
               }
             }}
             blurOnSubmit={input.name === "password"}
@@ -91,9 +101,11 @@ class LoginForm extends Component {
                 onPress={() => {
                   switch (input.name) {
                     case "email":
-                      this.emailTextInput.clear(); break;
+                      this.emailTextInput.clear();
+                      break;
                     case "password":
-                      this.passwordTextInput.clear(); break;
+                      this.passwordTextInput.clear();
+                      break;
                   }
                 }}
                 name="close"
@@ -140,12 +152,18 @@ class LoginForm extends Component {
 
     return (
       <View style={globalStyles.container}>
-        <StatusBar barStyle="light-content" backgroundColor={colors.statusbar} />
+        <StatusBar
+          barStyle="light-content"
+          backgroundColor={colors.statusbar}
+        />
         <ImageBackground source={bg} style={globalStyles.background}>
           <View style={styles.container}>
             <Image source={logo} style={styles.logo} />
           </View>
-          <Content showsVerticalScrollIndicator={false} contentContainerStyle={styles.container}>
+          <Content
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.container}
+          >
             <View style={styles.form}>
               <Field
                 name="email"
@@ -160,34 +178,47 @@ class LoginForm extends Component {
                 validate={[minLength8, required]}
               />
 
-              {error && <Text style={globalStyles.formErrorText3}>{errorText}</Text>}
+              {error &&
+                <Text style={globalStyles.formErrorText3}>
+                  {errorText}
+                </Text>}
 
-              <TouchableOpacity activeOpacity={0.6} style={[styles.loginBtn, globalStyles.shadow]} onPress={this.login.bind(this)}>
-                {
-                  isLoading ?
-                    <Spinner color={colors.blue} /> :
-                    <Text uppercase style={styles.loginBtnText}>
+              <TouchableOpacity
+                activeOpacity={0.6}
+                style={[styles.loginBtn, globalStyles.shadow]}
+                onPress={this.login.bind(this)}
+              >
+                {isLoading
+                  ? <Spinner color={colors.blue} />
+                  : <Text uppercase style={styles.loginBtnText}>
                       LOG IN
-                    </Text>
-                }
+                    </Text>}
               </TouchableOpacity>
 
-              {
-                this.state.showFooter &&
-                <TouchableOpacity style={styles.forgotPasswordContainer} activeOpacity={0.6} onPress={() => navigation.navigate("ForgotPassword")} hitSlop={{top: 10, bottom: 10, left: 20, right: 20}}>
-                  <Text uppercase={false} style={styles.forgotPasswordBtnText}>Forgot Password?</Text>
-                </TouchableOpacity>
-              }
+              {this.state.showFooter &&
+                <TouchableOpacity
+                  style={styles.forgotPasswordContainer}
+                  activeOpacity={0.6}
+                  onPress={() => navigation.navigate("ForgotPassword")}
+                  hitSlop={{ top: 10, bottom: 10, left: 20, right: 20 }}
+                >
+                  <Text uppercase={false} style={styles.forgotPasswordBtnText}>
+                    Forgot Password?
+                  </Text>
+                </TouchableOpacity>}
 
-              {
-                this.state.showFooter &&
-                <TouchableOpacity activeOpacity={0.6} style={globalStyles.bottomContainer} onPress={() => navigation.navigate("SignUp")} hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}>
+              {this.state.showFooter &&
+                <TouchableOpacity
+                  activeOpacity={0.6}
+                  style={globalStyles.bottomContainer}
+                  onPress={() => navigation.navigate("SignUp")}
+                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                >
                   <Text style={globalStyles.bottomLabelText}>
                     Don't have an account?
                     <Text style={globalStyles.bottomBtnText}> Sign Up.</Text>
                   </Text>
-                </TouchableOpacity>
-              }
+                </TouchableOpacity>}
             </View>
           </Content>
         </ImageBackground>
@@ -196,14 +227,17 @@ class LoginForm extends Component {
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
-    values: state.form && state.form.login && state.form.login.values ? state.form.login.values : undefined,
+    values:
+      state.form && state.form.login && state.form.login.values
+        ? state.form.login.values
+        : undefined,
     authReducer: state.authReducer
   };
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
     authUser: (payload = {}) => dispatch(authUser(payload))
   };

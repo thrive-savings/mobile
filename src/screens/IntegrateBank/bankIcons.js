@@ -14,7 +14,8 @@ const BANK_ICONS = {
   Laurentienne: require("../../../assets/Banks/Laurentienne/bitmap.png"),
   CoastCapital: require("../../../assets/Banks/CoastCapital/bitmap.png"),
   HSBC: require("../../../assets/Banks/HSBC/bitmap.png"),
-  FlinksCapital: require("../../../assets/Banks/TD/bitmap.png")
+  FlinksCapital: require("../../../assets/Banks/TD/bitmap.png"),
+  ThriveBank: require("../../../assets/Icons/ThriveBot/thriveBot.png")
 };
 
 export default BANK_ICONS;

@@ -1,9 +1,5 @@
 import React, { Component } from "react";
-import {
-  View,
-  ImageBackground,
-  StatusBar
-} from "react-native";
+import { View, ImageBackground, StatusBar } from "react-native";
 import { connect } from "react-redux";
 
 import Header from "../../components/Header";
@@ -31,7 +27,7 @@ class IntegrateBank extends Component {
     };
   }
 
-  authedBank( loginId, institution) {
+  authedBank(loginId, institution) {
     this.setState({ loginId, institution });
   }
 
@@ -54,18 +50,22 @@ class IntegrateBank extends Component {
     const step = reducerStep ? reducerStep : this.state.step;
     switch (step) {
       case 0:
-        return <WhyLink next={() => this.setState({step: 1})} />;
+        return <WhyLink next={() => this.setState({ step: 1 })} />;
       case 1:
         const { loginId, institution } = this.state;
-        if (loginId && institution) {
+        if (false || (loginId && institution)) {
           return <ChooseAccount loginId={loginId} institution={institution} />;
         } else {
           return <AuthenticateBank next={this.authedBank.bind(this)} />;
         }
       case 2:
-        return <AuthSuccess next={() => this.props.changeBankStep({ step: undefined })} />;
+        return (
+          <AuthSuccess
+            next={() => this.props.changeBankStep({ step: undefined })}
+          />
+        );
       default:
-        return <WhyLink next={() => this.setState({step: 1})} />;
+        return <WhyLink next={() => this.setState({ step: 1 })} />;
     }
   }
 
@@ -74,9 +74,15 @@ class IntegrateBank extends Component {
     const step = reducerStep ? reducerStep : this.state.step;
     return (
       <View style={globalStyles.container}>
-        <StatusBar barStyle="light-content" backgroundColor={colors.statusbar}/>
+        <StatusBar
+          barStyle="light-content"
+          backgroundColor={colors.statusbar}
+        />
         <ImageBackground source={bg} style={globalStyles.background}>
-          <Header button={step ? "back" : "none"} onButtonPress={this.onBackPress.bind(this)} />
+          <Header
+            button={step ? "back" : "none"}
+            onButtonPress={this.onBackPress.bind(this)}
+          />
           <View style={globalStyles.container}>
             {this.renderContent()}
           </View>
@@ -86,13 +92,13 @@ class IntegrateBank extends Component {
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
     integrateBankReducer: state.integrateBankReducer
   };
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
     changeBankStep: (payload = {}) => dispatch(changeBankStep(payload))
   };

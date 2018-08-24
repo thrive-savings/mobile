@@ -28,6 +28,7 @@ module.exports = {
     Laurentienne: "#F1B134",
     CoastCapital: "#3971A6",
     HSBC: "#D6392E",
-    FlinksCapital: "#0089CB"
+    FlinksCapital: "#0089CB",
+    ThriveBank: "#0089CB"
   }
 };

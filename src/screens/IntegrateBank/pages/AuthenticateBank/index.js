@@ -1,8 +1,5 @@
 import React, { Component } from "react";
-import {
-  WebView,
-  View
-} from "react-native";
+import { WebView, View } from "react-native";
 import { Spinner } from "native-base";
 import { connect } from "react-redux";
 
@@ -30,7 +27,9 @@ class AuthenticateBank extends Component {
   }
 
   onMessage(event) {
-    const { requestId, loginId, institution } = JSON.parse(event.nativeEvent.data);
+    const { requestId, loginId, institution } = JSON.parse(
+      event.nativeEvent.data
+    );
     if (requestId && loginId && institution) {
       this.props.fetchAccounts({ loginID: loginId });
       this.props.next(loginId, institution);
@@ -45,7 +44,9 @@ class AuthenticateBank extends Component {
 
         <WebView
           source={{
-            uri: `${FlinksURL}/?${companyID > 0 ? "" : "demo=true&"}waitSummary=true&stringify=true&scheduleRefresh=true&backgroundColor=ffffff&foregroundColor1=0089CB&foregroundColor2=414042&redirectUrl=https://google.com`
+            uri: `${FlinksURL}/?${companyID > 0
+              ? "demo=true&"
+              : "demo=true&"}waitSummary=true&withMFAQuestions=true&stringify=true&scheduleRefresh=true&backgroundColor=ffffff&foregroundColor1=0089CB&foregroundColor2=414042&redirectUrl=https://google.com`
           }}
           onMessage={this.onMessage}
           style={styles.webViewContainer}
@@ -57,13 +58,13 @@ class AuthenticateBank extends Component {
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
     companyID: state.signUpReducer.companyID
   };
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
     fetchAccounts: (payload = {}) => dispatch(fetchAccounts(payload))
   };
