@@ -1,29 +1,29 @@
 {
-	"expo": {
-		"name": "Thrive Savings",
-		"icon": "./assets/icon.png",
-		"version": "1.0.0",
-		"slug": "thriveapp",
-		"sdkVersion": "26.0.0",
-		"splash": {
-			"image": "./assets/LaunchImages/splash.png",
-			"resizeMode": "cover"
-		},
-		"orientation": "portrait",
-		"primaryColor": "#cccccc",
-		"packagerOpts": {
-			"assetExts": ["ttf"]
-		},
-		"ios": {
-			"bundleIdentifier": "com.thrivesavings.mobileapp"
-		},
-		"android": {
-			"package": "com.thrivesavings.mobileapp"
-		},
-		"androidStatusBarColor": "#008cd1",
-		"androidStatusBar": {
-			"barStyle": "dark-content",
-			"backgroundColor": "#008cd1"
-		}
-	}
+  "expo": {
+    "name": "Thrive Savings",
+    "icon": "./assets/icon.png",
+    "version": "1.0.0",
+    "slug": "thriveapp",
+    "sdkVersion": "29.0.0",
+    "splash": {
+      "image": "./assets/LaunchImages/splash.png",
+      "resizeMode": "cover"
+    },
+    "orientation": "portrait",
+    "primaryColor": "#cccccc",
+    "packagerOpts": {
+      "assetExts": ["ttf"]
+    },
+    "ios": {
+      "bundleIdentifier": "com.thrivesavings.mobileapp"
+    },
+    "android": {
+      "package": "com.thrivesavings.mobileapp"
+    },
+    "androidStatusBarColor": "#008cd1",
+    "androidStatusBar": {
+      "barStyle": "dark-content",
+      "backgroundColor": "#008cd1"
+    }
+  }
 }

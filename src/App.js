@@ -1,7 +1,7 @@
 import React from "react";
 import { AppState } from "react-native";
 import { connect } from "react-redux";
-import { StackNavigator, DrawerNavigator } from "react-navigation";
+import { createStackNavigator, createDrawerNavigator } from "react-navigation";
 import { Root } from "native-base";
 import amplitude from "./globals/amplitude";
 
@@ -26,7 +26,7 @@ import getAuthorized from "./globals/getAuthorized";
 
 import { getUpdates } from "./screens/Login/state/actions";
 
-const Drawer = DrawerNavigator(
+const Drawer = createDrawerNavigator(
   {
     Home: { screen: Home },
     Profile: { screen: Profile },
@@ -59,22 +59,22 @@ const stackerOptions = {
   headerMode: "none"
 };
 
-const StackerWithLanding = StackNavigator(stackScreens, {
+const StackerWithLanding = createStackNavigator(stackScreens, {
   ...stackerOptions,
   initialRouteName: "Landing"
 });
 
-const StackerWithDrawer = StackNavigator(stackScreens, {
+const StackerWithDrawer = createStackNavigator(stackScreens, {
   ...stackerOptions,
   initialRouteName: "Drawer"
 });
 
-const StackerWithIntegrateBank = StackNavigator(stackScreens, {
+const StackerWithIntegrateBank = createStackNavigator(stackScreens, {
   ...stackerOptions,
   initialRouteName: "IntegrateBank"
 });
 
-const StackerWithSetPhone = StackNavigator(stackScreens, {
+const StackerWithSetPhone = createStackNavigator(stackScreens, {
   ...stackerOptions,
   initialRouteName: "SetPhone"
 });

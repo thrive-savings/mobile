@@ -67,7 +67,9 @@ class Home extends Component {
   notificationClicked(notificationType) {
     switch (notificationType) {
       case "SavingPreferences":
-        amplitude.track(amplitude.events.SAVING_PREFERENCES_NOTIFICATION_CLICKED);
+        amplitude.track(
+          amplitude.events.SAVING_PREFERENCES_NOTIFICATION_CLICKED
+        );
         this.props.navigation.navigate("SavingPreferences");
         break;
       case "EmployerBonus":
@@ -81,8 +83,14 @@ class Home extends Component {
   getInfoModalContent() {
     return (
       <View>
-        <Text style={[styles.infoContentText, styles.bottomPadder]}>All Thrive users have a default Rainy Day Fund to help reduce their financial anxiety and jumpstart their saving goals!</Text>
-        <Text style={styles.infoContentText}>Your Thrive Savings will automatically go here unless you create additional goals.</Text>
+        <Text style={[styles.infoContentText, styles.bottomPadder]}>
+          All Thrive users have a default Rainy Day Fund to help reduce their
+          financial anxiety and jumpstart their saving goals!
+        </Text>
+        <Text style={styles.infoContentText}>
+          Your Thrive Savings will automatically go here unless you create
+          additional goals.
+        </Text>
       </View>
     );
   }
@@ -95,37 +103,55 @@ class Home extends Component {
       userData: { notifications }
     } = this.props;
 
-    let notifPreferencesSet = false, notifBonus = 0;
+    let notifPreferencesSet = false,
+      notifBonus = 0;
     if (notifications) {
       notifPreferencesSet = notifications.savingPreferencesSet;
       notifBonus = notifications.bonus;
     }
 
-    const notifFadeAnim = this.state.notifFadeAnim;
-
     return NOTIFICATION_TYPES.map(({ type, title, getDescription, icon }) => {
-      if (type === "EmployerBonus" && notifBonus <= 0) { return; }
-      else if (type === "SavingPreferences" && (preferencesInitialSetDone || notifPreferencesSet)) { return; }
+      if (type === "EmployerBonus" && notifBonus <= 0) {
+        return;
+      } else if (
+        type === "SavingPreferences" &&
+        (preferencesInitialSetDone || notifPreferencesSet)
+      ) {
+        return;
+      }
 
       const description =
         type === "EmployerBonus"
-          ? isSeeingBonus ? "Dismissing ... " : getDescription(getDollarString(notifBonus))
+          ? isSeeingBonus
+            ? "Dismissing ... "
+            : getDescription(getDollarString(notifBonus))
           : isSettingPreferencesDone ? "Setting up ..." : getDescription();
 
       return (
-        <Animated.View key={type} style={{
-          alignSelf: "stretch",
-          opacity: this.state.notifFadeAnim
-        }}>
+        <Animated.View
+          key={type}
+          style={{
+            alignSelf: "stretch",
+            opacity: this.state.notifFadeAnim
+          }}
+        >
           <TouchableOpacity
-            activeOpacity={0.6} style={styles.notificationHolder}
+            activeOpacity={0.6}
+            style={styles.notificationHolder}
             onPress={() => this.notificationClicked(type)}
           >
-            <LinearGradient colors={colors.blueGreenGradient.colors} style={styles.notificationContent}>
+            <LinearGradient
+              colors={colors.blueGreenGradient.colors}
+              style={styles.notificationContent}
+            >
               <Image source={icon} />
               <View style={styles.notificationTextsContainer}>
-                <Text style={styles.notificationTitle}>{title}</Text>
-                <Text style={styles.notificationDescription}>{isSeeingBonus ? "Dismissing ..." : description}</Text>
+                <Text style={styles.notificationTitle}>
+                  {title}
+                </Text>
+                <Text style={styles.notificationDescription}>
+                  {isSeeingBonus ? "Dismissing ..." : description}
+                </Text>
               </View>
             </LinearGradient>
           </TouchableOpacity>
@@ -139,29 +165,44 @@ class Home extends Component {
       const { category, name, amount, savedAmount } = goal;
       return (
         <TouchableOpacity
-          key={index} activeOpacity={0.6} style={styles.goalHolder}
-          onPress={() => this.props.navigation.navigate("SavingGoals", { actionType: "Detail", data: goal })}
+          key={index}
+          activeOpacity={0.6}
+          style={styles.goalHolder}
+          onPress={() =>
+            this.props.navigation.navigate("SavingGoals", {
+              actionType: "Detail",
+              data: goal
+            })}
         >
           <Card style={styles.goalCard}>
             <View style={styles.goalRow}>
               <Image source={GOAL_CATEGORIES[category].icon} />
-              {
-                category === "RainyDay" &&
-                <TouchableOpacity activeOpacity={0.6} style={styles.infoIconButton} onPress={() => this.setState({showRainyDayInfoModal: true})} hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}>
+              {category === "RainyDay" &&
+                <TouchableOpacity
+                  activeOpacity={0.6}
+                  style={styles.infoIconButton}
+                  onPress={() => this.setState({ showRainyDayInfoModal: true })}
+                  hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+                >
                   <Image source={infoIcon} />
-                </TouchableOpacity>
-              }
+                </TouchableOpacity>}
               <View style={styles.goalTextsContainer}>
                 <Text style={styles.goalLabelText}>{`GOAL ${index + 1}`}</Text>
-                <Text style={styles.goalNameText}>{name}</Text>
-                <Text style={styles.goalAmountText}>{getDollarString(savedAmount)}</Text>
+                <Text style={styles.goalNameText}>
+                  {name}
+                </Text>
+                <Text style={styles.goalAmountText}>
+                  {getDollarString(savedAmount)}
+                </Text>
               </View>
             </View>
             <View style={styles.goalProgressContainer}>
               <ProgressBar progress={savedAmount / amount} />
               <View style={styles.goalProgressTextsHolder}>
                 <Text style={styles.goalProgressBarText}>$0</Text>
-                <Text style={styles.goalProgressBarText}>{getDollarString(amount)}</Text>
+                <Text style={styles.goalProgressBarText}>
+                  {getDollarString(amount)}
+                </Text>
               </View>
             </View>
           </Card>
@@ -172,28 +213,48 @@ class Home extends Component {
 
   render() {
     const navigation = this.props.navigation;
-    const { beforeDot: balanceBD, afterDot: balanceAD } = getSplitDollarStrings(this.props.userData.balance);
+    const { beforeDot: balanceBD, afterDot: balanceAD } = getSplitDollarStrings(
+      this.props.userData.balance
+    );
     return (
       <View style={globalStyles.container}>
-        <StatusBar barStyle="light-content" backgroundColor={colors.statusbar}/>
+        <StatusBar
+          barStyle="light-content"
+          backgroundColor={colors.statusbar}
+        />
         <ImageBackground source={bg} style={globalStyles.background}>
           <Header navigation={navigation} />
           <View style={styles.subHeader}>
             <Text style={styles.balanceLabelText}>THRIVE SAVINGS BALANCE</Text>
             <View style={styles.balanceTextHolder}>
-              <Text style={styles.balanceMainText}>{balanceBD}</Text>
-              <Text style={styles.balanceRemainderText}>{balanceAD}</Text>
+              <Text style={styles.balanceMainText}>
+                {balanceBD}
+              </Text>
+              <Text style={styles.balanceRemainderText}>
+                {balanceAD}
+              </Text>
             </View>
             <View style={[styles.subHeaderLabel, globalStyles.shadow]}>
               <Text style={styles.subHeaderText}>MY SAVINGS GOALS</Text>
             </View>
           </View>
           <View style={styles.contentContainer}>
-            <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+            <ScrollView
+              contentContainerStyle={styles.content}
+              showsVerticalScrollIndicator={false}
+            >
               {this.renderNotifications()}
               {this.renderGoals()}
-              <TouchableOpacity activeOpacity={0.6} style={[styles.addGoalButton, globalStyles.shadow]} onPress={() => navigation.navigate("SavingGoals", { actionType: "Add" })}>
-                <LinearGradient colors={colors.blueGreenGradient.colors} style={styles.addGoalGradient}>
+              <TouchableOpacity
+                activeOpacity={0.6}
+                style={[styles.addGoalButton, globalStyles.shadow]}
+                onPress={() =>
+                  navigation.navigate("SavingGoals", { actionType: "Add" })}
+              >
+                <LinearGradient
+                  colors={colors.blueGreenGradient.colors}
+                  style={styles.addGoalGradient}
+                >
                   <Text style={styles.addGoalButtonText}>+ ADD GOAL</Text>
                 </LinearGradient>
               </TouchableOpacity>
@@ -203,7 +264,7 @@ class Home extends Component {
             show={this.state.showRainyDayInfoModal}
             buttonVisible={false}
             content={this.getInfoModalContent()}
-            onClose={() => this.setState({showRainyDayInfoModal: false})}
+            onClose={() => this.setState({ showRainyDayInfoModal: false })}
           />
         </ImageBackground>
       </View>
@@ -211,7 +272,7 @@ class Home extends Component {
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
     userData: state.authReducer.data.authorized,
     isSeeingBonus: state.authReducer.isSeeingBonus,
@@ -220,9 +281,10 @@ function mapStateToProps (state) {
   };
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
-    bonusNotificationSeen: (payload = {}) => dispatch(bonusNotificationSeen(payload))
+    bonusNotificationSeen: (payload = {}) =>
+      dispatch(bonusNotificationSeen(payload))
   };
 }
 
