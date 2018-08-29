@@ -74,6 +74,16 @@ const StackerWithIntegrateBank = createStackNavigator(stackScreens, {
   initialRouteName: "IntegrateBank"
 });
 
+const StackerWithSavingPreferences = createStackNavigator(stackScreens, {
+  ...stackerOptions,
+  initialRouteName: "SavingPreferences"
+});
+
+const StackerWithSavingGoals = createStackNavigator(stackScreens, {
+  ...stackerOptions,
+  initialRouteName: "SavingGoals"
+});
+
 const StackerWithSetPhone = createStackNavigator(stackScreens, {
   ...stackerOptions,
   initialRouteName: "SetPhone"
@@ -112,13 +122,18 @@ class App extends React.Component {
     let stacker = <StackerWithLanding />;
 
     const authorized = getAuthorized(this.props.authReducer);
+
     if (authorized) {
       if (!authorized.isVerified) {
         stacker = <StackerWithSetPhone />;
-      } else if (authorized.bankLinked) {
-        stacker = <StackerWithDrawer />;
-      } else {
+      } else if (!authorized.bankLinked || authorized.relinkRequired) {
         stacker = <StackerWithIntegrateBank />;
+      } else if (authorized.onboardingStep === "SavingPreferences") {
+        stacker = <StackerWithSavingPreferences />;
+      } else if (authorized.onboardingStep === "SavingGoals") {
+        stacker = <StackerWithSavingGoals />;
+      } else {
+        stacker = <StackerWithDrawer />;
       }
     }
 

@@ -12,7 +12,7 @@ import AuthenticateBank from "./pages/AuthenticateBank";
 import ChooseAccount from "./pages/ChooseAccount";
 import AuthSuccess from "./pages/AuthSuccess";
 
-import { changeBankStep } from "./state/actions";
+import { changeBankStep, updateUserAccount } from "./state/actions";
 
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
 
@@ -25,6 +25,17 @@ class IntegrateBank extends Component {
       loginId: undefined,
       institution: undefined
     };
+
+    this.allDone = this.allDone.bind(this);
+    this.authedBank = this.authedBank.bind(this);
+    this.onBackPress = this.onBackPress.bind(this);
+  }
+
+  allDone() {
+    this.props.updateUserAccount(
+      this.props.integrateBankReducer.defaultAccountData
+    );
+    this.props.changeBankStep({ step: undefined });
   }
 
   authedBank(loginId, institution) {
@@ -47,22 +58,32 @@ class IntegrateBank extends Component {
 
   renderContent() {
     const reducerStep = this.props.integrateBankReducer.step;
-    const step = reducerStep ? reducerStep : this.state.step;
+    let step = reducerStep ? reducerStep : this.state.step;
+
+    const { bank, relinkRequired } = this.props.userData;
+    if (relinkRequired) {
+      step = Math.max(step, 1);
+    }
+
     switch (step) {
       case 0:
         return <WhyLink next={() => this.setState({ step: 1 })} />;
       case 1:
         const { loginId, institution } = this.state;
-        if (false || (loginId && institution)) {
+        if (loginId && institution) {
           return <ChooseAccount loginId={loginId} institution={institution} />;
         } else {
-          return <AuthenticateBank next={this.authedBank.bind(this)} />;
+          return (
+            <AuthenticateBank
+              next={this.authedBank}
+              relinkRequired={relinkRequired}
+              bank={bank}
+            />
+          );
         }
       case 2:
         return (
-          <AuthSuccess
-            next={() => this.props.changeBankStep({ step: undefined })}
-          />
+          <AuthSuccess next={this.allDone} relinkRequired={relinkRequired} />
         );
       default:
         return <WhyLink next={() => this.setState({ step: 1 })} />;
@@ -81,7 +102,7 @@ class IntegrateBank extends Component {
         <ImageBackground source={bg} style={globalStyles.background}>
           <Header
             button={step ? "back" : "none"}
-            onButtonPress={this.onBackPress.bind(this)}
+            onButtonPress={this.onBackPress}
           />
           <View style={globalStyles.container}>
             {this.renderContent()}
@@ -94,12 +115,14 @@ class IntegrateBank extends Component {
 
 function mapStateToProps(state) {
   return {
+    userData: state.authReducer.data.authorized,
     integrateBankReducer: state.integrateBankReducer
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
+    updateUserAccount: (payload = {}) => dispatch(updateUserAccount(payload)),
     changeBankStep: (payload = {}) => dispatch(changeBankStep(payload))
   };
 }

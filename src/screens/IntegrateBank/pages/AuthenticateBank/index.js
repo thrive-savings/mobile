@@ -37,16 +37,19 @@ class AuthenticateBank extends Component {
   }
 
   render() {
-    const companyID = this.props.companyID;
+    const { relinkRequired, bank, companyID } = this.props;
+
     return (
       <View style={[styles.container, globalStyles.shadow]}>
         <Dots step={2} count={3} />
 
         <WebView
           source={{
-            uri: `${FlinksURL}/?${companyID > 0
-              ? "demo=true&"
-              : "demo=true&"}waitSummary=true&withMFAQuestions=true&stringify=true&scheduleRefresh=true&backgroundColor=ffffff&foregroundColor1=0089CB&foregroundColor2=414042&redirectUrl=https://google.com`
+            uri: `${FlinksURL}${relinkRequired && bank
+              ? `/Credential/${bank}/?backEnable=false&`
+              : `/${companyID > 0
+                  ? "?"
+                  : "?demo=true&"}`}waitSummary=true&withMFAQuestions=true&stringify=true&scheduleRefresh=true&backgroundColor=ffffff&foregroundColor1=0089CB&foregroundColor2=414042&redirectUrl=https://google.com`
           }}
           onMessage={this.onMessage}
           style={styles.webViewContainer}

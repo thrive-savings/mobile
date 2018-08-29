@@ -37,7 +37,8 @@ import {
   setWorkTypeSaga,
   setSavingTypeSaga,
   setSavingDetailsSaga,
-  preferencesInitialSetDoneSaga
+  preferencesInitialSetDoneSaga,
+  preferencesInitialSetDoneSucceedSaga
 } from "../screens/SavingPreferences/state/sagas";
 import {
   uploadPhotoSaga,
@@ -90,6 +91,7 @@ export default function configureStore() {
   sagaMiddleware.run(setSavingTypeSaga);
   sagaMiddleware.run(setSavingDetailsSaga);
   sagaMiddleware.run(preferencesInitialSetDoneSaga);
+  sagaMiddleware.run(preferencesInitialSetDoneSucceedSaga);
   sagaMiddleware.run(uploadPhotoSaga);
   sagaMiddleware.run(deletePhotoSaga);
   sagaMiddleware.run(setEmailSaga);

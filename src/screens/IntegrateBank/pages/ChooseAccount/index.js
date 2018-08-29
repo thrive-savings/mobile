@@ -225,7 +225,7 @@ class ChooseAccount extends Component {
       >
         <Image source={bankIcon} />
         <Text style={styles.bankBoxLabel}>
-          Please answer the following MFA questions.
+          Please answer the security questions.
         </Text>
         {questionsView}
         {isAnswering
@@ -248,7 +248,10 @@ class ChooseAccount extends Component {
       questions = []
     } = this.props.integrateBankReducer;
 
-    if (questions.length > 0) {
+    if (
+      questions.length > 0 &&
+      questions[0].Question !== "Enter Security Code" // special case for TD
+    ) {
       return this.renderMFAQuestions(bank, questions);
     } else if (accounts.length > 0) {
       return this.renderAccounts(bank, accounts);
@@ -298,7 +301,6 @@ function mapStateToProps(state) {
       state.form && state.form.mfaAnswers && state.form.mfaAnswers.values
         ? state.form.mfaAnswers.values
         : undefined,
-    authReducer: state.authReducer,
     integrateBankReducer: state.integrateBankReducer
   };
 }

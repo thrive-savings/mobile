@@ -1,5 +1,14 @@
 import amplitude from "../../../globals/amplitude";
-import { REQUEST_URL, GET_UPDATES, BONUS_NOTIFICATION_SEEN, UPDATE_AUTH_DATA, UPDATE_ACCOUNT_DATA, UPDATE_GOALS_DATA, UPDATE_AVATAR } from "./constants";
+import {
+  REQUEST_URL,
+  GET_UPDATES,
+  BONUS_NOTIFICATION_SEEN,
+  UPDATE_AUTH_DATA,
+  UPDATE_ACCOUNT_DATA,
+  UPDATE_GOALS_DATA,
+  UPDATE_AVATAR,
+  UPDATE_ONBOARDING_STEP
+} from "./constants";
 const initialState = {
   data: {},
   avatar: undefined,
@@ -9,7 +18,7 @@ const initialState = {
   errorMessage: ""
 };
 
-export default function authReducer (state = initialState, action) {
+export default function authReducer(state = initialState, action) {
   switch (action.type) {
     //Update Data case
     case `${UPDATE_AUTH_DATA}`:
@@ -24,13 +33,18 @@ export default function authReducer (state = initialState, action) {
     case `${UPDATE_ACCOUNT_DATA}`:
       const { payload: { authorized: { account } } } = action;
       const dataOnAccountUpdate = state.data.authorized;
+      const newOnboardingStep = dataOnAccountUpdate.relinkRequired
+        ? undefined
+        : "SavingPreferences";
       return {
         ...state,
         data: {
           authorized: {
             ...dataOnAccountUpdate,
             account,
-            bankLinked: true
+            bankLinked: true,
+            relinkRequired: false,
+            onboardingStep: newOnboardingStep
           }
         }
       };
@@ -44,7 +58,8 @@ export default function authReducer (state = initialState, action) {
         data: {
           authorized: {
             ...dataOnGoalsUpdate,
-            goals
+            goals,
+            onboardingStep: undefined
           }
         }
       };
@@ -55,6 +70,20 @@ export default function authReducer (state = initialState, action) {
       return {
         ...state,
         avatar: newAvatar
+      };
+
+    //Update Onboarding Step
+    case `${UPDATE_ONBOARDING_STEP}`:
+      const { payload: { data: { onboardingStep } } } = action;
+      const dataOnOnboardingStepUpdate = state.data.authorized;
+      return {
+        ...state,
+        data: {
+          authorized: {
+            ...dataOnOnboardingStepUpdate,
+            onboardingStep
+          }
+        }
       };
 
     //Log In cases
