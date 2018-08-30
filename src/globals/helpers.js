@@ -1,7 +1,12 @@
-const getDollarString = amount => {
+const getDollarString = (amount, rounded = false) => {
   let amountInDollars = amount / 100;
-  amountInDollars = amountInDollars.toFixed(2);
-  amountInDollars = "$" + amountInDollars.toLocaleString("en-US", {style: "currency", currency: "USD"});
+  amountInDollars = !rounded ? amountInDollars.toFixed(2) : amountInDollars;
+  amountInDollars =
+    "$" +
+    amountInDollars.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD"
+    });
 
   return amountInDollars;
 };

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { View, TouchableOpacity, Text } from "react-native";
-import { Left, Right } from "native-base";
+import { Left, Right, Toast } from "native-base";
 import { connect } from "react-redux";
 
 import amplitude from "../../../../globals/amplitude";
@@ -19,6 +19,7 @@ import styles from "./styles";
 import { FREQUENCY_TYPES, getFrequencyIndex } from "./constants";
 
 const MIN_FIXED_CONTRIBUTION = 500;
+const MAX_FIXED_CONTRIBUTION = 100000;
 
 class FixedPlan extends Component {
   constructor(props) {
@@ -40,8 +41,8 @@ class FixedPlan extends Component {
     }
 
     this.state = {
-      contribution: getDollarString(contribution),
-      setContribution: 0,
+      contribution: getDollarString(contribution, true),
+      setContribution: 2000,
       frequencyIndex: getFrequencyIndex(frequencyIndex),
       showContributionSetter: false,
       showFrequencySetter: false
@@ -59,13 +60,26 @@ class FixedPlan extends Component {
   next() {
     const { setContribution, frequencyIndex } = this.state;
 
-    this.props.save({
-      fixedContribution:
-        setContribution >= MIN_FIXED_CONTRIBUTION
-          ? setContribution.toString()
-          : "2000",
-      frequency: FREQUENCY_TYPES[frequencyIndex].identifier
-    });
+    if (
+      setContribution >= MIN_FIXED_CONTRIBUTION &&
+      setContribution <= MAX_FIXED_CONTRIBUTION
+    ) {
+      this.props.save({
+        fixedContribution: setContribution.toString(),
+        frequency: FREQUENCY_TYPES[frequencyIndex].identifier
+      });
+    } else {
+      Toast.show({
+        text: `Contribution amount should be between ${getDollarString(
+          MIN_FIXED_CONTRIBUTION,
+          true
+        )} and ${getDollarString(MAX_FIXED_CONTRIBUTION, true)}`,
+        duration: 2500,
+        position: "top",
+        type: "warning",
+        textStyle: { textAlign: "center" }
+      });
+    }
 
     this.setState({
       showFrequencySetter: false,
@@ -74,13 +88,14 @@ class FixedPlan extends Component {
   }
 
   numPadClicked(value) {
-    let setContribution = this.state.setContribution;
+    let setContribution = this.state.setContribution / 100;
     setContribution =
       value >= 0
         ? setContribution * 10 + value
         : Math.floor(setContribution / 10);
+    setContribution *= 100;
 
-    const contribution = getDollarString(setContribution);
+    const contribution = getDollarString(setContribution, true);
 
     this.setState({ setContribution, contribution });
   }
@@ -152,7 +167,7 @@ class FixedPlan extends Component {
             <Text style={styles.inputLabel}>Overdraft Limit:</Text>
           </Left>
           <Right>
-            <Text style={styles.inputText}>$100.00</Text>
+            <Text style={styles.inputText}>$100</Text>
           </Right>
         </View>
         <Text style={styles.promiseText}>
