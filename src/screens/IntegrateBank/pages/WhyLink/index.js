@@ -26,9 +26,8 @@ class WhyLink extends Component {
     amplitude.track(amplitude.events.WHY_LINK_VIEW);
   }
 
-  render() {
+  renderInitialLinkPage() {
     const descExpanded = this.state.descExpanded;
-
     return (
       <ScrollView
         contentContainerStyle={[styles.container, globalStyles.shadow]}
@@ -83,12 +82,64 @@ class WhyLink extends Component {
       </ScrollView>
     );
   }
+
+  renderRelinkPage() {
+    return (
+      <ScrollView
+        contentContainerStyle={[styles.container, globalStyles.shadow]}
+        showsVerticalScrollIndicator={false}
+      >
+        <Dots step={1} count={3} />
+
+        <Text style={styles.titleText}>RELINK YOUR BANK ACCOUNT</Text>
+        <Image source={bankSymbol} style={styles.bankSymbol} />
+        <Text style={styles.secondaryTitleText}>Why did this happen?</Text>
+        <Text style={[styles.regularText, styles.descText]}>
+          Occasionally, Thrive will lose connection to your bank account. This
+          is normal as it keeps your account secure.
+        </Text>
+        <Text style={[styles.regularText, styles.descText]}>
+          There are four reasons why this could happen:
+        </Text>
+
+        <Accordion
+          title={"Your login ID or password has changed."}
+          expandable={false}
+        />
+        <Accordion
+          title={
+            "Your bank requires us to ask you to answer a security question."
+          }
+          expandable={false}
+        />
+        <Accordion
+          title={"Your bank has updated their security measures."}
+          expandable={false}
+        />
+        <Accordion
+          title={"You travelled outside of Canada."}
+          expandable={false}
+        />
+
+        <View style={styles.separator} />
+        <SpecialButton text={"RELINK MY ACCOUNT"} onClick={this.props.next} />
+      </ScrollView>
+    );
+  }
+
+  render() {
+    return this.props.relinkRequired
+      ? this.renderRelinkPage()
+      : this.renderInitialLinkPage();
+  }
 }
 
 WhyLink.propTypes = {
+  relinkRequired: PropTypes.bool,
   next: PropTypes.func
 };
 WhyLink.defaultProps = {
+  relinkRequired: false,
   next: () => {}
 };
 

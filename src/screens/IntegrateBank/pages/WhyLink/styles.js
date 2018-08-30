@@ -28,7 +28,7 @@ export default StyleSheet.create({
     lineHeight: 24,
     letterSpacing: 0.2,
     textAlign: "center",
-    paddingTop: 10,
+    paddingTop: 10
   },
   bankSymbol: {
     width: 80,

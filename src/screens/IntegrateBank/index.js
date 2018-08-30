@@ -61,13 +61,15 @@ class IntegrateBank extends Component {
     let step = reducerStep ? reducerStep : this.state.step;
 
     const { bank, relinkRequired } = this.props.userData;
-    if (relinkRequired) {
-      step = Math.max(step, 1);
-    }
 
     switch (step) {
       case 0:
-        return <WhyLink next={() => this.setState({ step: 1 })} />;
+        return (
+          <WhyLink
+            next={() => this.setState({ step: 1 })}
+            relinkRequired={relinkRequired}
+          />
+        );
       case 1:
         const { loginId, institution } = this.state;
         if (loginId && institution) {

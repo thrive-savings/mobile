@@ -7,7 +7,7 @@ import {
   Text,
   TextInput,
   StatusBar
- } from "react-native";
+} from "react-native";
 import { connect } from "react-redux";
 import { Content, Icon, Toast } from "native-base";
 import { Field, reduxForm } from "redux-form";
@@ -60,7 +60,11 @@ class ForgotPasswordForm extends Component {
                     : "Confirm Password"
             }
             keyboardType={input.name === "email" ? "email-address" : "default"}
-            secureTextEntry={input.name === "password" || input.name === "confirmPassword" ? true : false}
+            secureTextEntry={
+              input.name === "password" || input.name === "confirmPassword"
+                ? true
+                : false
+            }
             {...input}
           />
           {touched && error
@@ -82,7 +86,7 @@ class ForgotPasswordForm extends Component {
   }
 
   request() {
-    if (this.props.valid  && this.props.values) {
+    if (this.props.valid && this.props.values) {
       this.props.passwordRequest(this.props.values);
     } else {
       Toast.show({
@@ -96,7 +100,7 @@ class ForgotPasswordForm extends Component {
   }
 
   reset() {
-    if (this.props.valid  && this.props.values) {
+    if (this.props.valid && this.props.values) {
       const { code, password, confirmPassword } = this.props.values;
       if (password === confirmPassword) {
         this.props.passwordReset({ code, password });
@@ -144,7 +148,10 @@ class ForgotPasswordForm extends Component {
   renderRequestForm() {
     return (
       <View style={styles.formContainer}>
-        <Text style={styles.secondaryText}>Enter your email address and we’ll send you a link to reset your password.</Text>
+        <Text style={styles.secondaryText}>
+          Enter your email address and we’ll send you a link to reset your
+          password.
+        </Text>
         <Field
           name="email"
           component={this.renderInput}
@@ -158,7 +165,10 @@ class ForgotPasswordForm extends Component {
   renderResetForm() {
     return (
       <View style={styles.formContainer}>
-        <Text style={styles.secondaryText}>We have sent a verification code to your email, please type it below along with your new password.</Text>
+        <Text style={styles.secondaryText}>
+          We have sent a verification code to your email, please type it below
+          along with your new password.
+        </Text>
         <Field
           name="code"
           component={this.renderInput}
@@ -169,13 +179,13 @@ class ForgotPasswordForm extends Component {
           name="password"
           component={this.renderInput}
           type="password"
-          validate={minLength8, required}
+          validate={[minLength8, required]}
         />
         <Field
           name="confirmPassword"
           component={this.renderInput}
           type="confirmPassword"
-          validate={minLength8, required}
+          validate={[minLength8, required]}
         />
       </View>
     );
@@ -184,17 +194,23 @@ class ForgotPasswordForm extends Component {
   renderDone() {
     return (
       <View style={styles.formContainer}>
-        <Text style={styles.secondaryText}>You have successfully changed your password. Please go back to login screen to proceed.</Text>
+        <Text style={styles.secondaryText}>
+          You have successfully changed your password. Please go back to login
+          screen to proceed.
+        </Text>
       </View>
     );
   }
 
   componentWillReceiveProps(nextProps) {
-    const { requestSucceeded, resetSucceeded } = nextProps.forgotPasswordReducer;
+    const {
+      requestSucceeded,
+      resetSucceeded
+    } = nextProps.forgotPasswordReducer;
     if (!this.state.step && requestSucceeded) {
-      this.setState({step : 1});
-    }  else if (this.state.step && resetSucceeded) {
-      this.setState({step: 0, done: 1});
+      this.setState({ step: 1 });
+    } else if (this.state.step && resetSucceeded) {
+      this.setState({ step: 0, done: 1 });
     }
   }
 
@@ -215,29 +231,44 @@ class ForgotPasswordForm extends Component {
 
     return (
       <View style={globalStyles.container}>
-        <StatusBar barStyle="light-content" backgroundColor={colors.statusbar}/>
+        <StatusBar
+          barStyle="light-content"
+          backgroundColor={colors.statusbar}
+        />
         <ImageBackground source={bg} style={globalStyles.background}>
-          <Header navigation={this.props.navigation} button="back" onButtonPress={this.goToLogin} />
-          <Content showsVerticalScrollIndicator={false} style={styles.contentContainer}>
+          <Header
+            navigation={this.props.navigation}
+            button="back"
+            onButtonPress={this.goToLogin}
+          />
+          <Content
+            showsVerticalScrollIndicator={false}
+            style={styles.contentContainer}
+          >
             <View style={styles.contentView}>
               <Text style={styles.labelText}>RESET PASSWORD</Text>
-              {
-                done
-                  ? this.renderDone()
-                  : step
-                    ? this.renderResetForm()
-                    : this.renderRequestForm()
-              }
-              {error && <Text style={globalStyles.formErrorText3}>{errorText}</Text>}
-              <SpecialButton loading={isLoading} text={done ? "GO TO LOGIN" : "SUBMIT"} onClick={this.submit}/>
-              {
-                !done &&
-                <TouchableOpacity activeOpacity={0.6} onPress={this.request} style={styles.resendButton} disabled={isLoading} hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}>
-                  <Text style={styles.resendButtonText}>
-                    Resend
-                  </Text>
-                </TouchableOpacity>
-              }
+              {done
+                ? this.renderDone()
+                : step ? this.renderResetForm() : this.renderRequestForm()}
+              {error &&
+                <Text style={globalStyles.formErrorText3}>
+                  {errorText}
+                </Text>}
+              <SpecialButton
+                loading={isLoading}
+                text={done ? "GO TO LOGIN" : "SUBMIT"}
+                onClick={this.submit}
+              />
+              {!done &&
+                <TouchableOpacity
+                  activeOpacity={0.6}
+                  onPress={this.request}
+                  style={styles.resendButton}
+                  disabled={isLoading}
+                  hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+                >
+                  <Text style={styles.resendButtonText}>Resend</Text>
+                </TouchableOpacity>}
             </View>
           </Content>
         </ImageBackground>
@@ -246,14 +277,19 @@ class ForgotPasswordForm extends Component {
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
-    values: state.form && state.form.forgotPassword && state.form.forgotPassword.values ? state.form.forgotPassword.values : undefined,
+    values:
+      state.form &&
+      state.form.forgotPassword &&
+      state.form.forgotPassword.values
+        ? state.form.forgotPassword.values
+        : undefined,
     forgotPasswordReducer: state.forgotPasswordReducer
   };
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
     clearStorage: () => dispatch(clearStorage()),
     passwordRequest: (payload = {}) => dispatch(passwordRequest(payload)),
@@ -261,7 +297,9 @@ function mapDispatchToProps (dispatch) {
   };
 }
 
-ForgotPasswordForm = connect(mapStateToProps, mapDispatchToProps)(ForgotPasswordForm);
+ForgotPasswordForm = connect(mapStateToProps, mapDispatchToProps)(
+  ForgotPasswordForm
+);
 
 const ForgotPassword = reduxForm({
   form: "forgotPassword"
