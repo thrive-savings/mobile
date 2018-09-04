@@ -14,6 +14,8 @@ export default StyleSheet.create({
     backgroundColor: "white",
     padding: 20
   },
+
+  // Goal Name styles
   nameContainer: {
     flexDirection: "row",
     justifyContent: "center",
@@ -27,53 +29,41 @@ export default StyleSheet.create({
     letterSpacing: 1.6,
     paddingRight: 10
   },
-  fieldRow: {
-    flexDirection: "row",
-    paddingVertical: 20,
-    paddingHorizontal: 5
+
+  // Content styles
+  contentView: {
+    marginVertical: 20
   },
-  fieldLabel: {
+  labelText: {
+    color: colors.blue,
+    fontSize: 15,
+    fontFamily: "LatoBold",
+    letterSpacing: 0.2,
+    textAlign: "center"
+  },
+  descText: {
     color: colors.charcoal,
     fontSize: 13,
     fontFamily: "LatoRegular",
-    letterSpacing: 0.2
+    letterSpacing: 0.2,
+    textAlign: "center"
   },
-  fieldButtonText: {
-    color: colors.blue,
-    fontSize: 13,
-    fontFamily: "LatoRegular",
-    letterSpacing: 0.2
-  },
-  bottomText: {
-    color: colors.darkerGrey,
-    fontSize: 11,
-    lineHeight: 17.5,
-    letterSpacing: 0.1,
-    paddingBottom: 20
-  },
-
-  // Date Picker styles
-  datePickerContainer: {
-    marginVertical: -10
-  },
-  datePickerInput: {
-    flexDirection: "row",
+  amountBox: {
+    alignSelf: "stretch",
+    justifyContent: "center",
     alignItems: "center",
-    justifyContent: "flex-end",
-    borderWidth: 0,
-    backgroundColor: "transparent"
+    margin: 20,
+    padding: 10,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: colors.mediumGrey
   },
-  datePickerPlaceholder: {
+  amountText: {
     color: colors.blue,
-    paddingLeft: 10,
-    fontSize: 13,
-    fontFamily: "LatoRegular"
-  },
-  datePickerText: {
-    color: colors.blue,
-    paddingLeft: 10,
-    fontSize: 13,
-    fontFamily: "LatoRegular"
+    fontSize: 15,
+    fontFamily: "LatoBold",
+    letterSpacing: 0.2,
+    textAlign: "center"
   },
 
   // Error Text style
@@ -90,5 +80,5 @@ export default StyleSheet.create({
     marginHorizontal: -20,
     alignSelf: "stretch",
     backgroundColor: colors.mediumGrey
-  },
+  }
 });

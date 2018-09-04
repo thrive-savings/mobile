@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { View, TouchableOpacity, Text, Image } from "react-native";
-import { Left, Right, Toast } from "native-base";
+import { Toast } from "native-base";
 import { connect } from "react-redux";
-
-import DatePicker from "react-native-datepicker";
 
 import amplitude from "../../../../globals/amplitude";
 
@@ -27,8 +25,7 @@ const editIcon = require("../../../../../assets/Icons/PencilEdit/pencilEditButto
 const NEW_GOAL_DEFAULTS = {
   category: "RainyDay",
   name: "GOAL NAME",
-  amount: 0,
-  percentage: 25
+  amount: 0
 };
 
 class EditGoal extends Component {
@@ -38,18 +35,14 @@ class EditGoal extends Component {
     this.state = {
       newName: "",
       newAmount: 0,
-      newPercentage: 0,
-      newDate: undefined,
       showNumPad: false,
-      showNameEditor: false,
-      showPercentPad: false
+      showNameEditor: false
     };
 
     this.submit = this.submit.bind(this);
 
     this.numPadClicked = this.numPadClicked.bind(this);
     this.nameSet = this.nameSet.bind(this);
-    this.percentagePadClicked = this.percentagePadClicked.bind(this);
   }
 
   componentDidMount() {
@@ -59,15 +52,8 @@ class EditGoal extends Component {
   }
 
   submit() {
-    const { newName, newAmount, newPercentage, newDate } = this.state;
-    const {
-      id,
-      category,
-      name,
-      amount,
-      percentage,
-      desiredDate
-    } = this.props.data;
+    const { newName, newAmount } = this.state;
+    const { id, category, name, amount } = this.props.data;
 
     let errorMsg, data;
 
@@ -82,11 +68,7 @@ class EditGoal extends Component {
         data = {
           category: category,
           name: newName,
-          amount: newAmount.toString(),
-          percentage: newPercentage
-            ? newPercentage.toString()
-            : NEW_GOAL_DEFAULTS.percentage.toString(),
-          desiredDate: newDate ? newDate : "infinite"
+          amount: newAmount.toString()
         };
       }
     } else {
@@ -95,13 +77,7 @@ class EditGoal extends Component {
           category,
           id: id.toString(),
           name: newName ? newName : name,
-          amount: newAmount ? newAmount.toString() : amount.toString(),
-          percentage: newPercentage
-            ? newPercentage.toString()
-            : percentage.toString(),
-          desiredDate: newDate
-            ? newDate
-            : desiredDate ? desiredDate : "infinite"
+          amount: newAmount ? newAmount.toString() : amount.toString()
         };
       }
     }
@@ -121,32 +97,11 @@ class EditGoal extends Component {
     }
   }
 
-  percentagePadClicked(value) {
-    let newPercentage = this.state.newPercentage;
-    if (
-      (newPercentage > 10 && value >= 0) ||
-      (newPercentage === 10 && value > 0)
-    ) {
-      Toast.show({
-        text: "Percentage value should be in [1, 100] range.",
-        duration: 2500,
-        position: "top",
-        type: "warning",
-        textStyle: { textAlign: "center" }
-      });
-    } else {
-      newPercentage =
-        value >= 0
-          ? newPercentage * 10 + value
-          : Math.floor(newPercentage / 10);
-      this.setState({ newPercentage });
-    }
-  }
-
   numPadClicked(value) {
-    let newAmount = this.state.newAmount;
+    let newAmount = this.state.newAmount / 100;
     newAmount =
       value >= 0 ? newAmount * 10 + value : Math.floor(newAmount / 10);
+    newAmount *= 100;
 
     this.setState({ newAmount });
   }
@@ -174,7 +129,7 @@ class EditGoal extends Component {
 
     const { data } = this.props;
 
-    let { category, name, amount, percentage, desiredDate } = data;
+    let { category, name, amount } = data;
     if (!category) {
       category = NEW_GOAL_DEFAULTS.category;
     }
@@ -191,19 +146,7 @@ class EditGoal extends Component {
     if (this.state.newAmount) {
       amount = this.state.newAmount;
     }
-    const amountDollars = getDollarString(amount);
-
-    if (!percentage) {
-      percentage = NEW_GOAL_DEFAULTS.percentage;
-    }
-    if (this.state.newPercentage) {
-      percentage = this.state.newPercentage;
-    }
-    const percentageStr = percentage + "%";
-
-    if (this.state.newDate) {
-      desiredDate = this.state.newDate;
-    }
+    const amountDollars = getDollarString(amount, true);
 
     return (
       <View style={[styles.container, globalStyles.shadow]}>
@@ -215,8 +158,7 @@ class EditGoal extends Component {
           onPress={() =>
             this.setState({
               showNameEditor: true,
-              showNumPad: false,
-              showPercentPad: false
+              showNumPad: false
             })}
           hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
         >
@@ -228,81 +170,26 @@ class EditGoal extends Component {
 
         <View style={styles.separator} />
 
-        <View style={styles.fieldRow}>
-          <Left>
-            <Text style={styles.fieldLabel}>Savings Goal:</Text>
-          </Left>
-          <Right>
-            <TouchableOpacity
-              activeOpacity={0.6}
-              onPress={() =>
-                this.setState({
-                  showNumPad: true,
-                  showNameEditor: false,
-                  showPercentPad: false
-                })}
-            >
-              <Text style={styles.fieldButtonText}>
-                {amountDollars}
-              </Text>
-            </TouchableOpacity>
-          </Right>
+        <View style={styles.contentView}>
+          <Text style={styles.labelText}>I want to save</Text>
+          <TouchableOpacity
+            activeOpacity={0.6}
+            style={styles.amountBox}
+            onPress={() =>
+              this.setState({
+                showNumPad: true,
+                showNameEditor: false
+              })}
+          >
+            <Text style={styles.amountText}>
+              {amountDollars}
+            </Text>
+          </TouchableOpacity>
+          <Text style={styles.descText}>
+            We calculate how long it'll take to reach your goal after your first
+            save.
+          </Text>
         </View>
-
-        <View style={styles.separator} />
-
-        <View style={[styles.fieldRow, styles.datePickerContainer]}>
-          <Left>
-            <Text style={styles.fieldLabel}>Desired Date:</Text>
-          </Left>
-          <Right>
-            <DatePicker
-              customStyles={{
-                placeholderText: styles.datePickerPlaceholder,
-                dateText: styles.datePickerText,
-                dateInput: styles.datePickerInput
-              }}
-              style={styles.dateOfBirth}
-              date={desiredDate}
-              placeholder="Choose Date"
-              format="YYYY-MM-DD"
-              confirmBtnText="Confirm"
-              cancelBtnText="Cancel"
-              showIcon={false}
-              androidMode="spinner"
-              onDateChange={date => this.setState({ newDate: date })}
-            />
-          </Right>
-        </View>
-
-        <View style={styles.separator} />
-
-        <View style={styles.fieldRow}>
-          <Left>
-            <Text style={styles.fieldLabel}>% of Total Savings:</Text>
-          </Left>
-          <Right>
-            <TouchableOpacity
-              activeOpacity={0.6}
-              onPress={() =>
-                this.setState({
-                  showPercentPad: true,
-                  showNumPad: false,
-                  showNameEditor: false
-                })}
-              hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-            >
-              <Text style={styles.fieldButtonText}>
-                {percentageStr}
-              </Text>
-            </TouchableOpacity>
-          </Right>
-        </View>
-
-        <Text style={styles.bottomText}>
-          Choose how much of your total savings you want to allocate for this
-          specific goal.{" "}
-        </Text>
 
         {error &&
           <Text style={styles.formErrorText}>
@@ -321,7 +208,7 @@ class EditGoal extends Component {
           onClose={() => this.setState({ showNumPad: false })}
           content={getNumPadModalContent({
             label: "Enter goal amount.",
-            value: getDollarString(this.state.newAmount),
+            value: getDollarString(this.state.newAmount, true),
             onPress: this.numPadClicked
           })}
         />
@@ -333,17 +220,6 @@ class EditGoal extends Component {
           content={getFieldEditorContent({
             label: "Enter goal name.",
             onChange: this.nameSet
-          })}
-        />
-
-        <ModalTemplate
-          show={this.state.showPercentPad}
-          buttonText={"SUBMIT"}
-          onClose={() => this.setState({ showPercentPad: false })}
-          content={getNumPadModalContent({
-            label: "Enter saving percentage.",
-            value: this.state.newPercentage + "%",
-            onPress: this.percentagePadClicked
           })}
         />
       </View>
