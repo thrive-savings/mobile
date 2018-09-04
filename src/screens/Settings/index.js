@@ -49,7 +49,7 @@ class Settings extends Component {
 
   headerIconClicked() {
     if (this.state.activePage === "settings") {
-      this.props.navigation.openDrawer();
+      this.props.navigation.navigate("DrawerOpen");
     } else {
       this.setState({ activePage: "settings" });
     }
