@@ -1,7 +1,7 @@
 import React from "react";
 import { AppState } from "react-native";
 import { connect } from "react-redux";
-import { createStackNavigator, createDrawerNavigator } from "react-navigation";
+import { StackNavigator, DrawerNavigator } from "react-navigation";
 import { Root } from "native-base";
 import amplitude from "./globals/amplitude";
 
@@ -26,7 +26,7 @@ import getAuthorized from "./globals/getAuthorized";
 
 import { getUpdates } from "./screens/Login/state/actions";
 
-const Drawer = createDrawerNavigator(
+const Drawer = DrawerNavigator(
   {
     Home: { screen: Home },
     Profile: { screen: Profile },
@@ -59,32 +59,32 @@ const stackerOptions = {
   headerMode: "none"
 };
 
-const StackerWithLanding = createStackNavigator(stackScreens, {
+const StackerWithLanding = StackNavigator(stackScreens, {
   ...stackerOptions,
   initialRouteName: "Landing"
 });
 
-const StackerWithDrawer = createStackNavigator(stackScreens, {
+const StackerWithDrawer = StackNavigator(stackScreens, {
   ...stackerOptions,
   initialRouteName: "Drawer"
 });
 
-const StackerWithIntegrateBank = createStackNavigator(stackScreens, {
+const StackerWithIntegrateBank = StackNavigator(stackScreens, {
   ...stackerOptions,
   initialRouteName: "IntegrateBank"
 });
 
-const StackerWithSavingPreferences = createStackNavigator(stackScreens, {
+const StackerWithSavingPreferences = StackNavigator(stackScreens, {
   ...stackerOptions,
   initialRouteName: "SavingPreferences"
 });
 
-const StackerWithSavingGoals = createStackNavigator(stackScreens, {
+const StackerWithSavingGoals = StackNavigator(stackScreens, {
   ...stackerOptions,
   initialRouteName: "SavingGoals"
 });
 
-const StackerWithSetPhone = createStackNavigator(stackScreens, {
+const StackerWithSetPhone = StackNavigator(stackScreens, {
   ...stackerOptions,
   initialRouteName: "SetPhone"
 });
