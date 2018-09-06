@@ -162,7 +162,7 @@ class Home extends Component {
 
   renderGoals() {
     return this.props.userData.goals.map((goal, index) => {
-      const { category, name, amount, savedAmount } = goal;
+      const { category, name, amount, progress } = goal;
       return (
         <TouchableOpacity
           key={index}
@@ -192,16 +192,16 @@ class Home extends Component {
                   {name}
                 </Text>
                 <Text style={styles.goalAmountText}>
-                  {getDollarString(savedAmount)}
+                  {getDollarString(progress)}
                 </Text>
               </View>
             </View>
             <View style={styles.goalProgressContainer}>
-              <ProgressBar progress={savedAmount / amount} />
+              <ProgressBar progress={progress / amount} />
               <View style={styles.goalProgressTextsHolder}>
                 <Text style={styles.goalProgressBarText}>$0</Text>
                 <Text style={styles.goalProgressBarText}>
-                  {getDollarString(amount)}
+                  {getDollarString(amount, true)}
                 </Text>
               </View>
             </View>

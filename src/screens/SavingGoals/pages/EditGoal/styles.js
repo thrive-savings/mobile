@@ -34,19 +34,15 @@ export default StyleSheet.create({
   contentView: {
     marginVertical: 20
   },
-  labelText: {
-    color: colors.blue,
-    fontSize: 15,
-    fontFamily: "LatoBold",
-    letterSpacing: 0.2,
-    textAlign: "center"
-  },
-  descText: {
+  regularText: {
     color: colors.charcoal,
     fontSize: 13,
     fontFamily: "LatoRegular",
     letterSpacing: 0.2,
     textAlign: "center"
+  },
+  blueText: {
+    color: colors.blue
   },
   amountBox: {
     alignSelf: "stretch",

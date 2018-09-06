@@ -68,7 +68,8 @@ class EditGoal extends Component {
         data = {
           category: category,
           name: newName,
-          amount: newAmount.toString()
+          amount: newAmount.toString(),
+          boosted: false
         };
       }
     } else {
@@ -77,7 +78,8 @@ class EditGoal extends Component {
           category,
           id: id.toString(),
           name: newName ? newName : name,
-          amount: newAmount ? newAmount.toString() : amount.toString()
+          amount: newAmount ? newAmount.toString() : amount.toString(),
+          boosted: false
         };
       }
     }
@@ -129,7 +131,7 @@ class EditGoal extends Component {
 
     const { data } = this.props;
 
-    let { category, name, amount } = data;
+    let { category, name, amount, weeksLeft } = data;
     if (!category) {
       category = NEW_GOAL_DEFAULTS.category;
     }
@@ -171,7 +173,7 @@ class EditGoal extends Component {
         <View style={styles.separator} />
 
         <View style={styles.contentView}>
-          <Text style={styles.labelText}>I want to save</Text>
+          <Text style={styles.regularText}>I want to save</Text>
           <TouchableOpacity
             activeOpacity={0.6}
             style={styles.amountBox}
@@ -185,10 +187,15 @@ class EditGoal extends Component {
               {amountDollars}
             </Text>
           </TouchableOpacity>
-          <Text style={styles.descText}>
-            We calculate how long it'll take to reach your goal after your first
-            save.
-          </Text>
+          {weeksLeft && weeksLeft >= 0
+            ? <Text style={styles.regularText}>
+                Based on how you save, you will reach your goal in
+                <Text style={styles.blueText}>{` ${weeksLeft} weeks`}</Text>
+              </Text>
+            : <Text style={styles.regularText}>
+                We calculate how long it'll take to reach your goal after your
+                next save
+              </Text>}
         </View>
 
         {error &&
