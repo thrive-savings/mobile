@@ -83,6 +83,8 @@ const imageAssets = [
   require("../../assets/Icons/ThriveBot/thriveBot.png"),
   require("../../assets/Icons/ThriveBotSmaller/thriveBot.png"),
   require("../../assets/Icons/TickGradient/tickGradient.png"),
+  require("../../assets/Icons/Star/Empty/star.png"),
+  require("../../assets/Icons/Star/Blue/star.png")
 ];
 
 const cacheImages = images => {

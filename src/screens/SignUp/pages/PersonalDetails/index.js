@@ -1,15 +1,7 @@
 import React, { Component } from "react";
-import {
-  View,
-  Image,
-  Text,
-  TextInput
-} from "react-native";
+import { View, Image, Text, TextInput } from "react-native";
 import { connect } from "react-redux";
 import { Content, Toast } from "native-base";
-import DatePicker from "react-native-datepicker";
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import ModalDropdown from "react-native-modal-dropdown";
 import CheckBox from "react-native-check-box";
 
 import { Field, reduxForm } from "redux-form";
@@ -21,11 +13,9 @@ import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
 import colors from "../../../../theme/colors";
 
-import { required, minLength8, alphaNumeric, email } from "../../../../globals/validators";
+import { required, minLength8, email } from "../../../../globals/validators";
 
 import { signUpUser } from "../../state/actions";
-
-import { GooglePlacesApiKey } from "../../../../../config";
 
 import INPUT_FIELDS from "./constants";
 
@@ -53,9 +43,17 @@ class PersonalDetails extends Component {
       let companyID = this.props.signUpReducer.companyID;
       companyID = companyID > 0 ? companyID : 1;
 
-      const { email: userEmail, password, firstName, lastName } = this.props.values;
+      const {
+        email: userEmail,
+        password,
+        firstName,
+        lastName
+      } = this.props.values;
       this.props.signUpUser({
-        email: userEmail, firstName, lastName, password,
+        email: userEmail,
+        firstName,
+        lastName,
+        password,
         companyID: companyID.toString()
       });
       return;
@@ -70,8 +68,10 @@ class PersonalDetails extends Component {
     });
   }
 
-
-  firstNameTextInput; lastNameTextInput; emailTextInput; passwordTextInput;
+  firstNameTextInput;
+  lastNameTextInput;
+  emailTextInput;
+  passwordTextInput;
   renderInput({ input, label, type, meta: { touched, error, warning } }) {
     return (
       <View>
@@ -80,13 +80,17 @@ class PersonalDetails extends Component {
             ref={c => {
               switch (input.name) {
                 case "firstName":
-                  this.firstNameTextInput = c; break;
+                  this.firstNameTextInput = c;
+                  break;
                 case "lastName":
-                  this.lastNameTextInput = c; break;
+                  this.lastNameTextInput = c;
+                  break;
                 case "email":
-                  this.emailTextInput = c; break;
+                  this.emailTextInput = c;
+                  break;
                 case "password":
-                  this.passwordTextInput = c; break;
+                  this.passwordTextInput = c;
+                  break;
               }
             }}
             placeholderTextColor={colors.darkerGrey}
@@ -98,11 +102,14 @@ class PersonalDetails extends Component {
             onSubmitEditing={() => {
               switch (input.name) {
                 case "firstName":
-                  this.lastNameTextInput.focus(); break;
+                  this.lastNameTextInput.focus();
+                  break;
                 case "lastName":
-                  this.emailTextInput.focus(); break;
+                  this.emailTextInput.focus();
+                  break;
                 case "email":
-                  this.passwordTextInput.focus(); break;
+                  this.passwordTextInput.focus();
+                  break;
               }
             }}
             blurOnSubmit={input.name === "password"}
@@ -121,7 +128,12 @@ class PersonalDetails extends Component {
 
   render() {
     const navigation = this.props.navigation;
-    const { companyLogoUrl, isLoading, error, errorMessage } = this.props.signUpReducer;
+    const {
+      companyLogoUrl,
+      isLoading,
+      error,
+      errorMessage
+    } = this.props.signUpReducer;
 
     let errorText = "";
     if (error) {
@@ -134,14 +146,16 @@ class PersonalDetails extends Component {
     }
 
     return (
-      <Content showsVerticalScrollIndicator={false} style={[styles.formContainer, globalStyles.shadow]}>
+      <Content
+        showsVerticalScrollIndicator={false}
+        style={[styles.formContainer, globalStyles.shadow]}
+      >
         <View style={styles.formContent}>
-          {
-            companyLogoUrl === "CreditCanada" &&
-            <Image source={creditCanadaLogo} style={styles.brandLogo}/>
-          }
+          {companyLogoUrl === "CreditCanada" &&
+            <Image source={creditCanadaLogo} style={styles.brandLogo} />}
           <Text style={styles.formLabelText}>
-            Please use your legal name as it appears on your bank statements, so that we can verify your account.
+            Please use your legal name as it appears on your bank statements, so
+            that we can verify your account.
           </Text>
           <View style={styles.inputRow}>
             <Field
@@ -173,35 +187,71 @@ class PersonalDetails extends Component {
 
           <View style={styles.checkboxRow}>
             <CheckBox
-              onClick={()=>this.setState({didAgree: !this.state.didAgree})}
+              onClick={() => this.setState({ didAgree: !this.state.didAgree })}
               isChecked={this.state.didAgree}
-              unCheckedImage={<View style={styles.checkbox} hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}/>}
-              checkedImage={<View style={styles.checkbox} hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}><Image source={tick} style={styles.checkboxTick}/></View>}
+              unCheckedImage={
+                <View
+                  style={styles.checkbox}
+                  hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+                />
+              }
+              checkedImage={
+                <View
+                  style={styles.checkbox}
+                  hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+                >
+                  <Image source={tick} style={styles.checkboxTick} />
+                </View>
+              }
             />
             <Text style={styles.checkboxText}>
               By creating an account you are agreeing to our
-              <Text style={styles.linkTexts} onPress={() => navigation.navigate("TOS")} suppressHighlighting> Terms of Service</Text> and
-              <Text style={styles.linkTexts} onPress={() => navigation.navigate("PP")} suppressHighlighting> Privacy Policy.</Text>
+              <Text
+                style={styles.linkTexts}
+                onPress={() => navigation.navigate("TOS")}
+                suppressHighlighting
+              >
+                {" "}Terms of Service
+              </Text>{" "}
+              and
+              <Text
+                style={styles.linkTexts}
+                onPress={() => navigation.navigate("PP")}
+                suppressHighlighting
+              >
+                {" "}Privacy Policy.
+              </Text>
             </Text>
           </View>
 
-          {error && <Text style={globalStyles.formErrorText3}>{errorText}</Text>}
+          {error &&
+            <Text style={globalStyles.formErrorText3}>
+              {errorText}
+            </Text>}
 
-          <SpecialButton loading={isLoading} enabled={this.state.didAgree} text={"CREATE MY ACCOUNT"} onClick={this.submit} />
+          <SpecialButton
+            loading={isLoading}
+            enabled={this.state.didAgree}
+            text={"CREATE MY ACCOUNT"}
+            onClick={this.submit}
+          />
         </View>
       </Content>
     );
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
-    values: state.form && state.form.signup && state.form.signup.values ? state.form.signup.values : undefined,
+    values:
+      state.form && state.form.signup && state.form.signup.values
+        ? state.form.signup.values
+        : undefined,
     signUpReducer: state.signUpReducer
   };
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
     signUpUser: (payload = {}) => dispatch(signUpUser(payload))
   };

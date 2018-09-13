@@ -76,5 +76,33 @@ export default StyleSheet.create({
     marginHorizontal: -20,
     alignSelf: "stretch",
     backgroundColor: colors.mediumGrey
+  },
+
+  // Checkbox styles
+  checkboxRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingBottom: 20,
+    paddingLeft: 5
+  },
+  checkbox: {
+    width: 15,
+    height: 15,
+    borderWidth: 1,
+    borderColor: colors.darkerGrey,
+    borderRadius: 2,
+    backgroundColor: "transparent"
+  },
+  checkboxTick: {
+    alignSelf: "center"
+  },
+  checkboxText: {
+    paddingRight: 15,
+    color: colors.charcoal,
+    fontSize: 13,
+    fontFamily: "LatoRegular",
+    letterSpacing: 0.2,
+    textAlign: "center"
   }
 });

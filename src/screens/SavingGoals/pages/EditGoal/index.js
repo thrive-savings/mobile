@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { View, TouchableOpacity, Text, Image } from "react-native";
 import { Toast } from "native-base";
 import { connect } from "react-redux";
+import CheckBox from "react-native-check-box";
 
 import amplitude from "../../../../globals/amplitude";
 
@@ -20,12 +21,14 @@ import { addGoal, updateGoal } from "../../state/actions";
 import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
 
+const tick = require("../../../../../assets/Icons/Checkbox/tick.png");
 const editIcon = require("../../../../../assets/Icons/PencilEdit/pencilEditButton.png");
 
 const NEW_GOAL_DEFAULTS = {
   category: "RainyDay",
   name: "GOAL NAME",
-  amount: 0
+  amount: 0,
+  boost: false
 };
 
 class EditGoal extends Component {
@@ -35,6 +38,8 @@ class EditGoal extends Component {
     this.state = {
       newName: "",
       newAmount: 0,
+      boostSet: false,
+      boostValue: props.newGoal ? false : props.data.boosted,
       showNumPad: false,
       showNameEditor: false
     };
@@ -52,8 +57,8 @@ class EditGoal extends Component {
   }
 
   submit() {
-    const { newName, newAmount } = this.state;
-    const { id, category, name, amount } = this.props.data;
+    const { newName, newAmount, boostSet, boostValue } = this.state;
+    const { id, category, name, amount, boosted } = this.props.data;
 
     let errorMsg, data;
 
@@ -69,7 +74,7 @@ class EditGoal extends Component {
           category: category,
           name: newName,
           amount: newAmount.toString(),
-          boosted: false
+          boosted: boostValue
         };
       }
     } else {
@@ -79,7 +84,7 @@ class EditGoal extends Component {
           id: id.toString(),
           name: newName ? newName : name,
           amount: newAmount ? newAmount.toString() : amount.toString(),
-          boosted: false
+          boosted: boostSet ? boostValue : boosted
         };
       }
     }
@@ -131,7 +136,7 @@ class EditGoal extends Component {
 
     const { data } = this.props;
 
-    let { category, name, amount, weeksLeft } = data;
+    let { category, name, amount, weeksLeft, boosted: boost } = data;
     if (!category) {
       category = NEW_GOAL_DEFAULTS.category;
     }
@@ -141,7 +146,12 @@ class EditGoal extends Component {
     if (this.state.newName) {
       name = this.state.newName;
     }
-
+    if (!boost) {
+      boost = NEW_GOAL_DEFAULTS.boost;
+    }
+    if (this.state.boostSet) {
+      boost = this.state.boostValue;
+    }
     if (!amount) {
       amount = NEW_GOAL_DEFAULTS.amount;
     }
@@ -187,6 +197,33 @@ class EditGoal extends Component {
               {amountDollars}
             </Text>
           </TouchableOpacity>
+          <View style={styles.checkboxRow}>
+            <Text style={styles.checkboxText}>
+              Do you want to prioritize the goal?
+            </Text>
+            <CheckBox
+              onClick={() =>
+                this.setState({
+                  boostValue: !this.state.boostValue,
+                  boostSet: true
+                })}
+              isChecked={boost}
+              unCheckedImage={
+                <View
+                  style={styles.checkbox}
+                  hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+                />
+              }
+              checkedImage={
+                <View
+                  style={styles.checkbox}
+                  hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+                >
+                  <Image source={tick} style={styles.checkboxTick} />
+                </View>
+              }
+            />
+          </View>
           {weeksLeft && weeksLeft >= 0
             ? <Text style={styles.regularText}>
                 Based on how you save, you will reach your goal in

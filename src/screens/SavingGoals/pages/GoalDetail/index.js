@@ -18,8 +18,8 @@ import { deleteGoal } from "../../state/actions";
 import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
 
-const infoIcon = require("../../../../../assets/Icons/Info/information.png");
-// const boostIcon = require("../../../../../assets/Icons/Boost/boost.png");
+const filledStarIcon = require("../../../../../assets/Icons/Star/Blue/star.png");
+const emptyStarIcon = require("../../../../../assets/Icons/Star/Empty/star.png");
 
 class GoalDetail extends Component {
   constructor(props) {
@@ -38,19 +38,25 @@ class GoalDetail extends Component {
     return (
       <View>
         <Text style={[styles.infoContentText, styles.bottomPadder]}>
-          All Thrive users have a default Rainy Day Fund to help reduce their
-          financial anxiety and jumpstart their saving goals!
+          Prioritizing a goal increases the amount Thrive will set aside towards
+          that specific goal.
         </Text>
         <Text style={styles.infoContentText}>
-          Your Thrive Savings will automatically go here unless you create
-          additional goals.
+          You can prioritize a goal by editing your goal.
         </Text>
       </View>
     );
   }
 
   renderGoalInfoBox() {
-    const { category, name, amount, progress, weeksLeft } = this.props.data;
+    const {
+      category,
+      name,
+      amount,
+      progress,
+      weeksLeft,
+      boosted
+    } = this.props.data;
     const {
       beforeDot: savedAmountBD,
       afterDot: savedAmountAD
@@ -59,15 +65,14 @@ class GoalDetail extends Component {
     return (
       <View style={[styles.infoBox, globalStyles.shadow]}>
         <Image source={GOAL_CATEGORIES[category].icon} />
-        {category === "RainyDay" &&
-          <TouchableOpacity
-            activeOpacity={0.6}
-            style={styles.infoIconButton}
-            onPress={() => this.setState({ showInfoModal: true })}
-            hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-          >
-            <Image source={infoIcon} />
-          </TouchableOpacity>}
+        <TouchableOpacity
+          activeOpacity={0.6}
+          style={styles.infoIconButton}
+          onPress={() => this.setState({ showInfoModal: true })}
+          hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+        >
+          <Image source={boosted ? filledStarIcon : emptyStarIcon} />
+        </TouchableOpacity>
         <Text style={styles.nameText}>
           {name}
         </Text>

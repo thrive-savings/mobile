@@ -31,7 +31,8 @@ import colors from "../../theme/colors";
 import NOTIFICATION_TYPES from "./constants";
 
 const bg = require("../../../assets/Backgrounds/BackgroundAccount.png");
-const infoIcon = require("../../../assets/Icons/Info/information.png");
+const filledStarIcon = require("../../../assets/Icons/Star/Blue/star.png");
+const emptyStarIcon = require("../../../assets/Icons/Star/Empty/star.png");
 
 class Home extends Component {
   constructor(props) {
@@ -40,7 +41,7 @@ class Home extends Component {
     this.cycleAnimation = this.cycleAnimation.bind(this);
 
     this.state = {
-      showRainyDayInfoModal: false,
+      showInfoModal: false,
       notifFadeAnim: new Animated.Value(1)
     };
   }
@@ -84,12 +85,11 @@ class Home extends Component {
     return (
       <View>
         <Text style={[styles.infoContentText, styles.bottomPadder]}>
-          All Thrive users have a default Rainy Day Fund to help reduce their
-          financial anxiety and jumpstart their saving goals!
+          Prioritizing a goal increases the amount Thrive will set aside towards
+          that specific goal.
         </Text>
         <Text style={styles.infoContentText}>
-          Your Thrive Savings will automatically go here unless you create
-          additional goals.
+          You can prioritize a goal by editing your goal.
         </Text>
       </View>
     );
@@ -162,7 +162,7 @@ class Home extends Component {
 
   renderGoals() {
     return this.props.userData.goals.map((goal, index) => {
-      const { category, name, amount, progress } = goal;
+      const { category, name, amount, progress, boosted } = goal;
       return (
         <TouchableOpacity
           key={index}
@@ -177,15 +177,14 @@ class Home extends Component {
           <Card style={styles.goalCard}>
             <View style={styles.goalRow}>
               <Image source={GOAL_CATEGORIES[category].icon} />
-              {category === "RainyDay" &&
-                <TouchableOpacity
-                  activeOpacity={0.6}
-                  style={styles.infoIconButton}
-                  onPress={() => this.setState({ showRainyDayInfoModal: true })}
-                  hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-                >
-                  <Image source={infoIcon} />
-                </TouchableOpacity>}
+              <TouchableOpacity
+                activeOpacity={0.6}
+                style={styles.infoIconButton}
+                onPress={() => this.setState({ showInfoModal: true })}
+                hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+              >
+                <Image source={boosted ? filledStarIcon : emptyStarIcon} />
+              </TouchableOpacity>
               <View style={styles.goalTextsContainer}>
                 <Text style={styles.goalLabelText}>{`GOAL ${index + 1}`}</Text>
                 <Text style={styles.goalNameText}>
@@ -261,10 +260,10 @@ class Home extends Component {
             </ScrollView>
           </View>
           <ModalTemplate
-            show={this.state.showRainyDayInfoModal}
+            show={this.state.showInfoModal}
             buttonVisible={false}
             content={this.getInfoModalContent()}
-            onClose={() => this.setState({ showRainyDayInfoModal: false })}
+            onClose={() => this.setState({ showInfoModal: false })}
           />
         </ImageBackground>
       </View>

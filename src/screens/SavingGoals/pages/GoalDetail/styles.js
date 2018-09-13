@@ -100,7 +100,7 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 8,
-    backgroundColor: "white",
+    backgroundColor: "white"
   },
   editButtonText: {
     color: colors.blue,
@@ -149,5 +149,5 @@ export default StyleSheet.create({
     marginHorizontal: -20,
     alignSelf: "stretch",
     backgroundColor: colors.mediumGrey
-  },
+  }
 });
