@@ -19,4 +19,30 @@ const getSplitDollarStrings = amount => {
   return { beforeDot, afterDot };
 };
 
-export { getDollarString, getSplitDollarStrings };
+const convertWeeks = weeks => {
+  const WEEKS_IN_YEAR = 52;
+  const WEEKS_IN_MONTH = 4;
+
+  let leftOver = weeks;
+  let formatted = "";
+
+  const years = Math.floor(leftOver / WEEKS_IN_YEAR);
+  if (years) {
+    formatted += `${years} y${years > 1 && "s"} `;
+    leftOver = leftOver % WEEKS_IN_YEAR;
+  }
+
+  const months = Math.floor(leftOver / WEEKS_IN_MONTH);
+  if (months) {
+    formatted += `${months} m${months > 1 && "s"} `;
+    leftOver = leftOver % WEEKS_IN_MONTH;
+  }
+
+  if (leftOver) {
+    formatted += `${leftOver} w${leftOver > 1 && "s"}`;
+  }
+
+  return formatted;
+};
+
+export { getDollarString, getSplitDollarStrings, convertWeeks };

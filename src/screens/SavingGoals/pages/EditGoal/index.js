@@ -13,7 +13,7 @@ import ModalTemplate from "../../../../components/ModalTemplate";
 import getNumPadModalContent from "../../../../components/NumPad";
 import getFieldEditorContent from "../../../../components/FieldEditor";
 
-import { getDollarString } from "../../../../globals/helpers";
+import { getDollarString, convertWeeks } from "../../../../globals/helpers";
 import GOAL_CATEGORIES from "../../../../globals/goalCategories";
 
 import { addGoal, updateGoal } from "../../state/actions";
@@ -227,7 +227,9 @@ class EditGoal extends Component {
           {weeksLeft && weeksLeft >= 0
             ? <Text style={styles.regularText}>
                 Based on how you save, you will reach your goal in
-                <Text style={styles.blueText}>{` ${weeksLeft} weeks`}</Text>
+                <Text style={styles.blueText}>{` ${convertWeeks(
+                  weeksLeft
+                )}`}</Text>
               </Text>
             : <Text style={styles.regularText}>
                 We calculate how long it'll take to reach your goal after your

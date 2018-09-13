@@ -9,7 +9,8 @@ import ProgressBar from "../../../../components/ProgressBar";
 
 import {
   getDollarString,
-  getSplitDollarStrings
+  getSplitDollarStrings,
+  convertWeeks
 } from "../../../../globals/helpers";
 import GOAL_CATEGORIES from "../../../../globals/goalCategories";
 
@@ -99,9 +100,9 @@ class GoalDetail extends Component {
 
         <View style={styles.extraInfoContainer}>
           <View style={styles.extraInfoLeftView}>
-            <Text style={styles.extraInfoLabel}>Weeks till goal</Text>
+            <Text style={styles.extraInfoLabel}>Time till goal</Text>
             <Text style={styles.extraInfoText}>
-              {weeksLeft && weeksLeft >= 0 ? weeksLeft : ". . ."}
+              {weeksLeft && weeksLeft >= 0 ? convertWeeks(weeksLeft) : ". . ."}
             </Text>
           </View>
           <View style={styles.extraInfoRightView}>
