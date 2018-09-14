@@ -39,7 +39,7 @@ class Faq extends Component {
     if (this.state.activeStep) {
       this.setState({ activeStep: 0, activeFaqIndex: -1 });
     } else {
-      this.props.navigation.navigate("DrawerOpen");
+      this.props.navigation.openDrawer();
     }
   }
 

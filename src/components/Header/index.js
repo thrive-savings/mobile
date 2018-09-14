@@ -15,7 +15,7 @@ class Header extends Component {
       onButtonPress();
     } else {
       if (button === "menu") {
-        navigation.navigate("DrawerOpen");
+        navigation.openDrawer();
       } else {
         navigation.goBack();
       }

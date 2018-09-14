@@ -52,7 +52,7 @@ class Profile extends Component {
 
   onHeaderButtonPress() {
     if (this.state.activeContent === "Home") {
-      this.props.navigation.navigate("DrawerOpen");
+      this.props.navigation.openDrawer();
     } else {
       this.setState({ activeContent: "Home" });
     }
