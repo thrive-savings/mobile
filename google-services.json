@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "929085402250",
+    "firebase_url": "https://thrive-app-72db1.firebaseio.com",
+    "project_id": "thrive-app-72db1",
+    "storage_bucket": "thrive-app-72db1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:929085402250:android:5f446fa902dfe2b0",
+        "android_client_info": {
+          "package_name": "com.thrivesavings.mobileapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "929085402250-gtcf1rf4jjdrl939l1a7389qibvvoedc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZHIQ5ORwpE3I09ltY8I80lLqg3PA9fGc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

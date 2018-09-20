@@ -9,7 +9,8 @@ import { requestApiSaga } from "../globals/requestApi";
 import {
   loginSaga,
   getUpdatesSaga,
-  bonusNotificationSeenSaga
+  bonusNotificationSeenSaga,
+  setExpoTokenSaga
 } from "../screens/Login/state/sagas";
 import {
   signUpSaga,
@@ -73,6 +74,7 @@ export default function configureStore() {
   sagaMiddleware.run(loginSaga);
   sagaMiddleware.run(getUpdatesSaga);
   sagaMiddleware.run(bonusNotificationSeenSaga);
+  sagaMiddleware.run(setExpoTokenSaga);
   sagaMiddleware.run(signUpSaga);
   sagaMiddleware.run(signUpSucceedSaga);
   sagaMiddleware.run(verifyReferralCodeSaga);

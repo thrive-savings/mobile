@@ -7,3 +7,4 @@ export const UPDATE_ONBOARDING_STEP = "updating_onboarding_step";
 
 export const GET_UPDATES = "/user/get-updates";
 export const BONUS_NOTIFICATION_SEEN = "/user/bonus-notification-seen";
+export const SET_EXPO_TOKEN = "/user/expo-token";

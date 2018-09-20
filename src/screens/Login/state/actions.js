@@ -1,6 +1,7 @@
 import {
   REQUEST_URL,
   GET_UPDATES,
+  SET_EXPO_TOKEN,
   BONUS_NOTIFICATION_SEEN,
   UPDATE_AUTH_DATA,
   UPDATE_ACCOUNT_DATA,
@@ -31,4 +32,7 @@ export const updateOnboardingStep = payload => ({
 export const getUpdates = () => ({ type: `${GET_UPDATES}_SUBMIT` });
 export const bonusNotificationSeen = () => ({
   type: `${BONUS_NOTIFICATION_SEEN}_SUBMIT`
+});
+export const setExpoToken = () => ({
+  type: `${SET_EXPO_TOKEN}_SUBMIT`
 });

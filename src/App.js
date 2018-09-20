@@ -1,9 +1,14 @@
 import React from "react";
 import { AppState } from "react-native";
+import { Notifications } from "expo";
 import { connect } from "react-redux";
 import { createStackNavigator, createDrawerNavigator } from "react-navigation";
 import { Root } from "native-base";
+
 import amplitude from "./globals/amplitude";
+import getAuthorized from "./globals/getAuthorized";
+
+import { getUpdates, setExpoToken } from "./screens/Login/state/actions";
 
 import Landing from "./screens/Landing";
 import Login from "./screens/Login/";
@@ -21,10 +26,6 @@ import PP from "./screens/PP";
 import TOS from "./screens/TOS";
 import Faq from "./screens/Faq";
 import Contact from "./screens/Contact";
-
-import getAuthorized from "./globals/getAuthorized";
-
-import { getUpdates } from "./screens/Login/state/actions";
 
 const Drawer = createDrawerNavigator(
   {
@@ -95,10 +96,26 @@ class App extends React.Component {
       this._handleAppStateChange(AppState.currentState);
     }
     AppState.addEventListener("change", this._handleAppStateChange);
+    this._notificationSubscription = Notifications.addListener(
+      this._handleNotification
+    );
   }
 
   componentWillUnmount() {
     AppState.removeEventListener("change", this._handleAppStateChange);
+    if (this._notificationSubscription) {
+      this._notificationSubscription.remove();
+    }
+  }
+
+  componentWillMount() {
+    const authorized = getAuthorized(this.props.authReducer);
+    if (authorized) {
+      this.props.getUpdates();
+      if (!authorized.expoPushToken) {
+        this.props.setExpoToken();
+      }
+    }
   }
 
   _handleAppStateChange(nextAppState) {
@@ -111,11 +128,8 @@ class App extends React.Component {
     amplitude.track(appStateEvent);
   }
 
-  componentWillMount() {
-    const authorized = getAuthorized(this.props.authReducer);
-    if (authorized) {
-      this.props.getUpdates();
-    }
+  _handleNotification(notification) {
+    console.log(notification);
   }
 
   render() {
@@ -126,7 +140,10 @@ class App extends React.Component {
     if (authorized) {
       if (!authorized.isVerified) {
         stacker = <StackerWithSetPhone />;
-      } else if (!authorized.bankLinked || authorized.relinkRequired) {
+      } else if (
+        (!authorized.bankLinked || authorized.relinkRequired) &&
+        false
+      ) {
         stacker = <StackerWithIntegrateBank />;
       } else if (authorized.onboardingStep === "SavingPreferences") {
         stacker = <StackerWithSavingPreferences />;
@@ -153,7 +170,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getUpdates: () => dispatch(getUpdates())
+    getUpdates: () => dispatch(getUpdates()),
+    setExpoToken: () => dispatch(setExpoToken())
   };
 }
 
