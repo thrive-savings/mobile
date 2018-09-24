@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {
+  KeyboardAvoidingView,
   View,
   ScrollView,
   TouchableOpacity,
@@ -63,7 +64,6 @@ class ReferralCodeForm extends Component {
         textStyle: { textAlign: "center" }
       });
     }
-
   }
 
   render() {
@@ -80,45 +80,59 @@ class ReferralCodeForm extends Component {
     }
 
     return (
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.container}>
+      <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
         <Image source={logo} style={styles.logo} />
-        <Text style={[styles.text, styles.textAbove]}>Please enter the referral code you received from your employer.</Text>
+        <Text style={[styles.text, styles.textAbove]}>
+          Please enter the referral code you received from your employer.
+        </Text>
         <Field
           name="code"
           component={this.renderInput}
           type="code"
           validate={[required]}
         />
-        <Text style={[styles.text, styles.textBelow]}>Contact your administrator if there are any issues</Text>
-        {error && <Text style={globalStyles.formErrorText3}>{errorText}</Text>}
-        <TouchableOpacity activeOpacity={0.6} style={[styles.createAccountBtn, globalStyles.shadow]} onPress={this.verify.bind(this)}>
-          {
-            isLoading ?
-              <Spinner color={colors.blue} /> :
-              <Text uppercase style={styles.createAccountBtnText}>
+        <Text style={[styles.text, styles.textBelow]}>
+          Contact your administrator if there are any issues
+        </Text>
+        {error &&
+          <Text style={globalStyles.formErrorText3}>
+            {errorText}
+          </Text>}
+        <TouchableOpacity
+          activeOpacity={0.6}
+          style={[styles.createAccountBtn, globalStyles.shadow]}
+          onPress={this.verify.bind(this)}
+        >
+          {isLoading
+            ? <Spinner color={colors.blue} />
+            : <Text uppercase style={styles.createAccountBtnText}>
                 CREATE MY ACCOUNT
-              </Text>
-          }
+              </Text>}
         </TouchableOpacity>
-      </ScrollView>
+      </KeyboardAvoidingView>
     );
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
-    values: state.form && state.form.referralCode && state.form.referralCode.values ? state.form.referralCode.values : undefined,
+    values:
+      state.form && state.form.referralCode && state.form.referralCode.values
+        ? state.form.referralCode.values
+        : undefined,
     signUpReducer: state.signUpReducer
   };
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
     verifyReferralCode: (payload = {}) => dispatch(verifyReferralCode(payload))
   };
 }
 
-ReferralCodeForm = connect(mapStateToProps, mapDispatchToProps)(ReferralCodeForm);
+ReferralCodeForm = connect(mapStateToProps, mapDispatchToProps)(
+  ReferralCodeForm
+);
 
 const ReferralCode = reduxForm({
   form: "referralCode"

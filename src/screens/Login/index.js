@@ -2,15 +2,16 @@
 import React, { Component } from "react";
 import {
   View,
+  ScrollView,
   TouchableOpacity,
   Image,
   ImageBackground,
   Text,
   TextInput,
-  StatusBar,
-  Keyboard
+  Keyboard,
+  Animated
 } from "react-native";
-import { Content, Icon, Toast, Spinner } from "native-base";
+import { Icon, Toast, Spinner } from "native-base";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 
@@ -19,7 +20,7 @@ import amplitude from "../../globals/amplitude";
 import { authUser } from "./state/actions";
 
 import globalStyles from "../../globals/globalStyles";
-import styles from "./styles";
+import styles, { LOGO_HEIGHT, LOGO_HEIGHT_SMALL } from "./styles";
 import colors from "../../theme/colors";
 
 import { required, minLength8, email } from "../../globals/validators";
@@ -30,6 +31,10 @@ const logo = require("../../../assets/Logo/white.png");
 class LoginForm extends Component {
   constructor(props) {
     super(props);
+
+    this.keyboardHeight = new Animated.Value(0);
+    this.imageHeight = new Animated.Value(LOGO_HEIGHT);
+
     this.state = {
       showFooter: true
     };
@@ -52,11 +57,33 @@ class LoginForm extends Component {
     this.keyboardDidHideListener.remove();
   }
 
-  _keyboardDidShow() {
+  _keyboardDidShow(event) {
+    Animated.parallel([
+      Animated.timing(this.keyboardHeight, {
+        duration: event.duration,
+        toValue: event.endCoordinates.height
+      }),
+      Animated.timing(this.imageHeight, {
+        duration: event.duration,
+        toValue: LOGO_HEIGHT_SMALL
+      })
+    ]).start();
+
     this.setState({ showFooter: false });
   }
 
-  _keyboardDidHide() {
+  _keyboardDidHide(event) {
+    Animated.parallel([
+      Animated.timing(this.keyboardHeight, {
+        duration: event.duration,
+        toValue: 0
+      }),
+      Animated.timing(this.imageHeight, {
+        duration: event.duration,
+        toValue: LOGO_HEIGHT
+      })
+    ]).start();
+
     this.setState({ showFooter: true });
   }
 
@@ -151,78 +178,75 @@ class LoginForm extends Component {
     }
 
     return (
-      <View style={globalStyles.container}>
-        <StatusBar
-          barStyle="light-content"
-          backgroundColor={colors.statusbar}
-        />
-        <ImageBackground source={bg} style={globalStyles.background}>
-          <View style={styles.container}>
-            <Image source={logo} style={styles.logo} />
-          </View>
-          <Content
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.container}
-          >
-            <View style={styles.form}>
-              <Field
-                name="email"
-                component={this.renderInput}
-                type="email"
-                validate={[email, required]}
-              />
-              <Field
-                name="password"
-                component={this.renderInput}
-                type="password"
-                validate={[minLength8, required]}
-              />
+      <ImageBackground source={bg} style={globalStyles.background}>
+        <View style={styles.container}>
+          <Image
+            source={logo}
+            style={[styles.logo, { height: this.imageHeight }]}
+          />
+        </View>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.container}
+        >
+          <View style={styles.form}>
+            <Field
+              name="email"
+              component={this.renderInput}
+              type="email"
+              validate={[email, required]}
+            />
+            <Field
+              name="password"
+              component={this.renderInput}
+              type="password"
+              validate={[minLength8, required]}
+            />
 
-              {error &&
-                <Text style={globalStyles.formErrorText3}>
-                  {errorText}
-                </Text>}
+            {error &&
+              <Text style={globalStyles.formErrorText3}>
+                {errorText}
+              </Text>}
 
+            <TouchableOpacity
+              activeOpacity={0.6}
+              style={[styles.loginBtn, globalStyles.shadow]}
+              onPress={this.login.bind(this)}
+            >
+              {isLoading
+                ? <Spinner color={colors.blue} />
+                : <Text uppercase style={styles.loginBtnText}>
+                    LOG IN
+                  </Text>}
+            </TouchableOpacity>
+
+            {this.state.showFooter &&
+              <TouchableOpacity
+                style={styles.forgotPasswordContainer}
+                activeOpacity={0.6}
+                onPress={() => navigation.navigate("ForgotPassword")}
+                hitSlop={{ top: 10, bottom: 10, left: 20, right: 20 }}
+              >
+                <Text uppercase={false} style={styles.forgotPasswordBtnText}>
+                  Forgot Password?
+                </Text>
+              </TouchableOpacity>}
+
+            {this.state.showFooter &&
               <TouchableOpacity
                 activeOpacity={0.6}
-                style={[styles.loginBtn, globalStyles.shadow]}
-                onPress={this.login.bind(this)}
+                style={globalStyles.bottomContainer}
+                onPress={() => navigation.navigate("SignUp")}
+                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
               >
-                {isLoading
-                  ? <Spinner color={colors.blue} />
-                  : <Text uppercase style={styles.loginBtnText}>
-                      LOG IN
-                    </Text>}
-              </TouchableOpacity>
-
-              {this.state.showFooter &&
-                <TouchableOpacity
-                  style={styles.forgotPasswordContainer}
-                  activeOpacity={0.6}
-                  onPress={() => navigation.navigate("ForgotPassword")}
-                  hitSlop={{ top: 10, bottom: 10, left: 20, right: 20 }}
-                >
-                  <Text uppercase={false} style={styles.forgotPasswordBtnText}>
-                    Forgot Password?
-                  </Text>
-                </TouchableOpacity>}
-
-              {this.state.showFooter &&
-                <TouchableOpacity
-                  activeOpacity={0.6}
-                  style={globalStyles.bottomContainer}
-                  onPress={() => navigation.navigate("SignUp")}
-                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                >
-                  <Text style={globalStyles.bottomLabelText}>
-                    Don't have an account?
-                    <Text style={globalStyles.bottomBtnText}> Sign Up.</Text>
-                  </Text>
-                </TouchableOpacity>}
-            </View>
-          </Content>
-        </ImageBackground>
-      </View>
+                <Text style={globalStyles.bottomLabelText}>
+                  Don't have an account?
+                  <Text style={globalStyles.bottomBtnText}> Sign Up.</Text>
+                </Text>
+              </TouchableOpacity>}
+          </View>
+        </ScrollView>
+      </ImageBackground>
     );
   }
 }

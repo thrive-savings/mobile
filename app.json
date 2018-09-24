@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "Thrive Savings",
+    "name": "Thrive",
     "icon": "./assets/icon.png",
     "version": "1.1.0",
     "slug": "thriveapp",
-    "sdkVersion": "29.0.0",
+    "sdkVersion": "30.0.0",
     "splash": {
       "image": "./assets/LaunchImages/splash.png",
       "resizeMode": "cover"
@@ -23,7 +23,7 @@
     },
     "androidStatusBarColor": "#008cd1",
     "androidStatusBar": {
-      "barStyle": "dark-content",
+      "barStyle": "light-content",
       "backgroundColor": "#008cd1"
     }
   }

@@ -129,7 +129,7 @@ class App extends React.Component {
   }
 
   _handleNotification(notification) {
-    console.log(notification);
+    // console.log(notification);
   }
 
   render() {
@@ -140,10 +140,7 @@ class App extends React.Component {
     if (authorized) {
       if (!authorized.isVerified) {
         stacker = <StackerWithSetPhone />;
-      } else if (
-        (!authorized.bankLinked || authorized.relinkRequired) &&
-        false
-      ) {
+      } else if (!authorized.bankLinked || authorized.relinkRequired) {
         stacker = <StackerWithIntegrateBank />;
       } else if (authorized.onboardingStep === "SavingPreferences") {
         stacker = <StackerWithSavingPreferences />;

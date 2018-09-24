@@ -5,6 +5,9 @@ const screen = Dimensions.get("window");
 const deviceHeight = screen.height;
 const deviceWidth = screen.width;
 
+export const LOGO_HEIGHT = deviceHeight / 4;
+export const LOGO_HEIGHT_SMALL = 40;
+
 export default StyleSheet.create({
   background: {
     flex: 1,
@@ -20,7 +23,7 @@ export default StyleSheet.create({
     resizeMode: "contain",
     alignSelf: "center",
     width: (2 * deviceWidth - 60) / 3,
-    height: deviceHeight / 4
+    height: LOGO_HEIGHT
   },
 
   // Form styles
@@ -62,7 +65,6 @@ export default StyleSheet.create({
 
   // Forgot Password styles
   forgotPasswordContainer: {
-    flex: 1,
     alignSelf: "center",
     flexDirection: "row",
     position: "absolute",
