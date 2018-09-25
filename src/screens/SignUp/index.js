@@ -21,7 +21,7 @@ class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showFooter: true
+      keyboardClosed: true
     };
   }
 
@@ -42,11 +42,11 @@ class SignUp extends Component {
   }
 
   _keyboardDidShow() {
-    this.setState({ showFooter: false });
+    this.setState({ keyboardClosed: false });
   }
 
   _keyboardDidHide() {
-    this.setState({ showFooter: true });
+    this.setState({ keyboardClosed: true });
   }
 
   render() {
@@ -55,7 +55,12 @@ class SignUp extends Component {
     let body, header;
     switch (step) {
       case 0:
-        body = <ReferralCode navigation={this.props.navigation} />;
+        body = (
+          <ReferralCode
+            navigation={this.props.navigation}
+            keyboardClosed={this.state.keyboardClosed}
+          />
+        );
         break;
       case 1:
         header = <Header button="none" />;
@@ -69,7 +74,7 @@ class SignUp extends Component {
       <ImageBackground source={bg} style={globalStyles.background}>
         {header}
         {body}
-        {this.state.showFooter &&
+        {this.state.keyboardClosed &&
           <TouchableOpacity
             activeOpacity={0.6}
             style={globalStyles.bottomContainer}

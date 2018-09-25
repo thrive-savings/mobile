@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import {
   KeyboardAvoidingView,
   View,
-  ScrollView,
   TouchableOpacity,
   Image,
   Text,
@@ -81,7 +80,10 @@ class ReferralCodeForm extends Component {
 
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
-        <Image source={logo} style={styles.logo} />
+        <Image
+          source={logo}
+          style={this.props.keyboardClosed ? styles.logo : styles.smallerLogo}
+        />
         <Text style={[styles.text, styles.textAbove]}>
           Please enter the referral code you received from your employer.
         </Text>

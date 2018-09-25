@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { WebView, View } from "react-native";
+import { WebView, KeyboardAvoidingView } from "react-native";
 import { Spinner } from "native-base";
 import { connect } from "react-redux";
 
@@ -40,7 +40,11 @@ class AuthenticateBank extends Component {
     const { relinkRequired, bank, companyID } = this.props;
 
     return (
-      <View style={[styles.container, globalStyles.shadow]}>
+      <KeyboardAvoidingView
+        behavior="padding"
+        enabled
+        style={[styles.container, globalStyles.shadow]}
+      >
         <Dots step={2} count={3} />
 
         <WebView
@@ -56,7 +60,7 @@ class AuthenticateBank extends Component {
           startInLoadingState={true}
           renderLoading={() => <Spinner color={colors.blue} />}
         />
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }

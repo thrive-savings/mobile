@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {
-  ScrollView,
+  KeyboardAvoidingView,
   View,
   Image,
   Text,
@@ -274,10 +274,7 @@ class ChooseAccount extends Component {
     }
 
     return (
-      <ScrollView
-        contentContainerStyle={styles.container}
-        showsVerticalScrollIndicator={false}
-      >
+      <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
         <Dots step={2} count={3} />
         <Text style={styles.titleText}>LINK YOUR BANK ACCOUNT</Text>
         {isFetching
@@ -290,7 +287,7 @@ class ChooseAccount extends Component {
           <Text style={styles.errorText}>
             {errorText}
           </Text>}
-      </ScrollView>
+      </KeyboardAvoidingView>
     );
   }
 }

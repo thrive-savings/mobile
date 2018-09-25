@@ -5,9 +5,6 @@ const screen = Dimensions.get("window");
 const deviceHeight = screen.height;
 const deviceWidth = screen.width;
 
-export const LOGO_HEIGHT = deviceHeight / 4;
-export const LOGO_HEIGHT_SMALL = 40;
-
 export default StyleSheet.create({
   background: {
     flex: 1,
@@ -15,22 +12,19 @@ export default StyleSheet.create({
     height: null
   },
   container: {
-    flex: 1,
-    flexDirection: "row",
-    alignSelf: "center"
+    flex: 0.9,
+    justifyContent: "center",
+    paddingHorizontal: deviceWidth / 6
   },
   logo: {
     resizeMode: "contain",
     alignSelf: "center",
     width: (2 * deviceWidth - 60) / 3,
-    height: LOGO_HEIGHT
+    height: deviceHeight / 4,
+    marginBottom: 40
   },
 
   // Form styles
-  form: {
-    flex: 1,
-    paddingHorizontal: deviceWidth / 6
-  },
   inputGrp: {
     flexDirection: "row",
     marginBottom: 8,

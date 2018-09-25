@@ -5,12 +5,12 @@ const screen = Dimensions.get("window");
 const deviceHeight = screen.height;
 const deviceWidth = screen.width;
 
+const LOGO_WIDTH = (2 * deviceWidth - 60) / 3;
+
 export default StyleSheet.create({
   container: {
-    flex: 0.8,
-    alignSelf: "flex-start",
-    alignItems: "center",
-    paddingTop: deviceHeight / 6,
+    flex: 0.9,
+    justifyContent: "center",
     paddingHorizontal: deviceWidth / 6
   },
 
@@ -36,8 +36,13 @@ export default StyleSheet.create({
   // Logo style
   logo: {
     resizeMode: "contain",
-    width: (2 * deviceWidth - 60) / 3,
+    width: LOGO_WIDTH,
     height: deviceHeight / 4,
+    marginBottom: 20
+  },
+  smallerLogo: {
+    resizeMode: "contain",
+    width: LOGO_WIDTH,
     marginBottom: 20
   },
 
