@@ -1,6 +1,8 @@
 const getDollarString = (amount, rounded = false) => {
   let amountInDollars = amount / 100;
-  amountInDollars = !rounded ? amountInDollars.toFixed(2) : amountInDollars;
+  amountInDollars = !rounded
+    ? amountInDollars.toFixed(2)
+    : amountInDollars.toFixed(0);
   amountInDollars =
     "$" +
     amountInDollars.toLocaleString("en-US", {

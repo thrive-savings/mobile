@@ -11,9 +11,16 @@ export default StyleSheet.create({
   },
   header: {
     flexDirection: "row",
-    justifyContent: "flex-start",
     alignItems: "center",
     padding: 10
+  },
+  left: {
+    flex: 0.9,
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  right: {
+    flex: 0.1
   },
   titleText: {
     paddingHorizontal: 10,
@@ -29,7 +36,7 @@ export default StyleSheet.create({
     fontSize: 15
   },
   rightIconRotated: {
-    transform: [{ rotate: "90deg"}]
+    transform: [{ rotate: "90deg" }]
   },
   contentContainer: {
     paddingHorizontal: 20,

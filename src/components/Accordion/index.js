@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { View, Image, Text, TouchableOpacity } from "react-native";
-import { Card, Right } from "native-base";
 
 import styles from "./styles";
+import globalStyles from "../../globals/globalStyles";
 
 const tickIcon = require("../../../assets/Icons/TickGradient/tickGradient.png");
 
@@ -27,25 +27,27 @@ class Accordion extends Component {
     const { title, description, showIcon, titleFont } = this.props;
 
     return (
-      <Card style={styles.container}>
+      <View style={[styles.container, globalStyles.shadow]}>
         <TouchableOpacity
           activeOpacity={0.6}
           onPress={this.onPress.bind(this)}
           style={styles.header}
         >
-          {showIcon && <Image source={tickIcon} />}
-          <Text
-            style={[styles.titleText, titleFont && { fontSize: titleFont }]}
-          >
-            {title}
-          </Text>
-          <Right>
+          <View style={styles.left}>
+            {showIcon && <Image source={tickIcon} />}
+            <Text
+              style={[styles.titleText, titleFont && { fontSize: titleFont }]}
+            >
+              {title}
+            </Text>
+          </View>
+          <View style={styles.right}>
             <Text
               style={[styles.rightIcon, expanded && styles.rightIconRotated]}
             >
               >
             </Text>
-          </Right>
+          </View>
         </TouchableOpacity>
         {expanded &&
           <View style={styles.contentContainer}>
@@ -53,7 +55,7 @@ class Accordion extends Component {
               {description}
             </Text>
           </View>}
-      </Card>
+      </View>
     );
   }
 }
