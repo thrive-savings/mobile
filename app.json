@@ -19,7 +19,8 @@
     },
     "android": {
       "package": "com.thrivesavings.mobileapp",
-      "googleServicesFile": "./google-services.json"
+      "googleServicesFile": "./google-services.json",
+      "versionCode": 110
     },
     "androidStatusBarColor": "#008cd1",
     "androidStatusBar": {
