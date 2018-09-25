@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import {
   Image,
   ImageBackground,
-  StatusBar,
   TouchableOpacity,
   View,
   Text
@@ -12,6 +11,7 @@ import { Spinner } from "native-base";
 import { Svg } from "expo";
 
 import Header from "../../components/Header";
+import addStatusBar from "../../components/StatusBar";
 
 import getAvatar from "../../globals/getAvatar";
 
@@ -219,28 +219,22 @@ class Profile extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <StatusBar
-          barStyle="light-content"
-          backgroundColor={colors.statusbar}
+      <ImageBackground source={bg} style={styles.background}>
+        <Header
+          navigation={this.props.navigation}
+          button={this.state.activeContent === "Home" ? "menu" : "back"}
+          onButtonPress={this.onHeaderButtonPress}
+          content="text"
+          text={this.getDisplayName()}
         />
-        <ImageBackground source={bg} style={styles.background}>
-          <Header
-            navigation={this.props.navigation}
-            button={this.state.activeContent === "Home" ? "menu" : "back"}
-            onButtonPress={this.onHeaderButtonPress}
-            content="text"
-            text={this.getDisplayName()}
+        <View style={globalStyles.container}>
+          {this.renderContent()}
+          <ChangePhotoModal
+            showModal={this.state.showModal}
+            onClose={() => this.setState({ showModal: false })}
           />
-          <View style={globalStyles.container}>
-            {this.renderContent()}
-            <ChangePhotoModal
-              showModal={this.state.showModal}
-              onClose={() => this.setState({ showModal: false })}
-            />
-          </View>
-        </ImageBackground>
-      </View>
+        </View>
+      </ImageBackground>
     );
   }
 }
@@ -259,4 +253,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  addStatusBar(Profile)
+);

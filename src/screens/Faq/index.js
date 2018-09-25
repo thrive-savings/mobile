@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import {
-  StatusBar,
   View,
   ScrollView,
   TouchableOpacity,
@@ -13,11 +12,12 @@ import amplitude from "../../globals/amplitude";
 
 import Header from "../../components/Header";
 import Accordion from "../../components/Accordion";
+import addStatusBar from "../../components/StatusBar";
+
 import FAQ_CATEGORIES from "../../globals/faqCategories";
 
 import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
-import colors from "../../theme/colors";
 
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
 
@@ -102,32 +102,26 @@ class Faq extends Component {
   render() {
     const { activeStep, activeFaqIndex } = this.state;
     return (
-      <View style={globalStyles.container}>
-        <StatusBar
-          barStyle="light-content"
-          backgroundColor={colors.statusbar}
+      <ImageBackground source={bg} style={globalStyles.background}>
+        <Header
+          navigation={this.props.navigation}
+          button={activeStep ? "back" : "menu"}
+          onButtonPress={this.headerIconClicked.bind(this)}
+          content="text"
+          text={
+            activeFaqIndex < 0 ? "FAQ" : FAQ_CATEGORIES[activeFaqIndex].name
+          }
         />
-        <ImageBackground source={bg} style={globalStyles.background}>
-          <Header
-            navigation={this.props.navigation}
-            button={activeStep ? "back" : "menu"}
-            onButtonPress={this.headerIconClicked.bind(this)}
-            content="text"
-            text={
-              activeFaqIndex < 0 ? "FAQ" : FAQ_CATEGORIES[activeFaqIndex].name
-            }
-          />
 
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            style={styles.contentContainer}
-          >
-            {activeStep ? this.renderQuestions() : this.renderCategories()}
-          </ScrollView>
-        </ImageBackground>
-      </View>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={styles.contentContainer}
+        >
+          {activeStep ? this.renderQuestions() : this.renderCategories()}
+        </ScrollView>
+      </ImageBackground>
     );
   }
 }
 
-export default Faq;
+export default addStatusBar(Faq);

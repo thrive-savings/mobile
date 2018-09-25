@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { View, ImageBackground, StatusBar } from "react-native";
+import { View, ImageBackground } from "react-native";
 import { connect } from "react-redux";
 
 import Header from "../../components/Header";
+import addStatusBar from "../../components/StatusBar";
 
 import ChooseCategory from "./pages/ChooseCategory";
 import GoalDetail from "./pages/GoalDetail";
@@ -13,7 +14,6 @@ import { setSucceedFlagOff } from "./state/actions";
 
 import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
-import colors from "../../theme/colors";
 
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
 
@@ -113,24 +113,18 @@ class SavingGoals extends Component {
     const { title, component } = this.getContent();
 
     return (
-      <View style={globalStyles.container}>
-        <StatusBar
-          barStyle="light-content"
-          backgroundColor={colors.statusbar}
+      <ImageBackground source={bg} style={globalStyles.background}>
+        <Header
+          navigation={this.props.navigation}
+          onButtonPress={this.backArrowPressed.bind(this)}
+          button="back"
+          content="text"
+          text={title}
         />
-        <ImageBackground source={bg} style={globalStyles.background}>
-          <Header
-            navigation={this.props.navigation}
-            onButtonPress={this.backArrowPressed.bind(this)}
-            button="back"
-            content="text"
-            text={title}
-          />
-          <View style={styles.contentContainer}>
-            {component}
-          </View>
-        </ImageBackground>
-      </View>
+        <View style={styles.contentContainer}>
+          {component}
+        </View>
+      </ImageBackground>
     );
   }
 }
@@ -149,4 +143,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SavingGoals);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  addStatusBar(SavingGoals)
+);

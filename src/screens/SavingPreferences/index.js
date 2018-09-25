@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { View, ImageBackground, StatusBar } from "react-native";
+import { ImageBackground } from "react-native";
 import { connect } from "react-redux";
 import { Content } from "native-base";
 
 import Header from "../../components/Header";
+import addStatusBar from "../../components/StatusBar";
 
 import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
@@ -22,8 +23,6 @@ import SavingType from "./pages/SavingType";
 import FixedPlan from "./pages/FixedPlan";
 import FlexPlan from "./pages/FlexPlan";
 import AllSet from "./pages/AllSet";
-
-import colors from "../../theme/colors";
 
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
 
@@ -73,27 +72,21 @@ class SavingPreferences extends Component {
     }
 
     return (
-      <View style={globalStyles.container}>
-        <StatusBar
-          barStyle="light-content"
-          backgroundColor={colors.statusbar}
+      <ImageBackground source={bg} style={globalStyles.background}>
+        <Header
+          navigation={navigation}
+          button={step > 0 ? "back" : "none"}
+          onButtonPress={this.onBackArrowClick.bind(this)}
+          content="text"
+          text="SAVING PREFERENCES"
         />
-        <ImageBackground source={bg} style={globalStyles.background}>
-          <Header
-            navigation={navigation}
-            button={step > 0 ? "back" : "none"}
-            onButtonPress={this.onBackArrowClick.bind(this)}
-            content="text"
-            text="SAVING PREFERENCES"
-          />
-          <Content
-            showsVerticalScrollIndicator={false}
-            style={styles.contentContainer}
-          >
-            {body}
-          </Content>
-        </ImageBackground>
-      </View>
+        <Content
+          showsVerticalScrollIndicator={false}
+          style={styles.contentContainer}
+        >
+          {body}
+        </Content>
+      </ImageBackground>
     );
   }
 }
@@ -121,4 +114,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SavingPreferences);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  addStatusBar(SavingPreferences)
+);

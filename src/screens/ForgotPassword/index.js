@@ -5,8 +5,7 @@ import {
   TouchableOpacity,
   ImageBackground,
   Text,
-  TextInput,
-  StatusBar
+  TextInput
 } from "react-native";
 import { connect } from "react-redux";
 import { Content, Icon, Toast } from "native-base";
@@ -230,49 +229,43 @@ class ForgotPasswordForm extends Component {
     const { done, step } = this.state;
 
     return (
-      <View style={globalStyles.container}>
-        <StatusBar
-          barStyle="light-content"
-          backgroundColor={colors.statusbar}
+      <ImageBackground source={bg} style={globalStyles.background}>
+        <Header
+          navigation={this.props.navigation}
+          button="back"
+          onButtonPress={this.goToLogin}
         />
-        <ImageBackground source={bg} style={globalStyles.background}>
-          <Header
-            navigation={this.props.navigation}
-            button="back"
-            onButtonPress={this.goToLogin}
-          />
-          <Content
-            showsVerticalScrollIndicator={false}
-            style={styles.contentContainer}
-          >
-            <View style={styles.contentView}>
-              <Text style={styles.labelText}>RESET PASSWORD</Text>
-              {done
-                ? this.renderDone()
-                : step ? this.renderResetForm() : this.renderRequestForm()}
-              {error &&
-                <Text style={globalStyles.formErrorText3}>
-                  {errorText}
-                </Text>}
-              <SpecialButton
-                loading={isLoading}
-                text={done ? "GO TO LOGIN" : "SUBMIT"}
-                onClick={this.submit}
-              />
-              {!done &&
-                <TouchableOpacity
-                  activeOpacity={0.6}
-                  onPress={this.request}
-                  style={styles.resendButton}
-                  disabled={isLoading}
-                  hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-                >
-                  <Text style={styles.resendButtonText}>Resend</Text>
-                </TouchableOpacity>}
-            </View>
-          </Content>
-        </ImageBackground>
-      </View>
+        <Content
+          showsVerticalScrollIndicator={false}
+          style={styles.contentContainer}
+        >
+          <View style={styles.contentView}>
+            <Text style={styles.labelText}>RESET PASSWORD</Text>
+            {done
+              ? this.renderDone()
+              : step ? this.renderResetForm() : this.renderRequestForm()}
+            {error &&
+              <Text style={globalStyles.formErrorText3}>
+                {errorText}
+              </Text>}
+            <SpecialButton
+              loading={isLoading}
+              text={done ? "GO TO LOGIN" : "SUBMIT"}
+              onClick={this.submit}
+            />
+            {!done &&
+              <TouchableOpacity
+                activeOpacity={0.6}
+                onPress={this.request}
+                style={styles.resendButton}
+                disabled={isLoading}
+                hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+              >
+                <Text style={styles.resendButtonText}>Resend</Text>
+              </TouchableOpacity>}
+          </View>
+        </Content>
+      </ImageBackground>
     );
   }
 }

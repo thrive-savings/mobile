@@ -4,11 +4,13 @@ import {
   TouchableOpacity,
   ImageBackground,
   Text,
-  Keyboard
+  Keyboard,
+  Platform
 } from "react-native";
 import { connect } from "react-redux";
 
 import Header from "../../components/Header";
+import addStatusBar from "../../components/StatusBar";
 
 import globalStyles from "../../globals/globalStyles";
 
@@ -27,11 +29,11 @@ class SignUp extends Component {
 
   componentDidMount() {
     this.keyboardDidShowListener = Keyboard.addListener(
-      "keyboardDidShow",
+      Platform.OS === "android" ? "keyboardDidShow" : "keyboardWillShow",
       this._keyboardDidShow.bind(this)
     );
     this.keyboardDidHideListener = Keyboard.addListener(
-      "keyboardDidHide",
+      Platform.OS === "android" ? "keyboardDidHide" : "keyboardWillHide",
       this._keyboardDidHide.bind(this)
     );
   }
@@ -100,4 +102,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(SignUp);
+export default connect(mapStateToProps)(addStatusBar(SignUp));

@@ -4,8 +4,7 @@ import {
   Text,
   Image,
   ImageBackground,
-  TouchableOpacity,
-  StatusBar
+  TouchableOpacity
 } from "react-native";
 import { Constants } from "expo";
 import { Content } from "native-base";
@@ -15,6 +14,7 @@ import Communications from "react-native-communications";
 
 import Header from "../../components/Header";
 import SpecialButton from "../../components/SpecialButton";
+import addStatusBar from "../../components/StatusBar";
 
 import WorkType from "../SavingPreferences/pages/WorkType";
 import SavingType from "../SavingPreferences/pages/SavingType";
@@ -29,7 +29,6 @@ import BANK_ICONS from "../IntegrateBank/bankIcons";
 
 import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
-import colors from "../../theme/colors";
 
 import PAGE_TYPES from "./constants";
 
@@ -274,27 +273,21 @@ class Settings extends Component {
     const activePage = this.state.activePage;
 
     return (
-      <View style={styles.container}>
-        <StatusBar
-          barStyle="light-content"
-          backgroundColor={colors.statusbar}
+      <ImageBackground source={bg} style={styles.background}>
+        <Header
+          navigation={this.props.navigation}
+          button={PAGE_TYPES[activePage].headerButton}
+          onButtonPress={this.headerIconClicked}
+          content="text"
+          text={PAGE_TYPES[activePage].headerTitle}
         />
-        <ImageBackground source={bg} style={styles.background}>
-          <Header
-            navigation={this.props.navigation}
-            button={PAGE_TYPES[activePage].headerButton}
-            onButtonPress={this.headerIconClicked}
-            content="text"
-            text={PAGE_TYPES[activePage].headerTitle}
-          />
-          <Content
-            showsVerticalScrollIndicator={false}
-            style={styles.contentContainer}
-          >
-            {this.renderContent()}
-          </Content>
-        </ImageBackground>
-      </View>
+        <Content
+          showsVerticalScrollIndicator={false}
+          style={styles.contentContainer}
+        >
+          {this.renderContent()}
+        </Content>
+      </ImageBackground>
     );
   }
 }
@@ -314,4 +307,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Settings);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  addStatusBar(Settings)
+);

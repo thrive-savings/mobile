@@ -3,6 +3,7 @@ import { View, ImageBackground, StatusBar } from "react-native";
 import { connect } from "react-redux";
 
 import Header from "../../components/Header";
+import addStatusBar from "../../components/StatusBar";
 
 import globalStyles from "../../globals/globalStyles";
 import colors from "../../theme/colors";
@@ -96,21 +97,15 @@ class IntegrateBank extends Component {
     const reducerStep = this.props.integrateBankReducer.step;
     const step = reducerStep ? reducerStep : this.state.step;
     return (
-      <View style={globalStyles.container}>
-        <StatusBar
-          barStyle="light-content"
-          backgroundColor={colors.statusbar}
+      <ImageBackground source={bg} style={globalStyles.background}>
+        <Header
+          button={step ? "back" : "none"}
+          onButtonPress={this.onBackPress}
         />
-        <ImageBackground source={bg} style={globalStyles.background}>
-          <Header
-            button={step ? "back" : "none"}
-            onButtonPress={this.onBackPress}
-          />
-          <View style={globalStyles.container}>
-            {this.renderContent()}
-          </View>
-        </ImageBackground>
-      </View>
+        <View style={globalStyles.container}>
+          {this.renderContent()}
+        </View>
+      </ImageBackground>
     );
   }
 }
@@ -129,4 +124,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(IntegrateBank);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  addStatusBar(IntegrateBank)
+);

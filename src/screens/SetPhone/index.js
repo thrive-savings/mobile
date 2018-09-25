@@ -4,7 +4,6 @@ import {
   TouchableOpacity,
   Image,
   ImageBackground,
-  StatusBar,
   TextInput,
   Text
 } from "react-native";
@@ -16,10 +15,10 @@ import amplitude from "../../globals/amplitude";
 
 import Header from "../../components/Header";
 import SpecialButton from "../../components/SpecialButton";
+import addStatusBar from "../../components/StatusBar";
 
 import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
-import colors from "../../theme/colors";
 
 import { savePhone, verifyCode, resendCode, changeStep } from "./state/actions";
 
@@ -30,7 +29,6 @@ import STEP_DETAILS from "./constants";
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
 const sms = require("../../../assets/Icons/Sms/sms.png");
 
-
 class SetPhoneForm extends Component {
   constructor(props) {
     super(props);
@@ -39,7 +37,9 @@ class SetPhoneForm extends Component {
   }
 
   componentDidMount() {
-    amplitude.track(amplitude.events.SET_PHONE_VIEW, { step: this.props.setPhoneReducer.step });
+    amplitude.track(amplitude.events.SET_PHONE_VIEW, {
+      step: this.props.setPhoneReducer.step
+    });
   }
 
   renderInput({ input, label, type, meta: { touched, error, warning } }) {
@@ -57,7 +57,9 @@ class SetPhoneForm extends Component {
           />
         </View>
         {touched && error
-          ? <Text style={step ? styles.formErrorText : globalStyles.formErrorText1}>
+          ? <Text
+              style={step ? styles.formErrorText : globalStyles.formErrorText1}
+            >
               {error}
             </Text>
           : <Text style={globalStyles.formErrorText2}> error here</Text>}
@@ -67,10 +69,13 @@ class SetPhoneForm extends Component {
 
   onBackPress() {
     if (this.props.setPhoneReducer.step) {
-      this.props.changeStep({step: 0});
+      this.props.changeStep({ step: 0 });
     } else {
       const navigation = this.props.navigation;
-      const showBack = navigation.state && navigation.state.params ? navigation.state.params.showBack : false;
+      const showBack =
+        navigation.state && navigation.state.params
+          ? navigation.state.params.showBack
+          : false;
       if (showBack) {
         this.props.navigation.goBack();
       }
@@ -97,10 +102,19 @@ class SetPhoneForm extends Component {
 
   render() {
     const navigation = this.props.navigation;
-    const showBack = navigation.state && navigation.state.params ? navigation.state.params.showBack : false;
+    const showBack =
+      navigation.state && navigation.state.params
+        ? navigation.state.params.showBack
+        : false;
 
     const { phone } = this.props.userData;
-    const { step, isLoading, isResending, error, errorMessage } = this.props.setPhoneReducer;
+    const {
+      step,
+      isLoading,
+      isResending,
+      error,
+      errorMessage
+    } = this.props.setPhoneReducer;
 
     let errorText = "";
     if (error) {
@@ -115,50 +129,67 @@ class SetPhoneForm extends Component {
     const { header, description, buttonText, field } = STEP_DETAILS[step];
 
     return (
-      <View style={globalStyles.container}>
-        <StatusBar barStyle="light-content" backgroundColor={colors.statusbar}/>
-        <ImageBackground source={bg} style={globalStyles.background}>
-          <Header button={showBack || step ? "back" : "none"} onButtonPress={this.onBackPress.bind(this)} />
-          <Content showsVerticalScrollIndicator={false} style={styles.contentContainer}>
-            <Card style={styles.cardContainer}>
-              <Text style={styles.labelText}>{header}</Text>
-              <Image source={sms} style={styles.smsIcon} />
-              <Text style={styles.secondaryText}>{description}</Text>
-              <Field
-                name={field}
-                component={this.renderInput}
-                type={field}
-                validate={[numeric, required]}
-              />
-              {error && <Text style={globalStyles.formErrorText3}>{errorText}</Text>}
-              <SpecialButton loading={isLoading} text={buttonText} onClick={this.submit.bind(this)} />
-              {
-                isResending
-                  ? <Text style={styles.resendText}>Resending...</Text>
-                  : step
-                    ?
-                    <TouchableOpacity activeOpacity={0.6} onPress={() => this.props.resendCode({ phone })}>
-                      <Text style={styles.resendText}>Resend</Text>
-                    </TouchableOpacity>
-                    : <View />
-              }
-            </Card>
-          </Content>
-        </ImageBackground>
-      </View>
+      <ImageBackground source={bg} style={globalStyles.background}>
+        <Header
+          button={showBack || step ? "back" : "none"}
+          onButtonPress={this.onBackPress.bind(this)}
+        />
+        <Content
+          showsVerticalScrollIndicator={false}
+          style={styles.contentContainer}
+        >
+          <Card style={styles.cardContainer}>
+            <Text style={styles.labelText}>
+              {header}
+            </Text>
+            <Image source={sms} style={styles.smsIcon} />
+            <Text style={styles.secondaryText}>
+              {description}
+            </Text>
+            <Field
+              name={field}
+              component={this.renderInput}
+              type={field}
+              validate={[numeric, required]}
+            />
+            {error &&
+              <Text style={globalStyles.formErrorText3}>
+                {errorText}
+              </Text>}
+            <SpecialButton
+              loading={isLoading}
+              text={buttonText}
+              onClick={this.submit.bind(this)}
+            />
+            {isResending
+              ? <Text style={styles.resendText}>Resending...</Text>
+              : step
+                ? <TouchableOpacity
+                    activeOpacity={0.6}
+                    onPress={() => this.props.resendCode({ phone })}
+                  >
+                    <Text style={styles.resendText}>Resend</Text>
+                  </TouchableOpacity>
+                : <View />}
+          </Card>
+        </Content>
+      </ImageBackground>
     );
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
-    values: state.form && state.form.setPhone && state.form.setPhone.values ? state.form.setPhone.values : undefined,
+    values:
+      state.form && state.form.setPhone && state.form.setPhone.values
+        ? state.form.setPhone.values
+        : undefined,
     setPhoneReducer: state.setPhoneReducer,
     userData: state.authReducer.data.authorized
   };
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
     savePhone: (payload = {}) => dispatch(savePhone(payload)),
     verifyCode: (payload = {}) => dispatch(verifyCode(payload)),
@@ -172,4 +203,4 @@ SetPhoneForm = connect(mapStateToProps, mapDispatchToProps)(SetPhoneForm);
 const SetPhone = reduxForm({
   form: "setPhone"
 })(SetPhoneForm);
-export default SetPhone;
+export default addStatusBar(SetPhone);

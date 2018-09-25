@@ -8,11 +8,14 @@ import {
   ImageBackground,
   Text,
   TextInput,
-  Keyboard
+  Keyboard,
+  Platform
 } from "react-native";
 import { Icon, Toast, Spinner } from "native-base";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
+
+import addStatusBar from "../../components/StatusBar";
 
 import amplitude from "../../globals/amplitude";
 
@@ -38,11 +41,11 @@ class LoginForm extends Component {
 
   componentDidMount() {
     this.keyboardDidShowListener = Keyboard.addListener(
-      "keyboardDidShow",
+      Platform.OS === "android" ? "keyboardDidShow" : "keyboardWillShow",
       this._keyboardDidShow.bind(this)
     );
     this.keyboardDidHideListener = Keyboard.addListener(
-      "keyboardDidHide",
+      Platform.OS === "android" ? "keyboardDidHide" : "keyboardWillHide",
       this._keyboardDidHide.bind(this)
     );
     amplitude.track(amplitude.events.LOGIN_VIEW);
@@ -235,7 +238,9 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-LoginForm = connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+LoginForm = connect(mapStateToProps, mapDispatchToProps)(
+  addStatusBar(LoginForm)
+);
 
 const Login = reduxForm({
   form: "login"

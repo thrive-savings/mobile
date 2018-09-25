@@ -13,6 +13,7 @@ import amplitude from "../../globals/amplitude";
 
 import Header from "../../components/Header";
 import SpecialButton from "../../components/SpecialButton";
+import addStatusBar from "../../components/StatusBar";
 
 import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
@@ -97,4 +98,4 @@ class Contact extends Component {
   }
 }
 
-export default Contact;
+export default addStatusBar(Contact);

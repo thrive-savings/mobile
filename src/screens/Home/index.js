@@ -6,7 +6,6 @@ import {
   ImageBackground,
   Text,
   TouchableOpacity,
-  StatusBar,
   Animated
 } from "react-native";
 import { Card } from "native-base";
@@ -18,6 +17,7 @@ import amplitude from "../../globals/amplitude";
 import Header from "../../components/Header";
 import ModalTemplate from "../../components/ModalTemplate";
 import ProgressBar from "../../components/ProgressBar";
+import addStatusBar from "../../components/StatusBar";
 
 import { getDollarString, getSplitDollarStrings } from "../../globals/helpers";
 import GOAL_CATEGORIES from "../../globals/goalCategories";
@@ -216,57 +216,51 @@ class Home extends Component {
       this.props.userData.balance
     );
     return (
-      <View style={globalStyles.container}>
-        <StatusBar
-          barStyle="light-content"
-          backgroundColor={colors.statusbar}
-        />
-        <ImageBackground source={bg} style={globalStyles.background}>
-          <Header navigation={navigation} />
-          <View style={styles.subHeader}>
-            <Text style={styles.balanceLabelText}>THRIVE SAVINGS BALANCE</Text>
-            <View style={styles.balanceTextHolder}>
-              <Text style={styles.balanceMainText}>
-                {balanceBD}
-              </Text>
-              <Text style={styles.balanceRemainderText}>
-                {balanceAD}
-              </Text>
-            </View>
-            <View style={[styles.subHeaderLabel, globalStyles.shadow]}>
-              <Text style={styles.subHeaderText}>MY SAVINGS GOALS</Text>
-            </View>
+      <ImageBackground source={bg} style={globalStyles.background}>
+        <Header navigation={navigation} />
+        <View style={styles.subHeader}>
+          <Text style={styles.balanceLabelText}>THRIVE SAVINGS BALANCE</Text>
+          <View style={styles.balanceTextHolder}>
+            <Text style={styles.balanceMainText}>
+              {balanceBD}
+            </Text>
+            <Text style={styles.balanceRemainderText}>
+              {balanceAD}
+            </Text>
           </View>
-          <View style={styles.contentContainer}>
-            <ScrollView
-              contentContainerStyle={styles.content}
-              showsVerticalScrollIndicator={false}
+          <View style={[styles.subHeaderLabel, globalStyles.shadow]}>
+            <Text style={styles.subHeaderText}>MY SAVINGS GOALS</Text>
+          </View>
+        </View>
+        <View style={styles.contentContainer}>
+          <ScrollView
+            contentContainerStyle={styles.content}
+            showsVerticalScrollIndicator={false}
+          >
+            {this.renderNotifications()}
+            {this.renderGoals()}
+            <TouchableOpacity
+              activeOpacity={0.6}
+              style={[styles.addGoalButton, globalStyles.shadow]}
+              onPress={() =>
+                navigation.navigate("SavingGoals", { actionType: "Add" })}
             >
-              {this.renderNotifications()}
-              {this.renderGoals()}
-              <TouchableOpacity
-                activeOpacity={0.6}
-                style={[styles.addGoalButton, globalStyles.shadow]}
-                onPress={() =>
-                  navigation.navigate("SavingGoals", { actionType: "Add" })}
+              <LinearGradient
+                colors={colors.blueGreenGradient.colors}
+                style={styles.addGoalGradient}
               >
-                <LinearGradient
-                  colors={colors.blueGreenGradient.colors}
-                  style={styles.addGoalGradient}
-                >
-                  <Text style={styles.addGoalButtonText}>+ ADD GOAL</Text>
-                </LinearGradient>
-              </TouchableOpacity>
-            </ScrollView>
-          </View>
-          <ModalTemplate
-            show={this.state.showInfoModal}
-            buttonVisible={false}
-            content={this.getInfoModalContent()}
-            onClose={() => this.setState({ showInfoModal: false })}
-          />
-        </ImageBackground>
-      </View>
+                <Text style={styles.addGoalButtonText}>+ ADD GOAL</Text>
+              </LinearGradient>
+            </TouchableOpacity>
+          </ScrollView>
+        </View>
+        <ModalTemplate
+          show={this.state.showInfoModal}
+          buttonVisible={false}
+          content={this.getInfoModalContent()}
+          onClose={() => this.setState({ showInfoModal: false })}
+        />
+      </ImageBackground>
     );
   }
 }
@@ -287,4 +281,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(addStatusBar(Home));
