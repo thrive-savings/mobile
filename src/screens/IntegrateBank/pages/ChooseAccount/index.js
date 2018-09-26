@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import {
-  KeyboardAvoidingView,
   View,
   Image,
   Text,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  Keyboard,
+  Platform
 } from "react-native";
 import { Spinner, Toast } from "native-base";
 import { connect } from "react-redux";
@@ -31,12 +32,34 @@ class ChooseAccount extends Component {
     super(props);
 
     this.state = {
-      selectedAccountID: undefined
+      selectedAccountID: undefined,
+      keyboardClosed: true
     };
   }
 
   componentDidMount() {
+    this.keyboardDidShowListener = Keyboard.addListener(
+      Platform.OS === "android" ? "keyboardDidShow" : "keyboardWillShow",
+      this._keyboardDidShow.bind(this)
+    );
+    this.keyboardDidHideListener = Keyboard.addListener(
+      Platform.OS === "android" ? "keyboardDidHide" : "keyboardWillHide",
+      this._keyboardDidHide.bind(this)
+    );
     amplitude.track(amplitude.events.CHOOSE_DEFAULT_ACCOUNT_VIEW);
+  }
+
+  componentWillUnmount() {
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
+  }
+
+  _keyboardDidShow() {
+    this.setState({ keyboardClosed: false });
+  }
+
+  _keyboardDidHide() {
+    this.setState({ keyboardClosed: true });
   }
 
   answerMFAQuestions() {
@@ -174,7 +197,7 @@ class ChooseAccount extends Component {
     );
   }
 
-  renderMFAAnswerField({ input, label, meta: { touched, error } }) {
+  renderMFAQuestionField({ input, label, meta: { touched, error } }) {
     return (
       <View style={styles.inputContainer}>
         <Text style={styles.inputLabel}>
@@ -209,7 +232,7 @@ class ChooseAccount extends Component {
         key={`MFAquestion_${index}`}
         name={`MFAquestion_${index}`}
         label={Question}
-        component={this.renderMFAAnswerField}
+        component={this.renderMFAQuestionField}
         type={`MFAquestion_${index}`}
         validate={[required]}
       />
@@ -223,10 +246,11 @@ class ChooseAccount extends Component {
           globalStyles.shadow
         ]}
       >
-        <Image source={bankIcon} />
-        <Text style={styles.bankBoxLabel}>
-          Please answer the security questions.
-        </Text>
+        {this.state.keyboardClosed && <Image source={bankIcon} />}
+        {this.state.keyboardClosed &&
+          <Text style={styles.bankBoxLabel}>
+            Please answer the security questions.
+          </Text>}
         {questionsView}
         {isAnswering
           ? <Spinner color={colors.blue} />
@@ -274,7 +298,7 @@ class ChooseAccount extends Component {
     }
 
     return (
-      <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
+      <View style={styles.container}>
         <Dots step={2} count={3} />
         <Text style={styles.titleText}>LINK YOUR BANK ACCOUNT</Text>
         {isFetching
@@ -287,7 +311,7 @@ class ChooseAccount extends Component {
           <Text style={styles.errorText}>
             {errorText}
           </Text>}
-      </KeyboardAvoidingView>
+      </View>
     );
   }
 }

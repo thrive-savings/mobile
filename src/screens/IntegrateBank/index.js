@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import { View, ImageBackground, StatusBar } from "react-native";
+import { View, ImageBackground } from "react-native";
 import { connect } from "react-redux";
 
 import Header from "../../components/Header";
 import addStatusBar from "../../components/StatusBar";
 
 import globalStyles from "../../globals/globalStyles";
-import colors from "../../theme/colors";
 
 import WhyLink from "./pages/WhyLink";
 import AuthenticateBank from "./pages/AuthenticateBank";

@@ -24,7 +24,7 @@ class Accordion extends Component {
 
   render() {
     const expanded = this.state.expanded;
-    const { title, description, showIcon, titleFont } = this.props;
+    const { title, description, showIcon, titleFont, expandable } = this.props;
 
     return (
       <View style={[styles.container, globalStyles.shadow]}>
@@ -41,13 +41,14 @@ class Accordion extends Component {
               {title}
             </Text>
           </View>
-          <View style={styles.right}>
-            <Text
-              style={[styles.rightIcon, expanded && styles.rightIconRotated]}
-            >
+          {expandable &&
+            <View style={styles.right}>
+              <Text
+                style={[styles.rightIcon, expanded && styles.rightIconRotated]}
               >
-            </Text>
-          </View>
+                >
+              </Text>
+            </View>}
         </TouchableOpacity>
         {expanded &&
           <View style={styles.contentContainer}>
