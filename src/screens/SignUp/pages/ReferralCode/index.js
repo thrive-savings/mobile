@@ -11,6 +11,8 @@ import { Spinner, Toast } from "native-base";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 
+import Communications from "react-native-communications";
+
 import amplitude from "../../../../globals/amplitude";
 
 import { verifyReferralCode } from "../../state/actions";
@@ -24,6 +26,17 @@ import { required } from "../../../../globals/validators";
 const logo = require("../../../../../assets/Logo/white.png");
 
 class ReferralCodeForm extends Component {
+  emailSupport() {
+    amplitude.track(amplitude.events.CLICKED_REQUEST_CODE);
+    Communications.email(
+      ["help@thrivesavings.com"],
+      null,
+      null,
+      "Request Employer Code",
+      null
+    );
+  }
+
   componentDidMount() {
     amplitude.track(amplitude.events.EMPLOYER_CODE_VIEW);
   }
@@ -93,9 +106,15 @@ class ReferralCodeForm extends Component {
           type="code"
           validate={[required]}
         />
-        <Text style={[styles.text, styles.textBelow]}>
-          Contact your administrator if there are any issues
-        </Text>
+        <TouchableOpacity
+          activeOpacity={0.6}
+          onPress={() => this.emailSupport()}
+        >
+          <Text style={[styles.text, styles.textBelow]}>
+            Don't have a code?
+            <Text style={styles.requestOneText}> Request One.</Text>
+          </Text>
+        </TouchableOpacity>
         {error &&
           <Text style={globalStyles.formErrorText3}>
             {errorText}

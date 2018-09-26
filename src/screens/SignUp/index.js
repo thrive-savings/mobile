@@ -83,10 +83,7 @@ class SignUp extends Component {
             onPress={() => this.props.navigation.navigate("Login")}
             hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
           >
-            <Text
-              style={globalStyles.bottomLabelText}
-              onPress={() => this.props.navigation.navigate("Login")}
-            >
+            <Text style={globalStyles.bottomLabelText}>
               Already have an account?
               <Text style={globalStyles.bottomBtnText}> Log In.</Text>
             </Text>

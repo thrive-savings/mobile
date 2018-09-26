@@ -63,6 +63,9 @@ export default StyleSheet.create({
     letterSpacing: 0.2,
     lineHeight: 22
   },
+  requestOneText: {
+    fontFamily: "LatoBold"
+  },
   formErrorText1: {
     fontSize: 12,
     color: colors.error,
