@@ -1,4 +1,9 @@
-import { SAVE_PHONE_URL, CODE_VERIFY_URL, CODE_RESEND_URL, CHANGE_STEP } from "./constants";
+import {
+  SAVE_PHONE_URL,
+  CODE_VERIFY_URL,
+  CODE_RESEND_URL,
+  CHANGE_STEP
+} from "./constants";
 const initialState = {
   data: {},
   step: 0,
@@ -16,14 +21,14 @@ export default function verifyCodeReducer(state = initialState, action) {
       return {
         ...state,
         isLoading: true,
-        showModal: false,
+        showModal: false
       };
     case `${SAVE_PHONE_URL}_SUCCEED`:
       const { payload: { data: savePhoneData } } = action;
       return {
         ...state,
         data: savePhoneData ? savePhoneData : {},
-        step: 1,
+        step: savePhoneData.authorized.isVerified ? 0 : 1,
         showModal: true,
         isLoading: false,
         error: false,
@@ -42,7 +47,7 @@ export default function verifyCodeReducer(state = initialState, action) {
     case `${CODE_VERIFY_URL}_SUBMIT`:
       return {
         ...state,
-        isLoading: true,
+        isLoading: true
       };
     case `${CODE_VERIFY_URL}_SUCCEED`:
       const { payload: { data: verifyPayloadData } } = action;
