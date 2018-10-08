@@ -11,11 +11,9 @@ import { Spinner, Toast } from "native-base";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 
-import Communications from "react-native-communications";
-
 import amplitude from "../../../../globals/amplitude";
 
-import { verifyReferralCode } from "../../state/actions";
+import { verifyReferralCode, tryPersonalClicked } from "../../state/actions";
 
 import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
@@ -26,23 +24,26 @@ import { required } from "../../../../globals/validators";
 const logo = require("../../../../../assets/Logo/white.png");
 
 class ReferralCodeForm extends Component {
-  emailSupport() {
-    amplitude.track(amplitude.events.CLICKED_REQUEST_CODE);
-    Communications.email(
-      ["help@thrivesavings.com"],
-      null,
-      null,
-      "Request Employer Code",
-      null
-    );
-  }
-
   componentDidMount() {
     amplitude.track(amplitude.events.EMPLOYER_CODE_VIEW);
   }
 
+  verify() {
+    if (this.props.valid) {
+      this.props.verifyReferralCode(this.props.values);
+    } else {
+      Toast.show({
+        text: "Valid Code Required",
+        duration: 2500,
+        position: "top",
+        type: "danger",
+        textStyle: { textAlign: "center" }
+      });
+    }
+  }
+
   textInput;
-  renderInput({ input, label, type, meta: { touched, error, warning } }) {
+  renderInput({ input, meta: { touched, error } }) {
     return (
       <View>
         <View style={styles.inputGrp}>
@@ -62,20 +63,6 @@ class ReferralCodeForm extends Component {
           : <Text style={globalStyles.formErrorText2}>error here</Text>}
       </View>
     );
-  }
-
-  verify() {
-    if (this.props.valid) {
-      this.props.verifyReferralCode(this.props.values);
-    } else {
-      Toast.show({
-        text: "Valid Code Required",
-        duration: 2500,
-        position: "top",
-        type: "danger",
-        textStyle: { textAlign: "center" }
-      });
-    }
   }
 
   render() {
@@ -108,11 +95,11 @@ class ReferralCodeForm extends Component {
         />
         <TouchableOpacity
           activeOpacity={0.6}
-          onPress={() => this.emailSupport()}
+          onPress={() => this.props.tryPersonalClicked()}
         >
           <Text style={[styles.text, styles.textBelow]}>
             Don't have a code?
-            <Text style={styles.requestOneText}> Request One.</Text>
+            <Text style={styles.requestOneText}> Try Thrive Personal.</Text>
           </Text>
         </TouchableOpacity>
         {error &&
@@ -147,7 +134,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    verifyReferralCode: (payload = {}) => dispatch(verifyReferralCode(payload))
+    verifyReferralCode: (payload = {}) => dispatch(verifyReferralCode(payload)),
+    tryPersonalClicked: () => dispatch(tryPersonalClicked())
   };
 }
 

@@ -15,7 +15,8 @@ import {
 import {
   signUpSaga,
   signUpSucceedSaga,
-  verifyReferralCodeSaga
+  verifyReferralCodeSaga,
+  acceptPersonalSaga
 } from "../screens/SignUp/state/sagas";
 import {
   setPhoneSaga,
@@ -78,6 +79,7 @@ export default function configureStore() {
   sagaMiddleware.run(signUpSaga);
   sagaMiddleware.run(signUpSucceedSaga);
   sagaMiddleware.run(verifyReferralCodeSaga);
+  sagaMiddleware.run(acceptPersonalSaga);
   sagaMiddleware.run(setPhoneSaga);
   sagaMiddleware.run(setPhoneSucceedSaga);
   sagaMiddleware.run(verifyCodeSaga);

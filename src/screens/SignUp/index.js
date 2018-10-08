@@ -16,6 +16,9 @@ import globalStyles from "../../globals/globalStyles";
 
 import ReferralCode from "./pages/ReferralCode";
 import PersonalDetails from "./pages/PersonalDetails";
+import Pricing from "./pages/Pricing";
+
+import { changeStep } from "./state/actions";
 
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
 
@@ -52,21 +55,37 @@ class SignUp extends Component {
   }
 
   render() {
-    const { step } = this.props.signUpReducer;
+    const { navigation, signUpReducer: { step } } = this.props;
 
     let body, header;
     switch (step) {
       case 0:
         body = (
           <ReferralCode
-            navigation={this.props.navigation}
+            navigation={navigation}
             keyboardClosed={this.state.keyboardClosed}
           />
         );
         break;
       case 1:
-        header = <Header button="none" />;
-        body = <PersonalDetails navigation={this.props.navigation} />;
+        header = (
+          <Header
+            navigation={navigation}
+            button="back"
+            onButtonPress={() => this.props.changeStep({ step: 0 })}
+          />
+        );
+        body = <PersonalDetails navigation={navigation} />;
+        break;
+      case 2:
+        header = (
+          <Header
+            navigation={navigation}
+            button="back"
+            onButtonPress={() => this.props.changeStep({ step: 1 })}
+          />
+        );
+        body = <Pricing navigation={navigation} />;
         break;
       default:
         break;
@@ -80,7 +99,7 @@ class SignUp extends Component {
           <TouchableOpacity
             activeOpacity={0.6}
             style={globalStyles.bottomContainer}
-            onPress={() => this.props.navigation.navigate("Login")}
+            onPress={() => navigation.navigate("Login")}
             hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
           >
             <Text style={globalStyles.bottomLabelText}>
@@ -99,4 +118,12 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(addStatusBar(SignUp));
+function mapDispatchToProps(dispatch) {
+  return {
+    changeStep: (payload = {}) => dispatch(changeStep(payload))
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  addStatusBar(SignUp)
+);

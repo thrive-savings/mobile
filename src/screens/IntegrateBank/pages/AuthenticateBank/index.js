@@ -53,7 +53,7 @@ class AuthenticateBank extends Component {
               ? `/Credential/${bank}/?backEnable=false&`
               : `/${companyID > 0
                   ? "?"
-                  : "?demo=true&"}`}waitSummary=true&withMFAQuestions=true&stringify=true&scheduleRefresh=true&backgroundColor=ffffff&foregroundColor1=0089CB&foregroundColor2=414042&redirectUrl=https://google.com`
+                  : "?demo=true&"}`}theme=light&waitSummary=true&withMFAQuestions=true&stringify=true&scheduleRefresh=true&backgroundColor=ffffff&foregroundColor1=0089CB&foregroundColor2=414042&redirectUrl=https://google.com`
           }}
           onMessage={this.onMessage}
           style={styles.webViewContainer}
