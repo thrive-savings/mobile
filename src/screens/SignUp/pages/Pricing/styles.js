@@ -54,26 +54,6 @@ export default StyleSheet.create({
     paddingBottom: 15
   },
 
-  infoContainer: {
-    alignSelf: "stretch",
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    paddingBottom: 15,
-    paddingHorizontal: 10
-  },
-  infoText: {
-    color: colors.charcoal,
-    fontFamily: "LatoRegular",
-    letterSpacing: 0.5,
-    fontSize: 15,
-    paddingLeft: 10
-  },
-  infoIcon: {
-    width: 30,
-    height: 30
-  },
-
   spacer: {
     height: 15
   }
