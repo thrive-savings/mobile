@@ -56,7 +56,9 @@ import {
   updateGoalSaga,
   updateGoalSucceedSaga,
   deleteGoalSaga,
-  deleteGoalSucceedSaga
+  deleteGoalSucceedSaga,
+  withdrawGoalSaga,
+  withdrawGoalSucceedSaga
 } from "../screens/SavingGoals/state/sagas";
 
 export default function configureStore() {
@@ -108,6 +110,8 @@ export default function configureStore() {
   sagaMiddleware.run(updateGoalSucceedSaga);
   sagaMiddleware.run(deleteGoalSaga);
   sagaMiddleware.run(deleteGoalSucceedSaga);
+  sagaMiddleware.run(withdrawGoalSaga);
+  sagaMiddleware.run(withdrawGoalSucceedSaga);
 
   return { store, persistor };
 }

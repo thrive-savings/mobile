@@ -14,7 +14,7 @@ import {
 } from "../../../../globals/helpers";
 import GOAL_CATEGORIES from "../../../../globals/goalCategories";
 
-import { deleteGoal } from "../../state/actions";
+import { deleteGoal, withdrawGoal } from "../../state/actions";
 
 import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
@@ -27,7 +27,8 @@ class GoalDetail extends Component {
     super(props);
 
     this.state = {
-      showInfoModal: false
+      showInfoModal: false,
+      showConfirmationModal: false
     };
   }
 
@@ -49,6 +50,20 @@ class GoalDetail extends Component {
     );
   }
 
+  getConfirmationModalContent() {
+    return (
+      <View>
+        <Text style={[styles.infoContentText, styles.bottomPadder]}>
+          Congratulations!! You've hit GOAL! Funds will be sent back to your
+          linked back account in 1 business day.
+        </Text>
+        <Text style={[styles.infoContentText, styles.bottomPadder]}>
+          Please confirm.
+        </Text>
+      </View>
+    );
+  }
+
   renderGoalInfoBox() {
     const {
       category,
@@ -59,10 +74,11 @@ class GoalDetail extends Component {
       boosted
     } = this.props.data;
     const {
-      beforeDot: savedAmountBD,
-      afterDot: savedAmountAD
+      beforeDot: progressBD,
+      afterDot: progressAD
     } = getSplitDollarStrings(progress);
 
+    const isWithdrawing = this.props.goalsReducer.isWithdrawing;
     return (
       <View style={[styles.infoBox, globalStyles.shadow]}>
         <Image source={GOAL_CATEGORIES[category].icon} />
@@ -79,10 +95,10 @@ class GoalDetail extends Component {
         </Text>
         <View style={styles.amountTextHolder}>
           <Text style={styles.amountMainText}>
-            {savedAmountBD}
+            {progressBD}
           </Text>
           <Text style={styles.amountRemainderText}>
-            {savedAmountAD}
+            {progressAD}
           </Text>
         </View>
 
@@ -98,20 +114,40 @@ class GoalDetail extends Component {
 
         <View style={styles.separator} />
 
-        <View style={styles.extraInfoContainer}>
-          <View style={styles.extraInfoLeftView}>
-            <Text style={styles.extraInfoLabel}>Time till goal</Text>
-            <Text style={styles.extraInfoText}>
-              {weeksLeft && weeksLeft >= 0 ? convertWeeks(weeksLeft) : ". . ."}
-            </Text>
-          </View>
-          <View style={styles.extraInfoRightView}>
-            <Text style={styles.extraInfoLabel}>Remaining</Text>
-            <Text style={styles.extraInfoText}>
-              {getDollarString(Math.max(0, amount - progress))}
-            </Text>
-          </View>
-        </View>
+        {progress < amount
+          ? <View style={styles.extraInfoContainer}>
+              <View style={styles.extraInfoLeftView}>
+                <Text style={styles.extraInfoLabel}>Time till goal</Text>
+                <Text style={styles.extraInfoText}>
+                  {weeksLeft && weeksLeft >= 0
+                    ? convertWeeks(weeksLeft)
+                    : ". . ."}
+                </Text>
+              </View>
+              <View style={styles.extraInfoRightView}>
+                <Text style={styles.extraInfoLabel}>Remaining</Text>
+                <Text style={styles.extraInfoText}>
+                  {getDollarString(Math.max(0, amount - progress))}
+                </Text>
+              </View>
+            </View>
+          : <View style={styles.extraInfoContainer}>
+              <View style={styles.extraInfoLeftView}>
+                <Text style={styles.extraInfoLabel}>Goal Completed:</Text>
+              </View>
+              {isWithdrawing
+                ? <View style={styles.extraInfoRightView}>
+                    <Text style={styles.extraInfoText}>Withdrawing...</Text>
+                  </View>
+                : <TouchableOpacity
+                    activeOpacity={0.6}
+                    style={styles.extraInfoRightView}
+                    onPress={() =>
+                      this.setState({ showConfirmationModal: true })}
+                  >
+                    <Text style={styles.extraInfoText}>Withdraw</Text>
+                  </TouchableOpacity>}
+            </View>}
 
         <TouchableOpacity
           activeOpacity={0.6}
@@ -150,6 +186,18 @@ class GoalDetail extends Component {
           content={this.getInfoModalContent()}
           onClose={() => this.setState({ showInfoModal: false })}
         />
+        <ModalTemplate
+          show={this.state.showConfirmationModal}
+          buttonText={"YES"}
+          onButtonClick={() => {
+            this.props.withdrawGoal({
+              goalID: this.props.data.id.toString()
+            });
+            this.setState({ showConfirmationModal: false });
+          }}
+          content={this.getConfirmationModalContent()}
+          onClose={() => this.setState({ showConfirmationModal: false })}
+        />
       </View>
     );
   }
@@ -163,7 +211,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    deleteGoal: (payload = {}) => dispatch(deleteGoal(payload))
+    deleteGoal: (payload = {}) => dispatch(deleteGoal(payload)),
+    withdrawGoal: (payload = {}) => dispatch(withdrawGoal(payload))
   };
 }
 
