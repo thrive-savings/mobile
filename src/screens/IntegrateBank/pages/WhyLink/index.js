@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { View, ScrollView, Image, Text, TouchableOpacity } from "react-native";
+import { View, Image, Text, TouchableOpacity } from "react-native";
 
 import amplitude from "../../../../globals/amplitude";
 
@@ -29,10 +29,7 @@ class WhyLink extends Component {
   renderInitialLinkPage() {
     const descExpanded = this.state.descExpanded;
     return (
-      <ScrollView
-        contentContainerStyle={[styles.container, globalStyles.shadow]}
-        showsVerticalScrollIndicator={false}
-      >
+      <View style={[styles.container, globalStyles.shadow]}>
         <Dots step={1} count={3} />
 
         <Text style={styles.titleText}>LINK YOUR BANK ACCOUNT</Text>
@@ -56,7 +53,7 @@ class WhyLink extends Component {
         {descExpanded &&
           <Text style={[styles.regularText, styles.descText]}>
             Each amount is custom-based on your transactions, income, and
-            expenses. We want you to live your best financial life – we will
+            expenses. We want you to live your best financial life – we will
             never overdraw you.
           </Text>}
 
@@ -79,16 +76,13 @@ class WhyLink extends Component {
 
         <View style={styles.separator} />
         <SpecialButton text={"LINK MY ACCOUNT"} onClick={this.props.next} />
-      </ScrollView>
+      </View>
     );
   }
 
   renderRelinkPage() {
     return (
-      <ScrollView
-        contentContainerStyle={[styles.container, globalStyles.shadow]}
-        showsVerticalScrollIndicator={false}
-      >
+      <View style={[styles.container, globalStyles.shadow]}>
         <Dots step={1} count={3} />
 
         <Text style={styles.titleText}>RELINK YOUR BANK ACCOUNT</Text>
@@ -123,7 +117,7 @@ class WhyLink extends Component {
 
         <View style={styles.separator} />
         <SpecialButton text={"RELINK MY ACCOUNT"} onClick={this.props.next} />
-      </ScrollView>
+      </View>
     );
   }
 

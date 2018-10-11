@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, ImageBackground } from "react-native";
+import { ScrollView, View, ImageBackground } from "react-native";
 import { connect } from "react-redux";
 
 import Header from "../../components/Header";
@@ -65,27 +65,37 @@ class IntegrateBank extends Component {
     switch (step) {
       case 0:
         return (
-          <WhyLink
-            next={() => this.setState({ step: 1 })}
-            relinkRequired={relinkRequired}
-          />
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <WhyLink
+              next={() => this.setState({ step: 1 })}
+              relinkRequired={relinkRequired}
+            />
+          </ScrollView>
         );
       case 1:
         const { loginId, institution } = this.state;
         if (loginId && institution) {
-          return <ChooseAccount loginId={loginId} institution={institution} />;
+          return (
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <ChooseAccount loginId={loginId} institution={institution} />
+            </ScrollView>
+          );
         } else {
           return (
-            <AuthenticateBank
-              next={this.authedBank}
-              relinkRequired={relinkRequired}
-              bank={bank}
-            />
+            <View style={globalStyles.container}>
+              <AuthenticateBank
+                next={this.authedBank}
+                relinkRequired={relinkRequired}
+                bank={bank}
+              />
+            </View>
           );
         }
       case 2:
         return (
-          <AuthSuccess next={this.allDone} relinkRequired={relinkRequired} />
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <AuthSuccess next={this.allDone} relinkRequired={relinkRequired} />
+          </ScrollView>
         );
       default:
         return <WhyLink next={() => this.setState({ step: 1 })} />;
@@ -95,15 +105,14 @@ class IntegrateBank extends Component {
   render() {
     const reducerStep = this.props.integrateBankReducer.step;
     const step = reducerStep ? reducerStep : this.state.step;
+
     return (
       <ImageBackground source={bg} style={globalStyles.background}>
         <Header
           button={step ? "back" : "none"}
           onButtonPress={this.onBackPress}
         />
-        <View style={globalStyles.container}>
-          {this.renderContent()}
-        </View>
+        {this.renderContent()}
       </ImageBackground>
     );
   }
