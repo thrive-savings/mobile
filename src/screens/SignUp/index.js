@@ -78,13 +78,7 @@ class SignUp extends Component {
         body = <PersonalDetails navigation={navigation} />;
         break;
       case 2:
-        header = (
-          <Header
-            navigation={navigation}
-            button="back"
-            onButtonPress={() => this.props.changeStep({ step: 1 })}
-          />
-        );
+        header = <Header button="none" />;
         body = <Pricing navigation={navigation} />;
         break;
       default:

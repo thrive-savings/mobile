@@ -29,9 +29,11 @@ const bonusNotificationSeenSaga = function*() {
 };
 
 const setExpoTokenSaga = function*() {
-  yield takeEvery(`${SET_EXPO_TOKEN}_SUBMIT`, function*({ payload }) {
+  yield takeEvery(`${SET_EXPO_TOKEN}_SUBMIT`, function*() {
     const token = yield call(getExpoPushToken);
-    yield put(requestApi(`${SET_EXPO_TOKEN}`, { data: { token } }));
+    if (token) {
+      yield put(requestApi(`${SET_EXPO_TOKEN}`, { data: { token } }));
+    }
   });
 };
 

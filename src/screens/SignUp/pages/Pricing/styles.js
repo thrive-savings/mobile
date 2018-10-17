@@ -39,7 +39,7 @@ export default StyleSheet.create({
     fontSize: 13
   },
   subLabelText: {
-    color: colors.blue,
+    color: colors.charcoal,
     fontFamily: "LatoRegular",
     fontSize: 13,
     textAlign: "center",
