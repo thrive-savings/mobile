@@ -21,6 +21,7 @@ import Settings from "./screens/Settings";
 import SetPhone from "./screens/SetPhone";
 import IntegrateBank from "./screens/IntegrateBank";
 import SavingPreferences from "./screens/SavingPreferences";
+import SavingHistory from "./screens/SavingHistory";
 import SavingGoals from "./screens/SavingGoals";
 import PP from "./screens/PP";
 import TOS from "./screens/TOS";
@@ -29,14 +30,15 @@ import Contact from "./screens/Contact";
 
 const Drawer = createDrawerNavigator(
   {
-    Home: { screen: Home },
     Profile: { screen: Profile },
+    Home: { screen: Home },
+    SavingHistory: { screen: SavingHistory },
     Settings: { screen: Settings },
     Faq: { screen: Faq },
     Contact: { screen: Contact }
   },
   {
-    initialRouteName: "Home",
+    initialRouteName: "SavingHistory",
     contentComponent: props => <Sidebar {...props} />
   }
 );
@@ -139,7 +141,7 @@ class App extends React.Component {
 
     if (authorized) {
       if (!authorized.isVerified) {
-        stacker = <StackerWithDrawer />;
+        stacker = <StackerWithSetPhone />;
       } else if (!authorized.bankLinked || authorized.relinkRequired) {
         stacker = <StackerWithIntegrateBank />;
       } else if (authorized.onboardingStep === "SavingPreferences") {
