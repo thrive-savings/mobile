@@ -1,7 +1,7 @@
 const globalPublics = require("./public");
 const globalSecrets = require("./secret");
 
-const env = "dev";
+const env = "prod";
 
 const envPublics =
   env === "dev"
