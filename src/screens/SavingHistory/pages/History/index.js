@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { View, Text } from "react-native";
+import PropTypes from "prop-types";
 
 import { getDollarString } from "../../../../globals/helpers";
 
@@ -52,49 +53,65 @@ class History extends Component {
   }
 
   renderData() {
+    const { data, limit } = this.props;
+
     let body = [];
 
-    FAKE_DATA.map(({ date, activity: { type, amount }, total }, index) => {
-      let activityTypeColor = colors.blue;
-      let activityAmountSign = "+";
-      let activityName = "DEPOSIT";
+    if (data.length) {
+      data.map(({ date, activity: { type, amount }, total }, index) => {
+        if (index >= limit) {
+          return;
+        }
 
-      if (type === "bonus") {
-        activityTypeColor = colors.green;
-        activityName = "EMPLOYER BONUS";
-      } else if (type === "credit") {
-        activityTypeColor = colors.error;
-        activityAmountSign = "-";
-        activityName = "WITHDRAWAL";
-      }
+        let activityTypeColor = colors.blue;
+        let activityAmountSign = "+";
+        let activityName = "DEPOSIT";
 
-      body.push(
-        <View key={date} style={styles.row}>
-          <View style={styles.smallColumn}>
-            <Text style={styles.regularText}>
-              {date}
-            </Text>
+        if (type === "bonus") {
+          activityTypeColor = colors.green;
+          activityName = "EMPLOYER BONUS";
+        } else if (type === "credit") {
+          activityTypeColor = colors.error;
+          activityAmountSign = "-";
+          activityName = "WITHDRAWAL";
+        }
+
+        body.push(
+          <View key={index} style={styles.row}>
+            <View style={styles.smallColumn}>
+              <Text style={styles.regularText}>
+                {date}
+              </Text>
+            </View>
+            <View style={[styles.activityContent, styles.largeColumn]}>
+              <Text style={[styles.regularText, { color: activityTypeColor }]}>
+                {`${activityAmountSign} ${getDollarString(amount)}`}
+              </Text>
+              <Text style={styles.greyText}>
+                {activityName}
+              </Text>
+            </View>
+            <View style={styles.smallColumn}>
+              <Text style={styles.regularText}>
+                {getDollarString(total)}
+              </Text>
+            </View>
           </View>
-          <View style={[styles.activityContent, styles.largeColumn]}>
-            <Text style={[styles.regularText, { color: activityTypeColor }]}>
-              {`${activityAmountSign} ${getDollarString(amount)}`}
-            </Text>
-            <Text style={styles.greyText}>
-              {activityName}
-            </Text>
-          </View>
-          <View style={styles.smallColumn}>
-            <Text style={styles.regularText}>
-              {getDollarString(total)}
-            </Text>
-          </View>
+        );
+
+        if (index < Math.min(limit, data.length) - 1) {
+          body.push(
+            <View style={styles.separator} key={`separator_${index}`} />
+          );
+        }
+      });
+    } else {
+      body = (
+        <View style={[styles.row, styles.centerItems]}>
+          <Text style={styles.regularText}>No data available.</Text>
         </View>
       );
-
-      if (index < FAKE_DATA.length - 1) {
-        body.push(<View style={styles.separator} key={`separator_${index}`} />);
-      }
-    });
+    }
 
     return body;
   }
@@ -109,5 +126,14 @@ class History extends Component {
     );
   }
 }
+
+History.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.object),
+  limit: PropTypes.number
+};
+History.defaultProps = {
+  data: [],
+  limit: 5
+};
 
 export default History;

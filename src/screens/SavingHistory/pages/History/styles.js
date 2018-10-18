@@ -28,6 +28,10 @@ export default StyleSheet.create({
     flex: 1,
     flexDirection: "row"
   },
+  centerItems: {
+    alignItems: "center",
+    justifyContent: "center"
+  },
   smallColumn: {
     flex: 0.3,
     alignSelf: "flex-start"

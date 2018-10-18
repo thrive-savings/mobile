@@ -20,9 +20,33 @@ import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
 import colors from "../../theme/colors";
 
+import { fetchHistory } from "./state/actions";
+
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
 
 class SavingHistory extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      historyLimit: 5
+    };
+  }
+
+  componentWillMount() {
+    const { data } = this.props.savingHistoryReducer;
+
+    const fetchArgs = { fromDate: "-1" };
+    if (Object.keys(data).length) {
+      const { history } = data;
+      if (history.length) {
+        fetchArgs.fromDate = history[0].processedDate;
+      }
+    }
+
+    this.props.fetchHistory(fetchArgs);
+  }
+
   renderSubHeader() {
     return (
       <View style={styles.subHeader}>
@@ -38,12 +62,13 @@ class SavingHistory extends Component {
   }
 
   renderButtons() {
+    const { historyLimit } = this.state;
     return (
       <View style={styles.footerButtons}>
         <TouchableOpacity
           style={[styles.whiteButtonContainer, globalStyles.shadow]}
           activeOpacity={0.6}
-          onPress={() => console.log("load 5 more clicked")}
+          onPress={() => this.setState({ historyLimit: historyLimit + 5 })}
         >
           {false
             ? <Spinner color={colors.blue} />
@@ -68,6 +93,9 @@ class SavingHistory extends Component {
   }
 
   render() {
+    const { historyLimit } = this.state;
+    const { data: { history } } = this.props.savingHistoryReducer;
+
     return (
       <ImageBackground source={bg} style={globalStyles.background}>
         <Header
@@ -82,7 +110,7 @@ class SavingHistory extends Component {
         >
           {this.renderSubHeader()}
           <Chart />
-          <History />
+          <History data={history} limit={historyLimit} />
           {this.renderButtons()}
         </ScrollView>
       </ImageBackground>
@@ -91,11 +119,15 @@ class SavingHistory extends Component {
 }
 
 function mapStateToProps(state) {
-  return {};
+  return {
+    savingHistoryReducer: state.savingHistoryReducer
+  };
 }
 
 function mapDispatchToProps(dispatch) {
-  return {};
+  return {
+    fetchHistory: (payload = {}) => dispatch(fetchHistory(payload))
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(
