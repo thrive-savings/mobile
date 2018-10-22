@@ -21,6 +21,7 @@ import Settings from "./screens/Settings";
 import SetPhone from "./screens/SetPhone";
 import IntegrateBank from "./screens/IntegrateBank";
 import SavingPreferences from "./screens/SavingPreferences";
+import SavingHistory from "./screens/SavingHistory";
 import SavingGoals from "./screens/SavingGoals";
 import PP from "./screens/PP";
 import TOS from "./screens/TOS";
@@ -29,8 +30,9 @@ import Contact from "./screens/Contact";
 
 const Drawer = createDrawerNavigator(
   {
-    Home: { screen: Home },
     Profile: { screen: Profile },
+    Home: { screen: Home },
+    SavingHistory: { screen: SavingHistory },
     Settings: { screen: Settings },
     Faq: { screen: Faq },
     Contact: { screen: Contact }

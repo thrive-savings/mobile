@@ -60,6 +60,7 @@ import {
   withdrawGoalSaga,
   withdrawGoalSucceedSaga
 } from "../screens/SavingGoals/state/sagas";
+import { fetchHistorySaga } from "../screens/SavingHistory/state/sagas";
 
 export default function configureStore() {
   const sagaMiddleware = createSagaMiddleware();
@@ -112,6 +113,7 @@ export default function configureStore() {
   sagaMiddleware.run(deleteGoalSucceedSaga);
   sagaMiddleware.run(withdrawGoalSaga);
   sagaMiddleware.run(withdrawGoalSucceedSaga);
+  sagaMiddleware.run(fetchHistorySaga);
 
   return { store, persistor };
 }
