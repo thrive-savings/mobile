@@ -7,13 +7,13 @@ import {
   Text
 } from "react-native";
 import { LinearGradient } from "expo";
-import { Spinner } from "native-base";
 import { connect } from "react-redux";
 
 import Header from "../../components/Header";
+import Dots from "../../components/Dots";
 import addStatusBar from "../../components/StatusBar";
 
-import Chart from "./pages/Chart";
+// import Chart from "./pages/Chart";
 import History from "./pages/History";
 
 import globalStyles from "../../globals/globalStyles";
@@ -29,8 +29,11 @@ class SavingHistory extends Component {
     super(props);
 
     this.state = {
-      historyLimit: 5
+      historyLimit: 6,
+      viewingAll: false
     };
+
+    this.onHeaderButtonPress = this.onHeaderButtonPress.bind(this);
   }
 
   componentWillMount() {
@@ -45,6 +48,15 @@ class SavingHistory extends Component {
     }
 
     this.props.fetchHistory(fetchArgs);
+  }
+
+  onHeaderButtonPress() {
+    const { viewingAll } = this.state;
+    if (viewingAll) {
+      this.setState({ viewingAll: false });
+    } else {
+      this.props.navigation.openDrawer();
+    }
   }
 
   renderSubHeader() {
@@ -70,37 +82,38 @@ class SavingHistory extends Component {
           activeOpacity={0.6}
           onPress={() => this.setState({ historyLimit: historyLimit + 5 })}
         >
-          {false
-            ? <Spinner color={colors.blue} />
-            : <Text style={styles.whiteButtonText}>LOAD 5 MORE</Text>}
+          <Text style={styles.whiteButtonText}>LOAD 5 MORE</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           activeOpacity={0.6}
-          onPress={() => console.log("view all clicked")}
+          onPress={() => this.setState({ viewingAll: true })}
         >
           <LinearGradient
             colors={colors.blueGreenGradient.colors}
             style={styles.gradientButton}
           >
-            {false
-              ? <Spinner color="white" />
-              : <Text style={styles.gradientButtonText}>VIEW ALL</Text>}
+            <Text style={styles.gradientButtonText}>VIEW ALL</Text>
           </LinearGradient>
         </TouchableOpacity>
       </View>
     );
   }
 
+  renderDots() {
+    return <Dots step={2} count={3} />;
+  }
+
   render() {
-    const { historyLimit } = this.state;
+    const { historyLimit, viewingAll } = this.state;
     const { data: { history } } = this.props.savingHistoryReducer;
 
     return (
       <ImageBackground source={bg} style={globalStyles.background}>
         <Header
           navigation={this.props.navigation}
-          button="menu"
+          button={viewingAll ? "back" : "menu"}
+          onButtonPress={this.onHeaderButtonPress}
           content="text"
           text="SAVING HISTORY"
         />
@@ -108,10 +121,9 @@ class SavingHistory extends Component {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.contentContainer}
         >
-          {this.renderSubHeader()}
-          <Chart />
-          <History data={history} limit={historyLimit} />
-          {this.renderButtons()}
+          {!viewingAll && this.renderSubHeader()}
+          <History data={history} limit={viewingAll ? -1 : historyLimit} />
+          {!viewingAll && this.renderButtons()}
         </ScrollView>
       </ImageBackground>
     );

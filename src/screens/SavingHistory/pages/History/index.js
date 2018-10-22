@@ -8,33 +8,6 @@ import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
 import colors from "../../../../theme/colors";
 
-const FAKE_DATA = [
-  {
-    date: "04/11",
-    activity: {
-      type: "debit",
-      amount: 10000
-    },
-    total: 190500
-  },
-  {
-    date: "04/08",
-    activity: {
-      type: "credit",
-      amount: 80000
-    },
-    total: 180500
-  },
-  {
-    date: "04/07",
-    activity: {
-      type: "bonus",
-      amount: 10000
-    },
-    total: 260500
-  }
-];
-
 class History extends Component {
   renderLabel() {
     return (
@@ -53,11 +26,15 @@ class History extends Component {
   }
 
   renderData() {
-    const { data, limit } = this.props;
+    let { data, limit } = this.props;
 
     let body = [];
 
     if (data.length) {
+      if (limit < 0) {
+        limit = data.length;
+      }
+
       data.map(({ date, activity: { type, amount }, total }, index) => {
         if (index >= limit) {
           return;

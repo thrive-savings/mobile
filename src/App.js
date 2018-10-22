@@ -38,7 +38,7 @@ const Drawer = createDrawerNavigator(
     Contact: { screen: Contact }
   },
   {
-    initialRouteName: "SavingHistory",
+    initialRouteName: "Home",
     contentComponent: props => <Sidebar {...props} />
   }
 );

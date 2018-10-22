@@ -8,7 +8,7 @@ class Chart extends Component {
   render() {
     return (
       <View style={[styles.container, globalStyles.shadow]}>
-        <Text>Loading Chart...</Text>
+        <Text style={styles.placeholder}>Coming Soon</Text>
       </View>
     );
   }

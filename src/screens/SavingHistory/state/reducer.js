@@ -18,7 +18,6 @@ export default function savingHistoryReducer(state = initialState, action) {
       const {
         payload: { data: { chart: newChart, history: newHistory } }
       } = action;
-      console.log(newHistory);
 
       const { data: { chart, history } } = state;
       return {

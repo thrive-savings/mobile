@@ -3,6 +3,11 @@ import colors from "../../../../theme/colors";
 
 const screen = Dimensions.get("window");
 const deviceWidth = screen.width;
+const deviceHeight = screen.height;
+
+const ROW_HEIGHT = 30;
+
+export const MAX_ROW_COUNT = Math.floor(deviceHeight / 2.5 / ROW_HEIGHT);
 
 export default StyleSheet.create({
   //Container
@@ -26,7 +31,8 @@ export default StyleSheet.create({
   // Content styles
   row: {
     flex: 1,
-    flexDirection: "row"
+    flexDirection: "row",
+    height: ROW_HEIGHT
   },
   centerItems: {
     alignItems: "center",
