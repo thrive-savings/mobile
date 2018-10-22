@@ -10,11 +10,12 @@ import { LinearGradient } from "expo";
 import { connect } from "react-redux";
 
 import Header from "../../components/Header";
-import Dots from "../../components/Dots";
 import addStatusBar from "../../components/StatusBar";
 
 // import Chart from "./pages/Chart";
 import History from "./pages/History";
+
+import { getSplitDollarStrings } from "../../globals/helpers";
 
 import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
@@ -60,13 +61,20 @@ class SavingHistory extends Component {
   }
 
   renderSubHeader() {
+    const { beforeDot: balanceBD, afterDot: balanceAD } = getSplitDollarStrings(
+      this.props.userData.balance
+    );
     return (
       <View style={styles.subHeader}>
         <View style={styles.subHeaderTexts}>
           <Text style={styles.subHeaderLabelText}>TOTAL SAVINGS</Text>
           <View style={styles.subHeaderAmountTextHolder}>
-            <Text style={styles.subHeaderAmountMainText}>$1,411</Text>
-            <Text style={styles.subHeaderAmountRemainderText}>.67</Text>
+            <Text style={styles.subHeaderAmountMainText}>
+              {balanceBD}
+            </Text>
+            <Text style={styles.subHeaderAmountRemainderText}>
+              {balanceAD}
+            </Text>
           </View>
         </View>
       </View>
@@ -100,10 +108,6 @@ class SavingHistory extends Component {
     );
   }
 
-  renderDots() {
-    return <Dots step={2} count={3} />;
-  }
-
   render() {
     const { historyLimit, viewingAll } = this.state;
     const { data: { history } } = this.props.savingHistoryReducer;
@@ -132,6 +136,7 @@ class SavingHistory extends Component {
 
 function mapStateToProps(state) {
   return {
+    userData: state.authReducer.data.authorized,
     savingHistoryReducer: state.savingHistoryReducer
   };
 }
