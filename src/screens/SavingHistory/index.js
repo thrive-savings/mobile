@@ -42,8 +42,8 @@ class SavingHistory extends Component {
 
     const fetchArgs = { fromDate: "-1" };
     if (Object.keys(data).length) {
-      const { history } = data;
-      if (history.length) {
+      const { history, totalSavings } = data;
+      if (history.length && totalSavings) {
         fetchArgs.fromDate = history[0].processedDate;
       }
     }
@@ -62,7 +62,7 @@ class SavingHistory extends Component {
 
   renderSubHeader() {
     const { beforeDot: balanceBD, afterDot: balanceAD } = getSplitDollarStrings(
-      this.props.userData.balance
+      this.props.savingHistoryReducer.data.totalSavings
     );
     return (
       <View style={styles.subHeader}>
@@ -136,7 +136,6 @@ class SavingHistory extends Component {
 
 function mapStateToProps(state) {
   return {
-    userData: state.authReducer.data.authorized,
     savingHistoryReducer: state.savingHistoryReducer
   };
 }

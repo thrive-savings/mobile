@@ -1,4 +1,4 @@
 module.exports = {
-  API: "https://api.thrivesavings.com",
+  API: "http://api.thrivesavings.com",
   WEB: "https://thrivesavings.com"
 };

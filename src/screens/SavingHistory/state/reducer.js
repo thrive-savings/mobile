@@ -1,6 +1,6 @@
 import { FETCH_HISTORY_URL } from "./constants";
 const initialState = {
-  data: { chart: [], history: [] },
+  data: { chart: [], history: [], totalSavings: 0 },
   isFetching: false,
   error: false,
   errorMessage: ""
@@ -16,15 +16,22 @@ export default function savingHistoryReducer(state = initialState, action) {
       };
     case `${FETCH_HISTORY_URL}_SUCCEED`:
       const {
-        payload: { data: { chart: newChart, history: newHistory } }
+        payload: {
+          data: {
+            chart: newChart,
+            history: newHistory,
+            totalSavings: newTotalSavings
+          }
+        }
       } = action;
 
-      const { data: { chart, history } } = state;
+      const { data: { chart, history, totalSavings } } = state;
       return {
         ...state,
         data: {
           chart: chart.concat(newChart),
-          history: history.concat(newHistory)
+          history: history.concat(newHistory),
+          totalSavings: totalSavings + newTotalSavings
         },
         isFetching: false,
         error: false,

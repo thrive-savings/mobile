@@ -2,15 +2,13 @@ import React, { Component } from "react";
 import { Image, TouchableOpacity } from "react-native";
 import { Svg } from "expo";
 import { connect } from "react-redux";
-import {
-  View,
-  Text,
-} from "native-base";
+import { View, Text } from "native-base";
 
 import amplitude from "../../globals/amplitude";
 import { clearStorage } from "../../globals/clearStorage";
 import getAvatar from "../../globals/getAvatar";
 import { getDollarString } from "../../globals/helpers";
+import { companyLogoUrl } from "../../globals/companyLogo";
 
 import styles from "./styles";
 import colors from "../../theme/colors";
@@ -18,7 +16,6 @@ import colors from "../../theme/colors";
 import MENU_ITEMS from "./constants";
 
 const logo = require("../../../assets/ThumbnailLogo/Small/thumbnail.png");
-const creditCanadaLogo = require("../../../assets/CompanyLogos/CreditCanada/logo.png");
 
 class SideBar extends Component {
   constructor(props) {
@@ -30,12 +27,12 @@ class SideBar extends Component {
   }
 
   onProfileClick() {
-    this.setState({activeMenuItemIndex: -1});
+    this.setState({ activeMenuItemIndex: -1 });
     this.props.navigation.navigate("Profile");
   }
 
   onMenuItemClick(index) {
-    this.setState({activeMenuItemIndex: index});
+    this.setState({ activeMenuItemIndex: index });
     this.props.navigation.navigate(MENU_ITEMS[index].screen);
   }
 
@@ -51,11 +48,29 @@ class SideBar extends Component {
         <TouchableOpacity
           key={index}
           activeOpacity={0.6}
-          style={[styles.menuItem, styles.padder, index === this.state.activeMenuItemIndex && styles.menuItemActive]}
+          style={[
+            styles.menuItem,
+            styles.padder,
+            index === this.state.activeMenuItemIndex && styles.menuItemActive
+          ]}
           onPress={() => this.onMenuItemClick(index)}
         >
-          <Image source={icon}  style={index === this.state.activeMenuItemIndex && styles.menuItemIconActive} />
-          <Text style={[styles.menuItemText, index === this.state.activeMenuItemIndex && styles.menuItemTextActive]}>{displayName}</Text>
+          <Image
+            source={icon}
+            style={
+              index === this.state.activeMenuItemIndex &&
+              styles.menuItemIconActive
+            }
+          />
+          <Text
+            style={[
+              styles.menuItemText,
+              index === this.state.activeMenuItemIndex &&
+                styles.menuItemTextActive
+            ]}
+          >
+            {displayName}
+          </Text>
         </TouchableOpacity>
       );
     });
@@ -63,26 +78,54 @@ class SideBar extends Component {
 
   render() {
     const avatar = getAvatar(this.props.authReducer, this.props.profileReducer);
-    const { data: { authorized: { balance, firstName, lastName, company: { brandLogoUrl: companyLogoUrl } } } } = this.props.authReducer;
+    const {
+      data: {
+        authorized: {
+          balance,
+          firstName,
+          lastName,
+          company: { brandLogoUrl: companyLogoName }
+        }
+      }
+    } = this.props.authReducer;
     const fullName = firstName + " " + lastName;
     const dollars = getDollarString(balance);
 
     return (
       <View style={styles.container}>
-        <TouchableOpacity activeOpacity= {0.6} style={[styles.header, styles.padder]} onPress={() => this.onProfileClick()}>
-          {companyLogoUrl === "CreditCanada" && <Image source={creditCanadaLogo} style={styles.brandLogo}/>}
+        <TouchableOpacity
+          activeOpacity={0.6}
+          style={[styles.header, styles.padder]}
+          onPress={() => this.onProfileClick()}
+        >
+          {companyLogoName &&
+            <Image
+              source={{ uri: companyLogoUrl(companyLogoName) }}
+              style={styles.brandLogo}
+            />}
           <View style={styles.profileContainer}>
-            {
-              avatar
-                ? <Image source={{uri: `data:image/png;base64,${avatar}`}} style={styles.avatar} />
-                :
-                  <Svg width={40} height={40}>
-                    <Svg.Circle cx="20" cy="20" r={19} stokeWidth={1} stroke={colors.darkerGrey} fill={colors.mediumGrey} />
-                  </Svg>
-            }
+            {avatar
+              ? <Image
+                  source={{ uri: `data:image/png;base64,${avatar}` }}
+                  style={styles.avatar}
+                />
+              : <Svg width={40} height={40}>
+                  <Svg.Circle
+                    cx="20"
+                    cy="20"
+                    r={19}
+                    stokeWidth={1}
+                    stroke={colors.darkerGrey}
+                    fill={colors.mediumGrey}
+                  />
+                </Svg>}
             <View style={styles.headerTexts}>
-              <Text style={styles.nameText}>{fullName}</Text>
-              <Text style={styles.balanceText}>{dollars}</Text>
+              <Text style={styles.nameText}>
+                {fullName}
+              </Text>
+              <Text style={styles.balanceText}>
+                {dollars}
+              </Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -90,7 +133,11 @@ class SideBar extends Component {
           {this.renderMenuItems()}
         </View>
         <View style={[styles.footer, styles.padder]}>
-          <TouchableOpacity activeOpacity={0.6} onPress={() => this.onLogout()} hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}>
+          <TouchableOpacity
+            activeOpacity={0.6}
+            onPress={() => this.onLogout()}
+            hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+          >
             <Text style={styles.logoutText}>Log Out</Text>
           </TouchableOpacity>
           <Image source={logo} />
@@ -100,14 +147,14 @@ class SideBar extends Component {
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
     profileReducer: state.profileReducer,
     authReducer: state.authReducer
   };
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
     clearStorage: () => dispatch(clearStorage())
   };

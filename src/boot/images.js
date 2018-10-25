@@ -12,9 +12,6 @@ const imageAssets = [
   require("../../assets/ThumbnailLogo/Large/thumbnail.png"),
   require("../../assets/ThumbnailLogo/Small/thumbnail.png"),
 
-  // Partner Company logos
-  require("../../assets/CompanyLogos/CreditCanada/logo.png"),
-
   // Launch Images
   require("../../assets/LaunchImages/splash.png"),
   require("../../assets/icon.png"),

@@ -9,6 +9,8 @@ import { Field, reduxForm } from "redux-form";
 import amplitude from "../../../../globals/amplitude";
 import SpecialButton from "../../../../components/SpecialButton";
 
+import { companyLogoUrl } from "../../../../globals/companyLogo";
+
 import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
 import colors from "../../../../theme/colors";
@@ -20,7 +22,6 @@ import { signUpUser } from "../../state/actions";
 import INPUT_FIELDS from "./constants";
 
 const tick = require("../../../../../assets/Icons/Checkbox/tick.png");
-const creditCanadaLogo = require("../../../../../assets/CompanyLogos/CreditCanada/logo.png");
 
 class PersonalDetails extends Component {
   constructor(props) {
@@ -129,7 +130,7 @@ class PersonalDetails extends Component {
   render() {
     const navigation = this.props.navigation;
     const {
-      companyLogoUrl,
+      companyLogoUrl: companyLogoName,
       isLoading,
       error,
       errorMessage
@@ -151,8 +152,11 @@ class PersonalDetails extends Component {
         style={[styles.formContainer, globalStyles.shadow]}
       >
         <View style={styles.formContent}>
-          {companyLogoUrl === "CreditCanada" &&
-            <Image source={creditCanadaLogo} style={styles.brandLogo} />}
+          {companyLogoName &&
+            <Image
+              source={{ uri: companyLogoUrl(companyLogoName) }}
+              style={styles.brandLogo}
+            />}
           <Text style={styles.formLabelText}>
             Please use your legal name as it appears on your bank statements, so
             that we can verify your account.
