@@ -14,6 +14,8 @@ import { Field, reduxForm } from "redux-form";
 import Header from "../../components/Header";
 import SpecialButton from "../../components/SpecialButton";
 
+import globalErrorMessage from "../../globals/errorMessage";
+
 import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
 import colors from "../../theme/colors";
@@ -222,7 +224,7 @@ class ForgotPasswordForm extends Component {
       if (errors && errors.constructor === Array && errors.length > 0) {
         errorText = errors[0].value;
       } else {
-        errorText = "Server Error!";
+        errorText = globalErrorMessage;
       }
     }
 

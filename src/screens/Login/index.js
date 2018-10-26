@@ -26,6 +26,7 @@ import styles from "./styles";
 import colors from "../../theme/colors";
 
 import { required, minLength8, email } from "../../globals/validators";
+import globalErrorMessage from "../../globals/errorMessage";
 
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
 const logo = require("../../../assets/Logo/white.png");
@@ -150,7 +151,7 @@ class LoginForm extends Component {
       if (errors && errors.constructor === Array && errors.length > 0) {
         errorText = errors[0].value;
       } else {
-        errorText = "Server Error!";
+        errorText = globalErrorMessage;
       }
     }
 

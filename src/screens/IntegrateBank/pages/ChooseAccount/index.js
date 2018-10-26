@@ -13,6 +13,8 @@ import { connect } from "react-redux";
 import { Svg } from "expo";
 import { Field, reduxForm } from "redux-form";
 
+import globalErrorMessage from "../../../../globals/errorMessage";
+
 import amplitude from "../../../../globals/amplitude";
 
 import Dots from "../../../../components/Dots";
@@ -115,7 +117,7 @@ class ChooseAccount extends Component {
         <Text
           style={[styles.errorText, { paddingHorizontal: 25, paddingTop: 20 }]}
         >
-          Server Error. Please contact support to get help.
+          {globalErrorMessage} Please contact support to get help.
         </Text>
       </View>
     );
@@ -293,7 +295,7 @@ class ChooseAccount extends Component {
       if (errors && errors.constructor === Array && errors.length > 0) {
         errorText = errors[0].value;
       } else {
-        errorText = "Server Error!";
+        errorText = globalErrorMessage;
       }
     }
 

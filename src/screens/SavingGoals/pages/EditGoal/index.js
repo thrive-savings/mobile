@@ -13,6 +13,7 @@ import ModalTemplate from "../../../../components/ModalTemplate";
 import getNumPadModalContent from "../../../../components/NumPad";
 import getFieldEditorContent from "../../../../components/FieldEditor";
 
+import globalErrorMessage from "../../../../globals/errorMessage";
 import { getDollarString, convertWeeks } from "../../../../globals/helpers";
 import GOAL_CATEGORIES from "../../../../globals/goalCategories";
 
@@ -130,7 +131,7 @@ class EditGoal extends Component {
       if (errors && errors.constructor === Array && errors.length > 0) {
         errorText = errors[0].value;
       } else {
-        errorText = "Server Error!";
+        errorText = globalErrorMessage;
       }
     }
 

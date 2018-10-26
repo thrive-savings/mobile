@@ -14,6 +14,7 @@ import Header from "../../components/Header";
 import addStatusBar from "../../components/StatusBar";
 
 import getAvatar from "../../globals/getAvatar";
+import globalErrorMessage from "../../globals/errorMessage";
 
 import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
@@ -141,7 +142,7 @@ class Profile extends Component {
       if (errors && errors.constructor === Array && errors.length > 0) {
         errorText = errors[0].value;
       } else {
-        errorText = "Server Error!";
+        errorText = globalErrorMessage;
       }
     }
 

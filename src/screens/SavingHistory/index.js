@@ -12,6 +12,8 @@ import { connect } from "react-redux";
 import Header from "../../components/Header";
 import addStatusBar from "../../components/StatusBar";
 
+import amplitude from "../../globals/amplitude";
+
 // import Chart from "./pages/Chart";
 import History from "./pages/History";
 
@@ -35,6 +37,10 @@ class SavingHistory extends Component {
     };
 
     this.onHeaderButtonPress = this.onHeaderButtonPress.bind(this);
+  }
+
+  componentDidMount() {
+    amplitude.track(amplitude.events.SAVING_HISTORY_VIEW);
   }
 
   componentWillMount() {

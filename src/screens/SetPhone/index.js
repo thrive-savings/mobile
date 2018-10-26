@@ -23,6 +23,7 @@ import styles from "./styles";
 import { savePhone, verifyCode, resendCode, changeStep } from "./state/actions";
 
 import { required, numeric } from "../../globals/validators";
+import globalErrorMessage from "../../globals/errorMessage";
 
 import STEP_DETAILS from "./constants";
 
@@ -122,7 +123,7 @@ class SetPhoneForm extends Component {
       if (errors && errors.constructor === Array && errors.length > 0) {
         errorText = errors[0].value;
       } else {
-        errorText = "Server Error!";
+        errorText = globalErrorMessage;
       }
     }
 

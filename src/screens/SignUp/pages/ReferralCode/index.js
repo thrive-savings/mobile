@@ -12,6 +12,7 @@ import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 
 import amplitude from "../../../../globals/amplitude";
+import globalErrorMessage from "../../../../globals/errorMessage";
 
 import { verifyReferralCode, tryPersonalClicked } from "../../state/actions";
 
@@ -74,7 +75,7 @@ class ReferralCodeForm extends Component {
       if (errors && errors.constructor === Array && errors.length > 0) {
         errorText = errors[0].value;
       } else {
-        errorText = "Server Error!";
+        errorText = globalErrorMessage;
       }
     }
 

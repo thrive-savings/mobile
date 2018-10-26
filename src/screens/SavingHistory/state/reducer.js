@@ -30,7 +30,7 @@ export default function savingHistoryReducer(state = initialState, action) {
         ...state,
         data: {
           chart: chart.concat(newChart),
-          history: history.concat(newHistory),
+          history: totalSavings ? newHistory.concat(history) : newHistory,
           totalSavings: totalSavings + newTotalSavings
         },
         isFetching: false,
