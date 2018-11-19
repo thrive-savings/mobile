@@ -28,7 +28,7 @@ export default function signUpReducer(state = initialState, action) {
       return {
         ...state,
         data: signUpData ? signUpData : {},
-        step: state.companyID === 1 ? 2 : 1,
+        step: 1,
         isLoading: false,
         error: false,
         errorMessage: ""

@@ -13,10 +13,7 @@ const signUpSaga = function*() {
 
 const signUpSucceedSaga = function*() {
   yield takeEvery(`${SIGN_UP_URL}_SUCCEED`, function*({ payload }) {
-    const { companyID } = yield select(s => s.signUpReducer);
-    if (companyID > 1) {
-      yield put(updateAuthData(payload));
-    }
+    yield put(updateAuthData(payload));
   });
 };
 
