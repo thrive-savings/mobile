@@ -1,18 +1,21 @@
 // @flow
 import React, { Component } from "react";
 import {
+  KeyboardAvoidingView,
   View,
   TouchableOpacity,
   Image,
   ImageBackground,
   Text,
   TextInput,
-  StatusBar,
-  Keyboard
+  Keyboard,
+  Platform
 } from "react-native";
-import { Content, Icon, Toast, Spinner } from "native-base";
+import { Icon, Toast, Spinner } from "native-base";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
+
+import addStatusBar from "../../components/StatusBar";
 
 import amplitude from "../../globals/amplitude";
 
@@ -22,7 +25,8 @@ import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
 import colors from "../../theme/colors";
 
-import { required, maxLength15, minLength8, email } from "../../globals/validators";
+import { required, minLength8, email } from "../../globals/validators";
+import globalErrorMessage from "../../globals/errorMessage";
 
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
 const logo = require("../../../assets/Logo/white.png");
@@ -30,31 +34,39 @@ const logo = require("../../../assets/Logo/white.png");
 class LoginForm extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      showFooter: true
+      keyboardClosed: true
     };
   }
 
-  componentDidMount () {
-    this.keyboardDidShowListener = Keyboard.addListener("keyboardDidShow", this._keyboardDidShow.bind(this));
-    this.keyboardDidHideListener = Keyboard.addListener("keyboardDidHide", this._keyboardDidHide.bind(this));    
+  componentDidMount() {
+    this.keyboardDidShowListener = Keyboard.addListener(
+      Platform.OS === "android" ? "keyboardDidShow" : "keyboardWillShow",
+      this._keyboardDidShow.bind(this)
+    );
+    this.keyboardDidHideListener = Keyboard.addListener(
+      Platform.OS === "android" ? "keyboardDidHide" : "keyboardWillHide",
+      this._keyboardDidHide.bind(this)
+    );
     amplitude.track(amplitude.events.LOGIN_VIEW);
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.keyboardDidShowListener.remove();
     this.keyboardDidHideListener.remove();
   }
 
-  _keyboardDidShow () {
-    this.setState({showFooter: false});
+  _keyboardDidShow() {
+    this.setState({ keyboardClosed: false });
   }
 
-  _keyboardDidHide () {
-    this.setState({showFooter: true});
+  _keyboardDidHide() {
+    this.setState({ keyboardClosed: true });
   }
 
-  emailTextInput; passwordTextInput;
+  emailTextInput;
+  passwordTextInput;
   renderInput({ input, label, type, meta: { touched, error, warning } }) {
     return (
       <View>
@@ -63,9 +75,11 @@ class LoginForm extends Component {
             ref={c => {
               switch (input.name) {
                 case "email":
-                  this.emailTextInput = c; break;
+                  this.emailTextInput = c;
+                  break;
                 case "password":
-                  this.passwordTextInput = c; break;
+                  this.passwordTextInput = c;
+                  break;
               }
             }}
             placeholderTextColor="#FFF"
@@ -76,7 +90,8 @@ class LoginForm extends Component {
             onSubmitEditing={() => {
               switch (input.name) {
                 case "email":
-                  this.passwordTextInput.focus(); break;
+                  this.passwordTextInput.focus();
+                  break;
               }
             }}
             blurOnSubmit={input.name === "password"}
@@ -91,9 +106,11 @@ class LoginForm extends Component {
                 onPress={() => {
                   switch (input.name) {
                     case "email":
-                      this.emailTextInput.clear(); break;
+                      this.emailTextInput.clear();
+                      break;
                     case "password":
-                      this.passwordTextInput.clear(); break;
+                      this.passwordTextInput.clear();
+                      break;
                   }
                 }}
                 name="close"
@@ -134,82 +151,97 @@ class LoginForm extends Component {
       if (errors && errors.constructor === Array && errors.length > 0) {
         errorText = errors[0].value;
       } else {
-        errorText = "Server Error!";
+        errorText = globalErrorMessage;
       }
     }
 
     return (
-      <View style={globalStyles.container}>
-        <StatusBar barStyle="light-content" backgroundColor={colors.statusbar} />
-        <ImageBackground source={bg} style={globalStyles.background}>
-          <View style={styles.container}>
-            <Image source={logo} style={styles.logo} />
-          </View>
-          <Content showsVerticalScrollIndicator={false} contentContainerStyle={styles.container}>
-            <View style={styles.form}>
-              <Field
-                name="email"
-                component={this.renderInput}
-                type="email"
-                validate={[email, required]}
-              />
-              <Field
-                name="password"
-                component={this.renderInput}
-                type="password"
-                validate={[minLength8, maxLength15, required]}
-              />
+      <ImageBackground source={bg} style={globalStyles.background}>
+        <KeyboardAvoidingView
+          style={styles.container}
+          behavior="padding"
+          enabled
+        >
+          <Image source={logo} style={styles.logo} />
+          <Field
+            name="email"
+            component={this.renderInput}
+            type="email"
+            validate={[email, required]}
+          />
+          <Field
+            name="password"
+            component={this.renderInput}
+            type="password"
+            validate={[minLength8, required]}
+          />
 
-              {error && <Text style={globalStyles.formErrorText3}>{errorText}</Text>}
+          {error &&
+            <Text style={globalStyles.formErrorText3}>
+              {errorText}
+            </Text>}
 
-              <TouchableOpacity activeOpacity={0.6} style={[styles.loginBtn, globalStyles.shadow]} onPress={this.login.bind(this)}>
-                {
-                  isLoading ?
-                    <Spinner color={colors.blue} /> :
-                    <Text uppercase style={styles.loginBtnText}>
-                      LOG IN
-                    </Text>
-                }
-              </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.6}
+            style={[styles.loginBtn, globalStyles.shadow]}
+            onPress={this.login.bind(this)}
+          >
+            {isLoading
+              ? <Spinner color={colors.blue} />
+              : <Text uppercase style={styles.loginBtnText}>
+                  LOG IN
+                </Text>}
+          </TouchableOpacity>
+        </KeyboardAvoidingView>
 
-              {
-                this.state.showFooter &&
-                <TouchableOpacity style={styles.forgotPasswordContainer} activeOpacity={0.6} onPress={() => navigation.navigate("ForgotPassword")} hitSlop={{top: 10, bottom: 10, left: 20, right: 20}}>
-                  <Text uppercase={false} style={styles.forgotPasswordBtnText}>Forgot Password?</Text>
-                </TouchableOpacity>
-              }
+        {this.state.keyboardClosed &&
+          <TouchableOpacity
+            style={styles.forgotPasswordContainer}
+            activeOpacity={0.6}
+            onPress={() => navigation.navigate("ForgotPassword")}
+            hitSlop={{ top: 10, bottom: 10, left: 20, right: 20 }}
+          >
+            <Text uppercase={false} style={styles.forgotPasswordBtnText}>
+              Forgot Password?
+            </Text>
+          </TouchableOpacity>}
 
-              {
-                this.state.showFooter &&
-                <TouchableOpacity activeOpacity={0.6} style={globalStyles.bottomContainer} onPress={() => navigation.navigate("SignUp")} hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}>
-                  <Text style={globalStyles.bottomLabelText}>
-                    Don't have an account?
-                    <Text style={globalStyles.bottomBtnText}> Sign Up.</Text>
-                  </Text>
-                </TouchableOpacity>
-              }
-            </View>
-          </Content>
-        </ImageBackground>
-      </View>
+        {this.state.keyboardClosed &&
+          <TouchableOpacity
+            activeOpacity={0.6}
+            style={globalStyles.bottomContainer}
+            onPress={() => navigation.navigate("SignUp")}
+            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+          >
+            <Text style={globalStyles.bottomLabelText}>
+              Don't have an account?
+              <Text style={globalStyles.bottomBtnText}> Sign Up.</Text>
+            </Text>
+          </TouchableOpacity>}
+      </ImageBackground>
     );
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
-    values: state.form && state.form.login && state.form.login.values ? state.form.login.values : undefined,
+    values:
+      state.form && state.form.login && state.form.login.values
+        ? state.form.login.values
+        : undefined,
     authReducer: state.authReducer
   };
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
     authUser: (payload = {}) => dispatch(authUser(payload))
   };
 }
 
-LoginForm = connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+LoginForm = connect(mapStateToProps, mapDispatchToProps)(
+  addStatusBar(LoginForm)
+);
 
 const Login = reduxForm({
   form: "login"

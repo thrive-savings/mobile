@@ -1,11 +1,11 @@
 const FREQUENCY_TYPES = [
   {
-    identifier: "ONCEWEEKLY",
-    displayName: "Once a week"
-  },
-  {
     identifier: "TWICEWEEKLY",
     displayName: "Twice a week"
+  },
+  {
+    identifier: "ONCEWEEKLY",
+    displayName: "Once a week"
   },
   {
     identifier: "BIWEEKLY",
@@ -23,7 +23,7 @@ const getFrequencyIndex = identifier => {
     if (type.identifier === identifier) { break; }
     i++;
   }
-  return i >= FREQUENCY_TYPES.length ? 0 : i;
+  return i >= FREQUENCY_TYPES.length ? 1 : i;
 };
 
 export { FREQUENCY_TYPES, getFrequencyIndex };

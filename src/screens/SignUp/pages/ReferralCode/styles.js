@@ -5,11 +5,12 @@ const screen = Dimensions.get("window");
 const deviceHeight = screen.height;
 const deviceWidth = screen.width;
 
+const LOGO_WIDTH = (2 * deviceWidth - 60) / 3;
+
 export default StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: "center",
-    paddingTop: deviceHeight / 6,
+    flex: 0.9,
+    justifyContent: "center",
     paddingHorizontal: deviceWidth / 6
   },
 
@@ -35,8 +36,13 @@ export default StyleSheet.create({
   // Logo style
   logo: {
     resizeMode: "contain",
-    width: (2 * deviceWidth - 60) / 3,
+    width: LOGO_WIDTH,
     height: deviceHeight / 4,
+    marginBottom: 20
+  },
+  smallerLogo: {
+    resizeMode: "contain",
+    width: LOGO_WIDTH,
     marginBottom: 20
   },
 
@@ -57,6 +63,9 @@ export default StyleSheet.create({
     letterSpacing: 0.2,
     lineHeight: 22
   },
+  requestOneText: {
+    fontFamily: "LatoBold"
+  },
   formErrorText1: {
     fontSize: 12,
     color: colors.error,
@@ -76,6 +85,7 @@ export default StyleSheet.create({
   createAccountBtnText: {
     color: colors.blue,
     fontSize: 15,
-    textAlign: "center"
+    textAlign: "center",
+    fontFamily: "LatoBold"
   }
 });

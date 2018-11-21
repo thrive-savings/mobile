@@ -1,10 +1,16 @@
 import React from "react";
 import { AppState } from "react-native";
+import { Notifications } from "expo";
 import { connect } from "react-redux";
-import { StackNavigator, DrawerNavigator } from "react-navigation";
+import { createStackNavigator, createDrawerNavigator } from "react-navigation";
 import { Root } from "native-base";
-import amplitude from "./globals/amplitude";
 
+import amplitude from "./globals/amplitude";
+import getAuthorized from "./globals/getAuthorized";
+
+import { getUpdates, setExpoToken } from "./screens/Login/state/actions";
+
+import Landing from "./screens/Landing";
 import Login from "./screens/Login/";
 import ForgotPassword from "./screens/ForgotPassword";
 import SignUp from "./screens/SignUp/";
@@ -15,20 +21,18 @@ import Settings from "./screens/Settings";
 import SetPhone from "./screens/SetPhone";
 import IntegrateBank from "./screens/IntegrateBank";
 import SavingPreferences from "./screens/SavingPreferences";
+import SavingHistory from "./screens/SavingHistory";
 import SavingGoals from "./screens/SavingGoals";
 import PP from "./screens/PP";
 import TOS from "./screens/TOS";
 import Faq from "./screens/Faq";
 import Contact from "./screens/Contact";
 
-import getAuthorized from "./globals/getAuthorized";
-
-import { getUpdates } from "./screens/Login/state/actions";
-
-const Drawer = DrawerNavigator(
+const Drawer = createDrawerNavigator(
   {
-    Home: { screen: Home },
     Profile: { screen: Profile },
+    Home: { screen: Home },
+    SavingHistory: { screen: SavingHistory },
     Settings: { screen: Settings },
     Faq: { screen: Faq },
     Contact: { screen: Contact }
@@ -40,6 +44,7 @@ const Drawer = DrawerNavigator(
 );
 
 const stackScreens = {
+  Landing: { screen: Landing },
   Login: { screen: Login },
   SignUp: { screen: SignUp },
   ForgotPassword: { screen: ForgotPassword },
@@ -57,73 +62,94 @@ const stackerOptions = {
   headerMode: "none"
 };
 
-const StackerWithLogin = StackNavigator(
-  stackScreens,
-  {
-    ...stackerOptions,
-    initialRouteName: "Login"
-  }
-);
+const StackerWithLanding = createStackNavigator(stackScreens, {
+  ...stackerOptions,
+  initialRouteName: "Landing"
+});
 
-const StackerWithDrawer = StackNavigator(
-  stackScreens,
-  {
-    ...stackerOptions,
-    initialRouteName: "Drawer"
-  }
-);
+const StackerWithDrawer = createStackNavigator(stackScreens, {
+  ...stackerOptions,
+  initialRouteName: "Drawer"
+});
 
-const StackerWithIntegrateBank = StackNavigator(
-  stackScreens,
-  {
-    ...stackerOptions,
-    initialRouteName: "IntegrateBank"
-  }
-);
+const StackerWithIntegrateBank = createStackNavigator(stackScreens, {
+  ...stackerOptions,
+  initialRouteName: "IntegrateBank"
+});
 
-const StackerWithSetPhone = StackNavigator(
-  stackScreens,
-  {
-    ...stackerOptions,
-    initialRouteName: "SetPhone"
-  }
-);
+const StackerWithSavingPreferences = createStackNavigator(stackScreens, {
+  ...stackerOptions,
+  initialRouteName: "SavingPreferences"
+});
+
+const StackerWithSavingGoals = createStackNavigator(stackScreens, {
+  ...stackerOptions,
+  initialRouteName: "SavingGoals"
+});
+
+const StackerWithSetPhone = createStackNavigator(stackScreens, {
+  ...stackerOptions,
+  initialRouteName: "SetPhone"
+});
 
 class App extends React.Component {
   componentDidMount() {
     if (AppState.currentState) {
       this._handleAppStateChange(AppState.currentState);
     }
-    AppState.addEventListener('change', this._handleAppStateChange);
+    AppState.addEventListener("change", this._handleAppStateChange);
+    this._notificationSubscription = Notifications.addListener(
+      this._handleNotification
+    );
   }
 
   componentWillUnmount() {
-    AppState.removeEventListener('change', this._handleAppStateChange);
-  }
-
-  _handleAppStateChange(nextAppState) {
-    const appStateEvent = nextAppState === "active" ? amplitude.events.APP_ACTIVE : nextAppState === "background" ? amplitude.events.APP_IN_BACKGROUND : amplitude.events.APP_INACTIVE;
-    amplitude.track(appStateEvent);
+    AppState.removeEventListener("change", this._handleAppStateChange);
+    if (this._notificationSubscription) {
+      this._notificationSubscription.remove();
+    }
   }
 
   componentWillMount() {
     const authorized = getAuthorized(this.props.authReducer);
     if (authorized) {
       this.props.getUpdates();
+      if (!authorized.expoPushToken) {
+        this.props.setExpoToken();
+      }
     }
   }
 
+  _handleAppStateChange(nextAppState) {
+    const appStateEvent =
+      nextAppState === "active"
+        ? amplitude.events.APP_ACTIVE
+        : nextAppState === "background"
+          ? amplitude.events.APP_IN_BACKGROUND
+          : amplitude.events.APP_INACTIVE;
+    amplitude.track(appStateEvent);
+  }
+
+  _handleNotification(notification) {
+    // console.log(notification);
+  }
+
   render() {
-    let stacker = <StackerWithLogin />;
+    let stacker = <StackerWithLanding />;
 
     const authorized = getAuthorized(this.props.authReducer);
+
     if (authorized) {
       if (!authorized.isVerified) {
         stacker = <StackerWithSetPhone />;
-      } else if (authorized.bankLinked && false) {
-        stacker = <StackerWithDrawer />;
-      } else {
+      } else if (!authorized.bankLinked || authorized.relinkRequired) {
         stacker = <StackerWithIntegrateBank />;
+      } else if (authorized.onboardingStep === "SavingPreferences") {
+        stacker = <StackerWithSavingPreferences />;
+      } else if (authorized.onboardingStep === "SavingGoals") {
+        stacker = <StackerWithSavingGoals />;
+      } else {
+        stacker = <StackerWithDrawer />;
       }
     }
 
@@ -135,15 +161,16 @@ class App extends React.Component {
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
     authReducer: state.authReducer
   };
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
-    getUpdates: () => dispatch(getUpdates())
+    getUpdates: () => dispatch(getUpdates()),
+    setExpoToken: () => dispatch(setExpoToken())
   };
 }
 

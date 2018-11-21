@@ -6,7 +6,7 @@ import {
   ImageBackground,
   Text,
   TouchableOpacity,
-  StatusBar
+  Animated
 } from "react-native";
 import { Card } from "native-base";
 import { LinearGradient } from "expo";
@@ -17,6 +17,7 @@ import amplitude from "../../globals/amplitude";
 import Header from "../../components/Header";
 import ModalTemplate from "../../components/ModalTemplate";
 import ProgressBar from "../../components/ProgressBar";
+import addStatusBar from "../../components/StatusBar";
 
 import { getDollarString, getSplitDollarStrings } from "../../globals/helpers";
 import GOAL_CATEGORIES from "../../globals/goalCategories";
@@ -30,21 +31,46 @@ import colors from "../../theme/colors";
 import NOTIFICATION_TYPES from "./constants";
 
 const bg = require("../../../assets/Backgrounds/BackgroundAccount.png");
-const infoIcon = require("../../../assets/Icons/Info/information.png");
+const filledStarIcon = require("../../../assets/Icons/Star/Blue/star.png");
+const emptyStarIcon = require("../../../assets/Icons/Star/Empty/star.png");
 
 class Home extends Component {
   constructor(props) {
     super(props);
 
+    this.cycleAnimation = this.cycleAnimation.bind(this);
+
     this.state = {
-      showRainyDayInfoModal: false
+      showInfoModal: false,
+      notifFadeAnim: new Animated.Value(1)
     };
+  }
+
+  cycleAnimation() {
+    Animated.sequence([
+      Animated.timing(this.state.notifFadeAnim, {
+        toValue: 0.6,
+        duration: 1000
+      }),
+      Animated.timing(this.state.notifFadeAnim, {
+        toValue: 1,
+        duration: 1000
+      })
+    ]).start(() => {
+      this.cycleAnimation();
+    });
+  }
+
+  componentDidMount() {
+    this.cycleAnimation();
   }
 
   notificationClicked(notificationType) {
     switch (notificationType) {
       case "SavingPreferences":
-        amplitude.track(amplitude.events.SAVING_PREFERENCES_NOTIFICATION_CLICKED);
+        amplitude.track(
+          amplitude.events.SAVING_PREFERENCES_NOTIFICATION_CLICKED
+        );
         this.props.navigation.navigate("SavingPreferences");
         break;
       case "EmployerBonus":
@@ -58,8 +84,13 @@ class Home extends Component {
   getInfoModalContent() {
     return (
       <View>
-        <Text style={[styles.infoContentText, styles.bottomPadder]}>All Thrive users have a default Rainy Day Fund to help reduce their financial anxiety and jumpstart their saving goals!</Text>
-        <Text style={styles.infoContentText}>Your Thrive Savings will automatically go here unless you create additional goals.</Text>
+        <Text style={[styles.infoContentText, styles.bottomPadder]}>
+          Prioritizing a goal increases the amount Thrive will set aside towards
+          that specific goal.
+        </Text>
+        <Text style={styles.infoContentText}>
+          You can prioritize a goal by editing your goal.
+        </Text>
       </View>
     );
   }
@@ -72,66 +103,105 @@ class Home extends Component {
       userData: { notifications }
     } = this.props;
 
-    let notifPreferencesSet = false, notifBonus = 0;
+    let notifPreferencesSet = false,
+      notifBonus = 0;
     if (notifications) {
       notifPreferencesSet = notifications.savingPreferencesSet;
       notifBonus = notifications.bonus;
     }
 
     return NOTIFICATION_TYPES.map(({ type, title, getDescription, icon }) => {
-      if (type === "EmployerBonus" && notifBonus <= 0) { return; }
-      else if (type === "SavingPreferences" && (preferencesInitialSetDone || notifPreferencesSet)) { return; }
+      if (type === "EmployerBonus" && notifBonus <= 0) {
+        return;
+      } else if (
+        type === "SavingPreferences" &&
+        (preferencesInitialSetDone || notifPreferencesSet)
+      ) {
+        return;
+      }
 
       const description =
         type === "EmployerBonus"
-          ? isSeeingBonus ? "Dismissing ... " : getDescription(getDollarString(notifBonus))
+          ? isSeeingBonus
+            ? "Dismissing ... "
+            : getDescription(getDollarString(notifBonus))
           : isSettingPreferencesDone ? "Setting up ..." : getDescription();
 
       return (
-        <TouchableOpacity
-          key={type} activeOpacity={0.6} style={styles.notificationHolder}
-          onPress={() => this.notificationClicked(type)}
+        <Animated.View
+          key={type}
+          style={{
+            alignSelf: "stretch",
+            opacity: this.state.notifFadeAnim
+          }}
         >
-          <LinearGradient colors={colors.blueGreenGradient.colors} style={styles.notificationContent}>
-            <Image source={icon} />
-            <View style={styles.notificationTextsContainer}>
-              <Text style={styles.notificationTitle}>{title}</Text>
-              <Text style={styles.notificationDescription}>{isSeeingBonus ? "Dismissing ..." : description}</Text>
-            </View>
-          </LinearGradient>
-        </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.6}
+            style={styles.notificationHolder}
+            onPress={() => this.notificationClicked(type)}
+          >
+            <LinearGradient
+              colors={colors.blueGreenGradient.colors}
+              style={styles.notificationContent}
+            >
+              <Image source={icon} />
+              <View style={styles.notificationTextsContainer}>
+                <Text style={styles.notificationTitle}>
+                  {title}
+                </Text>
+                <Text style={styles.notificationDescription}>
+                  {isSeeingBonus ? "Dismissing ..." : description}
+                </Text>
+              </View>
+            </LinearGradient>
+          </TouchableOpacity>
+        </Animated.View>
       );
     });
   }
 
   renderGoals() {
     return this.props.userData.goals.map((goal, index) => {
-      const { category, name, amount, savedAmount } = goal;
+      const { category, name, amount, progress, boosted } = goal;
       return (
         <TouchableOpacity
-          key={index} activeOpacity={0.6} style={styles.goalHolder}
-          onPress={() => this.props.navigation.navigate("SavingGoals", { actionType: "Detail", data: goal })}
+          key={index}
+          activeOpacity={0.6}
+          style={styles.goalHolder}
+          onPress={() =>
+            this.props.navigation.navigate("SavingGoals", {
+              actionType: "Detail",
+              data: goal
+            })}
         >
           <Card style={styles.goalCard}>
             <View style={styles.goalRow}>
               <Image source={GOAL_CATEGORIES[category].icon} />
-              {
-                category === "RainyDay" &&
-                <TouchableOpacity activeOpacity={0.6} style={styles.infoIconButton} onPress={() => this.setState({showRainyDayInfoModal: true})} hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}>
-                  <Image source={infoIcon} />
-                </TouchableOpacity>
-              }
+              <TouchableOpacity
+                activeOpacity={0.6}
+                style={styles.infoIconButton}
+                onPress={() => this.setState({ showInfoModal: true })}
+                hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+              >
+                <Image source={boosted ? filledStarIcon : emptyStarIcon} />
+              </TouchableOpacity>
               <View style={styles.goalTextsContainer}>
                 <Text style={styles.goalLabelText}>{`GOAL ${index + 1}`}</Text>
-                <Text style={styles.goalNameText}>{name}</Text>
-                <Text style={styles.goalAmountText}>{getDollarString(savedAmount)}</Text>
+                <Text style={styles.goalNameText}>
+                  {name}
+                </Text>
+                <Text style={styles.goalAmountText}>
+                  {getDollarString(progress)}
+                </Text>
               </View>
             </View>
             <View style={styles.goalProgressContainer}>
-              <ProgressBar progress={savedAmount / amount} />
+              <ProgressBar progress={progress / amount} />
               <View style={styles.goalProgressTextsHolder}>
                 <Text style={styles.goalProgressBarText}>$0</Text>
-                <Text style={styles.goalProgressBarText}>{getDollarString(amount)}</Text>
+                <Text style={styles.goalProgressBarText}>
+                  {getDollarString(amount, true)}
+                </Text>
               </View>
             </View>
           </Card>
@@ -142,46 +212,60 @@ class Home extends Component {
 
   render() {
     const navigation = this.props.navigation;
-    const { beforeDot: balanceBD, afterDot: balanceAD } = getSplitDollarStrings(this.props.userData.balance);
+    const { beforeDot: balanceBD, afterDot: balanceAD } = getSplitDollarStrings(
+      this.props.userData.balance
+    );
     return (
-      <View style={globalStyles.container}>
-        <StatusBar barStyle="light-content" backgroundColor={colors.statusbar}/>
-        <ImageBackground source={bg} style={globalStyles.background}>
-          <Header navigation={navigation} />
-          <View style={styles.subHeader}>
-            <Text style={styles.balanceLabelText}>THRIVE SAVINGS BALANCE</Text>
-            <View style={styles.balanceTextHolder}>
-              <Text style={styles.balanceMainText}>{balanceBD}</Text>
-              <Text style={styles.balanceRemainderText}>{balanceAD}</Text>
-            </View>
-            <View style={[styles.subHeaderLabel, globalStyles.shadow]}>
-              <Text style={styles.subHeaderText}>MY SAVINGS GOALS</Text>
-            </View>
+      <ImageBackground source={bg} style={globalStyles.background}>
+        <Header navigation={navigation} />
+        <View style={styles.subHeader}>
+          <Text style={styles.balanceLabelText}>THRIVE SAVINGS BALANCE</Text>
+          <View style={styles.balanceTextHolder}>
+            <Text style={styles.balanceMainText}>
+              {balanceBD}
+            </Text>
+            <Text style={styles.balanceRemainderText}>
+              {balanceAD}
+            </Text>
           </View>
-          <View style={styles.contentContainer}>
-            <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-              {this.renderNotifications()}
-              {this.renderGoals()}
-              <TouchableOpacity activeOpacity={0.6} style={[styles.addGoalButton, globalStyles.shadow]} onPress={() => navigation.navigate("SavingGoals", { actionType: "Add" })}>
-                <LinearGradient colors={colors.blueGreenGradient.colors} style={styles.addGoalGradient}>
-                  <Text style={styles.addGoalButtonText}>+ ADD GOAL</Text>
-                </LinearGradient>
-              </TouchableOpacity>
-            </ScrollView>
+          <View style={[styles.subHeaderLabel, globalStyles.shadow]}>
+            <Text style={styles.subHeaderText}>MY SAVINGS GOALS</Text>
           </View>
-          <ModalTemplate
-            show={this.state.showRainyDayInfoModal}
-            buttonVisible={false}
-            content={this.getInfoModalContent()}
-            onClose={() => this.setState({showRainyDayInfoModal: false})}
-          />
-        </ImageBackground>
-      </View>
+        </View>
+        <View style={styles.contentContainer}>
+          <ScrollView
+            contentContainerStyle={styles.content}
+            showsVerticalScrollIndicator={false}
+          >
+            {this.renderNotifications()}
+            {this.renderGoals()}
+            <TouchableOpacity
+              activeOpacity={0.6}
+              style={[styles.addGoalButton, globalStyles.shadow]}
+              onPress={() =>
+                navigation.navigate("SavingGoals", { actionType: "Add" })}
+            >
+              <LinearGradient
+                colors={colors.blueGreenGradient.colors}
+                style={styles.addGoalGradient}
+              >
+                <Text style={styles.addGoalButtonText}>+ ADD GOAL</Text>
+              </LinearGradient>
+            </TouchableOpacity>
+          </ScrollView>
+        </View>
+        <ModalTemplate
+          show={this.state.showInfoModal}
+          buttonVisible={false}
+          content={this.getInfoModalContent()}
+          onClose={() => this.setState({ showInfoModal: false })}
+        />
+      </ImageBackground>
     );
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
     userData: state.authReducer.data.authorized,
     isSeeingBonus: state.authReducer.isSeeingBonus,
@@ -190,10 +274,11 @@ function mapStateToProps (state) {
   };
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
-    bonusNotificationSeen: (payload = {}) => dispatch(bonusNotificationSeen(payload))
+    bonusNotificationSeen: (payload = {}) =>
+      dispatch(bonusNotificationSeen(payload))
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(addStatusBar(Home));

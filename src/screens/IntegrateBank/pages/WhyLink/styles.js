@@ -28,7 +28,7 @@ export default StyleSheet.create({
     lineHeight: 24,
     letterSpacing: 0.2,
     textAlign: "center",
-    paddingTop: 10,
+    paddingVertical: 10
   },
   bankSymbol: {
     width: 80,
@@ -43,12 +43,12 @@ export default StyleSheet.create({
   },
   descText: {
     color: colors.charcoal,
-    paddingVertical: 10
+    paddingBottom: 10
   },
   readMoreText: {
     color: colors.darkerGrey,
     textDecorationLine: "underline",
-    paddingBottom: 10
+    paddingBottom: 20
   },
 
   separator: {

@@ -65,6 +65,9 @@ export default StyleSheet.create({
   },
 
   // Notification styles
+  notificationAnimationholder: {
+    alignSelf: "stretch",
+  },
   notificationHolder: {
     alignSelf: "stretch",
     marginHorizontal: 10,

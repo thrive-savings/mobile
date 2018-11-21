@@ -1,5 +1,14 @@
 import amplitude from "../../../globals/amplitude";
-import { REQUEST_URL, GET_UPDATES, BONUS_NOTIFICATION_SEEN, UPDATE_AUTH_DATA, UPDATE_ACCOUNT_DATA, UPDATE_GOALS_DATA, UPDATE_AVATAR } from "./constants";
+import {
+  REQUEST_URL,
+  GET_UPDATES,
+  BONUS_NOTIFICATION_SEEN,
+  UPDATE_AUTH_DATA,
+  UPDATE_ACCOUNT_DATA,
+  UPDATE_GOALS_DATA,
+  UPDATE_AVATAR,
+  UPDATE_ONBOARDING_STEP
+} from "./constants";
 const initialState = {
   data: {},
   avatar: undefined,
@@ -9,12 +18,12 @@ const initialState = {
   errorMessage: ""
 };
 
-export default function authReducer (state = initialState, action) {
+export default function authReducer(state = initialState, action) {
   switch (action.type) {
     //Update Data case
     case `${UPDATE_AUTH_DATA}`:
       const { payload: { data: authData } } = action;
-      amplitude.identify(authData.authorized.id.toString())
+      amplitude.identify(authData.authorized.id.toString());
       return {
         ...state,
         data: authData
@@ -24,13 +33,18 @@ export default function authReducer (state = initialState, action) {
     case `${UPDATE_ACCOUNT_DATA}`:
       const { payload: { authorized: { account } } } = action;
       const dataOnAccountUpdate = state.data.authorized;
+      const newOnboardingStep = dataOnAccountUpdate.relinkRequired
+        ? undefined
+        : "SavingPreferences";
       return {
         ...state,
         data: {
           authorized: {
             ...dataOnAccountUpdate,
             account,
-            bankLinked: true
+            bankLinked: true,
+            relinkRequired: false,
+            onboardingStep: newOnboardingStep
           }
         }
       };
@@ -44,7 +58,8 @@ export default function authReducer (state = initialState, action) {
         data: {
           authorized: {
             ...dataOnGoalsUpdate,
-            goals
+            goals,
+            onboardingStep: undefined
           }
         }
       };
@@ -57,6 +72,20 @@ export default function authReducer (state = initialState, action) {
         avatar: newAvatar
       };
 
+    //Update Onboarding Step
+    case `${UPDATE_ONBOARDING_STEP}`:
+      const { payload: { data: { onboardingStep } } } = action;
+      const dataOnOnboardingStepUpdate = state.data.authorized;
+      return {
+        ...state,
+        data: {
+          authorized: {
+            ...dataOnOnboardingStepUpdate,
+            onboardingStep
+          }
+        }
+      };
+
     //Log In cases
     case `${REQUEST_URL}_SUBMIT`:
       return {
@@ -65,7 +94,7 @@ export default function authReducer (state = initialState, action) {
       };
     case `${REQUEST_URL}_SUCCEED`:
       const { payload: { data, avatar } } = action;
-      amplitude.identify(data.authorized.id.toString())
+      amplitude.identify(data.authorized.id.toString());
       return {
         ...state,
         data,
@@ -90,7 +119,7 @@ export default function authReducer (state = initialState, action) {
       };
     case `${GET_UPDATES}_SUCCEED`:
       const { payload: { data: getUpdatesData } } = action;
-      amplitude.identify(getUpdatesData.authorized.id.toString())
+      amplitude.identify(getUpdatesData.authorized.id.toString());
       return {
         ...state,
         data: getUpdatesData,

@@ -1,8 +1,5 @@
 import React, { Component } from "react";
-import {
-  WebView,
-  View
-} from "react-native";
+import { WebView, KeyboardAvoidingView } from "react-native";
 import { Spinner } from "native-base";
 import { connect } from "react-redux";
 
@@ -79,34 +76,38 @@ class AuthenticateBank extends Component {
 
     const companyID = this.props.companyID;
     return (
-      <View style={[styles.container, globalStyles.shadow]}>
+      <KeyboardAvoidingView
+        behavior="padding"
+        enabled
+        style={[styles.container, globalStyles.shadow]}
+      >
         <Dots step={2} count={3} />
 
-        {
-          isGetting ?
-          <Spinner color={colors.blue} /> :
-          <WebView
-            source={quovoHtmlWrapper}
-            ref={webview => { this.myWebView = webview; }}
-            onMessage={this.onWebViewMessage}
-            style={styles.webViewContainer}
-            startInLoadingState={true}
-            renderLoading={() => <Spinner color={colors.blue} />}
-          />
-        }
-      </View>
+        {isGetting
+          ? <Spinner color={colors.blue} />
+          : <WebView
+              source={quovoHtmlWrapper}
+              ref={webview => {
+                this.myWebView = webview;
+              }}
+              onMessage={this.onWebViewMessage}
+              style={styles.webViewContainer}
+              startInLoadingState={true}
+              renderLoading={() => <Spinner color={colors.blue} />}
+            />}
+      </KeyboardAvoidingView>
     );
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
     companyID: state.signUpReducer.companyID,
     integrateBankReducer: state.integrateBankReducer
   };
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
     fetchAccounts: (payload = {}) => dispatch(fetchAccounts(payload)),
     getUiToken: () => dispatch(getUiToken())

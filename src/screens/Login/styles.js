@@ -12,22 +12,19 @@ export default StyleSheet.create({
     height: null
   },
   container: {
-    flex: 1,
-    flexDirection: "row",
-    alignSelf: "center"
+    flex: 0.9,
+    justifyContent: "center",
+    paddingHorizontal: deviceWidth / 6
   },
   logo: {
     resizeMode: "contain",
     alignSelf: "center",
     width: (2 * deviceWidth - 60) / 3,
-    height: deviceHeight / 4
+    height: deviceHeight / 4,
+    marginBottom: 40
   },
 
   // Form styles
-  form: {
-    flex: 1,
-    paddingHorizontal: deviceWidth / 6
-  },
   inputGrp: {
     flexDirection: "row",
     marginBottom: 8,
@@ -62,7 +59,6 @@ export default StyleSheet.create({
 
   // Forgot Password styles
   forgotPasswordContainer: {
-    flex: 1,
     alignSelf: "center",
     flexDirection: "row",
     position: "absolute",

@@ -11,6 +11,7 @@ import integrateBankReducer from "../screens/IntegrateBank/state/reducer";
 import savingPreferencesReducer from "../screens/SavingPreferences/state/reducer";
 import profileReducer from "../screens/Profile/state/reducer";
 import goalsReducer from "../screens/SavingGoals/state/reducer";
+import savingHistoryReducer from "../screens/SavingHistory/state/reducer";
 
 import { CLEAR_STORAGE } from "../globals/clearStorage";
 
@@ -23,13 +24,14 @@ const appReducer = combineReducers({
   integrateBankReducer,
   savingPreferencesReducer,
   profileReducer,
-  goalsReducer
+  goalsReducer,
+  savingHistoryReducer
 });
 
-const rootReducer =  (state, action) => {
+const rootReducer = (state, action) => {
   if (action.type === `${CLEAR_STORAGE}`) {
     Object.keys(state).forEach(key => {
-        AsyncStorage.removeItem(`persist:${key}`);
+      AsyncStorage.removeItem(`persist:${key}`);
     });
     state = undefined;
   }

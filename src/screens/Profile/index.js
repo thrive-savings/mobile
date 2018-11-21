@@ -1,12 +1,20 @@
 import React, { Component } from "react";
-import { Image, ImageBackground, StatusBar, TouchableOpacity, View, Text } from "react-native";
+import {
+  Image,
+  ImageBackground,
+  TouchableOpacity,
+  View,
+  Text
+} from "react-native";
 import { connect } from "react-redux";
 import { Spinner } from "native-base";
 import { Svg } from "expo";
 
 import Header from "../../components/Header";
+import addStatusBar from "../../components/StatusBar";
 
 import getAvatar from "../../globals/getAvatar";
+import globalErrorMessage from "../../globals/errorMessage";
 
 import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
@@ -45,9 +53,9 @@ class Profile extends Component {
 
   onHeaderButtonPress() {
     if (this.state.activeContent === "Home") {
-      this.props.navigation.navigate("DrawerOpen");
+      this.props.navigation.openDrawer();
     } else {
-      this.setState({activeContent: "Home"});
+      this.setState({ activeContent: "Home" });
     }
   }
 
@@ -80,27 +88,39 @@ class Profile extends Component {
   renderPhotoContainer() {
     const avatar = getAvatar(this.props.authReducer, this.props.profileReducer);
 
-    const { data: { authorized: { firstName, lastName } } } = this.props.authReducer;
+    const {
+      data: { authorized: { firstName, lastName } }
+    } = this.props.authReducer;
     const { isLoading } = this.props.profileReducer;
 
     return (
       <View style={styles.photoContainer}>
-        {
-          isLoading
-            ? <Spinner color={colors.blue} />
-            :
-              <TouchableOpacity activeOpacity={0.6} style={styles.photoHolder} onPress={() => this.setState({showModal: true})}>
-                {
-                  avatar
-                    ? <Image source={{uri: `data:image/png;base64,${avatar}`}} style={styles.avatar} />
-                    :
-                      <Svg width={100} height={100}>
-                        <Svg.Circle cx="50" cy="50" r={49} stokeWidth={1} stroke={colors.darkestGrey} fill={colors.mediumGrey} />
-                      </Svg>
-                }
-              </TouchableOpacity>
-        }
-        <Text style={styles.nameText}>{firstName + " " + lastName}</Text>
+        {isLoading
+          ? <Spinner color={colors.blue} />
+          : <TouchableOpacity
+              activeOpacity={0.6}
+              style={styles.photoHolder}
+              onPress={() => this.setState({ showModal: true })}
+            >
+              {avatar
+                ? <Image
+                    source={{ uri: `data:image/png;base64,${avatar}` }}
+                    style={styles.avatar}
+                  />
+                : <Svg width={100} height={100}>
+                    <Svg.Circle
+                      cx="50"
+                      cy="50"
+                      r={49}
+                      stokeWidth={1}
+                      stroke={colors.darkestGrey}
+                      fill={colors.mediumGrey}
+                    />
+                  </Svg>}
+            </TouchableOpacity>}
+        <Text style={styles.nameText}>
+          {firstName + " " + lastName}
+        </Text>
       </View>
     );
   }
@@ -108,7 +128,13 @@ class Profile extends Component {
   renderHome() {
     const { phone, email } = this.props.authReducer.data.authorized;
 
-    const { isSettingPhone, isSettingEmail, isSettingPassword, error, errorMessage } = this.props.profileReducer;
+    const {
+      isSettingPhone,
+      isSettingEmail,
+      isSettingPassword,
+      error,
+      errorMessage
+    } = this.props.profileReducer;
 
     let errorText = "";
     if (error) {
@@ -116,7 +142,7 @@ class Profile extends Component {
       if (errors && errors.constructor === Array && errors.length > 0) {
         errorText = errors[0].value;
       } else {
-        errorText = "Server Error!";
+        errorText = globalErrorMessage;
       }
     }
 
@@ -127,86 +153,107 @@ class Profile extends Component {
         <View style={styles.separator} />
 
         <View style={styles.otherContainer}>
-          <Text style={[styles.labelText, styles.commonText]}>Phone Number:</Text>
-          {
-            isSettingPhone
-              ? <Text style={[styles.buttonText, styles.commonText]}>Changing phone ...</Text>
-              :
-                <TouchableOpacity activeOpacity={0.6} onPress={() => this.props.navigation.navigate("SetPhone", { showBack: true })}>
-                  <Text style={[styles.buttonText, styles.commonText]}>{phone}</Text>
-                </TouchableOpacity>
-          }
+          <Text style={[styles.labelText, styles.commonText]}>
+            Phone Number:
+          </Text>
+          {isSettingPhone
+            ? <Text style={[styles.buttonText, styles.commonText]}>
+                Changing phone ...
+              </Text>
+            : <TouchableOpacity
+                activeOpacity={0.6}
+                onPress={() =>
+                  this.props.navigation.navigate("SetPhone", {
+                    showBack: true
+                  })}
+              >
+                <Text style={[styles.buttonText, styles.commonText]}>
+                  {phone}
+                </Text>
+              </TouchableOpacity>}
         </View>
 
         <View style={styles.separator} />
 
         <View style={styles.otherContainer}>
           <Text style={[styles.labelText, styles.commonText]}>Email:</Text>
-          {
-            isSettingEmail
-              ? <Text style={[styles.buttonText, styles.commonText]}>Changing email ...</Text>
-              :
-                <TouchableOpacity activeOpacity={0.6} onPress={() => this.setState({activeContent: "ChangeEmail"})}>
-                  <Text style={[styles.buttonText, styles.commonText]}>{email}</Text>
-                </TouchableOpacity>
-          }
+          {isSettingEmail
+            ? <Text style={[styles.buttonText, styles.commonText]}>
+                Changing email ...
+              </Text>
+            : <TouchableOpacity
+                activeOpacity={0.6}
+                onPress={() => this.setState({ activeContent: "ChangeEmail" })}
+              >
+                <Text style={[styles.buttonText, styles.commonText]}>
+                  {email}
+                </Text>
+              </TouchableOpacity>}
         </View>
 
         <View style={styles.separator} />
 
         <View style={styles.otherContainer}>
           <Text style={[styles.labelText, styles.commonText]}>Password:</Text>
-          {
-            isSettingPassword
-              ? <Text style={[styles.buttonText, styles.commonText]}>Changing password ...</Text>
-              :
-                <TouchableOpacity activeOpacity={0.6} onPress={() => this.setState({activeContent: "ChangePassword"})}>
-                  <Text style={[styles.buttonText, styles.commonText]}>Change Password</Text>
-                </TouchableOpacity>
-          }
+          {isSettingPassword
+            ? <Text style={[styles.buttonText, styles.commonText]}>
+                Changing password ...
+              </Text>
+            : <TouchableOpacity
+                activeOpacity={0.6}
+                onPress={() =>
+                  this.setState({ activeContent: "ChangePassword" })}
+              >
+                <Text style={[styles.buttonText, styles.commonText]}>
+                  Change Password
+                </Text>
+              </TouchableOpacity>}
         </View>
 
-        {error && <Text style={globalStyles.formErrorText3}>{errorText}</Text>}
+        {error &&
+          <Text style={globalStyles.formErrorText3}>
+            {errorText}
+          </Text>}
       </View>
     );
   }
 
   render() {
     return (
-      <View style={styles.container}>
-        <StatusBar barStyle="light-content" backgroundColor={colors.statusbar}/>
-        <ImageBackground source={bg} style={styles.background}>
-          <Header
-            navigation={this.props.navigation}
-            button={this.state.activeContent === "Home" ? "menu" : "back"}
-            onButtonPress={this.onHeaderButtonPress}
-            content="text" text={this.getDisplayName()}
+      <ImageBackground source={bg} style={styles.background}>
+        <Header
+          navigation={this.props.navigation}
+          button={this.state.activeContent === "Home" ? "menu" : "back"}
+          onButtonPress={this.onHeaderButtonPress}
+          content="text"
+          text={this.getDisplayName()}
+        />
+        <View style={globalStyles.container}>
+          {this.renderContent()}
+          <ChangePhotoModal
+            showModal={this.state.showModal}
+            onClose={() => this.setState({ showModal: false })}
           />
-          <View style={globalStyles.container}>
-            {this.renderContent()}
-            <ChangePhotoModal
-              showModal={this.state.showModal}
-              onClose={() => this.setState({showModal: false})}
-            />
-          </View>
-        </ImageBackground>
-      </View>
+        </View>
+      </ImageBackground>
     );
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
     authReducer: state.authReducer,
     profileReducer: state.profileReducer
   };
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
-    setEmail: (payload) => dispatch(setEmail(payload)),
-    setPassword: (payload) => dispatch(setPassword(payload))
+    setEmail: payload => dispatch(setEmail(payload)),
+    setPassword: payload => dispatch(setPassword(payload))
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  addStatusBar(Profile)
+);

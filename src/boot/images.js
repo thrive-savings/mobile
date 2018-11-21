@@ -5,6 +5,7 @@ const imageAssets = [
   // Backgrounds
   require("../../assets/Backgrounds/BackgroundAccount.png"),
   require("../../assets/Backgrounds/BackgroundFull.png"),
+  require("../../assets/Backgrounds/BackgroundCover.png"),
 
   // Logos
   require("../../assets/Logo/white.png"),
@@ -79,6 +80,8 @@ const imageAssets = [
   require("../../assets/Icons/ThriveBot/thriveBot.png"),
   require("../../assets/Icons/ThriveBotSmaller/thriveBot.png"),
   require("../../assets/Icons/TickGradient/tickGradient.png"),
+  require("../../assets/Icons/Star/Empty/star.png"),
+  require("../../assets/Icons/Star/Blue/star.png")
 ];
 
 const cacheImages = images => {

@@ -24,10 +24,17 @@ const request = async (method = "post", url, params, config) => {
   }
 };
 
-export const requestApi = (url, params = {}, meta = {}, method, config) => ({ meta, payload: { config, method, params, url }, type: API_REQUEST });
+export const requestApi = (url, params = {}, meta = {}, method, config) => ({
+  meta,
+  payload: { config, method, params, url },
+  type: API_REQUEST
+});
 
-export const requestApiSaga = function * () {
-  yield takeEvery(API_REQUEST, function * ({ meta, payload: { config = {}, method, params, url } }) {
+export const requestApiSaga = function*() {
+  yield takeEvery(API_REQUEST, function*({
+    meta,
+    payload: { config = {}, method, params, url }
+  }) {
     const { headers = {} } = config;
 
     const authReducer = yield select(s => s.authReducer);
@@ -41,15 +48,20 @@ export const requestApiSaga = function * () {
 
     if (error) {
       const { errors, status } = error;
-      let errorContent = {}
+      let errorContent = {};
       if (errors) {
         errorContent.key = errors[0].key;
         errorContent.value = errors[0].value;
-        if (status) { errorContent.status = status; }
+        if (status) {
+          errorContent.status = status;
+        }
       } else {
         errorContent = error;
       }
-      amplitude.track(amplitude.events.SERVER_ERROR, { url, error: errorContent })
+      amplitude.track(amplitude.events.SERVER_ERROR, {
+        url,
+        error: errorContent
+      });
     }
 
     const type = `${url}_${payload ? "SUCCEED" : "FAIL"}`;

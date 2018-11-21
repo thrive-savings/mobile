@@ -12,12 +12,20 @@ export default StyleSheet.create({
   },
 
   //Header styles
-  header:{
+  header: {
     flex: 0.2,
+    justifyContent: "space-around",
+    alignItems: "flex-start",
+    backgroundColor: "white"
+  },
+  brandLogo: {
+    width: 200,
+    height: 40
+  },
+  profileContainer: {
     flexDirection: "row",
     justifyContent: "flex-start",
-    alignItems: "center",
-    backgroundColor: "white"
+    alignItems: "center"
   },
   avatar: {
     width: 40,
@@ -56,7 +64,7 @@ export default StyleSheet.create({
     borderColor: colors.grey
   },
   menuItemIconActive: {
-    tintColor: colors.blue,
+    tintColor: colors.blue
   },
   menuItemText: {
     color: colors.charcoal,
@@ -74,7 +82,7 @@ export default StyleSheet.create({
     flex: 0.2,
     flexDirection: "row",
     alignItems: "flex-end",
-    justifyContent: "space-between",
+    justifyContent: "space-between"
   },
   logoutText: {
     color: colors.charcoal,

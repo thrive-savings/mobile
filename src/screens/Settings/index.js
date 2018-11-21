@@ -4,8 +4,7 @@ import {
   Text,
   Image,
   ImageBackground,
-  TouchableOpacity,
-  StatusBar
+  TouchableOpacity
 } from "react-native";
 import { Constants } from "expo";
 import { Content } from "native-base";
@@ -15,17 +14,21 @@ import Communications from "react-native-communications";
 
 import Header from "../../components/Header";
 import SpecialButton from "../../components/SpecialButton";
+import addStatusBar from "../../components/StatusBar";
 
 import WorkType from "../SavingPreferences/pages/WorkType";
 import SavingType from "../SavingPreferences/pages/SavingType";
 import FixedPlan from "../SavingPreferences/pages/FixedPlan";
-import { setWorkType, setSavingType, setSavingDetails } from "../SavingPreferences/state/actions";
+import {
+  setWorkType,
+  setSavingType,
+  setSavingDetails
+} from "../SavingPreferences/state/actions";
 
 import BANK_ICONS from "../IntegrateBank/bankIcons";
 
 import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
-import colors from "../../theme/colors";
 
 import PAGE_TYPES from "./constants";
 
@@ -45,9 +48,9 @@ class Settings extends Component {
 
   headerIconClicked() {
     if (this.state.activePage === "settings") {
-      this.props.navigation.navigate("DrawerOpen");
+      this.props.navigation.openDrawer();
     } else {
-      this.setState({activePage: "settings"});
+      this.setState({ activePage: "settings" });
     }
   }
 
@@ -66,7 +69,7 @@ class Settings extends Component {
         break;
     }
 
-    this.setState({activePage: "settings"});
+    this.setState({ activePage: "settings" });
   }
 
   renderContent() {
@@ -99,11 +102,28 @@ class Settings extends Component {
 
     return (
       <View>
-        <View style={[styles.contentBox, styles.linkedBankBox, globalStyles.shadow]}>
+        <View
+          style={[styles.contentBox, styles.linkedBankBox, globalStyles.shadow]}
+        >
           <Image source={BANK_ICONS[bank]} />
-          <Text style={styles.linkedBankLabelText}>{title}</Text>
-          <Text style={styles.linkedBankDescText}>To change or unlink your bank account, send us a request below and we’ll get in touch with you shortly.</Text>
-          <SpecialButton text={"CONTACT SUPPORT"} onClick={() => Communications.email(["help@thrivesavings.com"],null,null,"Change or Unlink Bank Account",null)}/>
+          <Text style={styles.linkedBankLabelText}>
+            {title}
+          </Text>
+          <Text style={styles.linkedBankDescText}>
+            To change or unlink your bank account, send us a request below and
+            we’ll get in touch with you shortly.
+          </Text>
+          <SpecialButton
+            text={"CONTACT SUPPORT"}
+            onClick={() =>
+              Communications.email(
+                ["help@thrivesavings.com"],
+                null,
+                null,
+                "Change or Unlink Bank Account",
+                null
+              )}
+          />
         </View>
       </View>
     );
@@ -113,13 +133,25 @@ class Settings extends Component {
     return (
       <View>
         <View style={[styles.contentBox, styles.legalBox, globalStyles.shadow]}>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate("TOS")} activeOpacity={0.6} style={styles.contentRow}>
-            <Text style={[styles.regularText, styles.blueText]}>Terms of Service</Text>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate("TOS")}
+            activeOpacity={0.6}
+            style={styles.contentRow}
+          >
+            <Text style={[styles.regularText, styles.blueText]}>
+              Terms of Service
+            </Text>
             <Text style={[styles.regularText, styles.blueText]}>></Text>
           </TouchableOpacity>
           <View style={styles.separator} />
-          <TouchableOpacity onPress={() => this.props.navigation.navigate("PP")} activeOpacity={0.6} style={styles.contentRow}>
-            <Text style={[styles.regularText, styles.blueText]}>Privacy Policy</Text>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate("PP")}
+            activeOpacity={0.6}
+            style={styles.contentRow}
+          >
+            <Text style={[styles.regularText, styles.blueText]}>
+              Privacy Policy
+            </Text>
             <Text style={[styles.regularText, styles.blueText]}>></Text>
           </TouchableOpacity>
         </View>
@@ -129,14 +161,14 @@ class Settings extends Component {
 
   renderHome() {
     const {
-      isSettingWorkType, isSettingSavingType, isSettingSavingDetails,
-      values: {
-        workType: workTypeSaved,
-        savingType: savingTypeSaved
-      }
+      isSettingWorkType,
+      isSettingSavingType,
+      isSettingSavingDetails,
+      values: { workType: workTypeSaved, savingType: savingTypeSaved }
     } = this.props.savingPreferencesReducer;
 
-    let workType = workTypeSaved, savingType = savingTypeSaved;
+    let workType = workTypeSaved,
+      savingType = savingTypeSaved;
     const userPrefrencesData = this.props.userData.savingPreferences;
     if (!workType) {
       workType = userPrefrencesData.workType;
@@ -157,57 +189,80 @@ class Settings extends Component {
       <View>
         <View style={[styles.contentBox, globalStyles.shadow]}>
           <Text style={styles.contentTitle}>SAVING</Text>
-          <TouchableOpacity onPress={() => this.setState({activePage: "workType"})} activeOpacity={0.6} style={styles.contentRow}>
+          <TouchableOpacity
+            onPress={() => this.setState({ activePage: "workType" })}
+            activeOpacity={0.6}
+            style={styles.contentRow}
+          >
             <Text style={styles.regularText}>Primary Work Type</Text>
             <Text style={[styles.regularText, styles.blueText]}>
-              {
-                isSettingWorkType
-                  ? "Loading ..."
-                  : workType ? workType : "Full-time"
-              }
+              {isSettingWorkType
+                ? "Loading ..."
+                : workType ? workType : "Full-time"}
             </Text>
           </TouchableOpacity>
           <View style={styles.separator} />
-          <TouchableOpacity onPress={() => this.setState({activePage: "savingType"})} activeOpacity={0.6} style={styles.contentRow}>
+          <TouchableOpacity
+            onPress={() => this.setState({ activePage: "savingType" })}
+            activeOpacity={0.6}
+            style={styles.contentRow}
+          >
             <Text style={styles.regularText}>Saving Plan</Text>
             <Text style={[styles.regularText, styles.blueText]}>
-              {
-                isSettingSavingType
-                  ? "Loading ..."
-                  : savingType ? savingType : "Thrive Flex"
-              }
+              {isSettingSavingType
+                ? "Loading ..."
+                : savingType ? savingType : "Thrive Flex"}
             </Text>
           </TouchableOpacity>
           <View style={styles.separator} />
-          <TouchableOpacity onPress={() => !isSavingDetailsDisabled && this.setState({activePage: "fixedPlan"})} activeOpacity={isSavingDetailsDisabled ? 1 : 0.6} style={styles.contentRow}>
+          <TouchableOpacity
+            onPress={() =>
+              !isSavingDetailsDisabled &&
+              this.setState({ activePage: "fixedPlan" })}
+            activeOpacity={isSavingDetailsDisabled ? 1 : 0.6}
+            style={styles.contentRow}
+          >
             <Text style={styles.regularText}>Saving Preferences</Text>
-            <Text style={[styles.regularText, (isSavingDetailsDisabled ? styles.disabledText : styles.blueText)]}>
-              {
-                isSavingDetailsDisabled
-                  ? "Unavailable for Flex"
-                  : isSettingSavingDetails
-                    ? "Loading ..."
-                    : "Change Preferences"
-              }
+            <Text
+              style={[
+                styles.regularText,
+                isSavingDetailsDisabled ? styles.disabledText : styles.blueText
+              ]}
+            >
+              {isSavingDetailsDisabled
+                ? "Unavailable for Flex"
+                : isSettingSavingDetails ? "Loading ..." : "Change Preferences"}
             </Text>
           </TouchableOpacity>
         </View>
 
         <View style={[styles.contentBox, globalStyles.shadow]}>
           <Text style={styles.contentTitle}>GENERAL</Text>
-          <TouchableOpacity onPress={() => this.setState({activePage: "legal"})} activeOpacity={0.6} style={styles.contentRow}>
+          <TouchableOpacity
+            onPress={() => this.setState({ activePage: "legal" })}
+            activeOpacity={0.6}
+            style={styles.contentRow}
+          >
             <Text style={styles.regularText}>Legal & Privacy</Text>
             <Text style={[styles.regularText, styles.blueText]}>></Text>
           </TouchableOpacity>
           <View style={styles.separator} />
-          <TouchableOpacity onPress={() => this.setState({activePage: "linkedBank"})} activeOpacity={0.6} style={styles.contentRow}>
+          <TouchableOpacity
+            onPress={() => this.setState({ activePage: "linkedBank" })}
+            activeOpacity={0.6}
+            style={styles.contentRow}
+          >
             <Text style={styles.regularText}>Linked Bank Account</Text>
-            <Text style={[styles.regularText, styles.blueText]}>{title}</Text>
+            <Text style={[styles.regularText, styles.blueText]}>
+              {title}
+            </Text>
           </TouchableOpacity>
           <View style={styles.separator} />
           <View style={styles.contentRow}>
             <Text style={styles.regularText}>App Version</Text>
-            <Text style={[styles.regularText, styles.blueText]}>{"v" + Constants.manifest.version}</Text>
+            <Text style={[styles.regularText, styles.blueText]}>
+              {"v" + Constants.manifest.version}
+            </Text>
           </View>
         </View>
       </View>
@@ -218,23 +273,21 @@ class Settings extends Component {
     const activePage = this.state.activePage;
 
     return (
-      <View style={styles.container}>
-        <StatusBar barStyle="light-content" backgroundColor={colors.statusbar}/>
-        <ImageBackground
-          source={bg}
-          style={styles.background}
+      <ImageBackground source={bg} style={styles.background}>
+        <Header
+          navigation={this.props.navigation}
+          button={PAGE_TYPES[activePage].headerButton}
+          onButtonPress={this.headerIconClicked}
+          content="text"
+          text={PAGE_TYPES[activePage].headerTitle}
+        />
+        <Content
+          showsVerticalScrollIndicator={false}
+          style={styles.contentContainer}
         >
-          <Header
-            navigation={this.props.navigation}
-            button={PAGE_TYPES[activePage].headerButton}
-            onButtonPress={this.headerIconClicked}
-            content="text" text={PAGE_TYPES[activePage].headerTitle}
-          />
-          <Content showsVerticalScrollIndicator={false} style={styles.contentContainer}>
-            {this.renderContent()}
-          </Content>
-        </ImageBackground>
-      </View>
+          {this.renderContent()}
+        </Content>
+      </ImageBackground>
     );
   }
 }
@@ -254,4 +307,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Settings);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  addStatusBar(Settings)
+);

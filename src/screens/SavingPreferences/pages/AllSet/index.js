@@ -19,7 +19,6 @@ class AllSet extends Component {
 
   next() {
     this.props.save();
-    this.props.navigation.navigate("Home");
   }
 
   render() {
@@ -32,13 +31,14 @@ class AllSet extends Component {
         <Image source={thriveBotIcon} />
 
         <Text style={styles.greyText}>
-          Way to go! Your saving preferences are all set up and you can expect your first transfer in the next 2-3 business days.
+          Way to go! Your saving preferences are all set up and you can expect
+          your first transfer in the next 2-3 business days.
         </Text>
         <Text style={styles.blueText}>
           Next step is creating your first savings goal!
         </Text>
 
-        <SpecialButton text={"GO TO MY ACCOUNT"} onClick={this.next} />
+        <SpecialButton text={"CREATE A GOAL"} onClick={this.next} />
       </Card>
     );
   }

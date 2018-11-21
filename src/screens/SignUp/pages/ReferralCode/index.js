@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {
+  KeyboardAvoidingView,
   View,
-  ScrollView,
   TouchableOpacity,
   Image,
   Text,
@@ -12,8 +12,9 @@ import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 
 import amplitude from "../../../../globals/amplitude";
+import globalErrorMessage from "../../../../globals/errorMessage";
 
-import { verifyReferralCode } from "../../state/actions";
+import { verifyReferralCode, tryPersonalClicked } from "../../state/actions";
 
 import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
@@ -28,8 +29,22 @@ class ReferralCodeForm extends Component {
     amplitude.track(amplitude.events.EMPLOYER_CODE_VIEW);
   }
 
+  verify() {
+    if (this.props.valid) {
+      this.props.verifyReferralCode(this.props.values);
+    } else {
+      Toast.show({
+        text: "Valid Code Required",
+        duration: 2500,
+        position: "top",
+        type: "danger",
+        textStyle: { textAlign: "center" }
+      });
+    }
+  }
+
   textInput;
-  renderInput({ input, label, type, meta: { touched, error, warning } }) {
+  renderInput({ input, meta: { touched, error } }) {
     return (
       <View>
         <View style={styles.inputGrp}>
@@ -51,21 +66,6 @@ class ReferralCodeForm extends Component {
     );
   }
 
-  verify() {
-    if (this.props.valid) {
-      this.props.verifyReferralCode(this.props.values);
-    } else {
-      Toast.show({
-        text: "Valid Code Required",
-        duration: 2500,
-        position: "top",
-        type: "danger",
-        textStyle: { textAlign: "center" }
-      });
-    }
-
-  }
-
   render() {
     const { isLoading, error, errorMessage } = this.props.signUpReducer;
 
@@ -75,50 +75,74 @@ class ReferralCodeForm extends Component {
       if (errors && errors.constructor === Array && errors.length > 0) {
         errorText = errors[0].value;
       } else {
-        errorText = "Server Error!";
+        errorText = globalErrorMessage;
       }
     }
 
     return (
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.container}>
-        <Image source={logo} style={styles.logo} />
-        <Text style={[styles.text, styles.textAbove]}>Please enter the referral code you received from your employer.</Text>
+      <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
+        <Image
+          source={logo}
+          style={this.props.keyboardClosed ? styles.logo : styles.smallerLogo}
+        />
+        <Text style={[styles.text, styles.textAbove]}>
+          Please enter the referral code you received from your employer.
+        </Text>
         <Field
           name="code"
           component={this.renderInput}
           type="code"
           validate={[required]}
         />
-        <Text style={[styles.text, styles.textBelow]}>Contact your administrator if there are any issues</Text>
-        {error && <Text style={globalStyles.formErrorText3}>{errorText}</Text>}
-        <TouchableOpacity activeOpacity={0.6} style={[styles.createAccountBtn, globalStyles.shadow]} onPress={this.verify.bind(this)}>
-          {
-            isLoading ?
-              <Spinner color={colors.blue} /> :
-              <Text uppercase style={styles.createAccountBtnText}>
-                CREATE MY ACCOUNT
-              </Text>
-          }
+        <TouchableOpacity
+          activeOpacity={0.6}
+          onPress={() => this.props.tryPersonalClicked()}
+        >
+          <Text style={[styles.text, styles.textBelow]}>
+            Don't have a code?
+            <Text style={styles.requestOneText}> Try Thrive Personal.</Text>
+          </Text>
         </TouchableOpacity>
-      </ScrollView>
+        {error &&
+          <Text style={globalStyles.formErrorText3}>
+            {errorText}
+          </Text>}
+        <TouchableOpacity
+          activeOpacity={0.6}
+          style={[styles.createAccountBtn, globalStyles.shadow]}
+          onPress={this.verify.bind(this)}
+        >
+          {isLoading
+            ? <Spinner color={colors.blue} />
+            : <Text uppercase style={styles.createAccountBtnText}>
+                CREATE MY ACCOUNT
+              </Text>}
+        </TouchableOpacity>
+      </KeyboardAvoidingView>
     );
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
-    values: state.form && state.form.referralCode && state.form.referralCode.values ? state.form.referralCode.values : undefined,
+    values:
+      state.form && state.form.referralCode && state.form.referralCode.values
+        ? state.form.referralCode.values
+        : undefined,
     signUpReducer: state.signUpReducer
   };
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
-    verifyReferralCode: (payload = {}) => dispatch(verifyReferralCode(payload))
+    verifyReferralCode: (payload = {}) => dispatch(verifyReferralCode(payload)),
+    tryPersonalClicked: () => dispatch(tryPersonalClicked())
   };
 }
 
-ReferralCodeForm = connect(mapStateToProps, mapDispatchToProps)(ReferralCodeForm);
+ReferralCodeForm = connect(mapStateToProps, mapDispatchToProps)(
+  ReferralCodeForm
+);
 
 const ReferralCode = reduxForm({
   form: "referralCode"
