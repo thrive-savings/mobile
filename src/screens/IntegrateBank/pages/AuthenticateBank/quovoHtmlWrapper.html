@@ -3,8 +3,8 @@
 <html>
   <head>
     <title>Quovo Connect Wrapper</title>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=320, user-scalable=no">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=320, user-scalable=no" />
     <script src="../../../../globals/webViewBridge.js"></script>
     <script type="text/javascript" src="https://app.quovo.com/ui.js"></script>
     <style type="text/css">
@@ -24,26 +24,40 @@
       // Call RN to get UI token
       window.uiToken = undefined;
       function getUiToken() {
-        window.webViewBridge.send("handleUiTokenRequest", {}, function(res) {
-          window.uiToken = res;
-          var handler = Quovo.create({
-            token: window.uiToken,
-            // optional function parameters
-            onLoad: function() {
-              window.webViewBridge.send("handleDataReceived", "----onLoad---- fired");
-              handler.open();
-            },
-            onAdd: function(err, event) {
-              window.webViewBridge.send("handleDataReceived", "----onAdd---- fired");
-            },
-            // optional string parameter
-            topInstitutions: "banks",
-          });
-        }, function(err) {
-          window.webViewBridge.send("handleDataReceived", "Quovo uiToken not delivered!");
-        });
+        window.webViewBridge.send(
+          "handleUiTokenRequest",
+          {},
+          function(res) {
+            window.uiToken = res;
+            var handler = Quovo.create({
+              token: window.uiToken,
+              // optional function parameters
+              onLoad: function() {
+                window.webViewBridge.send(
+                  "handleDataReceived",
+                  "----onLoad---- fired"
+                );
+                handler.open();
+              },
+              onAdd: function(err, event) {
+                window.webViewBridge.send(
+                  "handleDataReceived",
+                  "----onAdd---- fired"
+                );
+              },
+              // optional string parameter
+              topInstitutions: "banks"
+            });
+          },
+          function(err) {
+            window.webViewBridge.send(
+              "handleDataReceived",
+              "Quovo uiToken not delivered!"
+            );
+          }
+        );
       }
-      setTimeout(getUiToken,100);
+      setTimeout(getUiToken, 100);
     </script>
   </body>
 </html>

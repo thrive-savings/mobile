@@ -74,7 +74,6 @@ class AuthenticateBank extends Component {
   render() {
     const { isGetting } = this.props.integrateBankReducer;
 
-    const companyID = this.props.companyID;
     return (
       <KeyboardAvoidingView
         behavior="padding"
