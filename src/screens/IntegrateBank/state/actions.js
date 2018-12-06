@@ -1,23 +1,15 @@
 import {
   FETCH_ACCOUNTS_URL,
-  ANSWER_MFA_QUESTIONS,
-  SET_DEFAULT_URL,
   UPDATE_USER_ACCOUNT,
   CHANGE_BANK_STEP,
   GET_UI_TOKEN
 } from "./constants";
 
+export const getUiToken = () => ({ type: `${GET_UI_TOKEN}_SUBMIT` });
+
 export const fetchAccounts = payload => ({
   payload,
   type: `${FETCH_ACCOUNTS_URL}_SUBMIT`
-});
-export const answerMFAQuestions = payload => ({
-  payload,
-  type: `${ANSWER_MFA_QUESTIONS}_SUBMIT`
-});
-export const setDefault = payload => ({
-  payload,
-  type: `${SET_DEFAULT_URL}_SUBMIT`
 });
 
 export const updateUserAccount = payload => ({
@@ -28,5 +20,3 @@ export const changeBankStep = payload => ({
   payload,
   type: `${CHANGE_BANK_STEP}`
 });
-
-export const getUiToken = () => ({ type: `${GET_UI_TOKEN}_SUBMIT` });

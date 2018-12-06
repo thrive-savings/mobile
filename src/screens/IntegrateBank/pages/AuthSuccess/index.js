@@ -16,7 +16,7 @@ class AuthSuccess extends Component {
   }
 
   render() {
-    const relinkRequired = this.props.relinkRequired;
+    const relink = this.props.relink;
     return (
       <ScrollView
         contentContainerStyle={[styles.container, globalStyles.shadow]}
@@ -29,14 +29,14 @@ class AuthSuccess extends Component {
         <Text style={styles.secondaryTitleText}>
           You’ve successfully linked your Thrive Savings account with your Bank.
         </Text>
-        {!relinkRequired &&
+        {!relink &&
           <Text style={styles.regularText}>
             Next step is to choose how you prefer to save!
           </Text>}
 
         <View style={styles.separator} />
         <SpecialButton
-          text={relinkRequired ? "CONTINUE" : "SET HOW I SAVE"}
+          text={relink ? "CONTINUE" : "SET HOW I SAVE"}
           onClick={this.continue.bind(this)}
         />
       </ScrollView>

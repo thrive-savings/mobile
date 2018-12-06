@@ -31,11 +31,9 @@ import {
   passwordResetSaga
 } from "../screens/ForgotPassword/state/sagas";
 import {
+  getUiTokenSaga,
   fetchAccountsSaga,
-  answerMFAQuestionsSaga,
-  setDefaultSaga,
-  updateUserAccountSaga,
-  getUiTokenSaga
+  updateUserAccountSaga
 } from "../screens/IntegrateBank/state/sagas";
 import {
   setWorkTypeSaga,
@@ -92,10 +90,8 @@ export default function configureStore() {
   sagaMiddleware.run(resendCodeSaga);
   sagaMiddleware.run(passwordRequestSaga);
   sagaMiddleware.run(passwordResetSaga);
-  sagaMiddleware.run(fetchAccountsSaga);
-  sagaMiddleware.run(answerMFAQuestionsSaga);
-  sagaMiddleware.run(setDefaultSaga);
   sagaMiddleware.run(getUiTokenSaga);
+  sagaMiddleware.run(fetchAccountsSaga);
   sagaMiddleware.run(updateUserAccountSaga);
   sagaMiddleware.run(setWorkTypeSaga);
   sagaMiddleware.run(setSavingTypeSaga);

@@ -24,6 +24,7 @@ export default StyleSheet.create({
     paddingVertical: 10
   },
   webViewContainer: {
+    flex: 1,
     width: deviceWidth - 60
   }
 });

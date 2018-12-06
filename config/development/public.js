@@ -1,4 +1,4 @@
 module.exports = {
-  API: "https://b79af557.ngrok.io",
+  API: "https://6dc4de69.ngrok.io",
   WEB: "https://join.thrivesavings.com"
 };

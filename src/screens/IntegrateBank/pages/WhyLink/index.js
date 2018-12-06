@@ -122,18 +122,18 @@ class WhyLink extends Component {
   }
 
   render() {
-    return this.props.relinkRequired
+    return this.props.relink
       ? this.renderRelinkPage()
       : this.renderInitialLinkPage();
   }
 }
 
 WhyLink.propTypes = {
-  relinkRequired: PropTypes.bool,
+  relink: PropTypes.bool,
   next: PropTypes.func
 };
 WhyLink.defaultProps = {
-  relinkRequired: false,
+  relink: false,
   next: () => {}
 };
 
