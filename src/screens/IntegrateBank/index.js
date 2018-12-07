@@ -36,7 +36,7 @@ class IntegrateBank extends Component {
     }
 
     if (stepFromReducer > lowestStep) {
-      this.props.changeBankStep({ step: stepFromProps - 1 });
+      this.props.changeBankStep({ step: stepFromReducer - 1 });
     } else {
       this.props.changeBankStep();
       if (stepFromProps) {

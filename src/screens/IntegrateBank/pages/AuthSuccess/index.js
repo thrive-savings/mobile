@@ -31,24 +31,23 @@ class AuthSuccess extends Component {
         </Text>
         {!relink &&
           <Text style={styles.regularText}>
-            Next step is to choose how you prefer to save!
+            You can link more banks later on.
           </Text>}
 
         <View style={styles.separator} />
-        <SpecialButton
-          text={relink ? "CONTINUE" : "SET HOW I SAVE"}
-          onClick={this.continue.bind(this)}
-        />
+        <SpecialButton text="CONTINUE" onClick={this.continue.bind(this)} />
       </ScrollView>
     );
   }
 }
 
 AuthSuccess.propTypes = {
-  next: PropTypes.func
+  next: PropTypes.func,
+  relink: PropTypes.bool
 };
 AuthSuccess.defaultProps = {
-  next: () => {}
+  next: () => {},
+  relink: false
 };
 
 export default AuthSuccess;
