@@ -11,15 +11,15 @@ import WhyLink from "./pages/WhyLink";
 import AuthenticateBank from "./pages/AuthenticateBank";
 import AuthSuccess from "./pages/AuthSuccess";
 
-import { changeBankStep, updateUserAccount } from "./state/actions";
+import { changeBankStep, updateUserConnections } from "./state/actions";
 import { LINK_STEPS } from "./state/constants";
 
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
 
 class IntegrateBank extends Component {
   allDone = () => {
-    this.props.updateUserAccount(
-      this.props.integrateBankReducer.defaultAccountData
+    this.props.updateUserConnections(
+      this.props.integrateBankReducer.connection
     );
     this.props.changeBankStep();
   };
@@ -117,7 +117,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    updateUserAccount: (payload = {}) => dispatch(updateUserAccount(payload)),
+    updateUserConnections: (payload = {}) =>
+      dispatch(updateUserConnections(payload)),
     changeBankStep: (payload = { step: 0 }) => dispatch(changeBankStep(payload))
   };
 }

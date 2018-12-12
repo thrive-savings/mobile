@@ -4,6 +4,7 @@ import {
   GET_UPDATES,
   BONUS_NOTIFICATION_SEEN,
   UPDATE_AUTH_DATA,
+  UPDATE_CONNECTION_DATA,
   UPDATE_ACCOUNT_DATA,
   UPDATE_GOALS_DATA,
   UPDATE_AVATAR,
@@ -21,7 +22,7 @@ const initialState = {
 export default function authReducer(state = initialState, action) {
   switch (action.type) {
     //Update Data case
-    case `${UPDATE_AUTH_DATA}`:
+    case UPDATE_AUTH_DATA:
       const { payload: { data: authData } } = action;
       amplitude.identify(authData.authorized.id.toString());
       return {
@@ -29,8 +30,28 @@ export default function authReducer(state = initialState, action) {
         data: authData
       };
 
+    // Update Connections
+    case UPDATE_CONNECTION_DATA:
+      const { payload: { connection: newConnectionData } } = action;
+      const dataOnConnectionUpdate = state.data.authorized;
+      const curConnections = dataOnConnectionUpdate.connections;
+      const newConnections =
+        curConnections && curConnections.constructor === Array
+          ? [...curConnections, newConnectionData]
+          : [newConnectionData];
+      return {
+        ...state,
+        data: {
+          authorized: {
+            ...dataOnConnectionUpdate,
+            connections: newConnections,
+            bankLinked: true
+          }
+        }
+      };
+
     // Update Account case
-    case `${UPDATE_ACCOUNT_DATA}`:
+    case UPDATE_ACCOUNT_DATA:
       const { payload: { authorized: { account } } } = action;
       const dataOnAccountUpdate = state.data.authorized;
       const newOnboardingStep = dataOnAccountUpdate.relinkRequired

@@ -40,7 +40,7 @@ export default function integrateBankReducer(state = initialState, action) {
     // Fetch Accounts cases
     case `${FETCH_ACCOUNTS_URL}_SUBMIT`:
       return {
-        ...initialState,
+        ...state,
         loadingState: LOADING_STATES.FETCHING_ACCOUNTS
       };
     case `${FETCH_ACCOUNTS_URL}_SUCCEED`:

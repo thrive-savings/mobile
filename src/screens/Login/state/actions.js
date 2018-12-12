@@ -4,6 +4,7 @@ import {
   SET_EXPO_TOKEN,
   BONUS_NOTIFICATION_SEEN,
   UPDATE_AUTH_DATA,
+  UPDATE_CONNECTION_DATA,
   UPDATE_ACCOUNT_DATA,
   UPDATE_GOALS_DATA,
   UPDATE_AVATAR,
@@ -13,20 +14,24 @@ import {
 export const authUser = payload => ({ payload, type: `${REQUEST_URL}_SUBMIT` });
 export const updateAuthData = payload => ({
   payload,
-  type: `${UPDATE_AUTH_DATA}`
+  type: UPDATE_AUTH_DATA
+});
+export const updateConnectionsData = payload => ({
+  payload,
+  type: UPDATE_CONNECTION_DATA
 });
 export const updateAccountData = payload => ({
   payload,
-  type: `${UPDATE_ACCOUNT_DATA}`
+  type: UPDATE_ACCOUNT_DATA
 });
 export const updateGoalsData = payload => ({
   payload,
-  type: `${UPDATE_GOALS_DATA}`
+  type: UPDATE_GOALS_DATA
 });
-export const updateAvatar = payload => ({ payload, type: `${UPDATE_AVATAR}` });
+export const updateAvatar = payload => ({ payload, type: UPDATE_AVATAR });
 export const updateOnboardingStep = payload => ({
   payload,
-  type: `${UPDATE_ONBOARDING_STEP}`
+  type: UPDATE_ONBOARDING_STEP
 });
 
 export const getUpdates = () => ({ type: `${GET_UPDATES}_SUBMIT` });

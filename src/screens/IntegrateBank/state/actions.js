@@ -1,6 +1,6 @@
 import {
   FETCH_ACCOUNTS_URL,
-  UPDATE_USER_ACCOUNT,
+  UPDATE_USER_CONNECTIONS,
   CHANGE_BANK_STEP,
   GET_UI_TOKEN
 } from "./constants";
@@ -12,9 +12,9 @@ export const fetchAccounts = payload => ({
   type: `${FETCH_ACCOUNTS_URL}_SUBMIT`
 });
 
-export const updateUserAccount = payload => ({
+export const updateUserConnections = payload => ({
   payload,
-  type: `${UPDATE_USER_ACCOUNT}`
+  type: `${UPDATE_USER_CONNECTIONS}`
 });
 export const changeBankStep = payload => ({
   payload,

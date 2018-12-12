@@ -1,11 +1,11 @@
 import {
   FETCH_ACCOUNTS_URL,
-  UPDATE_USER_ACCOUNT,
+  UPDATE_USER_CONNECTIONS,
   GET_UI_TOKEN
 } from "./constants";
 import { put, takeEvery } from "redux-saga/effects";
 import { requestApi } from "../../../globals/requestApi";
-import { updateAccountData } from "../../Login/state/actions";
+import { updateConnectionsData } from "../../Login/state/actions";
 
 const getUiTokenSaga = function*() {
   yield takeEvery(`${GET_UI_TOKEN}_SUBMIT`, function*() {
@@ -19,10 +19,10 @@ const fetchAccountsSaga = function*() {
   });
 };
 
-const updateUserAccountSaga = function*() {
-  yield takeEvery(`${UPDATE_USER_ACCOUNT}`, function*({ payload }) {
-    yield put(updateAccountData(payload));
+const updateUserConnectionsSaga = function*() {
+  yield takeEvery(`${UPDATE_USER_CONNECTIONS}`, function*({ payload }) {
+    yield put(updateConnectionsData(payload));
   });
 };
 
-export { getUiTokenSaga, fetchAccountsSaga, updateUserAccountSaga };
+export { getUiTokenSaga, fetchAccountsSaga, updateUserConnectionsSaga };

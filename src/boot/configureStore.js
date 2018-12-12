@@ -33,7 +33,7 @@ import {
 import {
   getUiTokenSaga,
   fetchAccountsSaga,
-  updateUserAccountSaga
+  updateUserConnectionsSaga
 } from "../screens/IntegrateBank/state/sagas";
 import {
   setWorkTypeSaga,
@@ -92,7 +92,7 @@ export default function configureStore() {
   sagaMiddleware.run(passwordResetSaga);
   sagaMiddleware.run(getUiTokenSaga);
   sagaMiddleware.run(fetchAccountsSaga);
-  sagaMiddleware.run(updateUserAccountSaga);
+  sagaMiddleware.run(updateUserConnectionsSaga);
   sagaMiddleware.run(setWorkTypeSaga);
   sagaMiddleware.run(setSavingTypeSaga);
   sagaMiddleware.run(setSavingDetailsSaga);

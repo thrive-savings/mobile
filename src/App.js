@@ -142,7 +142,7 @@ class App extends React.Component {
     if (authorized) {
       if (!authorized.isVerified) {
         stacker = <StackerWithSetPhone />;
-      } else if (!authorized.bankLinked || authorized.relinkRequired) {
+      } else if (!authorized.bankLinked) {
         stacker = <StackerWithIntegrateBank />;
       } else if (authorized.onboardingStep === "SavingPreferences") {
         stacker = <StackerWithSavingPreferences />;

@@ -1,7 +1,7 @@
 export const GET_UI_TOKEN = "/user/quovo-ui-token";
 export const FETCH_ACCOUNTS_URL = "/user/bank-fetch-accounts";
 
-export const UPDATE_USER_ACCOUNT = "UPDATE_USER_ACCOUNT";
+export const UPDATE_USER_CONNECTIONS = "UPDATE_USER_CONNECTIONS";
 export const CHANGE_BANK_STEP = "CHANGE_BANK_STEP";
 
 export const LINK_STEPS = {
