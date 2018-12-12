@@ -8,7 +8,11 @@ import amplitude from "../../../../globals/amplitude";
 
 import Dots from "../../../../components/Dots";
 
-import { fetchAccounts, getUiToken, changeBankStep } from "../../state/actions";
+import {
+  fetchConnection,
+  getUiToken,
+  changeBankStep
+} from "../../state/actions";
 import { LOADING_STATES } from "../../state/constants";
 
 import globalStyles from "../../../../globals/globalStyles";
@@ -43,7 +47,7 @@ class AuthenticateBank extends Component {
           userId: userID
         }
       } = data;
-      this.props.fetchAccounts({ userID, connectionID, institutionID });
+      this.props.fetchConnection({ userID, connectionID, institutionID });
     }
   };
 
@@ -79,7 +83,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchAccounts: (payload = {}) => dispatch(fetchAccounts(payload)),
+    fetchConnection: (payload = {}) => dispatch(fetchConnection(payload)),
     getUiToken: () => dispatch(getUiToken()),
     changeBankStep: (payload = { step: 0 }) => dispatch(changeBankStep(payload))
   };

@@ -25,7 +25,7 @@ import {
   setSavingDetails
 } from "../SavingPreferences/state/actions";
 
-import BANK_ICONS from "../IntegrateBank/bankIcons";
+import BANK_ICONS from "../../globals/bankIcons";
 
 import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";

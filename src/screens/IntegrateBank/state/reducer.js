@@ -1,5 +1,6 @@
 import {
-  FETCH_ACCOUNTS_URL,
+  FETCH_CONNECTION_URL,
+  SET_DEFAULT_ACCOUNT_URL,
   GET_UI_TOKEN,
   CHANGE_BANK_STEP,
   LINK_STEPS,
@@ -38,19 +39,40 @@ export default function integrateBankReducer(state = initialState, action) {
       };
 
     // Fetch Accounts cases
-    case `${FETCH_ACCOUNTS_URL}_SUBMIT`:
+    case `${FETCH_CONNECTION_URL}_SUBMIT`:
       return {
         ...state,
+        step: LINK_STEPS.ACCOUNT,
         loadingState: LOADING_STATES.FETCHING_ACCOUNTS
       };
-    case `${FETCH_ACCOUNTS_URL}_SUCCEED`:
+    case `${FETCH_CONNECTION_URL}_SUCCEED`:
+      return {
+        ...state,
+        connection: action.payload.connection,
+        step: LINK_STEPS.ACCOUNT,
+        loadingState: LOADING_STATES.NONE
+      };
+    case `${FETCH_CONNECTION_URL}_FAIL`:
+      return {
+        ...state,
+        loadingState: LOADING_STATES.NONE,
+        error: action.error
+      };
+
+    // Fetch Accounts cases
+    case `${SET_DEFAULT_ACCOUNT_URL}_SUBMIT`:
+      return {
+        ...state,
+        loadingState: LOADING_STATES.SETTING_DEFAULT_ACCOUNT
+      };
+    case `${SET_DEFAULT_ACCOUNT_URL}_SUCCEED`:
       return {
         ...state,
         connection: action.payload.connection,
         step: LINK_STEPS.SUCCESS,
         loadingState: LOADING_STATES.NONE
       };
-    case `${FETCH_ACCOUNTS_URL}_FAIL`:
+    case `${SET_DEFAULT_ACCOUNT_URL}_FAIL`:
       return {
         ...state,
         loadingState: LOADING_STATES.NONE,

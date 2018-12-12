@@ -1,5 +1,6 @@
 import {
-  FETCH_ACCOUNTS_URL,
+  FETCH_CONNECTION_URL,
+  SET_DEFAULT_ACCOUNT_URL,
   UPDATE_USER_CONNECTIONS,
   CHANGE_BANK_STEP,
   GET_UI_TOKEN
@@ -7,9 +8,13 @@ import {
 
 export const getUiToken = () => ({ type: `${GET_UI_TOKEN}_SUBMIT` });
 
-export const fetchAccounts = payload => ({
+export const fetchConnection = payload => ({
   payload,
-  type: `${FETCH_ACCOUNTS_URL}_SUBMIT`
+  type: `${FETCH_CONNECTION_URL}_SUBMIT`
+});
+export const setDefaultAccount = payload => ({
+  payload,
+  type: `${SET_DEFAULT_ACCOUNT_URL}_SUBMIT`
 });
 
 export const updateUserConnections = payload => ({

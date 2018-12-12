@@ -9,6 +9,7 @@ import globalStyles from "../../globals/globalStyles";
 
 import WhyLink from "./pages/WhyLink";
 import AuthenticateBank from "./pages/AuthenticateBank";
+import ChooseAccount from "./pages/ChooseAccount";
 import AuthSuccess from "./pages/AuthSuccess";
 
 import { changeBankStep, updateUserConnections } from "./state/actions";
@@ -73,6 +74,15 @@ class IntegrateBank extends Component {
           <View style={globalStyles.container}>
             <AuthenticateBank connection={providedConnection} />
           </View>
+        );
+      case LINK_STEPS.ACCOUNT:
+        return (
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <ChooseAccount
+              next={this.allDone}
+              relink={providedConnection || false}
+            />
+          </ScrollView>
         );
       case LINK_STEPS.SUCCESS:
         return (

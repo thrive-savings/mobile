@@ -1,5 +1,6 @@
 import {
-  FETCH_ACCOUNTS_URL,
+  FETCH_CONNECTION_URL,
+  SET_DEFAULT_ACCOUNT_URL,
   UPDATE_USER_CONNECTIONS,
   GET_UI_TOKEN
 } from "./constants";
@@ -13,9 +14,15 @@ const getUiTokenSaga = function*() {
   });
 };
 
-const fetchAccountsSaga = function*() {
-  yield takeEvery(`${FETCH_ACCOUNTS_URL}_SUBMIT`, function*({ payload }) {
-    yield put(requestApi(`${FETCH_ACCOUNTS_URL}`, { data: payload }));
+const fetchConnectionSaga = function*() {
+  yield takeEvery(`${FETCH_CONNECTION_URL}_SUBMIT`, function*({ payload }) {
+    yield put(requestApi(`${FETCH_CONNECTION_URL}`, { data: payload }));
+  });
+};
+
+const setDefaultAccountSaga = function*() {
+  yield takeEvery(`${SET_DEFAULT_ACCOUNT_URL}_SUBMIT`, function*({ payload }) {
+    yield put(requestApi(`${SET_DEFAULT_ACCOUNT_URL}`, { data: payload }));
   });
 };
 
@@ -25,4 +32,9 @@ const updateUserConnectionsSaga = function*() {
   });
 };
 
-export { getUiTokenSaga, fetchAccountsSaga, updateUserConnectionsSaga };
+export {
+  getUiTokenSaga,
+  fetchConnectionSaga,
+  setDefaultAccountSaga,
+  updateUserConnectionsSaga
+};
