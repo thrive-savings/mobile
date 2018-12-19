@@ -5,15 +5,6 @@ const screen = Dimensions.get("window");
 const deviceWidth = screen.width;
 
 export default StyleSheet.create({
-  container: {
-    flex: 1
-  },
-  background: {
-    flex: 1,
-    width: null,
-    height: null
-  },
-
   // Content styles
   contentContainer: {
     flex: 1,

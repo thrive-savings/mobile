@@ -1,6 +1,7 @@
 import {
   FETCH_CONNECTION_URL,
   SET_DEFAULT_ACCOUNT_URL,
+  UNLINK_CONNECTION_URL,
   GET_UI_TOKEN,
   CHANGE_BANK_STEP,
   LINK_STEPS,
@@ -10,6 +11,7 @@ import {
 const initialState = {
   quovoUiToken: undefined,
   connection: undefined,
+  allConnections: undefined,
   step: LINK_STEPS.INFO,
   loadingState: LOADING_STATES.NONE,
   error: undefined
@@ -68,7 +70,7 @@ export default function integrateBankReducer(state = initialState, action) {
     case `${SET_DEFAULT_ACCOUNT_URL}_SUCCEED`:
       return {
         ...state,
-        connection: action.payload.connection,
+        allConnections: action.payload.connections,
         step: LINK_STEPS.SUCCESS,
         loadingState: LOADING_STATES.NONE
       };
@@ -79,13 +81,34 @@ export default function integrateBankReducer(state = initialState, action) {
         error: action.error
       };
 
+    // Unlink Connection cases
+    case `${UNLINK_CONNECTION_URL}_SUBMIT`:
+      return {
+        ...state,
+        loadingState: LOADING_STATES.UNLINKING_CONNECTION
+      };
+    case `${UNLINK_CONNECTION_URL}_SUCCEED`:
+      return initialState;
+    case `${UNLINK_CONNECTION_URL}_FAIL`:
+      return {
+        ...state,
+        loadingState: LOADING_STATES.NONE,
+        error: action.error
+      };
+
     // Change Bank Step cases
     case `${CHANGE_BANK_STEP}`:
       const { payload: { step } } = action;
-      return {
-        ...state,
-        step: Object.values(LINK_STEPS).includes(step) ? step : LINK_STEPS.INFO
-      };
+      if (typeof step !== "undefined") {
+        return {
+          ...state,
+          step: Object.values(LINK_STEPS).includes(step)
+            ? step
+            : LINK_STEPS.INFO
+        };
+      } else {
+        return initialState;
+      }
 
     default:
       return state;

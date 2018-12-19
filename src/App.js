@@ -20,6 +20,7 @@ import Profile from "./screens/Profile";
 import Settings from "./screens/Settings";
 import SetPhone from "./screens/SetPhone";
 import IntegrateBank from "./screens/IntegrateBank";
+import BankConnections from "./screens/BankConnections";
 import SavingPreferences from "./screens/SavingPreferences";
 import SavingHistory from "./screens/SavingHistory";
 import SavingGoals from "./screens/SavingGoals";
@@ -33,6 +34,7 @@ const Drawer = createDrawerNavigator(
     Profile: { screen: Profile },
     Home: { screen: Home },
     SavingHistory: { screen: SavingHistory },
+    BankConnections: { screen: BankConnections },
     Settings: { screen: Settings },
     Faq: { screen: Faq },
     Contact: { screen: Contact }
@@ -50,6 +52,7 @@ const stackScreens = {
   ForgotPassword: { screen: ForgotPassword },
   SetPhone: { screen: SetPhone },
   IntegrateBank: { screen: IntegrateBank },
+  BankConnections: { screen: BankConnections },
   SavingPreferences: { screen: SavingPreferences },
   SavingGoals: { screen: SavingGoals },
   PP: { screen: PP },

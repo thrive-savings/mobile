@@ -1,6 +1,6 @@
 import {
   SIGN_UP_URL,
-  VERIFY_REFERRAL_URL,
+  VERIFY_COMPANY_CODE_URL,
   TRY_PERSONAL_CLICKED,
   ACCEPT_PERSONAL,
   CHANGE_STEP
@@ -12,7 +12,7 @@ export const signUpUser = payload => ({
 });
 export const verifyReferralCode = payload => ({
   payload,
-  type: `${VERIFY_REFERRAL_URL}_SUBMIT`
+  type: `${VERIFY_COMPANY_CODE_URL}_SUBMIT`
 });
 export const tryPersonalClicked = () => ({ type: TRY_PERSONAL_CLICKED });
 export const acceptPersonal = () => ({ type: ACCEPT_PERSONAL });

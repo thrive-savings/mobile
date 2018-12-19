@@ -12,18 +12,20 @@ class SpecialButton extends Component {
     let text = this.props.text ? this.props.text : "CONTINUE";
 
     return (
-      <TouchableOpacity activeOpacity={0.6} onPress={() => this.props.onClick()} style={styles.enabledButton}>
+      <TouchableOpacity
+        activeOpacity={0.6}
+        onPress={() => this.props.onClick()}
+        style={[styles.enabledButton, this.props.style]}
+      >
         <LinearGradient
           colors={colors.blueGreenGradient.colors}
           style={styles.enabledButtonGradient}
         >
-          {
-            this.props.loading
-              ? <Spinner color="white" />
-              : <Text style={styles.enabledButtonText}>
-                  {text}
-                </Text>
-          }
+          {this.props.loading
+            ? <Spinner color="white" />
+            : <Text style={styles.enabledButtonText}>
+                {text}
+              </Text>}
         </LinearGradient>
       </TouchableOpacity>
     );
@@ -33,36 +35,35 @@ class SpecialButton extends Component {
     let text = this.props.text ? this.props.text : "CONTINUE";
 
     return (
-      <TouchableOpacity activeOpacity={0.6} style={styles.disabledButton}>
-        {
-          this.props.loading
-            ? <Spinner color="white" />
-            : <Text style={styles.disabledButtonText}>
-                {text}
-              </Text>
-        }
+      <TouchableOpacity
+        activeOpacity={0.6}
+        style={[styles.disabledButton, this.props.style]}
+      >
+        {this.props.loading
+          ? <Spinner color="white" />
+          : <Text style={styles.disabledButtonText}>
+              {text}
+            </Text>}
       </TouchableOpacity>
     );
   }
 
   render() {
-    return (
-      this.props.enabled
-        ? this.renderEnabled()
-        : this.renderDisabled()
-    );
+    return this.props.enabled ? this.renderEnabled() : this.renderDisabled();
   }
 }
 
 SpecialButton.propTypes = {
   next: PropTypes.func,
   enabled: PropTypes.bool,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  style: PropTypes.number
 };
 SpecialButton.defaultProps = {
   next: () => {},
   enabled: true,
-  loading: false
+  loading: false,
+  styles: undefined
 };
 
 export default SpecialButton;

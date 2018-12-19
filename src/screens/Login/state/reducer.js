@@ -32,19 +32,55 @@ export default function authReducer(state = initialState, action) {
 
     // Update Connections
     case UPDATE_CONNECTION_DATA:
-      const { payload: { connection: newConnectionData } } = action;
+      const {
+        payload: {
+          connection: newConnectionData,
+          connections: allConnectionsData
+        }
+      } = action;
       const dataOnConnectionUpdate = state.data.authorized;
-      const curConnections = dataOnConnectionUpdate.connections;
-      const newConnections =
-        curConnections && curConnections.constructor === Array
-          ? [...curConnections, newConnectionData]
-          : [newConnectionData];
+
+      if (allConnectionsData) {
+        return {
+          ...state,
+          data: {
+            authorized: {
+              ...dataOnConnectionUpdate,
+              connections: allConnectionsData,
+              bankLinked: true
+            }
+          }
+        };
+      }
+
+      let connections = dataOnConnectionUpdate.connections;
+
+      let isNew = true;
+      let index;
+      connections.forEach(({ id }, i) => {
+        if (id === newConnectionData.id) {
+          isNew = false;
+          index = i;
+          return;
+        }
+      });
+
+      if (isNew) {
+        connections.push(newConnectionData);
+      } else {
+        if (newConnectionData.deleted) {
+          connections.splice(index, 1);
+        } else {
+          connections[index] = newConnectionData;
+        }
+      }
+
       return {
         ...state,
         data: {
           authorized: {
             ...dataOnConnectionUpdate,
-            connections: newConnections,
+            connections,
             bankLinked: true
           }
         }

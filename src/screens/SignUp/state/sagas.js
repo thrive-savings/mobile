@@ -1,4 +1,8 @@
-import { SIGN_UP_URL, VERIFY_REFERRAL_URL, ACCEPT_PERSONAL } from "./constants";
+import {
+  SIGN_UP_URL,
+  VERIFY_COMPANY_CODE_URL,
+  ACCEPT_PERSONAL
+} from "./constants";
 import { put, takeEvery, select } from "redux-saga/effects";
 import { requestApi } from "../../../globals/requestApi";
 import { updateAuthData } from "../../Login/state/actions";
@@ -18,10 +22,10 @@ const signUpSucceedSaga = function*() {
 };
 
 const verifyReferralCodeSaga = function*() {
-  yield takeEvery(`${VERIFY_REFERRAL_URL}_SUBMIT`, function*({ payload }) {
+  yield takeEvery(`${VERIFY_COMPANY_CODE_URL}_SUBMIT`, function*({ payload }) {
     yield put(
       requestApi(
-        `${VERIFY_REFERRAL_URL}`,
+        `${VERIFY_COMPANY_CODE_URL}`,
         { data: payload },
         { form: "referralCode" }
       )

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { View, WebView, KeyboardAvoidingView } from "react-native";
+import PropTypes from "prop-types";
+import { View, WebView } from "react-native";
 import { Spinner } from "native-base";
 import { connect } from "react-redux";
 
@@ -13,7 +14,7 @@ import {
   getUiToken,
   changeBankStep
 } from "../../state/actions";
-import { LOADING_STATES } from "../../state/constants";
+import { LOADING_STATES, ACTION_TYPES } from "../../state/constants";
 
 import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
@@ -52,7 +53,12 @@ class AuthenticateBank extends Component {
   };
 
   render() {
-    const { loadingState, quovoUiToken } = this.props.integrateBankReducer;
+    const {
+      integrateBankReducer: { loadingState, quovoUiToken },
+      actionType,
+      connection: connectionToFix,
+      userData: { userType }
+    } = this.props;
 
     return (
       <View style={[styles.container, globalStyles.shadow]}>
@@ -62,7 +68,12 @@ class AuthenticateBank extends Component {
           ? <Spinner color={colors.blue} />
           : <WebView
               source={{
-                uri: `${API}/link.html?token=${quovoUiToken}&test=true`
+                uri: `${API}/link.html?token=${quovoUiToken}${userType ===
+                "tester"
+                  ? "&test=true"
+                  : ""}${actionType === ACTION_TYPES.RELINK
+                  ? `&connectionId=${connectionToFix.quovoConnectionID}`
+                  : ""}`
               }}
               onMessage={this.onWebViewMessage}
               style={styles.webViewContainer}
@@ -74,9 +85,16 @@ class AuthenticateBank extends Component {
   }
 }
 
+AuthenticateBank.propTypes = {
+  actionType: PropTypes.oneOf(Object.values(ACTION_TYPES))
+};
+AuthenticateBank.defaultProps = {
+  actionType: ACTION_TYPES.INITAL
+};
+
 function mapStateToProps(state) {
   return {
-    companyID: state.signUpReducer.companyID,
+    userData: state.authReducer.data.authorized,
     integrateBankReducer: state.integrateBankReducer
   };
 }
@@ -85,7 +103,7 @@ function mapDispatchToProps(dispatch) {
   return {
     fetchConnection: (payload = {}) => dispatch(fetchConnection(payload)),
     getUiToken: () => dispatch(getUiToken()),
-    changeBankStep: (payload = { step: 0 }) => dispatch(changeBankStep(payload))
+    changeBankStep: (payload = {}) => dispatch(changeBankStep(payload))
   };
 }
 

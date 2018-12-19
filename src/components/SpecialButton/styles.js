@@ -13,10 +13,11 @@ export default StyleSheet.create({
   disabledButtonText: {
     fontSize: 15,
     fontFamily: "LatoBold",
-    color: colors.darkerGrey
+    color: colors.darkerGrey,
+    letterSpacing: 0.5
   },
   enabledButton: {
-    alignSelf: "stretch",
+    alignSelf: "stretch"
   },
   enabledButtonGradient: {
     height: 40,
@@ -28,6 +29,7 @@ export default StyleSheet.create({
     textAlign: "center",
     fontSize: 14,
     fontFamily: "LatoBold",
-    color: "white"
+    color: "white",
+    letterSpacing: 1
   }
 });

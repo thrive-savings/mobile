@@ -34,6 +34,8 @@ import {
   getUiTokenSaga,
   fetchConnectionSaga,
   setDefaultAccountSaga,
+  unlinkConnectionSaga,
+  unlinkConnectionSucceedSaga,
   updateUserConnectionsSaga
 } from "../screens/IntegrateBank/state/sagas";
 import {
@@ -94,6 +96,8 @@ export default function configureStore() {
   sagaMiddleware.run(getUiTokenSaga);
   sagaMiddleware.run(fetchConnectionSaga);
   sagaMiddleware.run(setDefaultAccountSaga);
+  sagaMiddleware.run(unlinkConnectionSaga);
+  sagaMiddleware.run(unlinkConnectionSucceedSaga);
   sagaMiddleware.run(updateUserConnectionsSaga);
   sagaMiddleware.run(setWorkTypeSaga);
   sagaMiddleware.run(setSavingTypeSaga);

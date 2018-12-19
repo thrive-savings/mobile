@@ -13,50 +13,79 @@ import ChooseAccount from "./pages/ChooseAccount";
 import AuthSuccess from "./pages/AuthSuccess";
 
 import { changeBankStep, updateUserConnections } from "./state/actions";
-import { LINK_STEPS } from "./state/constants";
+import { LINK_STEPS, ACTION_TYPES } from "./state/constants";
 
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
 
 class IntegrateBank extends Component {
-  allDone = () => {
-    this.props.updateUserConnections(
-      this.props.integrateBankReducer.connection
-    );
+  componentWillUnmount() {
     this.props.changeBankStep();
+  }
+
+  updateConnectionsData = () => {
+    const { integrateBankReducer: { connection, allConnections } } = this.props;
+    if (connection || allConnections) {
+      const updateConnectionObj = {};
+      if (allConnections) {
+        updateConnectionObj.connections = allConnections;
+      } else {
+        updateConnectionObj.connection = connection;
+      }
+      this.props.updateUserConnections(updateConnectionObj);
+    }
+  };
+
+  goBack = () => {
+    this.props.navigation.goBack();
   };
 
   onBackPress = () => {
     const {
-      step: stepFromProps,
-      integrateBankReducer: { step: stepFromReducer }
+      integrateBankReducer: { step: stepFromReducer },
+      navigation: { state: { params: { step: stepFromNavigation } } = {} }
     } = this.props;
 
     let lowestStep = LINK_STEPS.INFO;
-    if (stepFromProps) {
-      lowestStep = stepFromProps;
+    if (stepFromNavigation) {
+      lowestStep = stepFromNavigation;
     }
 
     if (stepFromReducer > lowestStep) {
       this.props.changeBankStep({ step: stepFromReducer - 1 });
     } else {
       this.props.changeBankStep();
-      if (stepFromProps) {
-        this.props.navigation.goBack();
+      if (typeof stepFromNavigation !== "undefined") {
+        this.updateConnectionsData();
+        this.goBack();
       }
     }
   };
 
   renderContent() {
     const {
-      step: stepFromProps,
-      connection: providedConnection,
-      integrateBankReducer: { step: stepFromReducer }
+      integrateBankReducer: { step: stepFromReducer },
+      navigation: {
+        state: {
+          params: {
+            step: stepFromNavigation = undefined,
+            connection: connectionToFix,
+            accounts: providedAccounts,
+            newConnection
+          } = {}
+        } = {}
+      }
     } = this.props;
 
     let step = stepFromReducer;
-    if (stepFromProps && stepFromProps > step) {
-      step = stepFromProps;
+    if (stepFromNavigation && stepFromNavigation > step) {
+      step = stepFromNavigation;
     }
+
+    const actionType = connectionToFix
+      ? ACTION_TYPES.RELINK
+      : providedAccounts
+        ? ACTION_TYPES.SET_DEFAULT
+        : newConnection ? ACTION_TYPES.NEW : ACTION_TYPES.INITAL;
 
     switch (step) {
       default:
@@ -65,22 +94,25 @@ class IntegrateBank extends Component {
           <ScrollView showsVerticalScrollIndicator={false}>
             <WhyLink
               next={() => this.props.changeBankStep({ step: LINK_STEPS.AUTH })}
-              relink={providedConnection || false}
+              actionType={actionType}
             />
           </ScrollView>
         );
       case LINK_STEPS.AUTH:
         return (
           <View style={globalStyles.container}>
-            <AuthenticateBank connection={providedConnection} />
+            <AuthenticateBank
+              connection={connectionToFix}
+              actionType={actionType}
+            />
           </View>
         );
       case LINK_STEPS.ACCOUNT:
         return (
           <ScrollView showsVerticalScrollIndicator={false}>
             <ChooseAccount
-              next={this.allDone}
-              relink={providedConnection || false}
+              actionType={actionType}
+              accounts={providedAccounts}
             />
           </ScrollView>
         );
@@ -88,8 +120,9 @@ class IntegrateBank extends Component {
         return (
           <ScrollView showsVerticalScrollIndicator={false}>
             <AuthSuccess
-              next={this.allDone}
-              relink={providedConnection || false}
+              actionType={actionType}
+              goBack={this.goBack}
+              updateConnectionsData={this.updateConnectionsData}
             />
           </ScrollView>
         );
@@ -98,19 +131,23 @@ class IntegrateBank extends Component {
 
   render() {
     const {
-      step: stepFromProps,
-      integrateBankReducer: { step: stepFromReducer }
+      integrateBankReducer: { step: stepFromReducer },
+      navigation: {
+        state: { params: { step: stepFromNavigation = undefined } = {} } = {}
+      }
     } = this.props;
 
     let step = stepFromReducer;
-    if (stepFromProps && stepFromProps > stepFromReducer) {
-      step = stepFromProps;
+    if (stepFromNavigation && stepFromNavigation > stepFromReducer) {
+      step = stepFromNavigation;
     }
 
     return (
       <ImageBackground source={bg} style={globalStyles.background}>
         <Header
-          button={step ? "back" : "none"}
+          button={
+            step || typeof stepFromNavigation !== "undefined" ? "back" : "none"
+          }
           onButtonPress={this.onBackPress}
         />
         {this.renderContent()}
@@ -127,9 +164,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    changeBankStep: (payload = {}) => dispatch(changeBankStep(payload)),
     updateUserConnections: (payload = {}) =>
-      dispatch(updateUserConnections(payload)),
-    changeBankStep: (payload = { step: 0 }) => dispatch(changeBankStep(payload))
+      dispatch(updateUserConnections(payload))
   };
 }
 

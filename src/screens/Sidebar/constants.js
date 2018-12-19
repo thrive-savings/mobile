@@ -16,6 +16,11 @@ const MENU_ITEMS = [
     screen: "SavingHistory"
   },
   {
+    displayName: "BANK CONNECTIONS",
+    icon: savingsIcon,
+    screen: "BankConnections"
+  },
+  {
     displayName: "SETTINGS",
     icon: settingsIcon,
     screen: "Settings"

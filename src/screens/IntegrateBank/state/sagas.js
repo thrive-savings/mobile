@@ -1,6 +1,7 @@
 import {
   FETCH_CONNECTION_URL,
   SET_DEFAULT_ACCOUNT_URL,
+  UNLINK_CONNECTION_URL,
   UPDATE_USER_CONNECTIONS,
   GET_UI_TOKEN
 } from "./constants";
@@ -26,6 +27,18 @@ const setDefaultAccountSaga = function*() {
   });
 };
 
+const unlinkConnectionSaga = function*() {
+  yield takeEvery(`${UNLINK_CONNECTION_URL}_SUBMIT`, function*({ payload }) {
+    yield put(requestApi(`${UNLINK_CONNECTION_URL}`, { data: payload }));
+  });
+};
+
+const unlinkConnectionSucceedSaga = function*() {
+  yield takeEvery(`${UNLINK_CONNECTION_URL}_SUCCEED`, function*({ payload }) {
+    yield put(updateConnectionsData(payload));
+  });
+};
+
 const updateUserConnectionsSaga = function*() {
   yield takeEvery(`${UPDATE_USER_CONNECTIONS}`, function*({ payload }) {
     yield put(updateConnectionsData(payload));
@@ -36,5 +49,7 @@ export {
   getUiTokenSaga,
   fetchConnectionSaga,
   setDefaultAccountSaga,
+  unlinkConnectionSaga,
+  unlinkConnectionSucceedSaga,
   updateUserConnectionsSaga
 };

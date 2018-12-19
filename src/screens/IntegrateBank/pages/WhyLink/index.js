@@ -11,6 +11,8 @@ import Accordion from "../../../../components/Accordion";
 import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
 
+import { ACTION_TYPES } from "../../state/constants";
+
 const bankSymbol = require("../../../../../assets/Icons/BankSymbol/bankSymbolGradient.png");
 
 class WhyLink extends Component {
@@ -122,18 +124,18 @@ class WhyLink extends Component {
   }
 
   render() {
-    return this.props.relink
+    return this.props.actionType === ACTION_TYPES.RELINK
       ? this.renderRelinkPage()
       : this.renderInitialLinkPage();
   }
 }
 
 WhyLink.propTypes = {
-  relink: PropTypes.bool,
+  actionType: PropTypes.oneOf(Object.values(ACTION_TYPES)),
   next: PropTypes.func
 };
 WhyLink.defaultProps = {
-  relink: false,
+  actionType: ACTION_TYPES.INITAL,
   next: () => {}
 };
 

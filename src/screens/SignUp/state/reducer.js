@@ -1,7 +1,7 @@
 import amplitude from "../../../globals/amplitude";
 import {
   SIGN_UP_URL,
-  VERIFY_REFERRAL_URL,
+  VERIFY_COMPANY_CODE_URL,
   TRY_PERSONAL_CLICKED,
   CHANGE_STEP
 } from "./constants";
@@ -42,13 +42,13 @@ export default function signUpReducer(state = initialState, action) {
       };
 
     //Verify Referral cases
-    case `${VERIFY_REFERRAL_URL}_SUBMIT`:
+    case `${VERIFY_COMPANY_CODE_URL}_SUBMIT`:
       return {
         ...state,
         isLoading: true,
         companyID: 1
       };
-    case `${VERIFY_REFERRAL_URL}_SUCCEED`:
+    case `${VERIFY_COMPANY_CODE_URL}_SUCCEED`:
       const { payload: { data: verifyReferralData } } = action;
       amplitude.track(
         amplitude.events.EMPLOYER_CODE_VERIFIED,
@@ -64,7 +64,7 @@ export default function signUpReducer(state = initialState, action) {
         error: false,
         errorMessage: ""
       };
-    case `${VERIFY_REFERRAL_URL}_FAIL`:
+    case `${VERIFY_COMPANY_CODE_URL}_FAIL`:
       return {
         ...state,
         isLoading: false,

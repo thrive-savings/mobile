@@ -10,8 +10,12 @@ import amplitude from "../../../../globals/amplitude";
 
 import Dots from "../../../../components/Dots";
 
-import { setDefaultAccount } from "../../state/actions";
-import { LOADING_STATES } from "../../state/constants";
+import { setDefaultAccount, changeBankStep } from "../../state/actions";
+import {
+  LINK_STEPS,
+  LOADING_STATES,
+  ACTION_TYPES
+} from "../../state/constants";
 
 import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
@@ -33,23 +37,27 @@ class ChooseAccount extends Component {
   }
 
   setDefaultAccount() {
-    const selectedAccountID = this.state.selectedAccountID;
-    if (selectedAccountID) {
-      const {
-        connection: { id: connectionID }
-      } = this.props.integrateBankReducer;
-      this.props.setDefaultAccount({
-        connectionID,
-        accountID: selectedAccountID
-      });
+    if (
+      [ACTION_TYPES.INITAL, ACTION_TYPES.SET_DEFAULT].includes(
+        this.props.actionType
+      )
+    ) {
+      const { selectedAccountID } = this.state;
+      if (selectedAccountID) {
+        this.props.setDefaultAccount({
+          accountID: selectedAccountID
+        });
+      } else {
+        Toast.show({
+          text: "Choose Default Account",
+          duration: 2500,
+          position: "top",
+          type: "danger",
+          textStyle: { textAlign: "center" }
+        });
+      }
     } else {
-      Toast.show({
-        text: "Choose Default Account",
-        duration: 2500,
-        position: "top",
-        type: "danger",
-        textStyle: { textAlign: "center" }
-      });
+      this.props.changeBankStep({ step: LINK_STEPS.SUCCESS });
     }
   }
 
@@ -76,7 +84,12 @@ class ChooseAccount extends Component {
   }
 
   renderAccounts(bank, accounts) {
-    const { loadingState } = this.props.integrateBankReducer;
+    const { integrateBankReducer: { loadingState }, actionType } = this.props;
+
+    const letUserSetDefault = [
+      ACTION_TYPES.INITAL,
+      ACTION_TYPES.SET_DEFAULT
+    ].includes(actionType);
 
     const accountsView = accounts.map(({ id, name, nickname }) => {
       const isSelected = this.state.selectedAccountID === id;
@@ -85,34 +98,39 @@ class ChooseAccount extends Component {
           key={id}
           activeOpacity={0.6}
           style={styles.accountRow}
-          onPress={() => this.setState({ selectedAccountID: id })}
+          onPress={() => {
+            if (letUserSetDefault) {
+              this.setState({ selectedAccountID: id });
+            }
+          }}
         >
-          {isSelected
-            ? <Svg width={16} height={16}>
-                <Svg.Circle
-                  cx="8"
-                  cy="8"
-                  r={7}
-                  stokeWidth={1}
-                  stroke={colors.darkerGrey}
-                  fill={"white"}
-                />
-                <Svg.Circle cx="8" cy="8" r={5} fill={colors.charcoal} />
-              </Svg>
-            : <Svg width={16} height={16}>
-                <Svg.Circle
-                  cx="8"
-                  cy="8"
-                  r={7}
-                  stokeWidth={1}
-                  stroke={colors.darkerGrey}
-                  fill={"white"}
-                />
-              </Svg>}
+          {letUserSetDefault &&
+            (isSelected
+              ? <Svg width={16} height={16}>
+                  <Svg.Circle
+                    cx="8"
+                    cy="8"
+                    r={7}
+                    stokeWidth={1}
+                    stroke={colors.darkerGrey}
+                    fill={"white"}
+                  />
+                  <Svg.Circle cx="8" cy="8" r={5} fill={colors.charcoal} />
+                </Svg>
+              : <Svg width={16} height={16}>
+                  <Svg.Circle
+                    cx="8"
+                    cy="8"
+                    r={7}
+                    stokeWidth={1}
+                    stroke={colors.darkerGrey}
+                    fill={"white"}
+                  />
+                </Svg>)}
           <Text
             style={[
               styles.accountTitleText,
-              isSelected && styles.selectedTitleText
+              (isSelected || !letUserSetDefault) && styles.selectedTitleText
             ]}
           >
             {nickname + " - " + name}
@@ -134,8 +152,9 @@ class ChooseAccount extends Component {
       >
         <Image source={bankIcon} />
         <Text style={styles.bankBoxLabel}>
-          Please select your primary chequing account. This is where you perform
-          your everyday banking.
+          {letUserSetDefault
+            ? "Please select your primary chequing account. This is where you perform your everyday banking."
+            : "We have fetched the following accounts from your bank."}
         </Text>
         {accountsView}
         {loadingState === LOADING_STATES.SETTING_DEFAULT_ACCOUNT
@@ -153,9 +172,15 @@ class ChooseAccount extends Component {
 
   renderContent() {
     const {
-      connection: { bank = "ThriveBank", accounts = [] }
-    } = this.props.integrateBankReducer;
+      integrateBankReducer: {
+        connection: { bank = "ThriveBank", accounts: accountsFromNew = [] } = {}
+      },
+      accounts: accountsFromExisting
+    } = this.props;
 
+    let accounts = accountsFromExisting
+      ? accountsFromExisting
+      : accountsFromNew;
     if (accounts.length > 0) {
       return this.renderAccounts(bank, accounts);
     } else {
@@ -203,7 +228,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    setDefaultAccount: (payload = {}) => dispatch(setDefaultAccount(payload))
+    setDefaultAccount: (payload = {}) => dispatch(setDefaultAccount(payload)),
+    changeBankStep: (payload = {}) => dispatch(changeBankStep(payload))
   };
 }
 
