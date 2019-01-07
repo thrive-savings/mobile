@@ -8,7 +8,7 @@ import amplitude from "../../globals/amplitude";
 import { clearStorage } from "../../globals/clearStorage";
 import getAvatar from "../../globals/getAvatar";
 import { getDollarString } from "../../globals/helpers";
-import { companyLogoUrl } from "../../globals/companyLogo";
+import { companyLogoUrl } from "../../globals/logoUrls";
 
 import styles from "./styles";
 import colors from "../../theme/colors";

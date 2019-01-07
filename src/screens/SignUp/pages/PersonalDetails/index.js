@@ -9,7 +9,7 @@ import { Field, reduxForm } from "redux-form";
 import amplitude from "../../../../globals/amplitude";
 import SpecialButton from "../../../../components/SpecialButton";
 
-import { companyLogoUrl } from "../../../../globals/companyLogo";
+import { companyLogoUrl } from "../../../../globals/logoUrls";
 
 import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";

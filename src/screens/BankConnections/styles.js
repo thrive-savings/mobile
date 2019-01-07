@@ -82,5 +82,11 @@ export default StyleSheet.create({
   },
   greyText: {
     color: colors.darkestGrey
+  },
+
+  // Logo style
+  bankLogo: {
+    width: 80,
+    height: 60
   }
 });

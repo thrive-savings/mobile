@@ -22,8 +22,9 @@ import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
 import colors from "../../theme/colors";
 
+import { bankLogoUrl } from "../../globals/logoUrls";
+
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
-const botIcon = require("../../../assets/Icons/ThriveBotSmaller/thriveBot.png");
 
 class BankConnections extends Component {
   constructor(props) {
@@ -98,7 +99,15 @@ class BankConnections extends Component {
     this.sortConnections(connections);
 
     return connections.map(
-      ({ id, isDefault, quovoConnectionID, institutionName, sync, accounts }) =>
+      ({
+        id,
+        isDefault,
+        quovoConnectionID,
+        institutionName,
+        sync,
+        accounts,
+        institution: { logoFolder: bankLogoFolderName }
+      }) =>
         <TouchableOpacity
           activeOpacity={0.6}
           style={[styles.accountArea, globalStyles.shadow]}
@@ -106,7 +115,10 @@ class BankConnections extends Component {
           onPress={() => this.onConnectionClick(id)}
         >
           <View style={styles.accountMain}>
-            <Image source={botIcon} />
+            <Image
+              source={{ uri: bankLogoUrl(bankLogoFolderName, true) }}
+              style={styles.bankLogo}
+            />
             <View style={styles.accountInfoContainer}>
               {sync.status === "good"
                 ? <Text style={[styles.regularAccountText, styles.greyText]}>

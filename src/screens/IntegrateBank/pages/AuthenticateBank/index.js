@@ -33,7 +33,6 @@ class AuthenticateBank extends Component {
     } catch (e) {
       return;
     }
-    console.log(msgData);
 
     const { event, data, error } = msgData;
 
