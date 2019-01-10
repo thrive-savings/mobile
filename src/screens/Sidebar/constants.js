@@ -1,40 +1,47 @@
 const savingsIcon = require("../../../assets/Sidebar/House/house.png");
 const historyIcon = require("../../../assets/Sidebar/Fill/fill1.png");
-const settingsIcon = require("../../../assets/Sidebar/Settings/settings1.png");
-const contactIcon = require("../../../assets/Sidebar/ThriveBot/thriveBot.png");
-const faqIcon = require("../../../assets/Sidebar/Faq/faq.png");
+const bankIcon = require("../../../assets/Sidebar/Bank/PiggybankGrey.png");
 
-const MENU_ITEMS = [
+export const TOP_MENU_ITEMS = [
   {
     displayName: "MY SAVINGS",
     icon: savingsIcon,
     screen: "Home"
   },
   {
-    displayName: "SAVING HISTORY",
+    displayName: "MY DEBT",
+    icon: savingsIcon,
+    screen: "Home",
+    premium: true
+  },
+  {
+    displayName: "HISTORY",
     icon: historyIcon,
     screen: "SavingHistory"
   },
   {
-    displayName: "BANK CONNECTIONS",
-    icon: savingsIcon,
+    displayName: "LINKED BANKS",
+    icon: bankIcon,
     screen: "BankConnections"
-  },
-  {
-    displayName: "SETTINGS",
-    icon: settingsIcon,
-    screen: "Settings"
-  },
-  {
-    displayName: "FAQ",
-    icon: faqIcon,
-    screen: "Faq"
-  },
-  {
-    displayName: "CONTACT",
-    icon: contactIcon,
-    screen: "Contact"
   }
 ];
 
-export default MENU_ITEMS;
+export const FOOTER_MENU_ITEMS = [
+  {
+    displayName: "Settings",
+    screen: "Settings"
+  },
+  {
+    displayName: "Faq",
+    screen: "Faq"
+  },
+  {
+    displayName: "Contact",
+    screen: "Contact"
+  },
+  {
+    displayName: "Log Out",
+    screen: "logout",
+    underline: true
+  }
+];

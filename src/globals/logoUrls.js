@@ -6,7 +6,7 @@ export const companyLogoUrl = companyName => {
 };
 
 export const bankLogoUrl = (bankName, isSquare) => {
-  return `${PUBLIC_S3_BUCKET}/bank_logos/${bankName}/${isSquare
+  return `${PUBLIC_S3_BUCKET}/bank_logos/ThriveBank/${isSquare
     ? "square"
-    : "original"}/logo.png`;
+    : "original"}/icon.png`;
 };

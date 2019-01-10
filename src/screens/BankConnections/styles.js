@@ -8,7 +8,8 @@ export default StyleSheet.create({
   // Overall Layout
   contentContainer: {
     flex: 1,
-    marginHorizontal: 20
+    marginHorizontal: 20,
+    marginBottom: 20
   },
   connectButton: {
     flex: 0.1,
@@ -28,6 +29,7 @@ export default StyleSheet.create({
     flexDirection: "row"
   },
   accountInfoContainer: {
+    flex: 1,
     justifyContent: "center",
     paddingLeft: 20
   },
@@ -86,7 +88,7 @@ export default StyleSheet.create({
 
   // Logo style
   bankLogo: {
-    width: 80,
+    width: 60,
     height: 60
   }
 });

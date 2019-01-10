@@ -71,7 +71,7 @@ export default StyleSheet.create({
     fontSize: 13,
     fontFamily: "LatoRegular",
     letterSpacing: 1.5,
-    paddingLeft: 20
+    paddingHorizontal: 15
   },
   menuItemTextActive: {
     color: colors.blue
@@ -84,10 +84,18 @@ export default StyleSheet.create({
     alignItems: "flex-end",
     justifyContent: "space-between"
   },
-  logoutText: {
+  footerLinks: {
+    alignItems: "flex-start"
+  },
+  footerPadder: {
+    paddingVertical: 10
+  },
+  footerLinkText: {
     color: colors.charcoal,
     fontSize: 13,
-    fontFamily: "LatoRegular",
+    fontFamily: "LatoRegular"
+  },
+  underlineText: {
     textDecorationLine: "underline"
   }
 });

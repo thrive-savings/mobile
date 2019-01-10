@@ -173,7 +173,10 @@ class ChooseAccount extends Component {
   renderContent() {
     const {
       integrateBankReducer: {
-        connection: { bank = "ThriveBank", accounts: accountsFromNew = [] } = {}
+        connection: {
+          accounts: accountsFromNew = [],
+          institution: { logoFolder: bankLogo = "ThriveBank" } = {}
+        } = {}
       },
       accounts: accountsFromExisting
     } = this.props;
@@ -182,9 +185,9 @@ class ChooseAccount extends Component {
       ? accountsFromExisting
       : accountsFromNew;
     if (accounts.length > 0) {
-      return this.renderAccounts(bank, accounts);
+      return this.renderAccounts(bankLogo, accounts);
     } else {
-      return this.renderError(bank);
+      return this.renderError(bankLogo);
     }
   }
 

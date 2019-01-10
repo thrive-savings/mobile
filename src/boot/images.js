@@ -60,6 +60,7 @@ const imageAssets = [
   require("../../assets/Sidebar/House/house.png"),
   require("../../assets/Sidebar/Settings/settings1.png"),
   require("../../assets/Sidebar/ThriveBot/thriveBot.png"),
+  require("../../assets/Sidebar/Bank/PiggybankGrey.png"),
 
   // Icons
   require("../../assets/Icons/Back/back.png"),

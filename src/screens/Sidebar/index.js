@@ -13,9 +13,10 @@ import { companyLogoUrl } from "../../globals/logoUrls";
 import styles from "./styles";
 import colors from "../../theme/colors";
 
-import MENU_ITEMS from "./constants";
+import { TOP_MENU_ITEMS, FOOTER_MENU_ITEMS } from "./constants";
 
 const logo = require("../../../assets/ThumbnailLogo/Small/thumbnail.png");
+const premiumIcon = require("../../../assets/Icons/Star/Blue/star.png");
 
 class SideBar extends Component {
   constructor(props) {
@@ -31,29 +32,23 @@ class SideBar extends Component {
     this.props.navigation.navigate("Profile");
   }
 
-  onMenuItemClick(index) {
+  onTopMenuItemClick(index) {
     this.setState({ activeMenuItemIndex: index });
-    this.props.navigation.navigate(MENU_ITEMS[index].screen);
+    this.props.navigation.navigate(TOP_MENU_ITEMS[index].screen);
   }
 
-  onLogout() {
-    amplitude.identify("N/A");
-    amplitude.track(amplitude.events.LOGOUT);
-    this.props.clearStorage();
-  }
-
-  renderMenuItems() {
-    return MENU_ITEMS.map(({ displayName, icon }, index) => {
+  renderTopMenuItems() {
+    return TOP_MENU_ITEMS.map(({ displayName, icon, premium }, index) => {
       return (
         <TouchableOpacity
-          key={index}
+          key={`TopMenuItem_${index}`}
           activeOpacity={0.6}
           style={[
             styles.menuItem,
             styles.padder,
             index === this.state.activeMenuItemIndex && styles.menuItemActive
           ]}
-          onPress={() => this.onMenuItemClick(index)}
+          onPress={() => this.onTopMenuItemClick(index)}
         >
           <Image
             source={icon}
@@ -68,6 +63,45 @@ class SideBar extends Component {
               index === this.state.activeMenuItemIndex &&
                 styles.menuItemTextActive
             ]}
+          >
+            {displayName}
+          </Text>
+          {premium &&
+            <TouchableOpacity activeOpacity={0.6} onPress={() => {}}>
+              <Image source={premiumIcon} />
+            </TouchableOpacity>}
+        </TouchableOpacity>
+      );
+    });
+  }
+
+  onLogout() {
+    amplitude.identify("N/A");
+    amplitude.track(amplitude.events.LOGOUT);
+    this.props.clearStorage();
+  }
+
+  onFooterMenuItemClick(index) {
+    const { screen } = FOOTER_MENU_ITEMS[index];
+    if (screen === "logout") {
+      this.onLogout();
+    } else {
+      this.props.navigation.navigate(screen);
+    }
+  }
+
+  renderFooterMenuItems() {
+    return FOOTER_MENU_ITEMS.map(({ displayName, underline }, index) => {
+      return (
+        <TouchableOpacity
+          key={`FooterMenuItem_${index}`}
+          activeOpacity={0.6}
+          onPress={() => this.onFooterMenuItemClick(index)}
+          hitSlop={{ top: 10, bottom: 10, left: 20, right: 20 }}
+          style={styles.footerPadder}
+        >
+          <Text
+            style={[styles.footerLinkText, underline && styles.underlineText]}
           >
             {displayName}
           </Text>
@@ -130,16 +164,12 @@ class SideBar extends Component {
           </View>
         </TouchableOpacity>
         <View style={styles.body}>
-          {this.renderMenuItems()}
+          {this.renderTopMenuItems()}
         </View>
         <View style={[styles.footer, styles.padder]}>
-          <TouchableOpacity
-            activeOpacity={0.6}
-            onPress={() => this.onLogout()}
-            hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-          >
-            <Text style={styles.logoutText}>Log Out</Text>
-          </TouchableOpacity>
+          <View style={styles.footerLinks}>
+            {this.renderFooterMenuItems()}
+          </View>
           <Image source={logo} />
         </View>
       </View>
