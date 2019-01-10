@@ -34,20 +34,15 @@ class AuthenticateBank extends Component {
       return;
     }
 
+    console.log(msgData);
+
     const { event, data, error } = msgData;
 
     if (event === "onClose") {
       this.props.changeBankStep();
     } else if (event === "onSync" && !error && data.sync.authenticated) {
-      // Call server with data
-      const {
-        connection: {
-          id: connectionID,
-          institutionId: institutionID,
-          userId: userID
-        }
-      } = data;
-      this.props.fetchConnection({ userID, connectionID, institutionID });
+      const { connection: { id: connectionID } } = data;
+      this.props.fetchConnection({ connectionID });
     }
   };
 
