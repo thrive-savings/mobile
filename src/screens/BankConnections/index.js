@@ -106,7 +106,7 @@ class BankConnections extends Component {
         institutionName,
         sync,
         accounts,
-        institution: { logoFolder: bankLogoFolderName }
+        institution: { logoFolder: bankLogoFolderName = "ThriveBank" } = {}
       }) =>
         <TouchableOpacity
           activeOpacity={0.6}
