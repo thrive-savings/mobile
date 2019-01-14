@@ -2,7 +2,7 @@
   "expo": {
     "name": "Thrive",
     "icon": "./assets/icon.png",
-    "version": "1.1.0",
+    "version": "2.0.0",
     "slug": "thriveapp",
     "sdkVersion": "30.0.0",
     "splash": {
@@ -20,7 +20,7 @@
     "android": {
       "package": "com.thrivesavings.mobileapp",
       "googleServicesFile": "./google-services.json",
-      "versionCode": 110
+      "versionCode": 200
     },
     "androidStatusBarColor": "#008cd1",
     "androidStatusBar": {
