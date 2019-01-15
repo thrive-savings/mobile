@@ -156,6 +156,8 @@ class App extends React.Component {
       }
     }
 
+    // stacker = <StackerWithDrawer />;
+
     return (
       <Root>
         {stacker}

@@ -46,7 +46,7 @@ class AuthenticateBank extends Component {
     }
   };
 
-  render() {
+  render_old() {
     const {
       integrateBankReducer: { loadingState, quovoUiToken },
       actionType,
@@ -75,6 +75,31 @@ class AuthenticateBank extends Component {
               renderLoading={() => <Spinner color={colors.blue} />}
             />}
       </View>
+    );
+  }
+
+  render() {
+    const {
+      integrateBankReducer: { loadingState, quovoUiToken },
+      actionType,
+      connection: connectionToFix,
+      userData: { userType }
+    } = this.props;
+
+    return (
+      <WebView
+        source={{
+          uri: `${API}/link.html?token=${quovoUiToken}${userType === "tester"
+            ? "&test=true"
+            : ""}${actionType === ACTION_TYPES.RELINK
+            ? `&connectionId=${connectionToFix.quovoConnectionID}`
+            : ""}`
+        }}
+        onMessage={this.onWebViewMessage}
+        style={styles.webViewContainer}
+        startInLoadingState={true}
+        renderLoading={() => <Spinner color={colors.blue} />}
+      />
     );
   }
 }

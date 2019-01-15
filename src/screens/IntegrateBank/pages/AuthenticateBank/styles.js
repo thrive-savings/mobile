@@ -25,6 +25,8 @@ export default StyleSheet.create({
   },
   webViewContainer: {
     flex: 1,
-    width: deviceWidth - 60
+    // width: deviceWidth - 60
+    marginHorizontal: 20,
+    marginBottom: 20
   }
 });

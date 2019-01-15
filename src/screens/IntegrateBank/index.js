@@ -42,7 +42,7 @@ class IntegrateBank extends Component {
   onBackPress = () => {
     const {
       integrateBankReducer: { step: stepFromReducer },
-      navigation: { state: { params: { step: stepFromNavigation } } = {} }
+      navigation: { state: { params: { step: stepFromNavigation } = {} } = {} }
     } = this.props;
 
     let lowestStep = LINK_STEPS.INFO;
