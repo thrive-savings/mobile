@@ -14,6 +14,7 @@ import { connect } from "react-redux";
 
 import amplitude from "../../globals/amplitude";
 
+import SpecialButton from "../../components/SpecialButton";
 import Header from "../../components/Header";
 import ModalTemplate from "../../components/ModalTemplate";
 import ProgressBar from "../../components/ProgressBar";
@@ -239,19 +240,12 @@ class Home extends Component {
           >
             {this.renderNotifications()}
             {this.renderGoals()}
-            <TouchableOpacity
-              activeOpacity={0.6}
-              style={[styles.addGoalButton, globalStyles.shadow]}
-              onPress={() =>
+            <SpecialButton
+              style={styles.addGoalButton}
+              text="+ ADD GOAL"
+              onClick={() =>
                 navigation.navigate("SavingGoals", { actionType: "Add" })}
-            >
-              <LinearGradient
-                colors={colors.blueGreenGradient.colors}
-                style={styles.addGoalGradient}
-              >
-                <Text style={styles.addGoalButtonText}>+ ADD GOAL</Text>
-              </LinearGradient>
-            </TouchableOpacity>
+            />
           </ScrollView>
         </View>
         <ModalTemplate

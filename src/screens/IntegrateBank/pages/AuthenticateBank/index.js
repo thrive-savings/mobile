@@ -87,19 +87,24 @@ class AuthenticateBank extends Component {
     } = this.props;
 
     return (
-      <WebView
-        source={{
-          uri: `${API}/link.html?token=${quovoUiToken}${userType === "tester"
-            ? "&test=true"
-            : ""}${actionType === ACTION_TYPES.RELINK
-            ? `&connectionId=${connectionToFix.quovoConnectionID}`
-            : ""}`
-        }}
-        onMessage={this.onWebViewMessage}
-        style={styles.webViewContainer}
-        startInLoadingState={true}
-        renderLoading={() => <Spinner color={colors.blue} />}
-      />
+      <React.Fragment>
+        {loadingState !== LOADING_STATES.NONE
+          ? <Spinner color={colors.blue} />
+          : <WebView
+              source={{
+                uri: `${API}/link.html?token=${quovoUiToken}${userType ===
+                "tester"
+                  ? "&test=true"
+                  : ""}${actionType === ACTION_TYPES.RELINK
+                  ? `&connectionId=${connectionToFix.quovoConnectionID}`
+                  : ""}`
+              }}
+              onMessage={this.onWebViewMessage}
+              style={styles.webViewContainer}
+              startInLoadingState={true}
+              renderLoading={() => <Spinner color={colors.blue} />}
+            />}
+      </React.Fragment>
     );
   }
 }

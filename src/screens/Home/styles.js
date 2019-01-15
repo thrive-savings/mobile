@@ -66,7 +66,7 @@ export default StyleSheet.create({
 
   // Notification styles
   notificationAnimationholder: {
-    alignSelf: "stretch",
+    alignSelf: "stretch"
   },
   notificationHolder: {
     alignSelf: "stretch",
@@ -155,22 +155,8 @@ export default StyleSheet.create({
 
   // Add Goal styles
   addGoalButton: {
-    width: deviceWidth / 3,
-    height: 35
-  },
-  addGoalGradient: {
-    flex: 1,
-    borderRadius: 8,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  addGoalButtonText: {
-    color: "white",
-    fontSize: 15,
-    fontFamily: "LatoBold",
-    lineHeight: 22,
-    letterSpacing: 1.6,
-    top: -1
+    marginHorizontal: 10,
+    marginTop: 10
   },
 
   // Info Button styles
