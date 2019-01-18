@@ -15,10 +15,6 @@ const PAGE_TYPES = {
     headerTitle: "UPDATE SETTINGS",
     headerButton: "back"
   },
-  linkedBank: {
-    headerTitle: "LINKED BANK ACCOUNT",
-    headerButton: "back"
-  },
   legal: {
     headerTitle: "LEGAL & PRIVACY",
     headerButton: "back"

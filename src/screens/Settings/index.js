@@ -1,19 +1,10 @@
 import React, { Component } from "react";
-import {
-  View,
-  Text,
-  Image,
-  ImageBackground,
-  TouchableOpacity
-} from "react-native";
+import { View, Text, ImageBackground, TouchableOpacity } from "react-native";
 import { Constants } from "expo";
 import { Content } from "native-base";
 import { connect } from "react-redux";
 
-import Communications from "react-native-communications";
-
 import Header from "../../components/Header";
-import SpecialButton from "../../components/SpecialButton";
 import addStatusBar from "../../components/StatusBar";
 
 import WorkType from "../SavingPreferences/pages/WorkType";
@@ -24,8 +15,6 @@ import {
   setSavingType,
   setSavingDetails
 } from "../SavingPreferences/state/actions";
-
-import BANK_ICONS from "../../globals/bankIcons";
 
 import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
@@ -91,44 +80,6 @@ class Settings extends Component {
     }
   }
 
-  renderLinkedBank() {
-    const account = this.props.userData.account;
-    let bank = "TD";
-    let title = "No Bank Linked";
-    if (account) {
-      bank = account.bank;
-      title = account.title;
-    }
-
-    return (
-      <View>
-        <View
-          style={[styles.contentBox, styles.linkedBankBox, globalStyles.shadow]}
-        >
-          <Image source={BANK_ICONS[bank]} />
-          <Text style={styles.linkedBankLabelText}>
-            {title}
-          </Text>
-          <Text style={styles.linkedBankDescText}>
-            To change or unlink your bank account, send us a request below and
-            we’ll get in touch with you shortly.
-          </Text>
-          <SpecialButton
-            text={"CONTACT SUPPORT"}
-            onClick={() =>
-              Communications.email(
-                ["help@thrivesavings.com"],
-                null,
-                null,
-                "Change or Unlink Bank Account",
-                null
-              )}
-          />
-        </View>
-      </View>
-    );
-  }
-
   renderLegal() {
     return (
       <View>
@@ -178,12 +129,6 @@ class Settings extends Component {
     }
 
     const isSavingDetailsDisabled = savingType === "Thrive Flex" || !savingType;
-
-    const account = this.props.userData.account;
-    let title = "No Bank Linked";
-    if (account) {
-      title = account.title;
-    }
 
     return (
       <View>
@@ -245,17 +190,6 @@ class Settings extends Component {
           >
             <Text style={styles.regularText}>Legal & Privacy</Text>
             <Text style={[styles.regularText, styles.blueText]}>></Text>
-          </TouchableOpacity>
-          <View style={styles.separator} />
-          <TouchableOpacity
-            onPress={() => this.setState({ activePage: "linkedBank" })}
-            activeOpacity={0.6}
-            style={styles.contentRow}
-          >
-            <Text style={styles.regularText}>Linked Bank Account</Text>
-            <Text style={[styles.regularText, styles.blueText]}>
-              {title}
-            </Text>
           </TouchableOpacity>
           <View style={styles.separator} />
           <View style={styles.contentRow}>
