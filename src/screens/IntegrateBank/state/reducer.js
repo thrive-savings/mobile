@@ -44,14 +44,18 @@ export default function integrateBankReducer(state = initialState, action) {
     case `${FETCH_CONNECTION_URL}_SUBMIT`:
       return {
         ...state,
-        step: LINK_STEPS.ACCOUNT,
-        loadingState: LOADING_STATES.FETCHING_ACCOUNTS
+        loadingState: LOADING_STATES.FETCHING_CONNECTION
       };
     case `${FETCH_CONNECTION_URL}_SUCCEED`:
+      const connection = action.payload.connection;
+      const { sync: { status: syncStatus } = {} } = connection;
       return {
         ...state,
-        connection: action.payload.connection,
-        step: LINK_STEPS.ACCOUNT,
+        connection,
+        step:
+          syncStatus && syncStatus !== "incorrect_credentials"
+            ? syncStatus === "good" ? LINK_STEPS.ACCOUNT : LINK_STEPS.FINAL
+            : state.step,
         loadingState: LOADING_STATES.NONE
       };
     case `${FETCH_CONNECTION_URL}_FAIL`:
@@ -71,7 +75,7 @@ export default function integrateBankReducer(state = initialState, action) {
       return {
         ...state,
         allConnections: action.payload.connections,
-        step: LINK_STEPS.SUCCESS,
+        step: LINK_STEPS.FINAL,
         loadingState: LOADING_STATES.NONE
       };
     case `${SET_DEFAULT_ACCOUNT_URL}_FAIL`:

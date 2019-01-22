@@ -7,20 +7,26 @@ import { connect } from "react-redux";
 import { API } from "../../../../../config";
 import amplitude from "../../../../globals/amplitude";
 
-import Dots from "../../../../components/Dots";
-
 import {
   fetchConnection,
   getUiToken,
   changeBankStep
 } from "../../state/actions";
-import { LOADING_STATES, ACTION_TYPES } from "../../state/constants";
+import {
+  LOADING_STATES,
+  ACTION_TYPES,
+  LINK_STEPS
+} from "../../state/constants";
 
-import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
 import colors from "../../../../theme/colors";
 
 class AuthenticateBank extends Component {
+  state = {
+    connectionID: undefined,
+    status: undefined
+  };
+
   componentDidMount() {
     amplitude.track(amplitude.events.AUTH_BANK_VIEW);
     this.props.getUiToken();
@@ -34,49 +40,41 @@ class AuthenticateBank extends Component {
       return;
     }
 
-    console.log(msgData);
+    const {
+      event,
+      data: { connection: { id: connectionID } = {} } = {},
+      error
+    } = msgData;
 
-    const { event, data, error } = msgData;
-
-    if (event === "onClose") {
-      this.props.changeBankStep();
-    } else if (event === "onSync" && !error && data.sync.authenticated) {
-      const { connection: { id: connectionID } } = data;
-      this.props.fetchConnection({ connectionID });
+    if (!error) {
+      switch (event) {
+        case "onAdd":
+        case "onSync":
+          this.props.fetchConnection({ connectionID });
+          break;
+        case "onClose":
+          const {
+            connection: {
+              quovoConnectionID: curConnectionID,
+              sync: { status: curSyncStatus } = {}
+            } = {}
+          } = this.props.integrateBankReducer;
+          if (curConnectionID) {
+            this.props.changeBankStep({
+              step:
+                curSyncStatus && curSyncStatus === "good"
+                  ? LINK_STEPS.ACCOUNT
+                  : LINK_STEPS.FINAL
+            });
+          } else {
+            this.props.changeBankStep();
+          }
+          break;
+        default:
+          break;
+      }
     }
   };
-
-  render_old() {
-    const {
-      integrateBankReducer: { loadingState, quovoUiToken },
-      actionType,
-      connection: connectionToFix,
-      userData: { userType }
-    } = this.props;
-
-    return (
-      <View style={[styles.container, globalStyles.shadow]}>
-        <Dots step={2} count={3} />
-
-        {loadingState !== LOADING_STATES.NONE
-          ? <Spinner color={colors.blue} />
-          : <WebView
-              source={{
-                uri: `${API}/link.html?token=${quovoUiToken}${userType ===
-                "tester"
-                  ? "&test=true"
-                  : ""}${actionType === ACTION_TYPES.RELINK
-                  ? `&connectionId=${connectionToFix.quovoConnectionID}`
-                  : ""}`
-              }}
-              onMessage={this.onWebViewMessage}
-              style={styles.webViewContainer}
-              startInLoadingState={true}
-              renderLoading={() => <Spinner color={colors.blue} />}
-            />}
-      </View>
-    );
-  }
 
   render() {
     const {
@@ -89,7 +87,9 @@ class AuthenticateBank extends Component {
     return (
       <React.Fragment>
         {loadingState !== LOADING_STATES.NONE
-          ? <Spinner color={colors.blue} />
+          ? <View style={styles.container}>
+              <Spinner color={colors.blue} />
+            </View>
           : <WebView
               source={{
                 uri: `${API}/link.html?token=${quovoUiToken}${userType ===
@@ -101,8 +101,11 @@ class AuthenticateBank extends Component {
               }}
               onMessage={this.onWebViewMessage}
               style={styles.webViewContainer}
-              startInLoadingState={true}
-              renderLoading={() => <Spinner color={colors.blue} />}
+              startInLoadingState
+              renderLoading={() =>
+                <View style={[styles.container, styles.webViewPadder]}>
+                  <Spinner color={colors.blue} />
+                </View>}
             />}
       </React.Fragment>
     );

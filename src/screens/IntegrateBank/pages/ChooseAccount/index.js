@@ -57,7 +57,7 @@ class ChooseAccount extends Component {
         });
       }
     } else {
-      this.props.changeBankStep({ step: LINK_STEPS.SUCCESS });
+      this.props.changeBankStep({ step: LINK_STEPS.FINAL });
     }
   }
 
@@ -208,7 +208,7 @@ class ChooseAccount extends Component {
       <View style={styles.container}>
         <Dots step={2} count={3} />
         <Text style={styles.titleText}>LINK YOUR BANK ACCOUNT</Text>
-        {loadingState === LOADING_STATES.FETCHING_ACCOUNTS
+        {loadingState === LOADING_STATES.FETCHING_CONNECTION
           ? <View>
               <Text style={styles.bankBoxLabel}>Fetching Accounts ...</Text>
               <Spinner color={colors.blue} />

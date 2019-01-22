@@ -1,16 +1,13 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet } from "react-native";
 import colors from "../../../../theme/colors";
-
-const screen = Dimensions.get("window");
-const deviceWidth = screen.width;
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    width: deviceWidth - 40,
-    alignSelf: "center",
+    justifyContent: "center",
     alignItems: "center",
     padding: 20,
+    marginHorizontal: 20,
     marginBottom: 20,
     borderRadius: 8,
     backgroundColor: "white"
@@ -25,8 +22,10 @@ export default StyleSheet.create({
   },
   webViewContainer: {
     flex: 1,
-    // width: deviceWidth - 60
     marginHorizontal: 20,
     marginBottom: 20
+  },
+  webViewPadder: {
+    marginTop: -20
   }
 });

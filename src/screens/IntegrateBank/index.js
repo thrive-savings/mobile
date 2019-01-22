@@ -116,7 +116,7 @@ class IntegrateBank extends Component {
             />
           </ScrollView>
         );
-      case LINK_STEPS.SUCCESS:
+      case LINK_STEPS.FINAL:
         return (
           <ScrollView showsVerticalScrollIndicator={false}>
             <AuthSuccess

@@ -10,13 +10,13 @@ export const LINK_STEPS = {
   INFO: 0,
   AUTH: 1,
   ACCOUNT: 2,
-  SUCCESS: 3
+  FINAL: 3
 };
 
 export const LOADING_STATES = {
   NONE: "none",
   GETTING_TOKEN: "getting_token",
-  FETCHING_ACCOUNTS: "fetching_accounts",
+  FETCHING_CONNECTION: "fetching_connection",
   SETTING_DEFAULT_ACCOUNT: "setting_default_account",
   UNLINKING_CONNECTION: "unlinking_connection"
 };
