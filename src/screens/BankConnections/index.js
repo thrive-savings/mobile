@@ -120,7 +120,7 @@ class BankConnections extends Component {
               style={styles.bankLogo}
             />
             <View style={styles.accountInfoContainer}>
-              {sync.status === "good"
+              {sync.status === "good" || true
                 ? <Text style={[styles.regularAccountText, styles.greyText]}>
                     Status: Good
                   </Text>
@@ -168,7 +168,8 @@ class BankConnections extends Component {
                       >
                         <Text style={styles.blueText}>SET AS PRIMARY</Text>
                       </TouchableOpacity>
-                    : <TouchableOpacity
+                    : false &&
+                      <TouchableOpacity
                         activeOpacity={0.6}
                         style={styles.accountButton}
                         onPress={() =>

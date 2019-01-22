@@ -41,7 +41,10 @@ class IntegrateBank extends Component {
 
   onBackPress = () => {
     const {
-      integrateBankReducer: { step: stepFromReducer },
+      integrateBankReducer: {
+        step: stepFromReducer,
+        connection: { sync: { status: syncStatus } = {} } = {}
+      },
       navigation: { state: { params: { step: stepFromNavigation } = {} } = {} }
     } = this.props;
 
@@ -51,7 +54,11 @@ class IntegrateBank extends Component {
     }
 
     if (stepFromReducer > lowestStep) {
-      this.props.changeBankStep({ step: stepFromReducer - 1 });
+      const newStep =
+        stepFromReducer === LINK_STEPS.FINAL && syncStatus !== "good"
+          ? LINK_STEPS.AUTH
+          : stepFromReducer - 1;
+      this.props.changeBankStep({ step: newStep });
     } else {
       this.props.changeBankStep();
       if (typeof stepFromNavigation !== "undefined") {

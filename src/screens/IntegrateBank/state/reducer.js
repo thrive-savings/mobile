@@ -41,11 +41,6 @@ export default function integrateBankReducer(state = initialState, action) {
       };
 
     // Fetch Accounts cases
-    case `${FETCH_CONNECTION_URL}_SUBMIT`:
-      return {
-        ...state,
-        loadingState: LOADING_STATES.FETCHING_CONNECTION
-      };
     case `${FETCH_CONNECTION_URL}_SUCCEED`:
       const connection = action.payload.connection;
       const { sync: { status: syncStatus } = {} } = connection;
@@ -53,7 +48,9 @@ export default function integrateBankReducer(state = initialState, action) {
         ...state,
         connection,
         step:
-          syncStatus && syncStatus !== "incorrect_credentials"
+          syncStatus &&
+          syncStatus !== "incorrect_credentials" &&
+          syncStatus !== "challenges"
             ? syncStatus === "good" ? LINK_STEPS.ACCOUNT : LINK_STEPS.FINAL
             : state.step,
         loadingState: LOADING_STATES.NONE
