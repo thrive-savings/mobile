@@ -120,13 +120,18 @@ class BankConnections extends Component {
               style={styles.bankLogo}
             />
             <View style={styles.accountInfoContainer}>
-              {sync.status === "good" || true
+              {sync.status === "good"
                 ? <Text style={[styles.regularAccountText, styles.greyText]}>
                     Status: Good
                   </Text>
-                : <Text style={[styles.regularAccountText, styles.redText]}>
-                    Status: Disconnected
-                  </Text>}
+                : !sync.status ||
+                  ["postponed", "maintenance"].includes(sync.status)
+                  ? <Text style={[styles.regularAccountText, styles.blueText]}>
+                      Status: Loading...
+                    </Text>
+                  : <Text style={[styles.regularAccountText, styles.redText]}>
+                      Status: Requires Attention
+                    </Text>}
               <Text style={styles.regularAccountText}>
                 {institutionName}
               </Text>
@@ -154,7 +159,7 @@ class BankConnections extends Component {
                     onPress={() =>
                       this.setState({ showConfirmationModalForID: id })}
                   >
-                    <Text style={styles.blueText}>UNLINK</Text>
+                    <Text style={styles.blueButtonText}>UNLINK</Text>
                   </TouchableOpacity>
                   {sync.status === "good"
                     ? <TouchableOpacity
@@ -166,20 +171,24 @@ class BankConnections extends Component {
                             accounts
                           })}
                       >
-                        <Text style={styles.blueText}>SET AS PRIMARY</Text>
+                        <Text style={styles.blueButtonText}>
+                          SET AS PRIMARY
+                        </Text>
                       </TouchableOpacity>
-                    : false &&
-                      <TouchableOpacity
-                        activeOpacity={0.6}
-                        style={styles.accountButton}
-                        onPress={() =>
-                          this.props.navigation.navigate("IntegrateBank", {
-                            step: LINK_STEPS.INFO,
-                            connection: { quovoConnectionID }
-                          })}
-                      >
-                        <Text style={styles.blueText}>RECONNECT</Text>
-                      </TouchableOpacity>}
+                    : !sync.status ||
+                      ["postponed", "maintenance"].includes(sync.status)
+                      ? <React.Fragment />
+                      : <TouchableOpacity
+                          activeOpacity={0.6}
+                          style={styles.accountButton}
+                          onPress={() =>
+                            this.props.navigation.navigate("IntegrateBank", {
+                              step: LINK_STEPS.INFO,
+                              connection: { quovoConnectionID }
+                            })}
+                        >
+                          <Text style={styles.blueButtonText}>FIX NOW</Text>
+                        </TouchableOpacity>}
                 </View>
               : <Spinner color={colors.blue} />)}
         </TouchableOpacity>

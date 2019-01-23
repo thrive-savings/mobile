@@ -1,8 +1,5 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet } from "react-native";
 import colors from "../../theme/colors";
-
-const screen = Dimensions.get("window");
-const deviceWidth = screen.width;
 
 export default StyleSheet.create({
   // Overall Layout
@@ -37,19 +34,21 @@ export default StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: 20
+    marginTop: 10,
+    marginHorizontal: -10
   },
   accountButton: {
-    width: deviceWidth / 2 - 50,
+    flex: 1,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 20,
     borderWidth: 1,
     borderColor: colors.blue,
-    height: 35
+    height: 30,
+    marginHorizontal: 5
   },
-  blueText: {
+  blueButtonText: {
     paddingHorizontal: 10,
     color: colors.blue,
     fontSize: 13,
@@ -79,11 +78,14 @@ export default StyleSheet.create({
     lineHeight: 20,
     letterSpacing: 0.5
   },
+  greyText: {
+    color: colors.darkestGrey
+  },
   redText: {
     color: colors.error
   },
-  greyText: {
-    color: colors.darkestGrey
+  blueText: {
+    color: colors.blue
   },
 
   // Logo style
