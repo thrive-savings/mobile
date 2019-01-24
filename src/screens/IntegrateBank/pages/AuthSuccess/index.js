@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { View, ScrollView, Image, Text } from "react-native";
+import { connect } from "react-redux";
 
 import Dots from "../../../../components/Dots";
 import SpecialButton from "../../../../components/SpecialButton";
@@ -21,8 +22,34 @@ class AuthSuccess extends Component {
     }
   }
 
+  getContent() {
+    const {
+      actionType,
+      integrateBankReducer: { connection: { sync: { status } = {} } = {} }
+    } = this.props;
+
+    const content = {
+      title: "SUCCESS!",
+      description:
+        "You’ve successfully linked your Thrive Savings account with your Bank."
+    };
+
+    if (actionType !== ACTION_TYPES.SET_DEFAULT) {
+      if (!status || ["postponed", "maintenance"].includes(status)) {
+        content.title = "...";
+        content.description = "Still loading, give us some more time.";
+      } else if (status !== "good") {
+        content.title = "...";
+        content.description = "Additional Information Required";
+      }
+    }
+
+    return content;
+  }
+
   render() {
     const { actionType } = this.props;
+    const { title, description } = this.getContent();
 
     return (
       <ScrollView
@@ -31,10 +58,12 @@ class AuthSuccess extends Component {
       >
         <Dots step={3} count={3} />
 
-        <Text style={styles.titleText}>SUCCESS!</Text>
+        <Text style={styles.titleText}>
+          {title}
+        </Text>
         <Image source={thriveBot} style={styles.botSymbol} />
         <Text style={styles.secondaryTitleText}>
-          You’ve successfully linked your Thrive Savings account with your Bank.
+          {description}
         </Text>
         {actionType === ACTION_TYPES.INITAL &&
           <Text style={styles.regularText}>
@@ -59,4 +88,10 @@ AuthSuccess.defaultProps = {
   actionType: ACTION_TYPES.INITIAL
 };
 
-export default AuthSuccess;
+function mapStateToProps(state) {
+  return {
+    integrateBankReducer: state.integrateBankReducer
+  };
+}
+
+export default connect(mapStateToProps)(AuthSuccess);

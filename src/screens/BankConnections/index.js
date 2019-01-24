@@ -10,6 +10,8 @@ import {
 import { Spinner } from "native-base";
 import { connect } from "react-redux";
 
+import amplitude from "../../globals/amplitude";
+
 import Header from "../../components/Header";
 import ModalTemplate from "../../components/ModalTemplate";
 import SpecialButton from "../../components/SpecialButton";
@@ -36,6 +38,10 @@ class BankConnections extends Component {
     };
 
     this.onConnectionClick = this.onConnectionClick.bind(this);
+  }
+
+  componentDidMount() {
+    amplitude.track(amplitude.events.BANK_CONNECTIONS_VIEW);
   }
 
   onConnectionClick(connectionID) {

@@ -40,7 +40,7 @@ export default function integrateBankReducer(state = initialState, action) {
         error: action.error
       };
 
-    // Fetch Accounts cases
+    // Fetch Connection cases
     case `${FETCH_CONNECTION_URL}_SUCCEED`:
       const connection = action.payload.connection;
       const { sync: { status: syncStatus } = {} } = connection;
@@ -62,7 +62,7 @@ export default function integrateBankReducer(state = initialState, action) {
         error: action.error
       };
 
-    // Fetch Accounts cases
+    // Set Default Account cases
     case `${SET_DEFAULT_ACCOUNT_URL}_SUBMIT`:
       return {
         ...state,
