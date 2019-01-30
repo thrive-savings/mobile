@@ -8,7 +8,7 @@ import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
 import colors from "../../../../theme/colors";
 
-class History extends Component {
+class HistoryList extends Component {
   renderLabel() {
     return (
       <View style={styles.row}>
@@ -104,13 +104,13 @@ class History extends Component {
   }
 }
 
-History.propTypes = {
+HistoryList.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object),
   limit: PropTypes.number
 };
-History.defaultProps = {
+HistoryList.defaultProps = {
   data: [],
   limit: 5
 };
 
-export default History;
+export default HistoryList;

@@ -35,7 +35,7 @@ const bg = require("../../../assets/Backgrounds/BackgroundAccount.png");
 const filledStarIcon = require("../../../assets/Icons/Star/Blue/star.png");
 const emptyStarIcon = require("../../../assets/Icons/Star/Empty/star.png");
 
-class Home extends Component {
+class SavingsDashboard extends Component {
   constructor(props) {
     super(props);
 
@@ -275,4 +275,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(addStatusBar(Home));
+export default connect(mapStateToProps, mapDispatchToProps)(addStatusBar(SavingsDashboard));

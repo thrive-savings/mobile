@@ -14,7 +14,8 @@ import Landing from "./screens/Landing";
 import Login from "./screens/Login/";
 import ForgotPassword from "./screens/ForgotPassword";
 import SignUp from "./screens/SignUp/";
-import Home from "./screens/Home";
+import SavingsDashboard from "./screens/SavingsDashboard";
+import DebtDashboard from "./screens/DebtDashboard";
 import Sidebar from "./screens/Sidebar";
 import Profile from "./screens/Profile";
 import Settings from "./screens/Settings";
@@ -22,7 +23,7 @@ import SetPhone from "./screens/SetPhone";
 import IntegrateBank from "./screens/IntegrateBank";
 import BankConnections from "./screens/BankConnections";
 import SavingPreferences from "./screens/SavingPreferences";
-import SavingHistory from "./screens/SavingHistory";
+import History from "./screens/History";
 import SavingGoals from "./screens/SavingGoals";
 import PP from "./screens/PP";
 import TOS from "./screens/TOS";
@@ -32,15 +33,16 @@ import Contact from "./screens/Contact";
 const Drawer = createDrawerNavigator(
   {
     Profile: { screen: Profile },
-    Home: { screen: Home },
-    SavingHistory: { screen: SavingHistory },
+    SavingsDashboard: { screen: SavingsDashboard },
+    DebtDashboard: { screen: DebtDashboard },
+    History: { screen: History },
     BankConnections: { screen: BankConnections },
     Settings: { screen: Settings },
     Faq: { screen: Faq },
     Contact: { screen: Contact }
   },
   {
-    initialRouteName: "Home",
+    initialRouteName: "SavingsDashboard",
     contentComponent: props => <Sidebar {...props} />
   }
 );

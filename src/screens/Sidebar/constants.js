@@ -6,18 +6,18 @@ export const TOP_MENU_ITEMS = [
   {
     displayName: "MY SAVINGS",
     icon: savingsIcon,
-    screen: "Home"
+    screen: "SavingsDashboard"
   },
-  /* {
+  {
     displayName: "MY DEBT",
     icon: savingsIcon,
-    screen: "Home",
+    screen: "DebtDashboard",
     premium: true
-  }, */
+  },
   {
     displayName: "HISTORY",
     icon: historyIcon,
-    screen: "SavingHistory"
+    screen: "History"
   },
   {
     displayName: "LINKED BANKS",

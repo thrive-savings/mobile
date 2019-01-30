@@ -14,8 +14,8 @@ import addStatusBar from "../../components/StatusBar";
 
 import amplitude from "../../globals/amplitude";
 
-// import Chart from "./pages/Chart";
-import History from "./pages/History";
+// import HistoryChart from "./pages/Chart";
+import HistoryList from "./pages/List";
 
 import { getSplitDollarStrings } from "../../globals/helpers";
 
@@ -27,7 +27,7 @@ import { fetchHistory } from "./state/actions";
 
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
 
-class SavingHistory extends Component {
+class History extends Component {
   constructor(props) {
     super(props);
 
@@ -44,7 +44,7 @@ class SavingHistory extends Component {
   }
 
   componentWillMount() {
-    const { data } = this.props.savingHistoryReducer;
+    const { data } = this.props.historyReducer;
 
     const fetchArgs = { fromDate: "-1" };
     if (Object.keys(data).length) {
@@ -68,7 +68,7 @@ class SavingHistory extends Component {
 
   renderSubHeader() {
     const { beforeDot: balanceBD, afterDot: balanceAD } = getSplitDollarStrings(
-      this.props.savingHistoryReducer.data.totalSavings
+      this.props.historyReducer.data.totalSavings
     );
     return (
       <View style={styles.subHeader}>
@@ -116,7 +116,7 @@ class SavingHistory extends Component {
 
   render() {
     const { historyLimit, viewingAll } = this.state;
-    const { data: { history } } = this.props.savingHistoryReducer;
+    const { data: { history } } = this.props.historyReducer;
 
     return (
       <ImageBackground source={bg} style={globalStyles.background}>
@@ -132,7 +132,7 @@ class SavingHistory extends Component {
           contentContainerStyle={styles.contentContainer}
         >
           {!viewingAll && this.renderSubHeader()}
-          <History data={history} limit={viewingAll ? -1 : historyLimit} />
+          <HistoryList data={history} limit={viewingAll ? -1 : historyLimit} />
           {!viewingAll && this.renderButtons()}
         </ScrollView>
       </ImageBackground>
@@ -142,7 +142,7 @@ class SavingHistory extends Component {
 
 function mapStateToProps(state) {
   return {
-    savingHistoryReducer: state.savingHistoryReducer
+    historyReducer: state.historyReducer
   };
 }
 
@@ -153,5 +153,5 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  addStatusBar(SavingHistory)
+  addStatusBar(History)
 );

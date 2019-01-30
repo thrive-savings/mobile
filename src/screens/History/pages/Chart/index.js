@@ -4,7 +4,7 @@ import { View, Text } from "react-native";
 import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
 
-class Chart extends Component {
+class HistoryChart extends Component {
   render() {
     return (
       <View style={[styles.container, globalStyles.shadow]}>
@@ -14,4 +14,4 @@ class Chart extends Component {
   }
 }
 
-export default Chart;
+export default HistoryChart;

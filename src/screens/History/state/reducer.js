@@ -6,7 +6,7 @@ const initialState = {
   errorMessage: ""
 };
 
-export default function savingHistoryReducer(state = initialState, action) {
+export default function historyReducer(state = initialState, action) {
   switch (action.type) {
     //Save Phone cases
     case `${FETCH_HISTORY_URL}_SUBMIT`:
