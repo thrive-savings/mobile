@@ -9,7 +9,6 @@ import ChooseCategory from "./pages/ChooseCategory";
 import GoalDetail from "./pages/GoalDetail";
 import EditGoal from "./pages/EditGoal";
 
-import { updateOnboardingStep } from "../Login/state/actions";
 import { setSucceedFlagOff } from "./state/actions";
 
 import globalStyles from "../../globals/globalStyles";
@@ -99,13 +98,7 @@ class SavingGoals extends Component {
     if (this.state.step > 0) {
       this.setState({ step: this.state.step - 1 });
     } else {
-      if (this.props.onboardingStep === "SavingGoals") {
-        this.props.updateOnboardingStep({
-          data: { onboardingStep: "SavingPreferences" }
-        });
-      } else {
-        this.props.navigation.goBack();
-      }
+      this.props.navigation.goBack();
     }
   }
 
@@ -131,14 +124,12 @@ class SavingGoals extends Component {
 
 function mapStateToProps(state) {
   return {
-    onboardingStep: state.authReducer.data.authorized.onboardingStep,
     goalsReducer: state.goalsReducer
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    updateOnboardingStep: payload => dispatch(updateOnboardingStep(payload)),
     setSucceedFlagOff: () => dispatch(setSucceedFlagOff())
   };
 }

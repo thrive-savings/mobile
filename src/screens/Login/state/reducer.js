@@ -5,10 +5,8 @@ import {
   BONUS_NOTIFICATION_SEEN,
   UPDATE_AUTH_DATA,
   UPDATE_CONNECTION_DATA,
-  UPDATE_ACCOUNT_DATA,
   UPDATE_GOALS_DATA,
-  UPDATE_AVATAR,
-  UPDATE_ONBOARDING_STEP
+  UPDATE_AVATAR
 } from "./constants";
 const initialState = {
   data: {},
@@ -86,26 +84,6 @@ export default function authReducer(state = initialState, action) {
         }
       };
 
-    // Update Account case
-    case UPDATE_ACCOUNT_DATA:
-      const { payload: { authorized: { account } } } = action;
-      const dataOnAccountUpdate = state.data.authorized;
-      const newOnboardingStep = dataOnAccountUpdate.relinkRequired
-        ? undefined
-        : "SavingPreferences";
-      return {
-        ...state,
-        data: {
-          authorized: {
-            ...dataOnAccountUpdate,
-            account,
-            bankLinked: true,
-            relinkRequired: false,
-            onboardingStep: newOnboardingStep
-          }
-        }
-      };
-
     // Update Goals case
     case `${UPDATE_GOALS_DATA}`:
       const { payload: { data: { goals } } } = action;
@@ -127,20 +105,6 @@ export default function authReducer(state = initialState, action) {
       return {
         ...state,
         avatar: newAvatar
-      };
-
-    //Update Onboarding Step
-    case `${UPDATE_ONBOARDING_STEP}`:
-      const { payload: { data: { onboardingStep } } } = action;
-      const dataOnOnboardingStepUpdate = state.data.authorized;
-      return {
-        ...state,
-        data: {
-          authorized: {
-            ...dataOnOnboardingStepUpdate,
-            onboardingStep
-          }
-        }
       };
 
     //Log In cases

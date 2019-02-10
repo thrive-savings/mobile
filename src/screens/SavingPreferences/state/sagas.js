@@ -6,7 +6,6 @@ import {
 } from "./constants";
 import { put, takeEvery } from "redux-saga/effects";
 import { requestApi } from "../../../globals/requestApi";
-import { updateOnboardingStep } from "../../Login/state/actions";
 
 const setWorkTypeSaga = function*() {
   yield takeEvery(`${SET_WORK_TYPE_URL}_SUBMIT`, function*({ payload }) {
@@ -32,18 +31,9 @@ const preferencesInitialSetDoneSaga = function*() {
   });
 };
 
-const preferencesInitialSetDoneSucceedSaga = function*() {
-  yield takeEvery(`${PREFERENCES_INITIAL_SET_DONE}_SUCCEED`, function*({
-    payload
-  }) {
-    yield put(updateOnboardingStep(payload));
-  });
-};
-
 export {
   setWorkTypeSaga,
   setSavingTypeSaga,
   setSavingDetailsSaga,
-  preferencesInitialSetDoneSaga,
-  preferencesInitialSetDoneSucceedSaga
+  preferencesInitialSetDoneSaga
 };
