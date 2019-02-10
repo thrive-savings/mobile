@@ -12,6 +12,7 @@ import savingPreferencesReducer from "../screens/SavingPreferences/state/reducer
 import profileReducer from "../screens/Profile/state/reducer";
 import goalsReducer from "../screens/SavingGoals/state/reducer";
 import historyReducer from "../screens/History/state/reducer";
+import debtReducer from "../screens/DebtDashboard/state/reducer";
 
 import { CLEAR_STORAGE } from "../globals/clearStorage";
 
@@ -25,7 +26,8 @@ const appReducer = combineReducers({
   savingPreferencesReducer,
   profileReducer,
   goalsReducer,
-  historyReducer
+  historyReducer,
+  debtReducer
 });
 
 const rootReducer = (state, action) => {

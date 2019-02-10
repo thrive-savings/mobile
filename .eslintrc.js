@@ -9,7 +9,7 @@ module.exports = {
     jest: true
   },
 
-  plugins: ["flowtype", "prettier", "react"],
+  plugins: ["prettier", "react"],
 
   // Map from global var to bool specifying if it can be redefined
   globals: {
@@ -50,13 +50,7 @@ module.exports = {
   },
 
   rules: {
-    // Flow Plugin
-    // The following rules are made available via `eslint-plugin-flowtype`
-    "flowtype/define-flow-type": 1,
-    "flowtype/use-flow-type": 1,
-
     // General
-
     "comma-dangle": 0, // disallow trailing commas in object literals
     "no-cond-assign": 1, // disallow assignment in conditional expressions
     "no-console": 1, // disallow use of console (off by default in the node environment)
