@@ -92,5 +92,24 @@ export default StyleSheet.create({
   bankLogo: {
     width: 60,
     height: 60
+  },
+
+  // Empty state styles
+  emptyContentArea: {
+    backgroundColor: "white",
+    borderRadius: 8,
+    marginVertical: 10,
+    paddingVertical: 20,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  emptyStateText: {
+    textAlign: "center",
+    color: colors.blue,
+    fontSize: 13,
+    fontFamily: "LatoRegular",
+    letterSpacing: 0.5,
+    paddingHorizontal: 20,
+    paddingTop: 20
   }
 });

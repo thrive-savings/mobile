@@ -26,6 +26,7 @@ import colors from "../../theme/colors";
 
 import { bankLogoUrl } from "../../globals/logoUrls";
 
+const bankSymbol = require("../../../assets/Icons/BankSymbol/bankSymbolGradient.png");
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
 
 class BankConnections extends Component {
@@ -94,6 +95,35 @@ class BankConnections extends Component {
       const [defaultConnection] = connections.splice(defaultConnectionIndex, 1);
       connections.unshift(defaultConnection);
     }
+  }
+
+  openLinkingFlow() {
+    this.props.navigation.navigate("IntegrateBank", {
+      step: LINK_STEPS.AUTH,
+      newConnection: true
+    });
+  }
+
+  renderEmpty() {
+    return (
+      <View style={[styles.emptyContentArea, globalStyles.shadow]}>
+        <Image
+          source={bankSymbol}
+          style={styles.bankLogo}
+        />
+        <Text style={styles.emptyStateText}>
+          You haven't connected any bank account yet.
+        </Text>
+        <Text style={[styles.emptyStateText, styles.bottomPadder]}>
+          Connect one now and let Thrive do the rest.
+        </Text>
+        <SpecialButton
+          style={styles.connectButton}
+          text="CONNECT YOUR BANK"
+          onClick={() => this.openLinkingFlow()}
+        />
+      </View>
+    );
   }
 
   renderConnections() {
@@ -203,6 +233,9 @@ class BankConnections extends Component {
 
   render() {
     const { showConfirmationModalForID } = this.state;
+    const {
+      userData: { connections = [] }
+    } = this.props;
 
     return (
       <ImageBackground source={bg} style={globalStyles.background}>
@@ -216,18 +249,16 @@ class BankConnections extends Component {
           showsVerticalScrollIndicator={false}
           style={styles.contentContainer}
         >
-          {this.renderConnections()}
+          {connections.length ? this.renderConnections() : this.renderEmpty()}
         </ScrollView>
-        <SpecialButton
-          style={styles.connectButton}
-          text="CONNECT ANOTHER BANK"
-          onClick={() => {
-            this.props.navigation.navigate("IntegrateBank", {
-              step: LINK_STEPS.AUTH,
-              newConnection: true
-            });
-          }}
-        />
+        {
+          connections.length > 0 &&
+            <SpecialButton
+              style={styles.connectButton}
+              text="CONNECT ANOTHER BANK"
+              onClick={() => this.openLinkingFlow()}
+            />
+        }
         <ModalTemplate
           show={typeof showConfirmationModalForID !== "undefined"}
           buttonText={"YES"}
