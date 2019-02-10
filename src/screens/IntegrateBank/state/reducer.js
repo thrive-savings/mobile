@@ -1,5 +1,6 @@
 import {
   FETCH_CONNECTION_URL,
+  SET_DEFAULT_AUTH_ACCOUNT_URL,
   SET_DEFAULT_ACCOUNT_URL,
   UNLINK_CONNECTION_URL,
   GET_UI_TOKEN,
@@ -42,20 +43,26 @@ export default function integrateBankReducer(state = initialState, action) {
 
     // Fetch Connection cases
     case `${FETCH_CONNECTION_URL}_SUCCEED`:
-      const connection = action.payload.connection;
-      const { sync: { status: syncStatus } = {} } = connection;
       return {
         ...state,
-        connection,
-        step:
-          syncStatus &&
-          syncStatus !== "incorrect_credentials" &&
-          syncStatus !== "challenges"
-            ? syncStatus === "good" ? LINK_STEPS.ACCOUNT : LINK_STEPS.FINAL
-            : state.step,
+        connection: action.payload.connection,
         loadingState: LOADING_STATES.NONE
       };
     case `${FETCH_CONNECTION_URL}_FAIL`:
+      return {
+        ...state,
+        loadingState: LOADING_STATES.NONE,
+        error: action.error
+      };
+
+    // Set Default Auth Account cases
+    case `${SET_DEFAULT_AUTH_ACCOUNT_URL}_SUCCEED`:
+      return {
+        ...state,
+        connection: action.payload.connection,
+        loadingState: LOADING_STATES.NONE
+      };
+    case `${SET_DEFAULT_AUTH_ACCOUNT_URL}_FAIL`:
       return {
         ...state,
         loadingState: LOADING_STATES.NONE,
@@ -72,7 +79,6 @@ export default function integrateBankReducer(state = initialState, action) {
       return {
         ...state,
         allConnections: action.payload.connections,
-        step: LINK_STEPS.FINAL,
         loadingState: LOADING_STATES.NONE
       };
     case `${SET_DEFAULT_ACCOUNT_URL}_FAIL`:
@@ -89,12 +95,10 @@ export default function integrateBankReducer(state = initialState, action) {
         loadingState: LOADING_STATES.UNLINKING_CONNECTION
       };
     case `${UNLINK_CONNECTION_URL}_SUCCEED`:
-      return initialState;
-    case `${UNLINK_CONNECTION_URL}_FAIL`:
-      return {
+      const fromQuovo = action.payload.fromQuovo;
+      return fromQuovo ? initialState : {
         ...state,
         loadingState: LOADING_STATES.NONE,
-        error: action.error
       };
 
     // Change Bank Step cases

@@ -9,13 +9,14 @@ import amplitude from "../../../../globals/amplitude";
 
 import {
   fetchConnection,
+  setDefaultAuthAccount,
+  unlinkConnection,
   getUiToken,
   changeBankStep
 } from "../../state/actions";
 import {
   LOADING_STATES,
-  ACTION_TYPES,
-  LINK_STEPS
+  ACTION_TYPES
 } from "../../state/constants";
 
 import styles from "./styles";
@@ -42,7 +43,7 @@ class AuthenticateBank extends Component {
 
     const {
       event,
-      data: { connection: { id: connectionID } = {} } = {},
+      data: { connection: { id: connectionID } = {}, account: { id: accountID } = {} } = {},
       error
     } = msgData;
 
@@ -52,23 +53,14 @@ class AuthenticateBank extends Component {
         case "onSync":
           this.props.fetchConnection({ connectionID });
           break;
+        case "onAuthAccountSelected":
+          this.props.setDefaultAuthAccount({ accountID });
+          break;
+        case "onDelete":
+          this.props.unlinkConnection({ connectionID: connectionID.toString(), fromQuovo: false });
+          break;
         case "onClose":
-          const {
-            connection: {
-              quovoConnectionID: curConnectionID,
-              sync: { status: curSyncStatus } = {}
-            } = {}
-          } = this.props.integrateBankReducer;
-          if (curConnectionID) {
-            this.props.changeBankStep({
-              step:
-                curSyncStatus && curSyncStatus === "good"
-                  ? LINK_STEPS.ACCOUNT
-                  : LINK_STEPS.FINAL
-            });
-          } else {
-            this.props.changeBankStep();
-          }
+          this.props.onQuovoClose();
           break;
         default:
           break;
@@ -78,11 +70,13 @@ class AuthenticateBank extends Component {
 
   render() {
     const {
-      integrateBankReducer: { loadingState, quovoUiToken },
+      integrateBankReducer: { loadingState: loadingStateFromReducer, quovoUiToken },
       actionType,
       connection: connectionToFix,
       userData: { userType }
     } = this.props;
+
+    const loadingState = loadingStateFromReducer === LOADING_STATES.UNLINKING_CONNECTION ? LOADING_STATES.NONE : loadingStateFromReducer;
 
     return (
       <React.Fragment>
@@ -113,6 +107,7 @@ class AuthenticateBank extends Component {
 }
 
 AuthenticateBank.propTypes = {
+  onQuovoClose: PropTypes.func.isRequired,
   actionType: PropTypes.oneOf(Object.values(ACTION_TYPES))
 };
 AuthenticateBank.defaultProps = {
@@ -129,6 +124,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     fetchConnection: (payload = {}) => dispatch(fetchConnection(payload)),
+    setDefaultAuthAccount: (payload = {}) => dispatch(setDefaultAuthAccount(payload)),
+    unlinkConnection: (payload = {}) => dispatch(unlinkConnection(payload)),
     getUiToken: () => dispatch(getUiToken()),
     changeBankStep: (payload = {}) => dispatch(changeBankStep(payload))
   };

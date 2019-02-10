@@ -12,6 +12,7 @@ import AuthenticateBank from "./pages/AuthenticateBank";
 import ChooseAccount from "./pages/ChooseAccount";
 import AuthSuccess from "./pages/AuthSuccess";
 
+import { fetchDebts } from "../DebtDashboard/state/actions";
 import { changeBankStep, updateUserConnections } from "./state/actions";
 import { LINK_STEPS, ACTION_TYPES } from "./state/constants";
 
@@ -36,7 +37,32 @@ class IntegrateBank extends Component {
   };
 
   goBack = () => {
+    const {
+      navigation: { state: { params: { comingFromDebts = false } = {} } = {} }
+    } = this.props;
+    if (comingFromDebts) {
+      this.props.fetchDebts();
+    }
+
     this.props.navigation.goBack();
+  };
+
+  onQuovoClose = () => {
+    const {
+      integrateBankReducer: {
+        connection: {
+          quovoConnectionID: curConnectionID,
+        } = {}
+      },
+      navigation: { state: { params: { step: stepFromNavigation } = {} } = {} }
+    } = this.props;
+
+    this.props.changeBankStep();
+
+    if (curConnectionID || typeof stepFromNavigation !== "undefined") {
+      this.updateConnectionsData();
+      this.goBack();
+    }
   };
 
   onBackPress = () => {
@@ -111,6 +137,7 @@ class IntegrateBank extends Component {
             <AuthenticateBank
               connection={connectionToFix}
               actionType={actionType}
+              onQuovoClose={this.onQuovoClose}
             />
           </View>
         );
@@ -120,6 +147,7 @@ class IntegrateBank extends Component {
             <ChooseAccount
               actionType={actionType}
               accounts={providedAccounts}
+              goBack={this.goBack}
             />
           </ScrollView>
         );
@@ -171,6 +199,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    fetchDebts: (payload = {}) => dispatch(fetchDebts(payload)),
     changeBankStep: (payload = {}) => dispatch(changeBankStep(payload)),
     updateUserConnections: (payload = {}) =>
       dispatch(updateUserConnections(payload))

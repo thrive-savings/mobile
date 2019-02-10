@@ -8,8 +8,6 @@ import globalErrorMessage from "../../../../globals/errorMessage";
 
 import amplitude from "../../../../globals/amplitude";
 
-import Dots from "../../../../components/Dots";
-
 import { setDefaultAccount, changeBankStep } from "../../state/actions";
 import {
   LINK_STEPS,
@@ -47,6 +45,7 @@ class ChooseAccount extends Component {
         this.props.setDefaultAccount({
           accountID: selectedAccountID
         });
+        this.props.goBack();
       } else {
         Toast.show({
           text: "Choose Default Account",
@@ -91,21 +90,20 @@ class ChooseAccount extends Component {
       ACTION_TYPES.SET_DEFAULT
     ].includes(actionType);
 
-    const accountsView = accounts.map(({ id, name, nickname }) => {
-      const isSelected = this.state.selectedAccountID === id;
-      return (
-        <TouchableOpacity
-          key={id}
-          activeOpacity={0.6}
-          style={styles.accountRow}
-          onPress={() => {
-            if (letUserSetDefault) {
-              this.setState({ selectedAccountID: id });
-            }
-          }}
-        >
-          {letUserSetDefault &&
-            (isSelected
+    const selectableAccountsView = [];
+    const unselectableAccountsView = [];
+
+    accounts.forEach(({ id, name, nickname, type }) => {
+      if (letUserSetDefault && ["Checking", "Savings"].includes(type)) {
+        const isSelected = this.state.selectedAccountID === id;
+        selectableAccountsView.push(
+          <TouchableOpacity
+            key={id}
+            activeOpacity={0.6}
+            style={styles.accountRow}
+            onPress={() => this.setState({ selectedAccountID: id })}
+          >
+            {isSelected
               ? <Svg width={16} height={16}>
                   <Svg.Circle
                     cx="8"
@@ -126,17 +124,40 @@ class ChooseAccount extends Component {
                     stroke={colors.darkerGrey}
                     fill={"white"}
                   />
-                </Svg>)}
-          <Text
-            style={[
-              styles.accountTitleText,
-              (isSelected || !letUserSetDefault) && styles.selectedTitleText
-            ]}
+                </Svg>}
+            <Text
+              style={[
+                styles.accountTitleText,
+                isSelected && styles.selectedTitleText
+              ]}
+            >
+              {type + " - " + nickname + " - " + name}
+            </Text>
+          </TouchableOpacity>
+        );
+      } else {
+        const view = (
+          <View
+            key={id}
+            style={styles.accountRow}
           >
-            {nickname + " - " + name}
-          </Text>
-        </TouchableOpacity>
-      );
+            <Text
+              style={[
+                styles.accountTitleText,
+                !letUserSetDefault && styles.selectedTitleText
+              ]}
+            >
+              {type + " - " + nickname + " - " + name}
+            </Text>
+          </View>
+        );
+
+        if (letUserSetDefault) {
+          unselectableAccountsView.push(view);
+        } else {
+          selectableAccountsView.push(view);
+        }
+      }
     });
 
     const bankColor = colors.banks[bank];
@@ -153,10 +174,18 @@ class ChooseAccount extends Component {
         <Image source={bankIcon} />
         <Text style={styles.bankBoxLabel}>
           {letUserSetDefault
-            ? "Please select your primary chequing account. This is where you perform your everyday banking."
+            ? "Please select your primary bank account. This is where Thrive will pull your savings from."
             : "We have fetched the following accounts from your bank."}
         </Text>
-        {accountsView}
+        {selectableAccountsView}
+        {unselectableAccountsView.length > 0 && (
+          <React.Fragment>
+            <Text style={styles.bankBoxLabel}>
+              You can only set Chequing or Savings account as your primary.
+            </Text>
+            {unselectableAccountsView}
+          </React.Fragment>
+        )}
         {loadingState === LOADING_STATES.SETTING_DEFAULT_ACCOUNT
           ? <Spinner color={colors.blue} />
           : <TouchableOpacity
@@ -206,8 +235,7 @@ class ChooseAccount extends Component {
 
     return (
       <View style={styles.container}>
-        <Dots step={2} count={3} />
-        <Text style={styles.titleText}>LINK YOUR BANK ACCOUNT</Text>
+        <Text style={styles.titleText}>SET PRIMARY ACCOUNT</Text>
         {loadingState === LOADING_STATES.FETCHING_CONNECTION
           ? <View>
               <Text style={styles.bankBoxLabel}>Fetching Accounts ...</Text>

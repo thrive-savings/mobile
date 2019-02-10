@@ -1,5 +1,6 @@
 import {
   FETCH_CONNECTION_URL,
+  SET_DEFAULT_AUTH_ACCOUNT_URL,
   SET_DEFAULT_ACCOUNT_URL,
   UNLINK_CONNECTION_URL,
   UPDATE_USER_CONNECTIONS,
@@ -21,9 +22,21 @@ const fetchConnectionSaga = function*() {
   });
 };
 
+const setDefaultAuthAccountSaga = function*() {
+  yield takeEvery(`${SET_DEFAULT_AUTH_ACCOUNT_URL}_SUBMIT`, function*({ payload }) {
+    yield put(requestApi(`${SET_DEFAULT_AUTH_ACCOUNT_URL}`, { data: payload }));
+  });
+};
+
 const setDefaultAccountSaga = function*() {
   yield takeEvery(`${SET_DEFAULT_ACCOUNT_URL}_SUBMIT`, function*({ payload }) {
     yield put(requestApi(`${SET_DEFAULT_ACCOUNT_URL}`, { data: payload }));
+  });
+};
+
+const setDefaultAccountSucceedSaga = function*() {
+  yield takeEvery(`${SET_DEFAULT_ACCOUNT_URL}_SUCCEED`, function*({ payload }) {
+    yield put(updateConnectionsData(payload));
   });
 };
 
@@ -48,7 +61,9 @@ const updateUserConnectionsSaga = function*() {
 export {
   getUiTokenSaga,
   fetchConnectionSaga,
+  setDefaultAuthAccountSaga,
   setDefaultAccountSaga,
+  setDefaultAccountSucceedSaga,
   unlinkConnectionSaga,
   unlinkConnectionSucceedSaga,
   updateUserConnectionsSaga

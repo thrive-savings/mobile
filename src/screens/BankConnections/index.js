@@ -34,7 +34,7 @@ class BankConnections extends Component {
 
     this.state = {
       expandedConnectionID: -1,
-      showConfirmationModalForID: -1
+      showConfirmationModalForID: undefined
     };
 
     this.onConnectionClick = this.onConnectionClick.bind(this);
@@ -64,7 +64,7 @@ class BankConnections extends Component {
     const { connections = [] } = this.props.userData;
     let institutionName;
     connections.forEach(connection => {
-      if (connection.id === connectionID) {
+      if (connection.quovoConnectionID === connectionID) {
         institutionName = connection.institutionName;
         return;
       }
@@ -110,7 +110,7 @@ class BankConnections extends Component {
         isDefault,
         quovoConnectionID,
         institutionName,
-        sync,
+        sync: { status: syncStatus } = {},
         accounts,
         institution: { logoFolder: bankLogoFolderName = "ThriveBank" } = {}
       }) =>
@@ -126,12 +126,12 @@ class BankConnections extends Component {
               style={styles.bankLogo}
             />
             <View style={styles.accountInfoContainer}>
-              {sync.status === "good"
+              {syncStatus === "good"
                 ? <Text style={[styles.regularAccountText, styles.greyText]}>
                     Status: Good
                   </Text>
-                : !sync.status ||
-                  ["postponed", "maintenance"].includes(sync.status)
+                : !syncStatus ||
+                  ["postponed", "maintenance"].includes(syncStatus)
                   ? <Text style={[styles.regularAccountText, styles.blueText]}>
                       Status: Loading...
                     </Text>
@@ -163,11 +163,11 @@ class BankConnections extends Component {
                     activeOpacity={0.6}
                     style={styles.accountButton}
                     onPress={() =>
-                      this.setState({ showConfirmationModalForID: id })}
+                      this.setState({ showConfirmationModalForID: quovoConnectionID })}
                   >
                     <Text style={styles.blueButtonText}>UNLINK</Text>
                   </TouchableOpacity>
-                  {sync.status === "good"
+                  {syncStatus === "good"
                     ? <TouchableOpacity
                         activeOpacity={0.6}
                         style={styles.accountButton}
@@ -181,15 +181,15 @@ class BankConnections extends Component {
                           SET AS PRIMARY
                         </Text>
                       </TouchableOpacity>
-                    : !sync.status ||
-                      ["postponed", "maintenance"].includes(sync.status)
+                    : !syncStatus ||
+                      ["postponed", "maintenance"].includes(syncStatus)
                       ? <React.Fragment />
                       : <TouchableOpacity
                           activeOpacity={0.6}
                           style={styles.accountButton}
                           onPress={() =>
                             this.props.navigation.navigate("IntegrateBank", {
-                              step: LINK_STEPS.INFO,
+                              step: LINK_STEPS.AUTH,
                               connection: { quovoConnectionID }
                             })}
                         >
@@ -223,22 +223,22 @@ class BankConnections extends Component {
           text="CONNECT ANOTHER BANK"
           onClick={() => {
             this.props.navigation.navigate("IntegrateBank", {
-              step: LINK_STEPS.INFO,
+              step: LINK_STEPS.AUTH,
               newConnection: true
             });
           }}
         />
         <ModalTemplate
-          show={showConfirmationModalForID > 0}
+          show={typeof showConfirmationModalForID !== "undefined"}
           buttonText={"YES"}
           onButtonClick={() => {
             this.props.unlinkConnection({
               connectionID: showConfirmationModalForID
             });
-            this.setState({ showConfirmationModalForID: -1 });
+            this.setState({ showConfirmationModalForID: undefined });
           }}
           content={this.getConfirmationModalContent(showConfirmationModalForID)}
-          onClose={() => this.setState({ showConfirmationModalForID: -1 })}
+          onClose={() => this.setState({ showConfirmationModalForID: undefined })}
         />
       </ImageBackground>
     );

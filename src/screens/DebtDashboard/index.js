@@ -9,32 +9,43 @@ import {
 } from "react-native";
 import { Card } from "native-base";
 import { connect } from "react-redux";
+import { Svg } from "expo";
 
 import SpecialButton from "../../components/SpecialButton";
 import Header from "../../components/Header";
-import ModalTemplate from "../../components/ModalTemplate";
 import addStatusBar from "../../components/StatusBar";
+
+import { fetchDebts } from "./state/actions";
 
 import { LINK_STEPS } from "../IntegrateBank/state/constants";
 
-import { getSplitDollarStrings } from "../../globals/helpers";
+import { getDollarString, getSplitDollarStrings } from "../../globals/helpers";
 import GOAL_CATEGORIES from "../../globals/goalCategories";
+
+import DebtDetails from "./pages/DebtDetails";
 
 import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
+import colors from "../../theme/colors"
 
 const bg = require("../../../assets/Backgrounds/BackgroundAccount.png");
-const filledStarIcon = require("../../../assets/Icons/Star/Blue/star.png");
-const emptyStarIcon = require("../../../assets/Icons/Star/Empty/star.png");
 const budgetIcon = require("../../../assets/Icons/Budget/budget.png");
 
-class SavingsDashboard extends Component {
+class DebtDashboard extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      showInfoModal: false
-    };
+    this.state = { debt: undefined };
+
+    this.onBackPress = this.onBackPress.bind(this);
+  }  
+
+  componentDidMount() {
+    this.props.fetchDebts();
+  }
+
+  onBackPress() {
+    this.setState({ debt: undefined });
   }
 
   getCCAccounts(connections) {
@@ -54,23 +65,9 @@ class SavingsDashboard extends Component {
     return ccAccounts;
   }
 
-  getInfoModalContent() {
-    return (
-      <View>
-        <Text style={[styles.infoContentText, styles.bottomPadder]}>
-          Prioritizing a goal increases the amount Thrive will set aside towards
-          that specific goal.
-        </Text>
-        <Text style={styles.infoContentText}>
-          You can prioritize a goal by editing your goal.
-        </Text>
-      </View>
-    );
-  }
-
-  renderCCBoxes(ccAccounts) {
-    return ccAccounts.map((account, index) => {
-      const { name, type } = account;
+  renderDebts(debts) {
+    return debts.map((debt, index) => {
+      const { amountPulled, amountToPay, status, account: { name, balance } = {} } = debt;
       const randomGoalLogo =
         GOAL_CATEGORIES[Object.keys(GOAL_CATEGORIES)[index]].icon;
 
@@ -79,28 +76,24 @@ class SavingsDashboard extends Component {
           key={index}
           activeOpacity={0.6}
           style={styles.ccHolder}
-          onPress={() => console.log("CC box click")}
+          onPress={() => this.setState({ debt })}
         >
           <Card style={styles.ccCard}>
             <View style={styles.ccRow}>
               <Image source={randomGoalLogo} />
-              <TouchableOpacity
-                activeOpacity={0.6}
-                style={styles.infoIconButton}
-                onPress={() => this.setState({ showInfoModal: true })}
-                hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-              >
-                <Image
-                  source={
-                    type === "Credit Card" ? filledStarIcon : emptyStarIcon
-                  }
-                />
-              </TouchableOpacity>
               <View style={styles.ccTextsContainer}>
-                <Text style={styles.ccLabelText}>{`CC ${index + 1}`}</Text>
-                <Text style={styles.ccNameText}>
+                <Text style={styles.ccBlackText}>
                   {name}
                 </Text>
+                <Text style={[styles.ccGreyText, styles.textsPadder]}>Next Payment: ---</Text>
+                <Text style={styles.ccGreyText}>Payment: <Text style={styles.ccDarkestGreyText}>{getDollarString(amountPulled)} / {getDollarString(amountToPay)}</Text></Text>
+                <Text style={[styles.ccGreyText, styles.textsPadder]}>Balance: <Text style={styles.ccDarkestGreyText}>{getDollarString(Math.abs(balance))}</Text></Text>
+                <View style={styles.ccStatusHolder}>
+                  <Svg width={10} height={10}>
+                    <Svg.Circle cx="4" cy="4" r={3} stokeWidth={1} stroke={colors.error} fill={status === "off" ? colors.error : colors.green} />
+                  </Svg>
+                  <Text style={[styles.ccGreyText, styles.ccStatusText]}>Auto Payments {status === "off" ? "OFF" : "ON"}</Text>
+                </View>
               </View>
             </View>
           </Card>
@@ -123,12 +116,16 @@ class SavingsDashboard extends Component {
     );
   }
 
-  render() {
-    const { navigation, userData: { connections = [], balance } } = this.props;
-    const ccAccounts = this.getCCAccounts(connections);
+  renderList() {
+    const { navigation, debtReducer: { debts = [] } } = this.props;
+
+    let totalDebtBalance = 0;
+    debts.map(({ amountPulled = 0 }) => {
+      totalDebtBalance += amountPulled;
+    });
 
     const { beforeDot: balanceBD, afterDot: balanceAD } = getSplitDollarStrings(
-      balance
+      totalDebtBalance
     );
 
     return (
@@ -153,41 +150,45 @@ class SavingsDashboard extends Component {
             contentContainerStyle={styles.content}
             showsVerticalScrollIndicator={false}
           >
-            {ccAccounts && ccAccounts.length > 0
-              ? this.renderCCBoxes(ccAccounts)
+            {debts.length > 0
+              ? this.renderDebts(debts)
               : this.renderEmpty()}
             <SpecialButton
               style={styles.addCcButton}
               text="+ ADD CREDIT CARD"
               onClick={() =>
                 navigation.navigate("IntegrateBank", {
-                  step: LINK_STEPS.INFO,
-                  newConnection: true
+                  step: LINK_STEPS.AUTH,
+                  newConnection: true,
+                  comingFromDebts: true
                 })}
             />
           </ScrollView>
         </View>
-        <ModalTemplate
-          show={this.state.showInfoModal}
-          buttonVisible={false}
-          content={this.getInfoModalContent()}
-          onClose={() => this.setState({ showInfoModal: false })}
-        />
       </ImageBackground>
     );
+  }
+
+  render() {
+    const { debt } = this.state;
+
+    return debt && typeof debt === "object" ? <DebtDetails debt={debt} onBackPress={this.onBackPress} /> : this.renderList();
   }
 }
 
 function mapStateToProps(state) {
   return {
-    userData: state.authReducer.data.authorized
+    userData: state.authReducer.data.authorized,
+    debtReducer: state.debtReducer
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return {};
+  return {
+    fetchDebts: (payload = {}) => dispatch(fetchDebts(payload))
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  addStatusBar(SavingsDashboard)
+  addStatusBar(DebtDashboard)
 );

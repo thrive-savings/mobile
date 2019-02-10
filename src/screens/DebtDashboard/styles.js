@@ -83,39 +83,34 @@ export default StyleSheet.create({
     paddingHorizontal: 20,
     top: -5
   },
-  ccLabelText: {
+  ccGreyText: {
     color: colors.darkerGrey,
     fontSize: 12,
     fontFamily: "LatoRegular",
     lineHeight: 20,
     letterSpacing: 1
   },
-  ccNameText: {
+  ccDarkestGreyText: {
+    color: colors.darkestGrey,
+    fontSize: 13,
+    fontFamily: "LatoBold",
+    lineHeight: 20,
+    letterSpacing: 1.25
+  },
+  ccBlackText: {
     color: colors.charcoal,
     fontSize: 15,
     fontFamily: "LatoRegular",
     letterSpacing: 1.5
+  },  
+  ccStatusHolder: {
+    marginBottom: -7.5,
+    alignItems: "center",
+    flexDirection: "row"
   },
-  ccAmountText: {
-    color: colors.blue,
-    fontSize: 13,
-    fontFamily: "LatoRegular",
-    lineHeight: 22,
-    letterSpacing: 0.2
-  },
-  ccProgressContainer: {
-    paddingTop: 10
-  },
-  ccProgressTextsHolder: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingTop: 7.5
-  },
-  ccProgressBarText: {
-    color: colors.charcoal,
-    fontSize: 11,
-    fontFamily: "LatoRegular",
-    letterSpacing: 0.1
+  ccStatusText: {
+    paddingBottom: 3,
+    paddingLeft: 3
   },
 
   // Add cc styles
@@ -141,6 +136,9 @@ export default StyleSheet.create({
   },
 
   // Padders
+  textsPadder: {
+    paddingBottom: 10
+  },
   bottomPadder: {
     paddingBottom: 20
   },

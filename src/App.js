@@ -42,7 +42,7 @@ const Drawer = createDrawerNavigator(
     Contact: { screen: Contact }
   },
   {
-    initialRouteName: "SavingsDashboard",
+    initialRouteName: "BankConnections",
     contentComponent: props => <Sidebar {...props} />
   }
 );
@@ -80,16 +80,6 @@ const StackerWithDrawer = createStackNavigator(stackScreens, {
 const StackerWithIntegrateBank = createStackNavigator(stackScreens, {
   ...stackerOptions,
   initialRouteName: "IntegrateBank"
-});
-
-const StackerWithSavingPreferences = createStackNavigator(stackScreens, {
-  ...stackerOptions,
-  initialRouteName: "SavingPreferences"
-});
-
-const StackerWithSavingGoals = createStackNavigator(stackScreens, {
-  ...stackerOptions,
-  initialRouteName: "SavingGoals"
 });
 
 const StackerWithSetPhone = createStackNavigator(stackScreens, {
@@ -149,16 +139,10 @@ class App extends React.Component {
         stacker = <StackerWithSetPhone />;
       } else if (!authorized.bankLinked) {
         stacker = <StackerWithIntegrateBank />;
-      } else if (authorized.onboardingStep === "SavingPreferences") {
-        stacker = <StackerWithSavingPreferences />;
-      } else if (authorized.onboardingStep === "SavingGoals") {
-        stacker = <StackerWithSavingGoals />;
       } else {
         stacker = <StackerWithDrawer />;
       }
     }
-
-    // stacker = <StackerWithDrawer />;
 
     return (
       <Root>

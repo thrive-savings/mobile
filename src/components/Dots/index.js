@@ -8,6 +8,15 @@ import styles from "./styles";
 const colors = require("../../theme/colors");
 
 class Dots extends Component {
+  renderTwo() {
+    return (
+      <Svg width={24} height={10}>
+        <Svg.Circle cx="4" cy="4" r={3} stokeWidth={1} stroke={colors.blue} fill={this.props.step === 1 ? colors.blue : "white"} />
+        <Svg.Circle cx="20" cy="4" r={3} stokeWidth={1} stroke={colors.blue} fill={this.props.step === 2 ? colors.blue : "white"} />
+      </Svg>
+    );
+  }
+
   renderThree() {
     return (
       <Svg width={40} height={10}>
@@ -32,6 +41,9 @@ class Dots extends Component {
   render() {
     let body;
     switch (this.props.count) {
+      case 2:
+        body = this.renderTwo();
+        break;
       case 3:
         body = this.renderThree();
         break;

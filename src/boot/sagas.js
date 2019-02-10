@@ -26,7 +26,9 @@ import {
 import {
   getUiTokenSaga,
   fetchConnectionSaga,
+  setDefaultAuthAccountSaga,
   setDefaultAccountSaga,
+  setDefaultAccountSucceedSaga,
   unlinkConnectionSaga,
   unlinkConnectionSucceedSaga,
   updateUserConnectionsSaga
@@ -77,7 +79,9 @@ export default function runSagas(sagaMiddleware) {
   sagaMiddleware.run(passwordResetSaga);
   sagaMiddleware.run(getUiTokenSaga);
   sagaMiddleware.run(fetchConnectionSaga);
+  sagaMiddleware.run(setDefaultAuthAccountSaga);
   sagaMiddleware.run(setDefaultAccountSaga);
+  sagaMiddleware.run(setDefaultAccountSucceedSaga);
   sagaMiddleware.run(unlinkConnectionSaga);
   sagaMiddleware.run(unlinkConnectionSucceedSaga);
   sagaMiddleware.run(updateUserConnectionsSaga);
