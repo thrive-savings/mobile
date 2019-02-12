@@ -20,7 +20,6 @@ import styles from "./styles";
 
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
 const botIcon = require("../../../assets/Icons/ThriveBot/thriveBot.png");
-const phoneIcon = require("../../../assets/Icons/Phone/phone.png");
 const emailIcon = require("../../../assets/Icons/Email/email.png");
 
 class Contact extends Component {
@@ -74,14 +73,6 @@ class Contact extends Component {
               </Text>
             </Text>
             <View style={styles.helpButtonsContainer}>
-              <TouchableOpacity
-                activeOpacity={0.6}
-                style={styles.helpButton}
-                onPress={() => this.callSupport()}
-              >
-                <Image source={phoneIcon} />
-                <Text style={styles.blueText}>CALL</Text>
-              </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.6}
                 style={styles.helpButton}

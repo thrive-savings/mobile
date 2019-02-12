@@ -39,7 +39,8 @@ export default StyleSheet.create({
     alignItems: "center"
   },
   helpButton: {
-    width: deviceWidth / 2 - 60,
+    marginHorizontal: 2.5,
+    flex: 1,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",

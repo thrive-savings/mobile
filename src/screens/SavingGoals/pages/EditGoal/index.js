@@ -27,7 +27,6 @@ const editIcon = require("../../../../../assets/Icons/PencilEdit/pencilEditButto
 
 const NEW_GOAL_DEFAULTS = {
   category: "RainyDay",
-  name: "GOAL NAME",
   amount: 0,
   boost: false
 };
@@ -64,16 +63,14 @@ class EditGoal extends Component {
     let errorMsg, data;
 
     if (this.props.newGoal) {
-      if (!newName) {
-        errorMsg = "Goal Name should be provided.";
-      } else if (!newAmount) {
+      if (!newAmount) {
         errorMsg = "Goal Amount should be provided.";
       }
 
       if (!errorMsg) {
         data = {
           category: category,
-          name: newName,
+          name: newName || GOAL_CATEGORIES[category].name,
           amount: newAmount.toString(),
           boosted: boostValue
         };
@@ -142,7 +139,7 @@ class EditGoal extends Component {
       category = NEW_GOAL_DEFAULTS.category;
     }
     if (!name) {
-      name = NEW_GOAL_DEFAULTS.name;
+      name = GOAL_CATEGORIES[category].name;
     }
     if (this.state.newName) {
       name = this.state.newName;

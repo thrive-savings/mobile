@@ -59,7 +59,7 @@ const FAQ_CATEGORIES = [
   },
   {
     icon: require("../../assets/Icons/PiggyBank/piggybank.png"),
-    name: "MONEY MANAGEMENT",
+    name: "MY MONEY",
     questions: [
       {
         question: "Do I get interest on my money?",

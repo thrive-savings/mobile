@@ -32,7 +32,7 @@ export const FOOTER_MENU_ITEMS = [
     screen: "Settings"
   },
   {
-    displayName: "Faq",
+    displayName: "FAQ",
     screen: "Faq"
   },
   {
