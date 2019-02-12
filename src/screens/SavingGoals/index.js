@@ -24,6 +24,15 @@ class SavingGoals extends Component {
       step: 0,
       data: {}
     };
+
+    this.categoryChosen = this.categoryChosen.bind(this);
+    this.onCategoryEdit = this.onCategoryEdit.bind(this);
+  }
+
+  onCategoryEdit() {
+    this.setState({
+      data: { editingCategory: true }
+    });
   }
 
   categoryChosen(category) {
@@ -51,7 +60,7 @@ class SavingGoals extends Component {
             return {
               title: "CREATE A SAVINGS GOAL",
               component: (
-                <ChooseCategory submit={this.categoryChosen.bind(this)} />
+                <ChooseCategory submit={this.categoryChosen} />
               )
             };
           case 1:
@@ -75,9 +84,12 @@ class SavingGoals extends Component {
               )
             };
           case 1:
+            const { editingCategory, category: newCategory } = newData;
             return {
               title: "CUSTOMIZE YOUR GOAL",
-              component: <EditGoal data={data} />
+              component: editingCategory
+                ? <ChooseCategory submit={this.categoryChosen} />
+                : <EditGoal data={{ ...data, category: newCategory || data.category }} onCategoryEdit={this.onCategoryEdit} />
             };
           default:
             return;
@@ -95,8 +107,9 @@ class SavingGoals extends Component {
   }
 
   backArrowPressed() {
-    if (this.state.step > 0) {
-      this.setState({ step: this.state.step - 1 });
+    const { step, data: { editingCategory } } = this.state;
+    if (step > 0) {
+      this.setState({ step: editingCategory ? step : step - 1, data: {} });
     } else {
       this.props.navigation.goBack();
     }

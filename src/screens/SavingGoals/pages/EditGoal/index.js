@@ -132,7 +132,7 @@ class EditGoal extends Component {
       }
     }
 
-    const { data } = this.props;
+    const { newGoal, data } = this.props;
 
     let { category, name, amount, weeksLeft, boosted: boost } = data;
     if (!category) {
@@ -160,7 +160,13 @@ class EditGoal extends Component {
 
     return (
       <View style={[styles.container, globalStyles.shadow]}>
-        <Image source={GOAL_CATEGORIES[category].icon} />
+        {
+          newGoal
+            ? <Image source={GOAL_CATEGORIES[category].icon} />
+            : <TouchableOpacity activeOpacity={0.6} onPress={() => this.props.onCategoryEdit()}>
+                <Image source={GOAL_CATEGORIES[category].icon} />
+              </TouchableOpacity>
+        }
 
         <TouchableOpacity
           activeOpacity={0.6}
@@ -273,11 +279,13 @@ class EditGoal extends Component {
 
 EditGoal.propTypes = {
   newGoal: PropTypes.bool,
-  data: PropTypes.object
+  data: PropTypes.object,
+  onCategoryEdit: PropTypes.func
 };
 EditGoal.defaultProps = {
   newGoal: false,
-  data: {}
+  data: {},
+  onCategoryEdit: () => {}
 };
 
 function mapStateToProps(state) {
