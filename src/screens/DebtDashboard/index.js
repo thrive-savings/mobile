@@ -15,7 +15,7 @@ import SpecialButton from "../../components/SpecialButton";
 import Header from "../../components/Header";
 import addStatusBar from "../../components/StatusBar";
 
-import { fetchDebts } from "./state/actions";
+import { fetchDebts, saveDebtDetails } from "./state/actions";
 
 import { LINK_STEPS } from "../IntegrateBank/state/constants";
 
@@ -26,7 +26,7 @@ import DebtDetails from "./pages/DebtDetails";
 
 import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
-import colors from "../../theme/colors"
+import colors from "../../theme/colors";
 
 const bg = require("../../../assets/Backgrounds/BackgroundAccount.png");
 const budgetIcon = require("../../../assets/Icons/Budget/budget.png");
@@ -38,7 +38,7 @@ class DebtDashboard extends Component {
     this.state = { debt: undefined };
 
     this.onBackPress = this.onBackPress.bind(this);
-  }  
+  }
 
   componentDidMount() {
     this.props.fetchDebts();
@@ -119,20 +119,20 @@ class DebtDashboard extends Component {
   renderList() {
     const { navigation, debtReducer: { debts = [] } } = this.props;
 
-    let totalDebtBalance = 0;
-    debts.map(({ amountPulled = 0 }) => {
-      totalDebtBalance += amountPulled;
+    let totalDebt = 0;
+    debts.map(({ account: { balance = 0 } = {} }) => {
+      totalDebt += -1 * balance;
     });
 
     const { beforeDot: balanceBD, afterDot: balanceAD } = getSplitDollarStrings(
-      totalDebtBalance
+      totalDebt
     );
 
     return (
       <ImageBackground source={bg} style={globalStyles.background}>
         <Header navigation={navigation} />
         <View style={styles.subHeader}>
-          <Text style={styles.balanceLabelText}>THRIVE DEBT BALANCE</Text>
+          <Text style={styles.balanceLabelText}>TOTAL DEBT</Text>
           <View style={styles.balanceTextHolder}>
             <Text style={styles.balanceMainText}>
               {balanceBD}
@@ -172,7 +172,7 @@ class DebtDashboard extends Component {
   render() {
     const { debt } = this.state;
 
-    return debt && typeof debt === "object" ? <DebtDetails debt={debt} onBackPress={this.onBackPress} /> : this.renderList();
+    return debt && typeof debt === "object" ? <DebtDetails debt={debt} onBackPress={this.onBackPress} saveDebtDetails={this.props.saveDebtDetails} /> : this.renderList();
   }
 }
 
@@ -185,7 +185,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchDebts: (payload = {}) => dispatch(fetchDebts(payload))
+    fetchDebts: (payload = {}) => dispatch(fetchDebts(payload)),
+    saveDebtDetails: (payload = {}) => dispatch(saveDebtDetails(payload))
   };
 }
 

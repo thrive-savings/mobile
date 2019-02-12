@@ -42,7 +42,7 @@ const Drawer = createDrawerNavigator(
     Contact: { screen: Contact }
   },
   {
-    initialRouteName: "BankConnections",
+    initialRouteName: "SavingsDashboard",
     contentComponent: props => <Sidebar {...props} />
   }
 );

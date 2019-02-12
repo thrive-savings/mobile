@@ -58,7 +58,7 @@ import {
   withdrawGoalSucceedSaga
 } from "../screens/SavingGoals/state/sagas";
 import { fetchHistorySaga } from "../screens/History/state/sagas";
-import { fetchDebtsSaga } from "../screens/DebtDashboard/state/sagas";
+import { fetchDebtsSaga, saveDebtDetailsSaga } from "../screens/DebtDashboard/state/sagas";
 
 export default function runSagas(sagaMiddleware) {
   sagaMiddleware.run(requestApiSaga);
@@ -105,4 +105,5 @@ export default function runSagas(sagaMiddleware) {
   sagaMiddleware.run(withdrawGoalSucceedSaga);
   sagaMiddleware.run(fetchHistorySaga);
   sagaMiddleware.run(fetchDebtsSaga);
+  sagaMiddleware.run(saveDebtDetailsSaga);
 }

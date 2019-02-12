@@ -47,4 +47,12 @@ const convertWeeks = weeks => {
   return formatted;
 };
 
-export { getDollarString, getSplitDollarStrings, convertWeeks };
+const hiddenCardNumber = number => {
+  const numLenth = number.length;
+  const last4 = number.substring(numLenth - 4);
+  const tillLast4 = number.substring(0, numLenth - 4);
+
+  return numLenth < 5 ? number : `${tillLast4.replace(/./g, "*")}${last4}`;
+};
+
+export { getDollarString, getSplitDollarStrings, convertWeeks, hiddenCardNumber };

@@ -8,7 +8,9 @@ import {
   Text,
   TouchableOpacity
 } from "react-native";
+import { Toast } from "native-base";
 import { Svg } from "expo";
+import moment from "moment";
 
 import DatePicker from "react-native-datepicker";
 
@@ -17,7 +19,7 @@ import Header from "../../../../components/Header";
 import SpecialButton from "../../../../components/SpecialButton";
 import getNumPadModalContent from "../../../../components/NumPad";
 
-import { getDollarString } from "../../../../globals/helpers";
+import { getDollarString, hiddenCardNumber } from "../../../../globals/helpers";
 import GOAL_CATEGORIES from "../../../../globals/goalCategories";
 
 import globalStyles from "../../../../globals/globalStyles";
@@ -26,9 +28,6 @@ import colors from "../../../../theme/colors";
 
 const bg = require("../../../../../assets/Backgrounds/BackgroundFull.png");
 
-const MIN_ACCELERATE_AMOUNT = 6000;
-const MIN_AMOUNT_TO_PAY = 10000;
-
 class DebtDetails extends Component {
   constructor(props) {
     super(props);
@@ -36,7 +35,7 @@ class DebtDetails extends Component {
     this.state = {
       setNumber: undefined,
       showNumberEditor: false,
-      setBalance: undefined, 
+      setBalance: undefined,
       showBalanceEditor: false,
       setDueDate: undefined,
       setAccelerateAmount: undefined,
@@ -46,14 +45,66 @@ class DebtDetails extends Component {
   }
 
   saveDetails() {
-    console.log(this.state);
+    const { debt: { id: debtID } } = this.props;
+    const { setNumber, setBalance, setDueDate, setAccelerateAmount, setAccelerateOn } = this.state;
+    const { number, balance, dueDate } = this.getDynamicValues();
+
+    if (!number || !balance || !dueDate) {
+      Toast.show({
+        text: "Full card number, balance, and due date are required to set up the automated debt payment.",
+        duration: 2500,
+        position: "top",
+        type: "danger",
+        textStyle: { textAlign: "center" }
+      });
+    } else {
+      let isNumberValid = true;
+      let invalidNumberMessage = "";
+
+      const firstNumberdigit = number.charAt(0);
+      const numberLength = number.length;
+      if (!["5", "4", "3"].includes(firstNumberdigit)) {
+        isNumberValid = false;
+        invalidNumberMessage = "You have provided invalid card number.";
+      } else if (["5", "4"].includes(firstNumberdigit) && numberLength !== 16) {
+        isNumberValid = false;
+        invalidNumberMessage = "Credit cards from Visa or Mastercard network should have 16 digit numbers. We need the full number to automate the debt payment.";
+      } else if (firstNumberdigit === "3" && numberLength !== 15) {
+        isNumberValid = false;
+        invalidNumberMessage = "Credit cards from American Express network should have 15 digit numbers. We need the full number to automate the debt payment.";
+      }
+
+      if (!isNumberValid) {
+        Toast.show({
+          text: invalidNumberMessage,
+          duration: 2500,
+          position: "top",
+          type: "danger",
+          textStyle: { textAlign: "center" }
+        });
+      } else {
+        this.props.saveDebtDetails({
+          debtID,
+          fullNumber: setNumber,
+          balance: setBalance,
+          dueDate: setDueDate,
+          accelerateAmount: setAccelerateAmount,
+          accelerateOn: setAccelerateOn
+        });
+      }
+    }
   }
 
   numPadClicked(value, field) {
     let newValue;
-    switch (field) {      
+    switch (field) {
       case "number":
-        newValue = (this.state.setNumber || "") + "" + value;
+        const curValue = this.state.setNumber || "";
+        if (value >= 0) {
+          newValue = curValue + "" + value;
+        } else {
+          newValue = curValue === "" ? "" : curValue.substring(0, curValue.length - 1);
+        }
         this.setState({ setNumber: newValue });
         break;
       case "balance":
@@ -72,15 +123,15 @@ class DebtDetails extends Component {
         break;
       default:
         break;
-    }  
+    }
   }
 
   getDynamicValues() {
     const { setNumber, setBalance, setDueDate, setAccelerateAmount, setAccelerateOn } = this.state;
     const { debt: { account: { balance: savedBalance, number: savedNumber, dueDate: savedDueDate } = {}, accelerateAmount: savedAccelerateAmount, accelerateOn: savedAccelerateOn } } = this.props;
-     
+
     const accelerateOn = setAccelerateOn || savedAccelerateOn;
-    const accelerateAmount = setAccelerateAmount ? setAccelerateAmount : savedAccelerateAmount ? savedAccelerateAmount : accelerateOn && MIN_ACCELERATE_AMOUNT;
+    const accelerateAmount = setAccelerateAmount ? setAccelerateAmount : savedAccelerateAmount;
     return {
       number: setNumber || savedNumber,
       balance: setBalance || savedBalance,
@@ -94,7 +145,7 @@ class DebtDetails extends Component {
     const { setNumber, showNumberEditor, setBalance, showBalanceEditor, setAccelerateAmount, showAccelerateAmountEditor } = this.state;
     const { debt, onBackPress } = this.props;
 
-    const { amountToPay = MIN_AMOUNT_TO_PAY, account: { name, connection: { sync: { lastGoodSync } = {} } = {} } = {} } = debt;
+    const { amountToPay, account: { name, connection: { sync: { lastGoodSync } = {} } = {} } = {} } = debt;
     const { number, balance, dueDate, accelerateAmount, accelerateOn } = this.getDynamicValues();
 
     const randomGoalLogo =
@@ -113,13 +164,13 @@ class DebtDetails extends Component {
               <View style={styles.separator} />
               <TouchableOpacity activeOpacity={0.6} onPress={() => this.setState({ showNumberEditor: true })} style={styles.detailsRow}>
                 <Text style={styles.regularText}>Card Number:</Text>
-                <Text style={[styles.regularText, styles.blueText]}>{number ? number : "Set the number"}</Text>
+                <Text style={[styles.regularText, styles.blueText]}>{number ? hiddenCardNumber(number) : "Set the number"}</Text>
               </TouchableOpacity>
               <TouchableOpacity activeOpacity={0.6} onPress={() => this.setState({ showBalanceEditor: true })} style={styles.detailsRow}>
                 <Text style={styles.regularText}>Current Balance:</Text>
                 <View style={styles.balanceContainer}>
                   <Text style={[styles.regularText, styles.blueText]}>{balance ? getDollarString(Math.abs(balance)) : "---"}</Text>
-                  <Text style={styles.lastUpdatedText}>{lastGoodSync ? `Last updated: ${lastGoodSync}` : "Not fetched yet"}</Text>
+                  <Text style={styles.lastUpdatedText}>{lastGoodSync ? `Last updated: ${moment(new Date(lastGoodSync)).format("MMM D")}` : "Not fetched yet"}</Text>
                 </View>
               </TouchableOpacity>
               <TouchableOpacity activeOpacity={0.6} style={styles.detailsRow}>
@@ -133,6 +184,8 @@ class DebtDetails extends Component {
                   date={dueDate}
                   placeholder="Set the date"
                   format="YYYY-MM-DD"
+                  minDate={moment().format("YYYY-MM-DD")}
+                  maxDate={moment().add(45, "days").format("YYYY-MM-DD")}
                   confirmBtnText="Confirm"
                   cancelBtnText="Cancel"
                   showIcon={false}
@@ -161,9 +214,9 @@ class DebtDetails extends Component {
                     <Text style={!accelerateOn ? styles.lastUpdatedText : styles.regularText}>Accelerate is {accelerateOn ? "ON" : "OFF"}</Text>
                   </View>
                 </View>
-                <View style={styles.accelerateContent}>           
+                <View style={styles.accelerateContent}>
                   <Text style={styles.regularText}>
-                    Pay an extra <Text onPress={() => this.setState({ showAccelerateAmountEditor: true })} style={styles.blueText}>{getDollarString(accelerateAmount ? accelerateAmount : MIN_ACCELERATE_AMOUNT, true)}</Text> per month.
+                    Pay an extra <Text onPress={() => this.setState({ showAccelerateAmountEditor: true })} style={styles.blueText}>{getDollarString(accelerateAmount, true)}</Text> per month.
                   </Text>
                   <View style={styles.spacer} />
                   <Text style={styles.regularText}>
@@ -177,18 +230,18 @@ class DebtDetails extends Component {
             text="CONFIRM"
             onClick={() => this.saveDetails()}
           />
-        </ScrollView>  
+        </ScrollView>
 
         <ModalTemplate
           show={showNumberEditor}
           buttonText={"SUBMIT"}
           content={getNumPadModalContent({
             label: "Enter Full Credit Card Number.",
-            value: setNumber || "***",
+            value: setNumber || "**** **** **** ****",
             onPress: value => this.numPadClicked(value, "number")
           })}
           onClose={() => this.setState({ showNumberEditor: false })}
-        />   
+        />
         <ModalTemplate
           show={showBalanceEditor}
           buttonText={"SUBMIT"}
@@ -208,7 +261,7 @@ class DebtDetails extends Component {
             onPress: value => this.numPadClicked(value, "accelerateAmount")
           })}
           onClose={() => this.setState({ showAccelerateAmountEditor: false })}
-        /> 
+        />
       </ImageBackground>
     );
   }
@@ -216,7 +269,8 @@ class DebtDetails extends Component {
 
 DebtDetails.propTypes = {
   debt: PropTypes.object.isRequired,
-  onBackPress: PropTypes.func.isRequired
+  onBackPress: PropTypes.func.isRequired,
+  saveDebtDetails: PropTypes.func.isRequired
 };
 
 export default DebtDetails;
