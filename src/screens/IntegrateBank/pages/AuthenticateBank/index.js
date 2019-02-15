@@ -47,6 +47,8 @@ class AuthenticateBank extends Component {
       error
     } = msgData;
 
+    amplitude.track(`QUOVO_CONNECT_${event}`, msgData.data);
+
     if (!error) {
       switch (event) {
         case "onAdd":

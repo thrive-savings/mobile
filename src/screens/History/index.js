@@ -32,7 +32,7 @@ class History extends Component {
     super(props);
 
     this.state = {
-      historyLimit: 6,
+      historyLimit: 8,
       viewingAll: false
     };
 
@@ -131,7 +131,6 @@ class History extends Component {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.contentContainer}
         >
-          {!viewingAll && this.renderSubHeader()}
           <HistoryList data={history} limit={viewingAll ? -1 : historyLimit} />
           {!viewingAll && this.renderButtons()}
         </ScrollView>
