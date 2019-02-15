@@ -1,0 +1,2 @@
+export const THRIVE_BOT_NUMBER = "6476941740";
+export const THRIVE_HELP_NUMBER = "8332433223";

@@ -12,6 +12,9 @@ import { Card } from "native-base";
 import { LinearGradient } from "expo";
 import { connect } from "react-redux";
 
+import Communications from "react-native-communications";
+import { THRIVE_BOT_NUMBER } from "../../globals/constants";
+
 import amplitude from "../../globals/amplitude";
 
 import SpecialButton from "../../components/SpecialButton";
@@ -80,6 +83,11 @@ class SavingsDashboard extends Component {
       default:
         break;
     }
+  }
+
+  saveMore() {
+    amplitude.track(amplitude.events.CLICKED_SAVE_MORE);
+    Communications.textWithoutEncoding(THRIVE_BOT_NUMBER, "Save 20.00");
   }
 
   getInfoModalContent() {
@@ -228,6 +236,13 @@ class SavingsDashboard extends Component {
             <Text style={styles.balanceRemainderText}>
               {balanceAD}
             </Text>
+            <TouchableOpacity
+              style={[styles.saveMoreContainer, globalStyles.shadow]}
+              activeOpacity={0.6}
+              onPress={() => this.saveMore()}
+            >
+              <Text style={styles.saveMoreText}>+</Text>
+            </TouchableOpacity>
           </View>
           <View style={[styles.subHeaderLabel, globalStyles.shadow]}>
             <Text style={styles.subHeaderText}>MY SAVINGS GOALS</Text>

@@ -54,6 +54,22 @@ export default StyleSheet.create({
     textAlign: "center"
   },
 
+  // Save More styles
+  saveMoreContainer: {
+    backgroundColor: "white",
+    borderRadius: 10,
+    width: 22.5,
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 10
+  },
+  saveMoreText: {
+    color: colors.charcoal,
+    fontSize: 16,
+    fontFamily: "LatoRegular",
+    paddingBottom: 2
+  },
+
   // Content styles
   contentContainer: {
     flex: 0.65,

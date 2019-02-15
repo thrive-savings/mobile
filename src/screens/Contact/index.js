@@ -8,6 +8,7 @@ import {
 } from "react-native";
 
 import Communications from "react-native-communications";
+import { THRIVE_BOT_NUMBER, THRIVE_HELP_NUMBER } from "../../globals/constants";
 
 import amplitude from "../../globals/amplitude";
 
@@ -25,12 +26,12 @@ const emailIcon = require("../../../assets/Icons/Email/email.png");
 class Contact extends Component {
   textThriveBot() {
     amplitude.track(amplitude.events.CLICKED_TALK_TO_BOT);
-    Communications.text("6476941740", "Balance");
+    Communications.text(THRIVE_BOT_NUMBER, "Balance");
   }
 
   callSupport() {
     amplitude.track(amplitude.events.CLICKED_CALL_SUPPORT);
-    Communications.phonecall("8332433223", true);
+    Communications.phonecall(THRIVE_HELP_NUMBER, true);
   }
 
   emailSupport() {
