@@ -4,8 +4,10 @@ import {
   Image,
   ImageBackground,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
+  Platform
 } from "react-native";
+import { Contacts } from "expo";
 
 import Communications from "react-native-communications";
 import { THRIVE_BOT_NUMBER, THRIVE_HELP_NUMBER } from "../../globals/constants";
@@ -24,8 +26,25 @@ const botIcon = require("../../../assets/Icons/ThriveBot/thriveBot.png");
 const emailIcon = require("../../../assets/Icons/Email/email.png");
 
 class Contact extends Component {
+  async createContact() {
+    const contactName = `Thrive Bot${__DEV__ ? " Dev" : ""}`;
+    const { data } = await Contacts.getContactsAsync({
+      name: contactName
+    });
+
+    if (!data || data.length === 0) {
+      await Contacts.addContactAsync({
+        [Contacts.Fields.FirstName]: contactName,
+        [Contacts.Fields.Company]: "Thrive Savings Inc."
+      });
+    }
+  }
+
   textThriveBot() {
     amplitude.track(amplitude.events.CLICKED_TALK_TO_BOT);
+    if (Platform.OS !== "android") {
+      this.createContact();
+    }
     Communications.text(THRIVE_BOT_NUMBER, "Balance");
   }
 

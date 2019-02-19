@@ -10,7 +10,7 @@ import getAuthorized from "./globals/getAuthorized";
 
 import { getUpdates, setExpoToken } from "./screens/Login/state/actions";
 
-import Landing from "./screens/Landing";
+import ProductTour from "./screens/ProductTour";
 import Login from "./screens/Login/";
 import ForgotPassword from "./screens/ForgotPassword";
 import SignUp from "./screens/SignUp/";
@@ -48,7 +48,7 @@ const Drawer = createDrawerNavigator(
 );
 
 const stackScreens = {
-  Landing: { screen: Landing },
+  ProductTour: { screen: ProductTour },
   Login: { screen: Login },
   SignUp: { screen: SignUp },
   ForgotPassword: { screen: ForgotPassword },
@@ -67,9 +67,9 @@ const stackerOptions = {
   headerMode: "none"
 };
 
-const StackerWithLanding = createStackNavigator(stackScreens, {
+const StackerWithProductTour = createStackNavigator(stackScreens, {
   ...stackerOptions,
-  initialRouteName: "Landing"
+  initialRouteName: "ProductTour"
 });
 
 const StackerWithDrawer = createStackNavigator(stackScreens, {
@@ -130,7 +130,7 @@ class App extends React.Component {
   }
 
   render() {
-    let stacker = <StackerWithLanding />;
+    let stacker = <StackerWithProductTour />;
 
     const authorized = getAuthorized(this.props.authReducer);
 

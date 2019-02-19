@@ -65,6 +65,7 @@ const imageAssets = [
   // Icons
   require("../../assets/Icons/Back/back.png"),
   require("../../assets/Icons/BankSymbol/bankSymbolGradient.png"),
+  require("../../assets/Icons/Budget/budget.png"),
   require("../../assets/Icons/Checkbox/tick.png"),
   require("../../assets/Icons/Close/close.png"),
   require("../../assets/Icons/Delete/delete.png"),
@@ -82,7 +83,14 @@ const imageAssets = [
   require("../../assets/Icons/ThriveBotSmaller/thriveBot.png"),
   require("../../assets/Icons/TickGradient/tickGradient.png"),
   require("../../assets/Icons/Star/Empty/star.png"),
-  require("../../assets/Icons/Star/Blue/star.png")
+  require("../../assets/Icons/Star/Blue/star.png"),
+
+  // Product Tour
+  require("../../assets/ProductTour/step0/bitmap.png"),
+  require("../../assets/ProductTour/step1/icon0/bitmap.png"),
+  require("../../assets/ProductTour/step1/icon1/bitmap.png"),
+  require("../../assets/ProductTour/step2/bitmap.png"),
+  require("../../assets/ProductTour/step3/bitmap.png")
 ];
 
 const cacheImages = images => {
