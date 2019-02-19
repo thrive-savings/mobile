@@ -1,18 +1,37 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet } from "react-native";
 import colors from "../../../../theme/colors";
-
-const screen = Dimensions.get("window");
-const deviceWidth = screen.width;
 
 export default StyleSheet.create({
   container: {
-    width: deviceWidth - 40,
+    marginHorizontal: 20,
     alignSelf: "center",
-    alignItems: "center",
     padding: 20,
     borderRadius: 8,
     backgroundColor: "white"
   },
+
+  logosContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 10,
+    marginBottom: 20
+  },
+  dashLine: {
+    width: 30,
+    height: 5,
+    backgroundColor: colors.blue,
+    marginHorizontal: 10
+  },
+  infoRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    paddingHorizontal: 20,
+    paddingVertical: 10
+  },
+
+  // texts
   titleText: {
     color: colors.blue,
     fontSize: 15,
@@ -21,37 +40,16 @@ export default StyleSheet.create({
     textAlign: "center",
     paddingVertical: 10
   },
-  secondaryTitleText: {
-    color: colors.blue,
-    fontSize: 15,
-    fontFamily: "LatoBold",
-    lineHeight: 24,
-    letterSpacing: 0.2,
-    textAlign: "center",
-    paddingVertical: 10
-  },
-  bankSymbol: {
-    width: 80,
-    height: 80
-  },
-  regularText: {
-    fontSize: 13,
-    fontFamily: "LatoRegular",
-    lineHeight: 21,
-    letterSpacing: 0.2,
-    textAlign: "center"
-  },
-  descText: {
+  infoText: {
     color: colors.charcoal,
-    paddingBottom: 10
-  },
-  readMoreText: {
-    color: colors.darkerGrey,
-    textDecorationLine: "underline",
-    paddingBottom: 20
+    fontSize: 14,
+    fontFamily: "LatoRegular",
+    lineHeight: 22,
+    letterSpacing: 1,
+    paddingLeft: 10
   },
 
-  separator: {
-    height: 10
+  buttonStyle: {
+    marginTop: 10
   }
 });

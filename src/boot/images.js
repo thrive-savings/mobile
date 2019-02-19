@@ -65,6 +65,7 @@ const imageAssets = [
   // Icons
   require("../../assets/Icons/Back/back.png"),
   require("../../assets/Icons/BankSymbol/bankSymbolGradient.png"),
+  require("../../assets/Icons/BankSymbolSmaller/bitmap.png"),
   require("../../assets/Icons/Budget/budget.png"),
   require("../../assets/Icons/Checkbox/tick.png"),
   require("../../assets/Icons/Close/close.png"),
@@ -78,10 +79,12 @@ const imageAssets = [
   require("../../assets/Icons/Phone/phone.png"),
   require("../../assets/Icons/PiggyBank/piggybank.png"),
   require("../../assets/Icons/SafeBox/safebox.png"),
+  require("../../assets/Icons/Shield/bitmap.png"),
   require("../../assets/Icons/Sms/sms.png"),
   require("../../assets/Icons/ThriveBot/thriveBot.png"),
   require("../../assets/Icons/ThriveBotSmaller/thriveBot.png"),
   require("../../assets/Icons/TickGradient/tickGradient.png"),
+  require("../../assets/Icons/TickIcon/bitmap.png"),
   require("../../assets/Icons/Star/Empty/star.png"),
   require("../../assets/Icons/Star/Blue/star.png"),
 

@@ -1,80 +1,59 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { View, Image, Text, TouchableOpacity } from "react-native";
+import { View, Image, Text } from "react-native";
 
 import amplitude from "../../../../globals/amplitude";
 
 import SpecialButton from "../../../../components/SpecialButton";
-import Accordion from "../../../../components/Accordion";
 
 import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
 
 import { ACTION_TYPES } from "../../state/constants";
 
-const bankSymbol = require("../../../../../assets/Icons/BankSymbol/bankSymbolGradient.png");
+const thumbnailIcon = require("../../../../../assets/ThumbnailLogo/Small/thumbnail.png");
+const shieldIcon = require("../../../../../assets/Icons/Shield/bitmap.png");
+const bankIcon = require("../../../../../assets/Icons/BankSymbolSmaller/bitmap.png");
+const tickIcon = require("../../../../../assets/Icons/TickIcon/bitmap.png");
 
 class WhyLink extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      descExpanded: false
-    };
-  }
-
   componentDidMount() {
     amplitude.track(amplitude.events.WHY_LINK_VIEW);
   }
 
   render() {
-    const descExpanded = this.state.descExpanded;
     return (
       <View style={[styles.container, globalStyles.shadow]}>
-        <Text style={styles.titleText}>LINK YOUR BANK ACCOUNT</Text>
-        <Image source={bankSymbol} style={styles.bankSymbol} />
-        <Text style={styles.secondaryTitleText}>
-          Why should I link my bank account?
-        </Text>
-        <Text style={[styles.regularText, styles.descText]}>
-          Every week Thrive will transfer a small amount of money into your
-          Thrive Savings account.
-        </Text>
-        {!descExpanded &&
-          <TouchableOpacity
-            activeOpacity={0.6}
-            onPress={() => this.setState({ descExpanded: !descExpanded })}
-          >
-            <Text style={[styles.regularText, styles.readMoreText]}>
-              Read More
-            </Text>
-          </TouchableOpacity>}
-        {descExpanded &&
-          <Text style={[styles.regularText, styles.descText]}>
-            Each amount is custom-based on your transactions, income, and
-            expenses. We want you to live your best financial life – we will
-            never overdraw you.
-          </Text>}
+        <Text style={styles.titleText}>OUR COMMITMENT TO YOU</Text>
 
-        <Accordion
-          title={"You're in good hands."}
-          description={
-            "We use bank-grade 256-bit encryption. Your savings at Thrive are CDIC insured."
-          }
-        />
-        <Accordion
-          title={"It's anonymous."}
-          description={"We never store your bank login credentials."}
-        />
-        <Accordion
-          title={"Take your money out anytime."}
-          description={
-            "Text our chatbot and your funds will be sent back to your chequing account."
-          }
-        />
+        <View style={styles.logosContainer}>
+          <Image source={thumbnailIcon} />
+          <View style={styles.dashLine} />
+          <Image source={shieldIcon} />
+          <View style={styles.dashLine} />
+          <Image source={bankIcon} />
+        </View>
 
-        <View style={styles.separator} />
-        <SpecialButton text={"LINK MY ACCOUNT"} onClick={this.props.next} />
+        <View style={styles.infoRow}>
+          <Image source={tickIcon} />
+          <Text style={styles.infoText}>
+            We use AES-256 encryption to protect your sensitive information.
+          </Text>
+        </View>
+        <View style={styles.infoRow}>
+          <Image source={tickIcon} />
+          <Text style={styles.infoText}>
+            Your savings are CDIC insured.
+          </Text>
+        </View>
+        <View style={styles.infoRow}>
+          <Image source={tickIcon} />
+          <Text style={styles.infoText}>
+            We never store your bank login credentials.
+          </Text>
+        </View>
+
+        <SpecialButton style={styles.buttonStyle} text={"LINK MY ACCOUNT"} onClick={this.props.next} />
       </View>
     );
   }
