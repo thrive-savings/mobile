@@ -87,6 +87,16 @@ export default StyleSheet.create({
   blueText: {
     color: colors.blue
   },
+  readMoreSecurityText: {
+    textAlign: "center",
+    color: "white",
+    fontSize: 13,
+    fontFamily: "LatoRegular",
+    lineHeight: 22,
+    letterSpacing: 1,
+    textDecorationLine: "underline",
+    paddingBottom: 10
+  },
 
   // Logo style
   bankLogo: {
@@ -95,21 +105,29 @@ export default StyleSheet.create({
   },
 
   // Empty state styles
-  emptyContentArea: {
-    backgroundColor: "white",
-    borderRadius: 8,
-    marginVertical: 10,
-    paddingVertical: 20,
+  emptyStateContainer: {
+    margin: 10,
+    paddingTop: 40,
+    paddingBottom: 20,
     justifyContent: "center",
     alignItems: "center"
   },
-  emptyStateText: {
+  emptyStateLabel: {
     textAlign: "center",
-    color: colors.blue,
-    fontSize: 13,
+    color: "white",
+    fontFamily: "LatoBold",
+    fontSize: 15,
+    lineHeight: 22,
+    letterSpacing: 1.6,
+    paddingTop: 30,
+    paddingBottom: 20
+  },
+  emptyStateDesc: {
+    textAlign: "center",
+    color: "white",
     fontFamily: "LatoRegular",
-    letterSpacing: 0.5,
-    paddingHorizontal: 20,
-    paddingTop: 20
+    fontSize: 13,
+    lineHeight: 22,
+    letterSpacing: 1.6
   }
 });

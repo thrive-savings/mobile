@@ -57,8 +57,6 @@ class IntegrateBank extends Component {
       navigation: { state: { params: { step: stepFromNavigation } = {} } = {} }
     } = this.props;
 
-    this.props.changeBankStep();
-
     if (curConnectionID || typeof stepFromNavigation !== "undefined") {
       this.updateConnectionsData();
       this.goBack();

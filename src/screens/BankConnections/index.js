@@ -26,8 +26,9 @@ import colors from "../../theme/colors";
 
 import { bankLogoUrl } from "../../globals/logoUrls";
 
-const bankSymbol = require("../../../assets/Icons/BankSymbol/bankSymbolGradient.png");
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
+const bankSymbolWhite = require("../../../assets/Icons/BankSymbolWhite/bitmap.png");
+
 
 class BankConnections extends Component {
   constructor(props) {
@@ -97,28 +98,16 @@ class BankConnections extends Component {
     }
   }
 
-  openLinkingFlow() {
-    this.props.navigation.navigate("IntegrateBank", { step: LINK_STEPS.AUTH });
+  openLinkingFlow(step) {
+    this.props.navigation.navigate("IntegrateBank", { step });
   }
 
   renderEmpty() {
     return (
-      <View style={[styles.emptyContentArea, globalStyles.shadow]}>
-        <Image
-          source={bankSymbol}
-          style={styles.bankLogo}
-        />
-        <Text style={styles.emptyStateText}>
-          You haven't connected any bank account yet.
-        </Text>
-        <Text style={[styles.emptyStateText, styles.bottomPadder]}>
-          Connect one now and let Thrive do the rest.
-        </Text>
-        <SpecialButton
-          style={styles.connectButton}
-          text="CONNECT YOUR BANK"
-          onClick={() => this.openLinkingFlow()}
-        />
+      <View style={styles.emptyStateContainer}>
+        <Image source={bankSymbolWhite} />
+        <Text style={styles.emptyStateLabel}>Your accounts aren't linked</Text>
+        <Text style={styles.emptyStateDesc}>Linking your bank account enables Thrive to save for you.</Text>
       </View>
     );
   }
@@ -246,16 +235,14 @@ class BankConnections extends Component {
           showsVerticalScrollIndicator={false}
           style={styles.contentContainer}
         >
+          <Text onPress={() => this.openLinkingFlow(LINK_STEPS.INFO)} style={styles.readMoreSecurityText}>Read more about our security</Text>
           {connections.length ? this.renderConnections() : this.renderEmpty()}
         </ScrollView>
-        {
-          connections.length > 0 &&
-            <SpecialButton
-              style={styles.connectButton}
-              text="CONNECT ANOTHER BANK"
-              onClick={() => this.openLinkingFlow()}
-            />
-        }
+        <SpecialButton
+          style={styles.connectButton}
+          text="CONNECT BANK"
+          onClick={() => this.openLinkingFlow(LINK_STEPS.AUTH)}
+        />
         <ModalTemplate
           show={typeof showConfirmationModalForID !== "undefined"}
           buttonText={"YES"}
