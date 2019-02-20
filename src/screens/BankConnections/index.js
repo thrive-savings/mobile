@@ -98,10 +98,7 @@ class BankConnections extends Component {
   }
 
   openLinkingFlow() {
-    this.props.navigation.navigate("IntegrateBank", {
-      step: LINK_STEPS.AUTH,
-      newConnection: true
-    });
+    this.props.navigation.navigate("IntegrateBank", { step: LINK_STEPS.AUTH });
   }
 
   renderEmpty() {

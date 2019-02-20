@@ -9,8 +9,6 @@ import SpecialButton from "../../../../components/SpecialButton";
 import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
 
-import { ACTION_TYPES } from "../../state/constants";
-
 const thumbnailIcon = require("../../../../../assets/ThumbnailLogo/Small/thumbnail.png");
 const shieldIcon = require("../../../../../assets/Icons/Shield/bitmap.png");
 const bankIcon = require("../../../../../assets/Icons/BankSymbolSmaller/bitmap.png");
@@ -60,11 +58,9 @@ class WhyLink extends Component {
 }
 
 WhyLink.propTypes = {
-  actionType: PropTypes.oneOf(Object.values(ACTION_TYPES)),
   next: PropTypes.func
 };
 WhyLink.defaultProps = {
-  actionType: ACTION_TYPES.INITAL,
   next: () => {}
 };
 

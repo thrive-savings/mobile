@@ -1,5 +1,6 @@
 const employerBonusIcon = require("../../../assets/Icons/Notifications/EmployerBonus/bitmap.png");
 const savingPreferencesIcon = require("../../../assets/Icons/Notifications/SavingPreferences/bitmap.png");
+const settingsIcon = require("../../../assets/Icons/Settings/bitmap.png");
 
 const NOTIFICATION_TYPES = [
   {
@@ -13,6 +14,12 @@ const NOTIFICATION_TYPES = [
     title: "SAVING PREFERENCES",
     getDescription: () => "Click here to set up how you’d like to save!",
     icon: savingPreferencesIcon
+  },
+  {
+    type: "IntegrateBank",
+    title: "LINK A BANK TO SAVE",
+    getDescription: () => "Tap here to link your bank account.",
+    icon: settingsIcon
   }
 ];
 

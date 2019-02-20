@@ -9,11 +9,7 @@ import globalErrorMessage from "../../../../globals/errorMessage";
 import amplitude from "../../../../globals/amplitude";
 
 import { setDefaultAccount, changeBankStep } from "../../state/actions";
-import {
-  LINK_STEPS,
-  LOADING_STATES,
-  ACTION_TYPES
-} from "../../state/constants";
+import { LOADING_STATES } from "../../state/constants";
 
 import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
@@ -35,28 +31,20 @@ class ChooseAccount extends Component {
   }
 
   setDefaultAccount() {
-    if (
-      [ACTION_TYPES.INITAL, ACTION_TYPES.SET_DEFAULT].includes(
-        this.props.actionType
-      )
-    ) {
-      const { selectedAccountID } = this.state;
-      if (selectedAccountID) {
-        this.props.setDefaultAccount({
-          accountID: selectedAccountID
-        });
-        this.props.goBack();
-      } else {
-        Toast.show({
-          text: "Choose Default Account",
-          duration: 2500,
-          position: "top",
-          type: "danger",
-          textStyle: { textAlign: "center" }
-        });
-      }
+    const { selectedAccountID } = this.state;
+    if (selectedAccountID) {
+      this.props.setDefaultAccount({
+        accountID: selectedAccountID
+      });
+      this.props.goBack();
     } else {
-      this.props.changeBankStep({ step: LINK_STEPS.FINAL });
+      Toast.show({
+        text: "Choose Default Account",
+        duration: 2500,
+        position: "top",
+        type: "danger",
+        textStyle: { textAlign: "center" }
+      });
     }
   }
 
@@ -83,18 +71,13 @@ class ChooseAccount extends Component {
   }
 
   renderAccounts(bank, accounts) {
-    const { integrateBankReducer: { loadingState }, actionType } = this.props;
-
-    const letUserSetDefault = [
-      ACTION_TYPES.INITAL,
-      ACTION_TYPES.SET_DEFAULT
-    ].includes(actionType);
+    const { integrateBankReducer: { loadingState } } = this.props;
 
     const selectableAccountsView = [];
     const unselectableAccountsView = [];
 
     accounts.forEach(({ id, name, nickname, type }) => {
-      if (letUserSetDefault && ["Checking", "Savings"].includes(type)) {
+      if (["Checking", "Savings"].includes(type)) {
         const isSelected = this.state.selectedAccountID === id;
         selectableAccountsView.push(
           <TouchableOpacity
@@ -136,27 +119,16 @@ class ChooseAccount extends Component {
           </TouchableOpacity>
         );
       } else {
-        const view = (
+        unselectableAccountsView.push(
           <View
             key={id}
             style={styles.accountRow}
           >
-            <Text
-              style={[
-                styles.accountTitleText,
-                !letUserSetDefault && styles.selectedTitleText
-              ]}
-            >
+            <Text style={styles.accountTitleText}>
               {type + " - " + nickname + " - " + name}
             </Text>
           </View>
         );
-
-        if (letUserSetDefault) {
-          unselectableAccountsView.push(view);
-        } else {
-          selectableAccountsView.push(view);
-        }
       }
     });
 
@@ -173,9 +145,7 @@ class ChooseAccount extends Component {
       >
         <Image source={bankIcon} />
         <Text style={styles.bankBoxLabel}>
-          {letUserSetDefault
-            ? "Please select your primary bank account. This is where Thrive will pull your savings from."
-            : "We have fetched the following accounts from your bank."}
+          Please select your primary bank account. This is where Thrive will pull your savings from.
         </Text>
         {selectableAccountsView}
         {unselectableAccountsView.length > 0 && (

@@ -159,7 +159,6 @@ class DebtDashboard extends Component {
               onClick={() =>
                 navigation.navigate("IntegrateBank", {
                   step: LINK_STEPS.AUTH,
-                  newConnection: true,
                   comingFromDebts: true
                 })}
             />

@@ -79,6 +79,7 @@ const imageAssets = [
   require("../../assets/Icons/Phone/phone.png"),
   require("../../assets/Icons/PiggyBank/piggybank.png"),
   require("../../assets/Icons/SafeBox/safebox.png"),
+  require("../../assets/Icons/Settings/bitmap.png"),
   require("../../assets/Icons/Shield/bitmap.png"),
   require("../../assets/Icons/Sms/sms.png"),
   require("../../assets/Icons/ThriveBot/thriveBot.png"),

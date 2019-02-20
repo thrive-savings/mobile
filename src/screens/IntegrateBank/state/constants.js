@@ -21,10 +21,3 @@ export const LOADING_STATES = {
   SETTING_DEFAULT_ACCOUNT: "setting_default_account",
   UNLINKING_CONNECTION: "unlinking_connection"
 };
-
-export const ACTION_TYPES = {
-  RELINK: "relink",
-  SET_DEFAULT: "set_default",
-  NEW: "new",
-  INITAL: "initial"
-};

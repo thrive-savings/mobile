@@ -26,6 +26,8 @@ import addStatusBar from "../../components/StatusBar";
 import { getDollarString, getSplitDollarStrings } from "../../globals/helpers";
 import GOAL_CATEGORIES from "../../globals/goalCategories";
 
+import { LINK_STEPS } from "../IntegrateBank/state/constants";
+
 import { bonusNotificationSeen } from "../Login/state/actions";
 
 import globalStyles from "../../globals/globalStyles";
@@ -80,6 +82,11 @@ class SavingsDashboard extends Component {
       case "EmployerBonus":
         this.props.bonusNotificationSeen();
         break;
+      case "IntegrateBank":
+        this.props.navigation.navigate("IntegrateBank", {
+          step: this.props.userData.bankLinked ? LINK_STEPS.AUTH : LINK_STEPS.INFO
+        });
+        break;
       default:
         break;
     }
@@ -109,7 +116,7 @@ class SavingsDashboard extends Component {
       isSeeingBonus,
       isSettingPreferencesDone,
       preferencesInitialSetDone,
-      userData: { notifications }
+      userData: { bankLinked, connections, notifications }
     } = this.props;
 
     let notifPreferencesSet = false,
@@ -120,21 +127,31 @@ class SavingsDashboard extends Component {
     }
 
     return NOTIFICATION_TYPES.map(({ type, title, getDescription, icon }) => {
-      if (type === "EmployerBonus" && notifBonus <= 0) {
-        return;
-      } else if (
-        type === "SavingPreferences" &&
-        (preferencesInitialSetDone || notifPreferencesSet)
-      ) {
-        return;
+      let shouldRender = false;
+      let description = "";
+
+      switch (type) {
+        case "EmployerBonus":
+          shouldRender = notifBonus > 0;
+          description = isSeeingBonus
+            ? "Dismissing ... "
+            : getDescription(getDollarString(notifBonus));
+          break;
+        case "SavingPreferences":
+          shouldRender = !preferencesInitialSetDone && !notifPreferencesSet;
+          description = isSettingPreferencesDone ? "Setting up ..." : getDescription();
+          break;
+        case "IntegrateBank":
+          shouldRender = !bankLinked || !connections || connections.length === 0;
+          description = getDescription();
+          break;
+        default:
+          break;
       }
 
-      const description =
-        type === "EmployerBonus"
-          ? isSeeingBonus
-            ? "Dismissing ... "
-            : getDescription(getDollarString(notifBonus))
-          : isSettingPreferencesDone ? "Setting up ..." : getDescription();
+      if (!shouldRender) {
+        return;
+      }
 
       return (
         <Animated.View

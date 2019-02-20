@@ -3,7 +3,7 @@ import colors from "../../../../theme/colors";
 
 export default StyleSheet.create({
   container: {
-    marginHorizontal: 20,
+    marginHorizontal: 30,
     alignSelf: "center",
     padding: 20,
     borderRadius: 8,

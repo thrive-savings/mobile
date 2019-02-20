@@ -14,7 +14,7 @@ import AuthSuccess from "./pages/AuthSuccess";
 
 import { fetchDebts } from "../DebtDashboard/state/actions";
 import { changeBankStep, updateUserConnections } from "./state/actions";
-import { LINK_STEPS, ACTION_TYPES } from "./state/constants";
+import { LINK_STEPS } from "./state/constants";
 
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
 
@@ -102,8 +102,7 @@ class IntegrateBank extends Component {
           params: {
             step: stepFromNavigation = undefined,
             connection: connectionToFix,
-            accounts: providedAccounts,
-            newConnection
+            accounts: providedAccounts
           } = {}
         } = {}
       }
@@ -114,12 +113,6 @@ class IntegrateBank extends Component {
       step = stepFromNavigation;
     }
 
-    const actionType = connectionToFix
-      ? ACTION_TYPES.RELINK
-      : providedAccounts
-        ? ACTION_TYPES.SET_DEFAULT
-        : newConnection ? ACTION_TYPES.NEW : ACTION_TYPES.INITAL;
-
     switch (step) {
       default:
       case LINK_STEPS.INFO:
@@ -127,7 +120,6 @@ class IntegrateBank extends Component {
           <ScrollView showsVerticalScrollIndicator={false}>
             <WhyLink
               next={() => this.props.changeBankStep({ step: LINK_STEPS.AUTH })}
-              actionType={actionType}
             />
           </ScrollView>
         );
@@ -136,7 +128,6 @@ class IntegrateBank extends Component {
           <View style={globalStyles.container}>
             <AuthenticateBank
               connection={connectionToFix}
-              actionType={actionType}
               onQuovoClose={this.onQuovoClose}
             />
           </View>
@@ -145,7 +136,6 @@ class IntegrateBank extends Component {
         return (
           <ScrollView showsVerticalScrollIndicator={false}>
             <ChooseAccount
-              actionType={actionType}
               accounts={providedAccounts}
               goBack={this.goBack}
             />
@@ -154,11 +144,7 @@ class IntegrateBank extends Component {
       case LINK_STEPS.FINAL:
         return (
           <ScrollView showsVerticalScrollIndicator={false}>
-            <AuthSuccess
-              actionType={actionType}
-              goBack={this.goBack}
-              updateConnectionsData={this.updateConnectionsData}
-            />
+            <AuthSuccess updateConnectionsData={this.updateConnectionsData} />
           </ScrollView>
         );
     }

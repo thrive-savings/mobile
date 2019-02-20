@@ -77,11 +77,6 @@ const StackerWithDrawer = createStackNavigator(stackScreens, {
   initialRouteName: "Drawer"
 });
 
-const StackerWithIntegrateBank = createStackNavigator(stackScreens, {
-  ...stackerOptions,
-  initialRouteName: "IntegrateBank"
-});
-
 const StackerWithSetPhone = createStackNavigator(stackScreens, {
   ...stackerOptions,
   initialRouteName: "SetPhone"
@@ -137,8 +132,6 @@ class App extends React.Component {
     if (authorized) {
       if (!authorized.isVerified) {
         stacker = <StackerWithSetPhone />;
-      } else if (!authorized.bankLinked) {
-        stacker = <StackerWithIntegrateBank />;
       } else {
         stacker = <StackerWithDrawer />;
       }

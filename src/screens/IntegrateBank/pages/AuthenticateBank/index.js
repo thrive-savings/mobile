@@ -14,10 +14,7 @@ import {
   getUiToken,
   changeBankStep
 } from "../../state/actions";
-import {
-  LOADING_STATES,
-  ACTION_TYPES
-} from "../../state/constants";
+import { LOADING_STATES } from "../../state/constants";
 
 import styles from "./styles";
 import colors from "../../../../theme/colors";
@@ -73,7 +70,6 @@ class AuthenticateBank extends Component {
   render() {
     const {
       integrateBankReducer: { loadingState: loadingStateFromReducer, quovoUiToken },
-      actionType,
       connection: connectionToFix,
       userData: { userType }
     } = this.props;
@@ -91,7 +87,7 @@ class AuthenticateBank extends Component {
                 uri: `${API}/link.html?token=${quovoUiToken}${userType ===
                 "tester"
                   ? "&test=true"
-                  : ""}${actionType === ACTION_TYPES.RELINK
+                  : ""}${connectionToFix && connectionToFix.quovoConnectionID
                   ? `&connectionId=${connectionToFix.quovoConnectionID}`
                   : ""}`
               }}
@@ -109,11 +105,7 @@ class AuthenticateBank extends Component {
 }
 
 AuthenticateBank.propTypes = {
-  onQuovoClose: PropTypes.func.isRequired,
-  actionType: PropTypes.oneOf(Object.values(ACTION_TYPES))
-};
-AuthenticateBank.defaultProps = {
-  actionType: ACTION_TYPES.INITAL
+  onQuovoClose: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
