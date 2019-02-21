@@ -60,11 +60,11 @@ class ReferralCodeForm extends Component {
   }
 
   render() {
-    const { isLoading, error, errorMessage } = this.props.signUpReducer;
+    const { isLoading, verifyCodeError: error } = this.props.signUpReducer;
 
     let errorText = "";
     if (error) {
-      const { errors } = errorMessage;
+      const { errors } = error;
       if (errors && errors.constructor === Array && errors.length > 0) {
         errorText = errors[0].value;
       } else {

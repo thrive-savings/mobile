@@ -11,8 +11,8 @@ const initialState = {
   companyLogoUrl: undefined,
   step: 0,
   isLoading: false,
-  error: false,
-  errorMessage: ""
+  signUpError: undefined,
+  verifyCodeError: undefined
 };
 
 export default function signUpReducer(state = initialState, action) {
@@ -30,15 +30,13 @@ export default function signUpReducer(state = initialState, action) {
         data: signUpData ? signUpData : {},
         step: 2,
         isLoading: false,
-        error: false,
-        errorMessage: ""
+        signUpError: undefined
       };
     case `${SIGN_UP_URL}_FAIL`:
       return {
         ...state,
         isLoading: false,
-        error: true,
-        errorMessage: action.error
+        signUpError: action.error
       };
 
     //Verify Referral cases
@@ -61,16 +59,14 @@ export default function signUpReducer(state = initialState, action) {
         companyLogoUrl: verifyReferralData.companyLogoUrl,
         step: 2,
         isLoading: false,
-        error: false,
-        errorMessage: ""
+        verifyCodeError: undefined
       };
     case `${VERIFY_COMPANY_CODE_URL}_FAIL`:
       return {
         ...state,
         isLoading: false,
         verifyReferralCode: "",
-        error: true,
-        errorMessage: action.error
+        verifyCodeError: action.error
       };
 
     case TRY_PERSONAL_CLICKED:

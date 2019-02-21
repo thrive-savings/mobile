@@ -129,13 +129,12 @@ class PersonalDetails extends Component {
     const {
       companyLogoUrl: companyLogoName,
       isLoading,
-      error,
-      errorMessage
+      signUpError: error
     } = this.props.signUpReducer;
 
     let errorText = "";
     if (error) {
-      const { errors } = errorMessage;
+      const { errors } = error;
       if (errors && errors.constructor === Array && errors.length > 0) {
         errorText = errors[0].value;
       } else {
