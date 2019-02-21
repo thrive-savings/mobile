@@ -9,6 +9,7 @@ const imageAssets = [
 
   // Logos
   require("../../assets/Logo/white.png"),
+  require("../../assets/LogoLarger/bitmap.png"),
   require("../../assets/ThumbnailLogo/Large/thumbnail.png"),
   require("../../assets/ThumbnailLogo/Small/thumbnail.png"),
 

@@ -1,28 +1,21 @@
 import React, { Component } from "react";
-import {
-  KeyboardAvoidingView,
-  View,
-  TouchableOpacity,
-  Image,
-  Text,
-  TextInput
-} from "react-native";
-import { Spinner, Toast } from "native-base";
+import { ScrollView, View, Text, TextInput } from "react-native";
+import { Toast } from "native-base";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
+
+import SpecialButton from "../../../../components/SpecialButton";
 
 import amplitude from "../../../../globals/amplitude";
 import globalErrorMessage from "../../../../globals/errorMessage";
 
-import { verifyReferralCode, tryPersonalClicked } from "../../state/actions";
+import { verifyReferralCode } from "../../state/actions";
 
 import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
 import colors from "../../../../theme/colors";
 
 import { required } from "../../../../globals/validators";
-
-const logo = require("../../../../../assets/Logo/white.png");
 
 class ReferralCodeForm extends Component {
   componentDidMount() {
@@ -50,7 +43,7 @@ class ReferralCodeForm extends Component {
         <View style={styles.inputGrp}>
           <TextInput
             ref={c => (this.textInput = c)}
-            placeholderTextColor="#FFF"
+            placeholderTextColor={colors.darkerGrey}
             style={styles.input}
             placeholder={input.name === "code" ? "ENTER CODE" : "Placeholder"}
             underlineColorAndroid="transparent"
@@ -80,12 +73,8 @@ class ReferralCodeForm extends Component {
     }
 
     return (
-      <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
-        <Image
-          source={logo}
-          style={this.props.keyboardClosed ? styles.logo : styles.smallerLogo}
-        />
-        <Text style={[styles.text, styles.textAbove]}>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={[styles.container, globalStyles.shadow]}>
+        <Text style={styles.formLabelText}>
           Please enter the referral code you received from your employer.
         </Text>
         <Field
@@ -94,31 +83,12 @@ class ReferralCodeForm extends Component {
           type="code"
           validate={[required]}
         />
-        <TouchableOpacity
-          activeOpacity={0.6}
-          onPress={() => this.props.tryPersonalClicked()}
-        >
-          <Text style={[styles.text, styles.textBelow]}>
-            Don't have a code?
-            <Text style={styles.requestOneText}> Try Thrive Personal.</Text>
-          </Text>
-        </TouchableOpacity>
         {error &&
           <Text style={globalStyles.formErrorText3}>
             {errorText}
           </Text>}
-        <TouchableOpacity
-          activeOpacity={0.6}
-          style={[styles.createAccountBtn, globalStyles.shadow]}
-          onPress={this.verify.bind(this)}
-        >
-          {isLoading
-            ? <Spinner color={colors.blue} />
-            : <Text uppercase style={styles.createAccountBtnText}>
-                CREATE MY ACCOUNT
-              </Text>}
-        </TouchableOpacity>
-      </KeyboardAvoidingView>
+        <SpecialButton loading={isLoading} text={"JOIN THRIVE @ WORK"} onClick={this.verify.bind(this)} />
+      </ScrollView>
     );
   }
 }
@@ -135,8 +105,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    verifyReferralCode: (payload = {}) => dispatch(verifyReferralCode(payload)),
-    tryPersonalClicked: () => dispatch(tryPersonalClicked())
+    verifyReferralCode: (payload = {}) => dispatch(verifyReferralCode(payload))
   };
 }
 

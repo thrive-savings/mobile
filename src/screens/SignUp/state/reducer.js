@@ -28,7 +28,7 @@ export default function signUpReducer(state = initialState, action) {
       return {
         ...state,
         data: signUpData ? signUpData : {},
-        step: 1,
+        step: 2,
         isLoading: false,
         error: false,
         errorMessage: ""
@@ -59,7 +59,7 @@ export default function signUpReducer(state = initialState, action) {
         data: verifyReferralData ? verifyReferralData : {},
         companyID: verifyReferralData.companyID,
         companyLogoUrl: verifyReferralData.companyLogoUrl,
-        step: 1,
+        step: 2,
         isLoading: false,
         error: false,
         errorMessage: ""
@@ -76,7 +76,7 @@ export default function signUpReducer(state = initialState, action) {
     case TRY_PERSONAL_CLICKED:
       return {
         ...state,
-        step: 1
+        step: 2
       };
 
     case CHANGE_STEP:
