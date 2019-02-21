@@ -8,12 +8,12 @@ export const TOP_MENU_ITEMS = [
     icon: savingsIcon,
     screen: "SavingsDashboard"
   },
-  {
+  /* {
     displayName: "MY DEBT",
     icon: savingsIcon,
     screen: "DebtDashboard",
     premium: true
-  },
+  }, */
   {
     displayName: "HISTORY",
     icon: historyIcon,
