@@ -106,9 +106,8 @@ class SavingsDashboard extends Component {
     if (setRating > 0) {
       data.rating = setRating;
       if (setRating > 3 && StoreReview.hasAction()) {
-        console.log("Requesting Review")
         StoreReview.requestReview();
-      } 
+      }
     }
 
     this.props.submitRating(data);
@@ -255,8 +254,8 @@ class SavingsDashboard extends Component {
 
   render() {
     const { setRating } = this.state;
-    const { 
-      navigation, 
+    const {
+      navigation,
       userData: { promptRating, balance }
     } = this.props;
 

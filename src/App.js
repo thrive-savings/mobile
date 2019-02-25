@@ -82,7 +82,7 @@ const StackerWithSetPhone = createStackNavigator(stackScreens, {
   initialRouteName: "SetPhone"
 });
 
-class App extends React.Component {  
+class App extends React.Component {
   componentDidMount() {
     if (AppState.currentState) {
       this._handleAppStateChange(AppState.currentState);
@@ -134,12 +134,12 @@ class App extends React.Component {
         stacker = <StackerWithSetPhone />;
       } else {
         stacker = <StackerWithDrawer />;
-      }    
+      }
     }
 
     return (
       <Root>
-        {stacker}        
+        {stacker}
       </Root>
     );
   }
