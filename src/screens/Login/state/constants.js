@@ -7,3 +7,4 @@ export const UPDATE_AVATAR = "updating_avatar";
 export const GET_UPDATES = "/user/get-updates";
 export const BONUS_NOTIFICATION_SEEN = "/user/bonus-notification-seen";
 export const SET_EXPO_TOKEN = "/user/expo-token";
+export const SUBMIT_RATING = "/user/rating-submit";

@@ -2,7 +2,8 @@ import {
   REQUEST_URL,
   GET_UPDATES,
   BONUS_NOTIFICATION_SEEN,
-  SET_EXPO_TOKEN
+  SET_EXPO_TOKEN,
+  SUBMIT_RATING
 } from "./constants";
 import { put, takeEvery, call } from "redux-saga/effects";
 import { requestApi } from "../../../globals/requestApi";
@@ -37,9 +38,16 @@ const setExpoTokenSaga = function*() {
   });
 };
 
+const submitRatingSaga = function*() {
+  yield takeEvery(`${SUBMIT_RATING}_SUBMIT`, function*({ payload }) {
+    yield put(requestApi(`${SUBMIT_RATING}`, { data: payload }));
+  });
+};
+
 export {
   loginSaga,
   getUpdatesSaga,
   bonusNotificationSeenSaga,
-  setExpoTokenSaga
+  setExpoTokenSaga,
+  submitRatingSaga
 };

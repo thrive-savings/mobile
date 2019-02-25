@@ -3,6 +3,7 @@ import {
   REQUEST_URL,
   GET_UPDATES,
   BONUS_NOTIFICATION_SEEN,
+  SUBMIT_RATING,
   UPDATE_AUTH_DATA,
   UPDATE_CONNECTION_DATA,
   UPDATE_GOALS_DATA,
@@ -178,6 +179,25 @@ export default function authReducer(state = initialState, action) {
         error: true,
         errorMessage: action.error
       };
+
+    // Give Rating cases
+    case `${SUBMIT_RATING}_SUCCEED`:
+      const { payload: { data: submitRatingData } } = action;
+      return {
+        ...state,
+        data: submitRatingData,
+        isLoading: false,
+        error: false,
+        errorMessage: ""
+      };
+    case `${SUBMIT_RATING}_FAIL`:
+      const dataOnSubmitRatingFail = state.data.authorized;
+      dataOnSubmitRatingFail.promptRating = false;
+      return {
+        ...state,
+        data: { authorized: dataOnSubmitRatingFail }
+      };
+
     default:
       return state;
   }

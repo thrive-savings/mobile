@@ -15,10 +15,12 @@
       "assetExts": ["ttf"]
     },
     "ios": {
-      "bundleIdentifier": "com.thrivesavings.mobileapp"
+      "bundleIdentifier": "com.thrivesavings.mobileapp",
+      "appStoreUrl": "https://itunes.apple.com/us/app/thrive-save-more-money/id1396743469"
     },
     "android": {
       "package": "com.thrivesavings.mobileapp",
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.thrivesavings.mobileapp",
       "googleServicesFile": "./google-services.json",
       "versionCode": 200
     },

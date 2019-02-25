@@ -13,7 +13,6 @@ import styles from "./styles";
 
 const closeIcon = require("../../../assets/Icons/Close/close.png");
 
-
 class ModalTemplate extends Component {
   constructor(props) {
     super(props);
@@ -50,14 +49,23 @@ class ModalTemplate extends Component {
         onBackdropPress={this.close}
       >
         <View style={styles.container}>
-          <TouchableOpacity activeOpacity={0.6} style={styles.closeButton} onPress={() => this.close()} hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}>
+          <TouchableOpacity
+            activeOpacity={0.6}
+            style={styles.closeButton}
+            onPress={this.close}
+            hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
+          >
             <Image source={closeIcon} style={styles.closeIcon} />
           </TouchableOpacity>
           <View style={styles.contentContainer}>
             {body}
             {
               this.props.buttonVisible &&
-              <SpecialButton loading={this.state.buttonLoading} text={this.props.buttonText} onClick={this.props.onButtonClick ? this.props.onButtonClick : this.close} />
+              <SpecialButton
+                loading={this.state.buttonLoading}
+                text={this.props.buttonText}
+                onClick={this.props.onButtonClick ? this.props.onButtonClick : this.close}
+              />
             }
           </View>
         </View>

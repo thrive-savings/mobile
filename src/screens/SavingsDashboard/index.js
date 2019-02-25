@@ -9,7 +9,7 @@ import {
   Animated
 } from "react-native";
 import { Card } from "native-base";
-import { LinearGradient } from "expo";
+import { LinearGradient, StoreReview } from "expo";
 import { connect } from "react-redux";
 
 import Communications from "react-native-communications";
@@ -22,13 +22,14 @@ import Header from "../../components/Header";
 import ModalTemplate from "../../components/ModalTemplate";
 import ProgressBar from "../../components/ProgressBar";
 import addStatusBar from "../../components/StatusBar";
+import getRatingModalContent from "../../components/RatingModal";
 
 import { getDollarString, getSplitDollarStrings } from "../../globals/helpers";
 import GOAL_CATEGORIES from "../../globals/goalCategories";
 
 import { LINK_STEPS } from "../IntegrateBank/state/constants";
 
-import { bonusNotificationSeen } from "../Login/state/actions";
+import { bonusNotificationSeen, submitRating } from "../Login/state/actions";
 
 import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
@@ -47,6 +48,7 @@ class SavingsDashboard extends Component {
     this.cycleAnimation = this.cycleAnimation.bind(this);
 
     this.state = {
+      setRating: 0,
       showInfoModal: false,
       notifFadeAnim: new Animated.Value(1)
     };
@@ -95,6 +97,21 @@ class SavingsDashboard extends Component {
   saveMore() {
     amplitude.track(amplitude.events.CLICKED_SAVE_MORE);
     Communications.textWithoutEncoding(THRIVE_BOT_NUMBER, "Save 20.00");
+  }
+
+  submitRating() {
+    const data = { rating: 0 };
+
+    const { setRating } = this.state;
+    if (setRating > 0) {
+      data.rating = setRating;
+      if (setRating > 3 && StoreReview.hasAction()) {
+        console.log("Requesting Review")
+        StoreReview.requestReview();
+      } 
+    }
+
+    this.props.submitRating(data);
   }
 
   getInfoModalContent() {
@@ -237,10 +254,13 @@ class SavingsDashboard extends Component {
   }
 
   render() {
-    const navigation = this.props.navigation;
-    const { beforeDot: balanceBD, afterDot: balanceAD } = getSplitDollarStrings(
-      this.props.userData.balance
-    );
+    const { setRating } = this.state;
+    const { 
+      navigation, 
+      userData: { promptRating, balance }
+    } = this.props;
+
+    const { beforeDot: balanceBD, afterDot: balanceAD } = getSplitDollarStrings(balance);
     return (
       <ImageBackground source={bg} style={globalStyles.background}>
         <Header navigation={navigation} />
@@ -286,6 +306,16 @@ class SavingsDashboard extends Component {
           content={this.getInfoModalContent()}
           onClose={() => this.setState({ showInfoModal: false })}
         />
+        <ModalTemplate
+          show={promptRating}
+          buttonText={"SUBMIT"}
+          content={getRatingModalContent({
+            label: "Do you enjoy using Thrive?",
+            value: setRating,
+            onPress: value => this.setState({ setRating: value })
+          })}
+          onClose={() => this.submitRating()}
+        />
       </ImageBackground>
     );
   }
@@ -303,7 +333,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     bonusNotificationSeen: (payload = {}) =>
-      dispatch(bonusNotificationSeen(payload))
+      dispatch(bonusNotificationSeen(payload)),
+    submitRating: (payload = {}) => dispatch(submitRating(payload))
   };
 }
 

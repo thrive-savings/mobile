@@ -3,6 +3,7 @@ import {
   GET_UPDATES,
   SET_EXPO_TOKEN,
   BONUS_NOTIFICATION_SEEN,
+  SUBMIT_RATING,
   UPDATE_AUTH_DATA,
   UPDATE_CONNECTION_DATA,
   UPDATE_GOALS_DATA,
@@ -30,4 +31,8 @@ export const bonusNotificationSeen = () => ({
 });
 export const setExpoToken = () => ({
   type: `${SET_EXPO_TOKEN}_SUBMIT`
+});
+export const submitRating = payload => ({
+  payload,
+  type: `${SUBMIT_RATING}_SUBMIT`
 });

@@ -4,7 +4,8 @@ import {
   loginSaga,
   getUpdatesSaga,
   bonusNotificationSeenSaga,
-  setExpoTokenSaga
+  setExpoTokenSaga,
+  submitRatingSaga
 } from "../screens/Login/state/sagas";
 import {
   signUpSaga,
@@ -66,6 +67,7 @@ export default function runSagas(sagaMiddleware) {
   sagaMiddleware.run(getUpdatesSaga);
   sagaMiddleware.run(bonusNotificationSeenSaga);
   sagaMiddleware.run(setExpoTokenSaga);
+  sagaMiddleware.run(submitRatingSaga);
   sagaMiddleware.run(signUpSaga);
   sagaMiddleware.run(signUpSucceedSaga);
   sagaMiddleware.run(verifyReferralCodeSaga);
