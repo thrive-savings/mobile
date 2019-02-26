@@ -9,16 +9,11 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "eject": "expo eject",
-    "test": "jest && eslint .",
+    "eslint": "eslint .",
     "eslint:fix": "eslint . --fix"
   },
-  "jest": {
-    "preset": "jest-expo",
-    "transformIgnorePatterns": [
-      "node_modules/(?!(react-native|lottie-react-native|expo|react-native-maps|react-native-svg|react-native-branch|native-base-shoutem-theme|react-native-easy-grid|react-native-drawer|react-native-vector-icons|react-native-keyboard-aware-scroll-view|react-native-swiper|react-navigation|native-base|@expo|react-native-scrollable-tab-view|react-native-simple-modal)/)"
-    ]
-  },
   "devDependencies": {
+    "babel-preset-expo": "^5.0.0",
     "babel-eslint": "7.2.3",
     "eslint": "4.4.1",
     "eslint-plugin-import": "2.7.0",
@@ -26,23 +21,17 @@
     "eslint-plugin-prettier": "2.1.2",
     "eslint-plugin-react": "7.1.0",
     "eslint-plugin-react-native": "3.0.1",
-    "husky": "0.14.3",
-    "jest": "20.0.4",
-    "jest-expo": "^30.0.0",
-    "prettier": "1.5.3",
-    "react-native-scripts": "1.1.0",
-    "react-test-renderer": "16.0.0-alpha.12"
+    "prettier": "1.5.3"
   },
   "dependencies": {
     "axios": "^0.18.0",
     "color": "1.0.3",
-    "expo": "^30.0.1",
-    "jest-cli": "20.0.4",
+    "expo": "^32.0.0",
     "lodash": "4.13.1",
     "moment": "2.13.0",
-    "native-base": "2.3.1",
-    "react": "16.3.1",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
+    "native-base": "2.12.0",
+    "react": "16.5.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
     "react-native-calendars": "1.5.6",
     "react-native-carousel-view": "^0.5.1",
     "react-native-check-box": "^2.1.0",

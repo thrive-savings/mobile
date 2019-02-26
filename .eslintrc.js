@@ -5,8 +5,7 @@ module.exports = {
 
   env: {
     es6: true,
-    node: true,
-    jest: true
+    node: true
   },
 
   plugins: ["prettier", "react"],
@@ -31,7 +30,6 @@ module.exports = {
     fetch: false,
     FormData: false,
     global: false,
-    jest: false,
     Map: true,
     module: false,
     navigator: false,

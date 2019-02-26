@@ -57,13 +57,17 @@ SpecialButton.propTypes = {
   next: PropTypes.func,
   enabled: PropTypes.bool,
   loading: PropTypes.bool,
-  style: PropTypes.number
+  style: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.number])),
+    PropTypes.object,
+    PropTypes.number
+  ])
 };
 SpecialButton.defaultProps = {
   next: () => {},
   enabled: true,
   loading: false,
-  styles: undefined
+  style: undefined
 };
 
 export default SpecialButton;
