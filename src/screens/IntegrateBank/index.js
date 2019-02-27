@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ScrollView, View, ImageBackground } from "react-native";
+import { ScrollView, ImageBackground } from "react-native";
 import { connect } from "react-redux";
 
 import Header from "../../components/Header";
@@ -115,7 +115,7 @@ class IntegrateBank extends Component {
       default:
       case LINK_STEPS.INFO:
         return (
-          <ScrollView showsVerticalScrollIndicator={false}>
+          <ScrollView style={globalStyles.container} showsVerticalScrollIndicator={false}>
             <WhyLink
               next={() => this.props.changeBankStep({ step: LINK_STEPS.AUTH })}
             />
@@ -123,16 +123,14 @@ class IntegrateBank extends Component {
         );
       case LINK_STEPS.AUTH:
         return (
-          <View style={globalStyles.container}>
-            <AuthenticateBank
-              connection={connectionToFix}
-              onQuovoClose={this.onQuovoClose}
-            />
-          </View>
+          <AuthenticateBank
+            connection={connectionToFix}
+            onQuovoClose={this.onQuovoClose}
+          />
         );
       case LINK_STEPS.ACCOUNT:
         return (
-          <ScrollView showsVerticalScrollIndicator={false}>
+          <ScrollView style={globalStyles.container} showsVerticalScrollIndicator={false}>
             <ChooseAccount
               accounts={providedAccounts}
               goBack={this.goBack}
@@ -141,7 +139,7 @@ class IntegrateBank extends Component {
         );
       case LINK_STEPS.FINAL:
         return (
-          <ScrollView showsVerticalScrollIndicator={false}>
+          <ScrollView style={globalStyles.container} showsVerticalScrollIndicator={false}>
             <AuthSuccess updateConnectionsData={this.updateConnectionsData} />
           </ScrollView>
         );

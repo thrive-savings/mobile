@@ -7,7 +7,6 @@ const deviceWidth = screen.width;
 export default StyleSheet.create({
   //Content styles
   contentContainer: {
-    alignItems: "center",
     paddingHorizontal: 25,
     paddingBottom: 10
   },

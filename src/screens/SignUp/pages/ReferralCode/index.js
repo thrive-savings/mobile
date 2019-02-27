@@ -73,7 +73,7 @@ class ReferralCodeForm extends Component {
     }
 
     return (
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={[styles.container, globalStyles.shadow]}>
+      <ScrollView style={globalStyles.container} showsVerticalScrollIndicator={false} contentContainerStyle={[styles.container, globalStyles.shadow]}>
         <Text style={styles.formLabelText}>
           Please enter the referral code you received from your employer.
         </Text>

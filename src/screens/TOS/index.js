@@ -29,12 +29,12 @@ class TOS extends Component {
         />
 
         <ScrollView
+          style={globalStyles.container}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.scrollViewsContainer}
         >
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={[
+          <View
+            style={[
               styles.contentContainer,
               styles.noBottomBorder
             ]}
@@ -90,7 +90,15 @@ class TOS extends Component {
                 </Text>
               </View>
             </View>
+          </View>
 
+          <View
+            style={[
+              styles.contentContainer,
+              styles.noTopBorder,
+              styles.noBottomBorder
+            ]}
+          >
             <Text style={styles.regularText}>
               Your use of and access to the Services are subject at all times to
               these Terms and our{" "}
@@ -150,7 +158,15 @@ class TOS extends Component {
               IF YOU DO NOT AGREE TO EVERY PROVISION OF THIS PRIVACY POLICY AND
               OUR TERMS OF SERVICE, YOU MAY NOT ACCESS OR USE OUR SERVICES.
             </Text>
+          </View>
 
+          <View
+            style={[
+              styles.contentContainer,
+              styles.noTopBorder,
+              styles.noBottomBorder
+            ]}
+          >
             <Text style={[styles.regularText, styles.blueText]}>
               Your Consent to Use Electronic Signatures And Communications
             </Text>
@@ -227,10 +243,10 @@ class TOS extends Component {
               version of the software that is currently being supported by its
               publisher.
             </Text>
-          </ScrollView>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={[
+          </View>
+
+          <View
+            style={[
               styles.contentContainer,
               styles.noTopBorder,
               styles.noBottomBorder
@@ -266,6 +282,15 @@ class TOS extends Component {
                 </Text>
               </View>
             </View>
+          </View>
+
+          <View
+            style={[
+              styles.contentContainer,
+              styles.noTopBorder,
+              styles.noBottomBorder
+            ]}
+          >
             <Text style={styles.regularText}>
               By agreeing to the Thrive Terms of Service, you are also agreeing
               to the Pre-Authorized Debit Agreement (the “PAD Agreement”).{" "}
@@ -363,7 +388,15 @@ class TOS extends Component {
               indirectly, by operation of law, change of control or otherwise,
               by providing at least 10 days prior Notice to you.
             </Text>
+          </View>
 
+          <View
+            style={[
+              styles.contentContainer,
+              styles.noTopBorder,
+              styles.noBottomBorder
+            ]}
+          >
             <Text style={[styles.regularText, styles.blueText]}>
               Are there any fees for using the Thrive program?
             </Text>
@@ -381,10 +414,10 @@ class TOS extends Component {
               financial institution that maintains your Linked Bank Account as a
               result of any pre-authorized debit or credit.
             </Text>
-          </ScrollView>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={[
+          </View>
+
+          <View
+            style={[
               styles.contentContainer,
               styles.noTopBorder,
               styles.noBottomBorder
@@ -430,7 +463,15 @@ class TOS extends Component {
                 </Text>
               </View>
             </View>
+          </View>
 
+          <View
+            style={[
+              styles.contentContainer,
+              styles.noTopBorder,
+              styles.noBottomBorder
+            ]}
+          >
             <Text style={styles.regularText}>
               You represent and warrant that all User Information you provide us
               from time to time is truthful, accurate, current, and complete,
@@ -492,10 +533,10 @@ class TOS extends Component {
                 </Text>
               </View>
             </View>
-          </ScrollView>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={[
+          </View>
+
+          <View
+            style={[
               styles.contentContainer,
               styles.noTopBorder,
               styles.noBottomBorder
@@ -597,6 +638,15 @@ class TOS extends Component {
               </Text>{" "}
               page on the Website or the Application.
             </Text>
+          </View>
+
+          <View
+            style={[
+              styles.contentContainer,
+              styles.noTopBorder,
+              styles.noBottomBorder
+            ]}
+          >
             <Text style={[styles.regularText, styles.blueText]}>
               What personal financial information is required to use the
               Services?
@@ -651,10 +701,10 @@ class TOS extends Component {
               {"\n\n"}
               You expressly understand and agree that:
             </Text>
-          </ScrollView>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={[
+          </View>
+
+          <View
+            style={[
               styles.contentContainer,
               styles.noTopBorder,
               styles.noBottomBorder
@@ -703,10 +753,10 @@ class TOS extends Component {
                 </Text>
               </View>
             </View>
-          </ScrollView>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={[
+          </View>
+
+          <View
+            style={[
               styles.contentContainer,
               styles.noTopBorder,
               styles.noBottomBorder
@@ -774,10 +824,10 @@ class TOS extends Component {
                 </Text>
               </View>
             </View>
-          </ScrollView>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={[
+          </View>
+
+          <View
+            style={[
               styles.contentContainer,
               styles.noTopBorder,
               styles.noBottomBorder
@@ -902,10 +952,10 @@ class TOS extends Component {
               to the licenses granted above, in according with its Privacy
               Policy.
             </Text>
-          </ScrollView>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={[
+          </View>
+
+          <View
+            style={[
               styles.contentContainer,
               styles.noTopBorder,
               styles.noBottomBorder
@@ -932,10 +982,10 @@ class TOS extends Component {
               the funds in your Savings and nothing in these Terms grants Thrive
               any rights to the principal of the funds held in your Savings.
             </Text>
-          </ScrollView>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={[
+          </View>
+
+          <View
+            style={[
               styles.contentContainer,
               styles.noTopBorder,
               styles.noBottomBorder
@@ -980,8 +1030,18 @@ class TOS extends Component {
                   )}
               >
                 help@thrivesavings.com
-              </Text>.
-              {"\n\n"}
+              </Text>.{"\n"}
+            </Text>
+          </View>
+
+          <View
+            style={[
+              styles.contentContainer,
+              styles.noTopBorder,
+              styles.noBottomBorder
+            ]}
+          >
+            <Text style={styles.regularText}>
               We offer the Services and the features, information, materials,
               and content provided and depicted through the Services
               (collectively, “Content”) solely for your personal use for the
@@ -1065,10 +1125,10 @@ class TOS extends Component {
               Account for any reason, including, but not limited to, your breach
               of these Terms.
             </Text>
-          </ScrollView>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={[
+          </View>
+
+          <View
+            style={[
               styles.contentContainer,
               styles.noTopBorder,
               styles.noBottomBorder
@@ -1143,7 +1203,15 @@ class TOS extends Component {
               Communications electronically provided by us to you before the
               withdrawal of your consent becomes effective.
             </Text>
+          </View>
 
+          <View
+            style={[
+              styles.contentContainer,
+              styles.noTopBorder,
+              styles.noBottomBorder
+            ]}
+          >
             <Text style={[styles.regularText, styles.blueText]}>
               What do I need to know about third-party websites?
             </Text>
@@ -1165,10 +1233,10 @@ class TOS extends Component {
               conditions and privacy policy of each third-party website or
               service that you visit or utilize.
             </Text>
-          </ScrollView>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={[
+          </View>
+
+          <View
+            style={[
               styles.contentContainer,
               styles.noTopBorder,
               styles.noBottomBorder
@@ -1217,7 +1285,15 @@ class TOS extends Component {
               specified period of time to report and deliver funds to a province
               varies by province, but usually ranges between two and five years.
             </Text>
+          </View>
 
+          <View
+            style={[
+              styles.contentContainer,
+              styles.noTopBorder,
+              styles.noBottomBorder
+            ]}
+          >
             <Text style={[styles.regularText, styles.blueText]}>
               What about my privacy?
             </Text>
@@ -1246,10 +1322,10 @@ class TOS extends Component {
               applicable regulatory requirements, including the AML rules and
               other applicable requirements.
             </Text>
-          </ScrollView>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={[
+          </View>
+
+          <View
+            style={[
               styles.contentContainer,
               styles.noTopBorder,
               styles.noBottomBorder
@@ -1268,7 +1344,18 @@ class TOS extends Component {
               programs (the “Additional Terms”), which are hereby incorporated
               by reference into these Terms. In the event of a conflict between
               any Additional Terms and these Terms, these Terms will control.
-              {"\n\n"}
+              {"\n"}
+            </Text>
+          </View>
+
+          <View
+            style={[
+              styles.contentContainer,
+              styles.noTopBorder,
+              styles.noBottomBorder
+            ]}
+          >
+            <Text style={styles.regularText}>
               <Text style={styles.boldText}>WARRANTIES</Text>
               {"\n"}
               Thrive represents and warrants that it will provide the Services
@@ -1310,7 +1397,18 @@ class TOS extends Component {
               IS DONE AT YOUR OWN DISCRETION AND RISK, AND YOU ARE SOLELY
               RESPONSIBLE FOR ANY DAMAGE TO YOUR COMPUTER SYSTEM OR LOSS OF DATA
               THAT RESULTS FROM THE DOWNLOAD OF ANY SUCH MATERIAL.
-              {"\n\n"}
+              {"\n"}
+            </Text>
+          </View>
+
+          <View
+            style={[
+              styles.contentContainer,
+              styles.noTopBorder,
+              styles.noBottomBorder
+            ]}
+          >
+            <Text style={styles.regularText}>
               <Text style={styles.boldText}>LIMITATION OF LIABILITY:</Text>
               {"\n"}
               SOME PROVINCES AND TERRITORIES DO NOT PROVIDE EXCLUSION OF
@@ -1343,10 +1441,10 @@ class TOS extends Component {
               LIMITATION AND EXCLUSIONS MAY NOT APPLY TO YOU.
               {"\n\n"}
             </Text>
-          </ScrollView>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={[
+          </View>
+
+          <View
+            style={[
               styles.contentContainer,
               styles.noTopBorder,
               styles.noBottomBorder
@@ -1391,7 +1489,18 @@ class TOS extends Component {
               beneficiaries of the applicable provisions of these Terms, with
               all rights to enforce such provisions as if such service providers
               were a party to these Terms.
-              {"\n\n"}
+              {"\n"}
+            </Text>
+          </View>
+
+          <View
+            style={[
+              styles.contentContainer,
+              styles.noTopBorder,
+              styles.noBottomBorder
+            ]}
+          >
+            <Text style={styles.regularText}>
               <Text style={styles.boldText}>GOVERNING LAW:</Text>
               {"\n"}
               This Agreement shall be governed by the laws of the province of
@@ -1429,10 +1538,10 @@ class TOS extends Component {
               Thrive, and you do not have any authority of any kind to bind
               Thrive in any respect whatsoever.
             </Text>
-          </ScrollView>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={[
+          </View>
+
+          <View
+            style={[
               styles.contentContainer,
               styles.noTopBorder,
               styles.noBottomBorder
@@ -1475,10 +1584,10 @@ class TOS extends Component {
               Store, the following terms and conditions apply to you in addition
               to all the other terms and conditions of these Terms:
             </Text>
-          </ScrollView>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={[
+          </View>
+
+          <View
+            style={[
               styles.contentContainer,
               styles.noTopBorder,
               styles.noBottomBorder
@@ -1619,10 +1728,10 @@ class TOS extends Component {
                 </Text>
               </View>
             </View>
-          </ScrollView>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={[
+          </View>
+
+          <View
+            style={[
               styles.contentContainer,
               styles.noTopBorder
             ]}
@@ -1690,7 +1799,7 @@ class TOS extends Component {
                 THEIR TERMS AND CONDITIONS.
               </Text>
             </Text>
-          </ScrollView>
+          </View>
         </ScrollView>
       </ImageBackground>
     );

@@ -67,6 +67,14 @@ class AuthenticateBank extends Component {
     }
   };
 
+  renderLoading() {
+    return (
+      <View style={styles.container}>
+        <Spinner color={colors.blue} />
+      </View>
+    );
+  }
+
   render() {
     const {
       integrateBankReducer: { loadingState: loadingStateFromReducer, quovoUiToken },
@@ -78,27 +86,26 @@ class AuthenticateBank extends Component {
 
     return (
       <React.Fragment>
-        {loadingState !== LOADING_STATES.NONE
-          ? <View style={styles.container}>
-              <Spinner color={colors.blue} />
-            </View>
-          : <WebView
-              source={{
-                uri: `${API}/link.html?token=${quovoUiToken}${userType ===
-                "tester"
-                  ? "&test=true"
-                  : ""}${connectionToFix && connectionToFix.quovoConnectionID
-                  ? `&connectionId=${connectionToFix.quovoConnectionID}`
-                  : ""}`
-              }}
-              onMessage={this.onWebViewMessage}
-              style={styles.webViewContainer}
-              startInLoadingState
-              renderLoading={() =>
-                <View style={[styles.container, styles.webViewPadder]}>
-                  <Spinner color={colors.blue} />
-                </View>}
-            />}
+        {
+          loadingState !== LOADING_STATES.NONE
+            ? this.renderLoading()
+            :
+              <View style={styles.webViewContainer}>
+                <WebView
+                  source={{
+                    uri: `${API}/link.html?token=${quovoUiToken}${userType ===
+                    "tester"
+                      ? "&test=true"
+                      : ""}${connectionToFix && connectionToFix.quovoConnectionID
+                      ? `&connectionId=${connectionToFix.quovoConnectionID}`
+                      : ""}`
+                  }}
+                  onMessage={this.onWebViewMessage}
+                  startInLoadingState
+                  renderLoading={() => this.renderLoading()}
+                />
+              </View>
+        }
       </React.Fragment>
     );
   }

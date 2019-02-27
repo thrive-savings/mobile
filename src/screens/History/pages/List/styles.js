@@ -1,21 +1,9 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet } from "react-native";
 import colors from "../../../../theme/colors";
-
-const screen = Dimensions.get("window");
-const deviceWidth = screen.width;
-const deviceHeight = screen.height;
-
-const ROW_HEIGHT = 30;
-
-export const MAX_ROW_COUNT = Math.floor(deviceHeight / 2.5 / ROW_HEIGHT);
 
 export default StyleSheet.create({
   //Container
   container: {
-    width: deviceWidth - 50,
-    marginVertical: 10,
-    justifyContent: "center",
-    alignItems: "stretch",
     borderRadius: 8,
     backgroundColor: "white",
     padding: 20
@@ -30,9 +18,7 @@ export default StyleSheet.create({
 
   // Content styles
   row: {
-    flex: 1,
-    flexDirection: "row",
-    height: ROW_HEIGHT
+    flexDirection: "row"
   },
   centerItems: {
     alignItems: "center",

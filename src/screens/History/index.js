@@ -129,6 +129,7 @@ class History extends Component {
         />
         <ScrollView
           showsVerticalScrollIndicator={false}
+          style={globalStyles.container}
           contentContainerStyle={styles.contentContainer}
         >
           <HistoryList data={history} limit={viewingAll ? -1 : historyLimit} />

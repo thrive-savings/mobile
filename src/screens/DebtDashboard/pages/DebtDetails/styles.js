@@ -56,7 +56,7 @@ export default StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     padding: 10,
-    borderTopLeftRadius: 8, 
+    borderTopLeftRadius: 8,
     borderTopRightRadius: 8
   },
   accelerateStatusHolder: {
@@ -65,7 +65,7 @@ export default StyleSheet.create({
   },
   accelerateContent: {
     backgroundColor: "white",
-    borderBottomLeftRadius: 8, 
+    borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8,
     justifyContent: "center",
     padding: 20
@@ -89,13 +89,13 @@ export default StyleSheet.create({
     fontSize: 13,
     fontFamily: "LatoRegular",
     letterSpacing: 1.0
-  }, 
+  },
   lastUpdatedText: {
     color: colors.darkerGrey,
     fontSize: 12,
     fontFamily: "LatoRegular",
     letterSpacing: 1
-  },  
+  },
   largeText: {
     fontSize: 18
   },

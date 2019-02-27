@@ -21,7 +21,7 @@ import colors from "../../../../theme/colors";
 import WORK_TYPES from "./constants";
 
 class WorkType extends Component {
-  constructor(props: Props) {
+  constructor(props) {
     super(props);
 
     this.state = {

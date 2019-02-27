@@ -102,7 +102,7 @@ export default StyleSheet.create({
     fontSize: 15,
     fontFamily: "LatoRegular",
     letterSpacing: 1.5
-  },  
+  },
   ccStatusHolder: {
     marginBottom: -7.5,
     alignItems: "center",

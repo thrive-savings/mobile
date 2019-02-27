@@ -29,12 +29,12 @@ class PP extends Component {
         />
 
         <ScrollView
+          style={globalStyles.container}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.scrollViewsContainer}
         >
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={[
+          <View
+            style={[
               styles.contentContainer,
               styles.noBottomBorder
             ]}
@@ -79,7 +79,15 @@ class PP extends Component {
               desktop, laptop, mobile phone, tablet, or other consumer
               electronic device (each, a "Device").
             </Text>
+          </View>
 
+          <View
+            style={[
+              styles.contentContainer,
+              styles.noTopBorder,
+              styles.noBottomBorder
+            ]}
+          >
             <Text style={[styles.regularText, styles.blueText]}>
               Information We Collect
             </Text>
@@ -116,6 +124,15 @@ class PP extends Component {
               email address to contact you, open and maintain your account and
               provide you with better customer service when you contact us.
             </Text>
+          </View>
+
+          <View
+            style={[
+              styles.contentContainer,
+              styles.noTopBorder,
+              styles.noBottomBorder
+            ]}
+          >
             <Text style={[styles.regularText]}>
               <Text style={[styles.boldText]}>
                 LIFESTYLE AND FINANCIAL GOALS:
@@ -166,10 +183,10 @@ class PP extends Component {
               instances, you will be given the opportunity to provide or decline
               that information.
             </Text>
-          </ScrollView>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={[
+          </View>
+
+          <View
+            style={[
               styles.contentContainer,
               styles.noBottomBorder,
               styles.noTopBorder
@@ -267,10 +284,10 @@ class PP extends Component {
                 </Text>
               </View>
             </View>
-          </ScrollView>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={[
+          </View>
+
+          <View
+            style={[
               styles.contentContainer,
               styles.noBottomBorder,
               styles.noTopBorder
@@ -326,6 +343,15 @@ class PP extends Component {
               law or detecting, suppressing or preventing fraud, or as otherwise
               required or permitted by applicable Canadian, US or other law.
             </Text>
+          </View>
+
+          <View
+            style={[
+              styles.contentContainer,
+              styles.noTopBorder,
+              styles.noBottomBorder
+            ]}
+          >
             <Text style={[styles.regularText, styles.blueText]}>
               How We Protect The Information We Collect
             </Text>
@@ -392,12 +418,13 @@ class PP extends Component {
                 help@thrivesavings.com
               </Text>.
             </Text>
-          </ScrollView>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={[
+          </View>
+          
+          <View
+            style={[
               styles.contentContainer,
-              styles.noTopBorder
+              styles.noTopBorder,
+              styles.noBottomBorder
             ]}
           >
             <Text style={[styles.regularText, styles.blueText]}>
@@ -453,7 +480,14 @@ class PP extends Component {
               parties and websites. This Privacy Policy only applies to our
               Services.
             </Text>
+          </View>
 
+          <View
+            style={[
+              styles.contentContainer,
+              styles.noTopBorder
+            ]}
+          >
             <Text style={[styles.regularText, styles.blueText]}>
               Opting Out
             </Text>
@@ -535,7 +569,7 @@ class PP extends Component {
                 East, 6th Floor, Toronto ON M5B 2G9
               </Text>.
             </Text>
-          </ScrollView>
+          </View>
         </ScrollView>
       </ImageBackground>
     );

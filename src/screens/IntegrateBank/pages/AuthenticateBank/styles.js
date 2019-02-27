@@ -2,6 +2,7 @@ import { StyleSheet } from "react-native";
 import colors from "../../../../theme/colors";
 
 export default StyleSheet.create({
+  // Container styles
   container: {
     flex: 1,
     justifyContent: "center",
@@ -12,6 +13,14 @@ export default StyleSheet.create({
     borderRadius: 8,
     backgroundColor: "white"
   },
+  webViewContainer: {
+    flex: 1,
+    overflow: "hidden",
+    marginHorizontal: 20,
+    marginBottom: 20,
+  },
+
+  // Text styles
   titleText: {
     color: colors.blue,
     fontSize: 15,
@@ -19,13 +28,5 @@ export default StyleSheet.create({
     letterSpacing: 1.6,
     textAlign: "center",
     paddingVertical: 10
-  },
-  webViewContainer: {
-    flex: 1,
-    marginHorizontal: 20,
-    marginBottom: 20
-  },
-  webViewPadder: {
-    marginTop: -20
   }
 });
