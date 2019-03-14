@@ -16,8 +16,13 @@ const logo = require("../../../../../assets/LogoLarger/bitmap.png");
 
 class ChooseType extends Component {
   componentDidMount() {
-    amplitude.track(amplitude.events.EMPLOYER_CODE_VIEW);
+    amplitude.track(amplitude.events.CHOOSE_SIGN_UP_TYPE_VIEW);
   }
+
+  onButtonPress = type => {
+    amplitude.track(type === "personal" ? amplitude.events.CLICKED_JOIN_THRIVE_PERSONAL : amplitude.events.CLICKED_JOIN_THRIVE_AT_WORK);
+    this.props.onButtonPress(type);
+  };
 
   render() {
     return (
@@ -33,7 +38,7 @@ class ChooseType extends Component {
           <TouchableOpacity
             style={[styles.buttonStyle, globalStyles.shadow]}
             activeOpacity={0.6}
-            onPress={() => this.props.onButtonPress("personal")}
+            onPress={() => this.onButtonPress("personal")}
           >
             <Text style={[styles.buttonText, styles.greenText]}>JOIN THRIVE PERSONAL</Text>
           </TouchableOpacity>
@@ -42,7 +47,7 @@ class ChooseType extends Component {
           <TouchableOpacity
             style={[styles.buttonStyle, globalStyles.shadow]}
             activeOpacity={0.6}
-            onPress={() => this.props.onButtonPress("company")}
+            onPress={() => this.onButtonPress("company")}
           >
             <Text style={styles.buttonText}>JOIN THRIVE @ WORK</Text>
           </TouchableOpacity>
