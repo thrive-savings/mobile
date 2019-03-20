@@ -22,39 +22,40 @@ export default StyleSheet.create({
   topPadder: {
     marginTop: 20
   },
+  verticalPadder: {
+    marginVertical: -10
+  },
 
   // Texts
   labelText: {
     color: colors.blue,
-    fontSize: 14,
+    fontSize: 15,
     fontFamily: "LatoBold",
     paddingBottom: 10,
-    paddingLeft: 50,
-    paddingRight: 50,
-    textAlign: "center"
+    paddingHorizontal: 20,
+    textAlign: "center",
+    letterSpacing: 1.3
   },
-  secondaryText: {
+  regularText: {
     color: colors.charcoal,
-    fontSize: 12,
+    fontSize: 13,
     fontFamily: "LatoRegular",
-    paddingBottom: 10
+    paddingBottom: 10,
+    letterSpacing: 0.2
   },
-  planNameText: {
-    color: colors.blue,
-    fontSize: 12,
-    fontFamily: "LatoRegular"
+  blueText: {
+    color: colors.blue
   },
-  promiseText: {
-    color: color(colors.grey).darken(0.35).hex(),
-    fontSize: 10,
-    fontFamily: "LatoRegular",
-    paddingTop: 15,
-    paddingBottom: 30
+  smallerText: {
+    fontSize: 12
   },
 
   // Input styles
-  inputContainer: {
-    flexDirection: "row"
+  inputRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    alignSelf: "stretch"
   },
   inputLabel: {
     color: colors.charcoal,
@@ -66,9 +67,10 @@ export default StyleSheet.create({
     fontSize: 12,
     fontFamily: "LatoRegular"
   },
-  inputText: {
-    color: colors.charcoal,
-    fontSize: 12,
-    fontFamily: "LatoRegular"
+  datePickerInput: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    borderColor: "transparent"
   }
 });

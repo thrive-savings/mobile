@@ -28,6 +28,7 @@ import { getDollarString, getSplitDollarStrings } from "../../globals/helpers";
 import GOAL_CATEGORIES from "../../globals/goalCategories";
 
 import { LINK_STEPS } from "../IntegrateBank/state/constants";
+import { LOADING_STATES } from "../SavingPreferences/state/constants";
 
 import { bonusNotificationSeen, submitRating } from "../Login/state/actions";
 
@@ -130,8 +131,7 @@ class SavingsDashboard extends Component {
   renderNotifications() {
     const {
       isSeeingBonus,
-      isSettingPreferencesDone,
-      preferencesInitialSetDone,
+      preferencesLoadingState,
       userData: { bankLinked, connections, notifications }
     } = this.props;
 
@@ -154,8 +154,8 @@ class SavingsDashboard extends Component {
             : getDescription(getDollarString(notifBonus));
           break;
         case "SavingPreferences":
-          shouldRender = !preferencesInitialSetDone && !notifPreferencesSet;
-          description = isSettingPreferencesDone ? "Setting up ..." : getDescription();
+          shouldRender = !notifPreferencesSet;
+          description = preferencesLoadingState === LOADING_STATES.SETTING_INITIAL_DONE ? "Setting up ..." : getDescription();
           break;
         case "IntegrateBank":
           shouldRender = !bankLinked || !connections || connections.length === 0;
@@ -324,8 +324,7 @@ function mapStateToProps(state) {
   return {
     userData: state.authReducer.data.authorized,
     isSeeingBonus: state.authReducer.isSeeingBonus,
-    isSettingPreferencesDone: state.savingPreferencesReducer.isSettingDone,
-    preferencesInitialSetDone: state.savingPreferencesReducer.initialSetDone
+    preferencesLoadingState: state.savingPreferencesReducer.loadingState
   };
 }
 

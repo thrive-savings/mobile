@@ -18,6 +18,7 @@ class AllSet extends Component {
   }
 
   next() {
+    this.props.navigation.goBack();
     this.props.save();
   }
 
@@ -45,6 +46,7 @@ class AllSet extends Component {
 }
 
 AllSet.propTypes = {
+  navigation: PropTypes.object.isRequired,
   next: PropTypes.func
 };
 AllSet.defaultProps = {

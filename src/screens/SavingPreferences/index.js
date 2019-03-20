@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { ImageBackground } from "react-native";
 import { connect } from "react-redux";
 import { Content } from "native-base";
@@ -20,8 +19,7 @@ import {
 
 import WorkType from "./pages/WorkType";
 import SavingType from "./pages/SavingType";
-import FixedPlan from "./pages/FixedPlan";
-import FlexPlan from "./pages/FlexPlan";
+import SavingDetails from "./pages/SavingDetails";
 import AllSet from "./pages/AllSet";
 
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
@@ -37,8 +35,6 @@ class SavingPreferences extends Component {
   }
 
   render() {
-    const navigation = this.props.navigation;
-
     const {
       step,
       values: { savingType }
@@ -53,29 +49,18 @@ class SavingPreferences extends Component {
         body = <SavingType save={this.props.setSavingType} />;
         break;
       case 2:
-        body =
-          savingType === "Thrive Flex"
-            ? <FlexPlan changeStep={this.props.changeStep} />
-            : <FixedPlan
-                changeStep={this.props.changeStep}
-                save={this.props.setSavingDetails}
-              />;
+        body = <SavingDetails savingType={savingType} save={this.props.setSavingDetails} />;
         break;
       case 3:
-        body = (
-          <AllSet
-            navigation={navigation}
-            save={this.props.preferencesInitialSetDone}
-          />
-        );
+        body = <AllSet navigation={this.props.navigation} save={this.props.preferencesInitialSetDone} />;
         break;
     }
 
     return (
       <ImageBackground source={bg} style={globalStyles.background}>
         <Header
-          navigation={navigation}
-          button={step > 0 ? "back" : "none"}
+          navigation={this.props.navigation}
+          button="back"
           onButtonPress={this.onBackArrowClick.bind(this)}
           content="text"
           text="SAVING PREFERENCES"
@@ -90,13 +75,6 @@ class SavingPreferences extends Component {
     );
   }
 }
-
-SavingPreferences.propTypes = {
-  navigation: PropTypes.object
-};
-SavingPreferences.defaultProps = {
-  navigation: {}
-};
 
 function mapStateToProps(state) {
   return {

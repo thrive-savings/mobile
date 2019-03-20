@@ -9,12 +9,14 @@ import addStatusBar from "../../components/StatusBar";
 
 import WorkType from "../SavingPreferences/pages/WorkType";
 import SavingType from "../SavingPreferences/pages/SavingType";
-import FixedPlan from "../SavingPreferences/pages/FixedPlan";
+import SavingDetails from "../SavingPreferences/pages/SavingDetails";
+
 import {
   setWorkType,
   setSavingType,
   setSavingDetails
 } from "../SavingPreferences/state/actions";
+import { LOADING_STATES } from "../SavingPreferences/state/constants";
 
 import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
@@ -33,6 +35,25 @@ class Settings extends Component {
 
     this.headerIconClicked = this.headerIconClicked.bind(this);
     this.save = this.save.bind(this);
+    this.getData = this.getData.bind(this);
+  }
+
+  getData() {
+    const {
+      values: { workType: workTypeSaved, savingType: savingTypeSaved }
+    } = this.props.savingPreferencesReducer;
+
+    let workType = workTypeSaved,
+      savingType = savingTypeSaved;
+    const userPrefrencesData = this.props.userData.savingPreferences;
+    if (!workType) {
+      workType = userPrefrencesData.workType;
+    }
+    if (!savingType) {
+      savingType = userPrefrencesData.savingType;
+    }
+
+    return { workType, savingType };
   }
 
   headerIconClicked() {
@@ -51,7 +72,7 @@ class Settings extends Component {
       case "savingType":
         this.props.setSavingType(payload);
         break;
-      case "fixedPlan":
+      case "savingDetails":
         this.props.setSavingDetails(payload);
         break;
       default:
@@ -62,6 +83,8 @@ class Settings extends Component {
   }
 
   renderContent() {
+    const { savingType } = this.getData();
+
     switch (this.state.activePage) {
       case "settings":
         return this.renderHome();
@@ -69,8 +92,8 @@ class Settings extends Component {
         return <WorkType showDots={false} save={this.save} />;
       case "savingType":
         return <SavingType showDots={false} save={this.save} />;
-      case "fixedPlan":
-        return <FixedPlan showDots={false} save={this.save} />;
+      case "savingDetails":
+        return <SavingDetails savingType={savingType} showDots={false} save={this.save} />;
       case "linkedBank":
         return this.renderLinkedBank();
       case "legal":
@@ -111,24 +134,8 @@ class Settings extends Component {
   }
 
   renderHome() {
-    const {
-      isSettingWorkType,
-      isSettingSavingType,
-      isSettingSavingDetails,
-      values: { workType: workTypeSaved, savingType: savingTypeSaved }
-    } = this.props.savingPreferencesReducer;
-
-    let workType = workTypeSaved,
-      savingType = savingTypeSaved;
-    const userPrefrencesData = this.props.userData.savingPreferences;
-    if (!workType) {
-      workType = userPrefrencesData.workType;
-    }
-    if (!savingType) {
-      savingType = userPrefrencesData.savingType;
-    }
-
-    const isSavingDetailsDisabled = savingType === "Thrive Flex" || !savingType;
+    const { loadingState } = this.props.savingPreferencesReducer;
+    const { workType, savingType } = this.getData();
 
     return (
       <View>
@@ -141,7 +148,7 @@ class Settings extends Component {
           >
             <Text style={styles.regularText}>Primary Work Type</Text>
             <Text style={[styles.regularText, styles.blueText]}>
-              {isSettingWorkType
+              {loadingState === LOADING_STATES.SETTING_WORK_TYPE
                 ? "Loading ..."
                 : workType ? workType : "Full-time"}
             </Text>
@@ -154,29 +161,24 @@ class Settings extends Component {
           >
             <Text style={styles.regularText}>Saving Plan</Text>
             <Text style={[styles.regularText, styles.blueText]}>
-              {isSettingSavingType
+              {loadingState === LOADING_STATES.SETTING_SAVING_TYPE
                 ? "Loading ..."
                 : savingType ? savingType : "Thrive Flex"}
             </Text>
           </TouchableOpacity>
           <View style={styles.separator} />
           <TouchableOpacity
-            onPress={() =>
-              !isSavingDetailsDisabled &&
-              this.setState({ activePage: "fixedPlan" })}
-            activeOpacity={isSavingDetailsDisabled ? 1 : 0.6}
+            onPress={() => this.setState({ activePage: "savingDetails" })}
+            activeOpacity={0.6}
             style={styles.contentRow}
           >
             <Text style={styles.regularText}>Saving Preferences</Text>
             <Text
               style={[
-                styles.regularText,
-                isSavingDetailsDisabled ? styles.disabledText : styles.blueText
+                styles.regularText, styles.blueText
               ]}
             >
-              {isSavingDetailsDisabled
-                ? "Unavailable for Flex"
-                : isSettingSavingDetails ? "Loading ..." : "Change Preferences"}
+              {loadingState === LOADING_STATES.SETTING_SAVING_DETAILS ? "Loading ..." : "Change Preferences"}
             </Text>
           </TouchableOpacity>
         </View>

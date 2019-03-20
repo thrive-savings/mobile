@@ -14,6 +14,8 @@ import amplitude from "../../../../globals/amplitude";
 import SpecialButton from "../../../../components/SpecialButton";
 import Dots from "../../../../components/Dots";
 
+import { LOADING_STATES } from "../../state/constants";
+
 import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
 import colors from "../../../../theme/colors";
@@ -79,7 +81,7 @@ class WorkType extends Component {
   }
 
   render() {
-    const { showDots, reducer: { isLoading } } = this.props;
+    const { showDots, reducer: { loadingState } } = this.props;
 
     return (
       <View style={styles.container}>
@@ -92,7 +94,7 @@ class WorkType extends Component {
           {this.renderWorkTypes()}
         </View>
 
-        <SpecialButton loading={isLoading} onClick={this.next} enabled={this.state.workType ? true : false} />
+        <SpecialButton loading={loadingState !== LOADING_STATES.NONE} onClick={this.next} enabled={this.state.workType ? true : false} />
       </View>
     );
   }

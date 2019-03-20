@@ -11,6 +11,10 @@ const PAGE_TYPES = {
     headerTitle: "UPDATE SETTINGS",
     headerButton: "back"
   },
+  savingDetails: {
+    headerTitle: "UPDATE SETTINGS",
+    headerButton: "back"
+  },
   fixedPlan: {
     headerTitle: "UPDATE SETTINGS",
     headerButton: "back"

@@ -1,4 +1,4 @@
-import { CHANGE_STEP, SET_WORK_TYPE_URL, SET_SAVING_TYPE_URL, SET_SAVING_DETAILS_URL, PREFERENCES_INITIAL_SET_DONE } from "./constants";
+import { CHANGE_STEP, SET_WORK_TYPE_URL, SET_SAVING_TYPE_URL, SET_SAVING_DETAILS_URL, PREFERENCES_INITIAL_SET_DONE, LOADING_STATES } from "./constants";
 const initialState = {
   data: {},
   values: {
@@ -7,15 +7,11 @@ const initialState = {
     fixedContribution: 0,
     frequency: ""
   },
-  isLoading: false,
-  isSettingWorkType: false,
-  isSettingSavingType: false,
-  isSettingSavingDetails: false,
-  isSettingDone: false,
-  initialSetDone: false,
+
+  step: 0,
+  loadingState: LOADING_STATES.NONE,
   error: false,
-  errorMessage: "",
-  step: 0
+  errorMessage: ""
 };
 
 export default function savingPreferencesReducer(state = initialState, action) {
@@ -32,8 +28,7 @@ export default function savingPreferencesReducer(state = initialState, action) {
     case `${SET_WORK_TYPE_URL}_SUBMIT`:
       return {
         ...state,
-        isLoading: true,
-        isSettingWorkType: true
+        loadingState: LOADING_STATES.SETTING_WORK_TYPE
       };
     case `${SET_WORK_TYPE_URL}_SUCCEED`:
       const { payload: { data: setWorkTypeData } } = action;
@@ -44,17 +39,15 @@ export default function savingPreferencesReducer(state = initialState, action) {
           ...values,
           workType: setWorkTypeData.workType
         },
-        isLoading: false,
-        isSettingWorkType: false,
         step: 1,
+        loadingState: LOADING_STATES.NONE,
         error: false,
         errorMessage: ""
       };
     case `${SET_WORK_TYPE_URL}_FAIL`:
       return {
         ...state,
-        isLoading: false,
-        isSettingWorkType: false,
+        loadingState: LOADING_STATES.NONE,
         error: true,
         errorMessage: action.error
       };
@@ -63,8 +56,7 @@ export default function savingPreferencesReducer(state = initialState, action) {
     case `${SET_SAVING_TYPE_URL}_SUBMIT`:
       return {
         ...state,
-        isLoading: true,
-        isSettingSavingType: true
+        loadingState: LOADING_STATES.SETTING_SAVING_TYPE,
       };
     case `${SET_SAVING_TYPE_URL}_SUCCEED`:
       const { payload: { data: setSavingTypeData } } = action;
@@ -75,17 +67,15 @@ export default function savingPreferencesReducer(state = initialState, action) {
           ...values,
           savingType: setSavingTypeData.savingType
         },
-        isLoading: false,
-        isSettingSavingType: false,
         step: 2,
+        loadingState: LOADING_STATES.NONE,
         error: false,
         errorMessage: ""
       };
     case `${SET_SAVING_TYPE_URL}_FAIL`:
       return {
         ...state,
-        isLoading: false,
-        isSettingSavingType: false,
+        loadingState: LOADING_STATES.NONE,
         error: true,
         errorMessage: action.error
       };
@@ -94,8 +84,7 @@ export default function savingPreferencesReducer(state = initialState, action) {
     case `${SET_SAVING_DETAILS_URL}_SUBMIT`:
       return {
         ...state,
-        isLoading: true,
-        isSettingSavingDetails: false,
+        loadingState: LOADING_STATES.SETTING_SAVING_DETAILS,
       };
     case `${SET_SAVING_DETAILS_URL}_SUCCEED`:
       const { payload: { data: setSavingDetailsData } } = action;
@@ -104,20 +93,19 @@ export default function savingPreferencesReducer(state = initialState, action) {
         data: setSavingDetailsData,
         values: {
           ...values,
+          nextSaveDate: setSavingDetailsData.nextSaveDate,
           fixedContribution: setSavingDetailsData.fixedContribution,
           frequency: setSavingDetailsData.frequency
         },
-        isLoading: false,
-        isSettingSavingDetails: false,
         step: 3,
+        loadingState: LOADING_STATES.NONE,
         error: false,
         errorMessage: ""
       };
     case `${SET_SAVING_DETAILS_URL}_FAIL`:
       return {
         ...state,
-        isLoading: false,
-        isSettingSavingDetails: false,
+        loadingState: LOADING_STATES.NONE,
         error: true,
         errorMessage: action.error
       };
@@ -126,23 +114,19 @@ export default function savingPreferencesReducer(state = initialState, action) {
     case `${PREFERENCES_INITIAL_SET_DONE}_SUBMIT`:
       return {
         ...state,
-        isLoading: true,
-        isSettingDone: true
+        loadingState: LOADING_STATES.SETTING_INITIAL_DONE,
       };
     case `${PREFERENCES_INITIAL_SET_DONE}_SUCCEED`:
       return {
         ...state,
-        isLoading: false,
-        isSettingDone: false,
-        initialSetDone: true,
+        loadingState: LOADING_STATES.NONE,
         error: false,
         errorMessage: ""
       };
     case `${PREFERENCES_INITIAL_SET_DONE}_FAIL`:
       return {
         ...state,
-        isLoading: false,
-        isSettingDone: false,
+        loadingState: LOADING_STATES.NONE,
         error: true,
         errorMessage: action.error
       };

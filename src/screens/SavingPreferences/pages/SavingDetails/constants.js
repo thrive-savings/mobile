@@ -1,11 +1,7 @@
 const FREQUENCY_TYPES = [
   {
-    identifier: "TWICEWEEKLY",
-    displayName: "Twice a week"
-  },
-  {
     identifier: "ONCEWEEKLY",
-    displayName: "Once a week"
+    displayName: "Weekly"
   },
   {
     identifier: "BIWEEKLY",

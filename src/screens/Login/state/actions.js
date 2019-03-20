@@ -7,6 +7,7 @@ import {
   UPDATE_AUTH_DATA,
   UPDATE_CONNECTION_DATA,
   UPDATE_GOALS_DATA,
+  UPDATE_NOTIFICATIONS_DATA,
   UPDATE_AVATAR
 } from "./constants";
 
@@ -22,6 +23,10 @@ export const updateConnectionsData = payload => ({
 export const updateGoalsData = payload => ({
   payload,
   type: UPDATE_GOALS_DATA
+});
+export const updateNotificationsData = payload => ({
+  payload,
+  type: UPDATE_NOTIFICATIONS_DATA
 });
 export const updateAvatar = payload => ({ payload, type: UPDATE_AVATAR });
 

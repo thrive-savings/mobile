@@ -7,8 +7,10 @@ import {
   UPDATE_AUTH_DATA,
   UPDATE_CONNECTION_DATA,
   UPDATE_GOALS_DATA,
+  UPDATE_NOTIFICATIONS_DATA,
   UPDATE_AVATAR
 } from "./constants";
+
 const initialState = {
   data: {},
   avatar: undefined,
@@ -94,13 +96,30 @@ export default function authReducer(state = initialState, action) {
         data: {
           authorized: {
             ...dataOnGoalsUpdate,
-            goals,
-            onboardingStep: undefined
+            goals
           }
         }
       };
 
-    //Update Avatar case
+    // Update Notifications case
+    case `${UPDATE_NOTIFICATIONS_DATA}`:
+      const { payload: { type: notificationType } } = action;
+      const dataOnNotificationsUpdate = state.data.authorized;
+      const notifications = dataOnNotificationsUpdate.notifications;
+      if (notificationType === "savingPreferences") {
+        notifications.savingPreferencesSet = true;
+      }
+      return {
+        ...state,
+        data: {
+          authorized: {
+            ...dataOnNotificationsUpdate,
+            notifications
+          }
+        }
+      };
+
+    // Update Avatar case
     case `${UPDATE_AVATAR}`:
       const { payload: { avatar: newAvatar } } = action;
       return {
