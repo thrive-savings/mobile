@@ -32,35 +32,15 @@ class SavingDetails extends Component {
   constructor(props) {
     super(props);
 
-    let {
-      values: { nextSaveDate, fixedContribution: contribution, frequency: frequencyIndex }
-    } = props.reducer;
-    const {
-      nextSaveDate: savedNextSaveDate,
-      savingPreferences: {
-        savingDetails: { fetchFrequency, fixedContribution }
-      }
-    } = props.userData;
-
-    if (!nextSaveDate) {
-      nextSaveDate = savedNextSaveDate;
-    }
-    if (!contribution) {
-      contribution = fixedContribution;
-    }
-    if (!frequencyIndex) {
-      frequencyIndex = fetchFrequency;
-    }
-
     this.state = {
-      nextSaveDate: moment(nextSaveDate).format(DATE_DISPLAY_FORMAT),
-      contribution: getDollarString(contribution, true),
-      setContribution: contribution,
-      frequencyIndex: getFrequencyIndex(frequencyIndex),
+      nextSaveDate: undefined,
+      contribution: undefined,
+      frequencyIndex: undefined,
       showContributionSetter: false,
       showFrequencySetter: false
     };
 
+    this.getData = this.getData.bind(this);
     this.next = this.next.bind(this);
     this.numPadClicked = this.numPadClicked.bind(this);
     this.frequencySelected = this.frequencySelected.bind(this);
@@ -71,18 +51,12 @@ class SavingDetails extends Component {
   }
 
   next() {
-    const { nextSaveDate, setContribution, frequencyIndex } = this.state;
+    const { nextSaveDate, contribution, frequencyIndex } = this.state;
 
     if (
-      setContribution >= MIN_FIXED_CONTRIBUTION &&
-      setContribution <= MAX_FIXED_CONTRIBUTION
+      contribution &&
+      (contribution < MIN_FIXED_CONTRIBUTION || contribution > MAX_FIXED_CONTRIBUTION)
     ) {
-      this.props.save({
-        nextSaveDate,
-        fixedContribution: setContribution.toString(),
-        frequency: FREQUENCY_TYPES[frequencyIndex].identifier
-      });
-    } else {
       Toast.show({
         text: `Contribution amount should be between ${getDollarString(
           MIN_FIXED_CONTRIBUTION,
@@ -93,36 +67,51 @@ class SavingDetails extends Component {
         type: "warning",
         textStyle: { textAlign: "center" }
       });
+    } else {
+      this.props.save({
+        nextSaveDate,
+        fixedContribution: contribution,
+        frequency: frequencyIndex && FREQUENCY_TYPES[frequencyIndex].identifier
+      });
     }
   }
 
   numPadClicked(value) {
-    let setContribution = this.state.setContribution / 100;
-    setContribution =
+    let contribution = this.getData().contribution / 100;
+    contribution =
       value >= 0
-        ? setContribution * 10 + value
-        : Math.floor(setContribution / 10);
-    setContribution *= 100;
+        ? contribution * 10 + value
+        : Math.floor(contribution / 10);
+    contribution *= 100;
 
-    const contribution = getDollarString(setContribution, true);
-
-    this.setState({ setContribution, contribution });
+    this.setState({ contribution });
   }
 
   frequencySelected(value) {
     this.setState({ frequencyIndex: value });
   }
 
-  render() {
+  getData() {
+    const { nextSaveDate, contribution, frequencyIndex } = this.state;
     const {
-      nextSaveDate,
-      contribution,
-      setContribution,
-      frequencyIndex,
-      showContributionSetter,
-      showFrequencySetter
-    } = this.state;
+      nextSaveDate: savedNextSaveDate,
+      savingDetails: {
+        fetchFrequency: savedFrequency,
+        fixedContribution: savedContribution
+      }
+    } = this.props.userData.savingPreferences;
 
+    return {
+      nextSaveDate: nextSaveDate || moment(savedNextSaveDate).format(DATE_DISPLAY_FORMAT),
+      frequencyIndex: frequencyIndex ? frequencyIndex : savedFrequency && getFrequencyIndex(savedFrequency),
+      contribution: typeof contribution !== "undefined" ? contribution : savedContribution
+    };
+  }
+
+  render() {
+    const { nextSaveDate, frequencyIndex, contribution } = this.getData();
+
+    const { showContributionSetter, showFrequencySetter } = this.state;
     const { reducer: { loadingState }, showDots, savingType } = this.props;
     const isFlex = savingType === "Thrive Flex";
 
@@ -182,7 +171,7 @@ class SavingDetails extends Component {
                 Automated
               </Text> :
               <Text style={styles.inputButtonText}>
-                {contribution}
+                {getDollarString(contribution, true)}
               </Text>
           }
         </TouchableOpacity>
@@ -230,7 +219,7 @@ class SavingDetails extends Component {
           buttonText={"SUBMIT"}
           content={getNumPadModalContent({
             label: "Enter contribution amount.",
-            value: setContribution && contribution,
+            value: contribution && getDollarString(contribution, true),
             onPress: this.numPadClicked
           })}
         />

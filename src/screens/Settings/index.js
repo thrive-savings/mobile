@@ -35,25 +35,6 @@ class Settings extends Component {
 
     this.headerIconClicked = this.headerIconClicked.bind(this);
     this.save = this.save.bind(this);
-    this.getData = this.getData.bind(this);
-  }
-
-  getData() {
-    const {
-      values: { workType: workTypeSaved, savingType: savingTypeSaved }
-    } = this.props.savingPreferencesReducer;
-
-    let workType = workTypeSaved,
-      savingType = savingTypeSaved;
-    const userPrefrencesData = this.props.userData.savingPreferences;
-    if (!workType) {
-      workType = userPrefrencesData.workType;
-    }
-    if (!savingType) {
-      savingType = userPrefrencesData.savingType;
-    }
-
-    return { workType, savingType };
   }
 
   headerIconClicked() {
@@ -83,7 +64,7 @@ class Settings extends Component {
   }
 
   renderContent() {
-    const { savingType } = this.getData();
+    const { savingType } = this.props.userData.savingPreferences;
 
     switch (this.state.activePage) {
       case "settings":
@@ -135,7 +116,7 @@ class Settings extends Component {
 
   renderHome() {
     const { loadingState } = this.props.savingPreferencesReducer;
-    const { workType, savingType } = this.getData();
+    const { workType, savingType } = this.props.userData.savingPreferences;
 
     return (
       <View>

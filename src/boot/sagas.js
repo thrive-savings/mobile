@@ -36,8 +36,11 @@ import {
 } from "../screens/IntegrateBank/state/sagas";
 import {
   setWorkTypeSaga,
+  setWorkTypeSucceedSaga,
   setSavingTypeSaga,
+  setSavingTypeSucceedSaga,
   setSavingDetailsSaga,
+  setSavingDetailsSucceedSaga,
   preferencesInitialSetDoneSaga,
   preferencesInitialSetDoneSucceedSaga
 } from "../screens/SavingPreferences/state/sagas";
@@ -89,8 +92,11 @@ export default function runSagas(sagaMiddleware) {
   sagaMiddleware.run(unlinkConnectionSucceedSaga);
   sagaMiddleware.run(updateUserConnectionsSaga);
   sagaMiddleware.run(setWorkTypeSaga);
+  sagaMiddleware.run(setWorkTypeSucceedSaga);
   sagaMiddleware.run(setSavingTypeSaga);
+  sagaMiddleware.run(setSavingTypeSucceedSaga);
   sagaMiddleware.run(setSavingDetailsSaga);
+  sagaMiddleware.run(setSavingDetailsSucceedSaga);
   sagaMiddleware.run(preferencesInitialSetDoneSaga);
   sagaMiddleware.run(preferencesInitialSetDoneSucceedSaga);
   sagaMiddleware.run(uploadPhotoSaga);

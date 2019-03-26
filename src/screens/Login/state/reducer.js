@@ -8,6 +8,7 @@ import {
   UPDATE_CONNECTION_DATA,
   UPDATE_GOALS_DATA,
   UPDATE_NOTIFICATIONS_DATA,
+  UPDATE_SAVING_PREFERENCES_DATA,
   UPDATE_AVATAR
 } from "./constants";
 
@@ -115,6 +116,20 @@ export default function authReducer(state = initialState, action) {
           authorized: {
             ...dataOnNotificationsUpdate,
             notifications
+          }
+        }
+      };
+
+    // Update Saving Preferences case
+    case `${UPDATE_SAVING_PREFERENCES_DATA}`:
+      const { payload: { data: { savingPreferences } } } = action;
+      const dataOnSavingPreferencesUpdate = state.data.authorized;
+      return {
+        ...state,
+        data: {
+          authorized: {
+            ...dataOnSavingPreferencesUpdate,
+            savingPreferences
           }
         }
       };
