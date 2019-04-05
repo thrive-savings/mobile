@@ -64,8 +64,6 @@ class Settings extends Component {
   }
 
   renderContent() {
-    const { savingType } = this.props.userData.savingPreferences;
-
     switch (this.state.activePage) {
       case "settings":
         return this.renderHome();
@@ -74,7 +72,7 @@ class Settings extends Component {
       case "savingType":
         return <SavingType showDots={false} save={this.save} />;
       case "savingDetails":
-        return <SavingDetails savingType={savingType} showDots={false} save={this.save} />;
+        return <SavingDetails showDots={false} save={this.save} />;
       case "linkedBank":
         return this.renderLinkedBank();
       case "legal":

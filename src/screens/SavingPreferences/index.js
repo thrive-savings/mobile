@@ -35,10 +35,7 @@ class SavingPreferences extends Component {
   }
 
   render() {
-    const {
-      step,
-      values: { savingType }
-    } = this.props.savingPreferencesReducer;
+    const { step } = this.props.savingPreferencesReducer;
 
     let body;
     switch (step) {
@@ -49,7 +46,7 @@ class SavingPreferences extends Component {
         body = <SavingType save={this.props.setSavingType} />;
         break;
       case 2:
-        body = <SavingDetails savingType={savingType} save={this.props.setSavingDetails} />;
+        body = <SavingDetails save={this.props.setSavingDetails} />;
         break;
       case 3:
         body = <AllSet navigation={this.props.navigation} save={this.props.preferencesInitialSetDone} />;

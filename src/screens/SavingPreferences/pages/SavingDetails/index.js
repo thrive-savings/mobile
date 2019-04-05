@@ -94,6 +94,7 @@ class SavingDetails extends Component {
   getData() {
     const { nextSaveDate, contribution, frequencyIndex } = this.state;
     const {
+      savingType,
       nextSaveDate: savedNextSaveDate,
       savingDetails: {
         fetchFrequency: savedFrequency,
@@ -102,6 +103,7 @@ class SavingDetails extends Component {
     } = this.props.userData.savingPreferences;
 
     return {
+      savingType,
       nextSaveDate: nextSaveDate || moment(savedNextSaveDate).format(DATE_DISPLAY_FORMAT),
       frequencyIndex: frequencyIndex ? frequencyIndex : savedFrequency && getFrequencyIndex(savedFrequency),
       contribution: typeof contribution !== "undefined" ? contribution : savedContribution
@@ -109,10 +111,10 @@ class SavingDetails extends Component {
   }
 
   render() {
-    const { nextSaveDate, frequencyIndex, contribution } = this.getData();
+    const { savingType, nextSaveDate, frequencyIndex, contribution } = this.getData();
 
     const { showContributionSetter, showFrequencySetter } = this.state;
-    const { reducer: { loadingState }, showDots, savingType } = this.props;
+    const { reducer: { loadingState }, showDots } = this.props;
     const isFlex = savingType === "Thrive Flex";
 
     return (
@@ -240,12 +242,10 @@ class SavingDetails extends Component {
 }
 
 SavingDetails.propTypes = {
-  savingType: PropTypes.string,
   next: PropTypes.func,
   showDots: PropTypes.bool
 };
 SavingDetails.defaultProps = {
-  savingType: "Thrive Flex",
   next: () => {},
   showDots: true
 };
