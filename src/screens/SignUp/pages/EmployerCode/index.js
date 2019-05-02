@@ -9,7 +9,7 @@ import SpecialButton from "../../../../components/SpecialButton";
 import amplitude from "../../../../globals/amplitude";
 import globalErrorMessage from "../../../../globals/errorMessage";
 
-import { verifyReferralCode } from "../../state/actions";
+import { verifyEmployerCode } from "../../state/actions";
 
 import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
@@ -17,14 +17,14 @@ import colors from "../../../../theme/colors";
 
 import { required } from "../../../../globals/validators";
 
-class ReferralCodeForm extends Component {
+class EmployerCodeForm extends Component {
   componentDidMount() {
     amplitude.track(amplitude.events.EMPLOYER_CODE_VIEW);
   }
 
   verify() {
     if (this.props.valid) {
-      this.props.verifyReferralCode(this.props.values);
+      this.props.verifyEmployerCode(this.props.values);
     } else {
       Toast.show({
         text: "Valid Code Required",
@@ -47,6 +47,7 @@ class ReferralCodeForm extends Component {
             style={styles.input}
             placeholder={input.name === "code" ? "ENTER CODE" : "Placeholder"}
             underlineColorAndroid="transparent"
+            autoCapitalize="characters"
             {...input}
           />
         </View>
@@ -73,7 +74,11 @@ class ReferralCodeForm extends Component {
     }
 
     return (
-      <ScrollView style={globalStyles.container} showsVerticalScrollIndicator={false} contentContainerStyle={[styles.container, globalStyles.shadow]}>
+      <ScrollView
+        style={globalStyles.container}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={[styles.container, globalStyles.shadow]}
+      >
         <Text style={styles.formLabelText}>
           Please enter the referral code you received from your employer.
         </Text>
@@ -87,7 +92,11 @@ class ReferralCodeForm extends Component {
           <Text style={globalStyles.formErrorText3}>
             {errorText}
           </Text>}
-        <SpecialButton loading={isLoading} text={"JOIN THRIVE @ WORK"} onClick={this.verify.bind(this)} />
+        <SpecialButton
+          loading={isLoading}
+          text={"JOIN THRIVE @ WORK"}
+          onClick={this.verify.bind(this)}
+        />
       </ScrollView>
     );
   }
@@ -96,8 +105,8 @@ class ReferralCodeForm extends Component {
 function mapStateToProps(state) {
   return {
     values:
-      state.form && state.form.referralCode && state.form.referralCode.values
-        ? state.form.referralCode.values
+      state.form && state.form.employerCode && state.form.employerCode.values
+        ? state.form.employerCode.values
         : undefined,
     signUpReducer: state.signUpReducer
   };
@@ -105,15 +114,15 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    verifyReferralCode: (payload = {}) => dispatch(verifyReferralCode(payload))
+    verifyEmployerCode: (payload = {}) => dispatch(verifyEmployerCode(payload))
   };
 }
 
-ReferralCodeForm = connect(mapStateToProps, mapDispatchToProps)(
-  ReferralCodeForm
+EmployerCodeForm = connect(mapStateToProps, mapDispatchToProps)(
+  EmployerCodeForm
 );
 
-const ReferralCode = reduxForm({
-  form: "referralCode"
-})(ReferralCodeForm);
-export default ReferralCode;
+const EmployerCode = reduxForm({
+  form: "employerCode"
+})(EmployerCodeForm);
+export default EmployerCode;

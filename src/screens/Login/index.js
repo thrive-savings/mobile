@@ -84,6 +84,7 @@ class LoginForm extends Component {
             placeholderTextColor="#FFF"
             style={styles.input}
             placeholder={input.name === "email" ? "Email" : "Password"}
+            autoCapitalize="none"
             keyboardType={input.name === "email" ? "email-address" : "default"}
             returnKeyType={input.name === "password" ? "done" : "next"}
             onSubmitEditing={() => {

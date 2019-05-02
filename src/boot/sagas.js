@@ -10,7 +10,7 @@ import {
 import {
   signUpSaga,
   signUpSucceedSaga,
-  verifyReferralCodeSaga,
+  verifyEmployerCodeSaga,
   acceptPersonalSaga
 } from "../screens/SignUp/state/sagas";
 import {
@@ -63,7 +63,10 @@ import {
   withdrawGoalSucceedSaga
 } from "../screens/SavingGoals/state/sagas";
 import { fetchHistorySaga } from "../screens/History/state/sagas";
-import { fetchDebtsSaga, saveDebtDetailsSaga } from "../screens/DebtDashboard/state/sagas";
+import {
+  fetchDebtsSaga,
+  saveDebtDetailsSaga
+} from "../screens/DebtDashboard/state/sagas";
 
 export default function runSagas(sagaMiddleware) {
   sagaMiddleware.run(requestApiSaga);
@@ -74,7 +77,7 @@ export default function runSagas(sagaMiddleware) {
   sagaMiddleware.run(submitRatingSaga);
   sagaMiddleware.run(signUpSaga);
   sagaMiddleware.run(signUpSucceedSaga);
-  sagaMiddleware.run(verifyReferralCodeSaga);
+  sagaMiddleware.run(verifyEmployerCodeSaga);
   sagaMiddleware.run(acceptPersonalSaga);
   sagaMiddleware.run(setPhoneSaga);
   sagaMiddleware.run(setPhoneSucceedSaga);

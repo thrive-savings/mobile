@@ -57,7 +57,7 @@ Header.defaultProps = {
   button: "menu",
   onButtonPress: undefined,
   content: "icon",
-  text: "HEADER"
+  text: ""
 };
 
 export default Header;

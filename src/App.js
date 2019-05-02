@@ -18,6 +18,7 @@ import SavingsDashboard from "./screens/SavingsDashboard";
 import DebtDashboard from "./screens/DebtDashboard";
 import Sidebar from "./screens/Sidebar";
 import Profile from "./screens/Profile";
+import Referral from "./screens/Referral";
 import Settings from "./screens/Settings";
 import SetPhone from "./screens/SetPhone";
 import IntegrateBank from "./screens/IntegrateBank";
@@ -37,6 +38,7 @@ const Drawer = createDrawerNavigator(
     DebtDashboard: { screen: DebtDashboard },
     History: { screen: History },
     BankConnections: { screen: BankConnections },
+    Referral: { screen: Referral },
     Settings: { screen: Settings },
     Faq: { screen: Faq },
     Contact: { screen: Contact }
@@ -69,7 +71,7 @@ const stackerOptions = {
 
 const StackerWithProductTour = createStackNavigator(stackScreens, {
   ...stackerOptions,
-  initialRouteName: "ProductTour"
+  initialRouteName: "SignUp"
 });
 
 const StackerWithDrawer = createStackNavigator(stackScreens, {

@@ -6,7 +6,6 @@ import { getDollarString } from "../../../../globals/helpers";
 
 import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
-import colors from "../../../../theme/colors";
 
 class HistoryList extends Component {
   renderLabel() {
@@ -27,7 +26,6 @@ class HistoryList extends Component {
 
   renderData() {
     let { data, limit } = this.props;
-
     let body = [];
 
     if (data.length) {
@@ -35,53 +33,51 @@ class HistoryList extends Component {
         limit = data.length;
       }
 
-      data.map(({ date, activity: { type, amount }, total }, index) => {
-        if (index >= limit) {
-          return;
-        }
+      data.map(
+        (
+          { date, activity: { type, amount, color, typeToDisplay }, total },
+          index
+        ) => {
+          if (index >= limit) {
+            return;
+          }
 
-        let activityTypeColor = colors.blue;
-        let activityAmountSign = "+";
-        let activityName = "DEPOSIT";
+          const activityTypeColor = color;
+          const activityAmountSign = type === "credit" ? "-" : "+";
+          const activityName = typeToDisplay.toUpperCase();
 
-        if (type === "bonus") {
-          activityTypeColor = colors.green;
-          activityName = "EMPLOYER BONUS";
-        } else if (type === "credit") {
-          activityTypeColor = colors.error;
-          activityAmountSign = "-";
-          activityName = "WITHDRAWAL";
-        }
-
-        body.push(
-          <View key={index} style={styles.row}>
-            <View style={styles.smallColumn}>
-              <Text style={styles.regularText}>
-                {date}
-              </Text>
-            </View>
-            <View style={[styles.activityContent, styles.largeColumn]}>
-              <Text style={[styles.regularText, { color: activityTypeColor }]}>
-                {`${activityAmountSign} ${getDollarString(amount)}`}
-              </Text>
-              <Text style={styles.greyText}>
-                {activityName}
-              </Text>
-            </View>
-            <View style={styles.smallColumn}>
-              <Text style={styles.regularText}>
-                {getDollarString(total)}
-              </Text>
-            </View>
-          </View>
-        );
-
-        if (index < Math.min(limit, data.length) - 1) {
           body.push(
-            <View style={styles.separator} key={`separator_${index}`} />
+            <View key={index} style={styles.row}>
+              <View style={styles.smallColumn}>
+                <Text style={styles.regularText}>
+                  {date}
+                </Text>
+              </View>
+              <View style={[styles.activityContent, styles.largeColumn]}>
+                <Text
+                  style={[styles.regularText, { color: activityTypeColor }]}
+                >
+                  {`${activityAmountSign} ${getDollarString(amount)}`}
+                </Text>
+                <Text style={styles.greyText}>
+                  {activityName}
+                </Text>
+              </View>
+              <View style={styles.smallColumn}>
+                <Text style={styles.regularText}>
+                  {getDollarString(total)}
+                </Text>
+              </View>
+            </View>
           );
+
+          if (index < Math.min(limit, data.length) - 1) {
+            body.push(
+              <View style={styles.separator} key={`separator_${index}`} />
+            );
+          }
         }
-      });
+      );
     } else {
       body = (
         <View style={[styles.row, styles.centerItems]}>

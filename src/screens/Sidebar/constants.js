@@ -28,6 +28,10 @@ export const TOP_MENU_ITEMS = [
 
 export const FOOTER_MENU_ITEMS = [
   {
+    displayName: "Refer & Earn $5",
+    screen: "Referral"
+  },
+  {
     displayName: "Settings",
     screen: "Settings"
   },

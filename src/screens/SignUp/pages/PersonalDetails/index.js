@@ -45,13 +45,15 @@ class PersonalDetails extends Component {
         email: userEmail,
         password,
         firstName,
-        lastName
+        lastName,
+        referralCode
       } = this.props.values;
       this.props.signUpUser({
         email: userEmail,
         firstName,
         lastName,
         password,
+        referralCode,
         companyID: this.props.signUpReducer.companyID
       });
       return;
@@ -70,7 +72,8 @@ class PersonalDetails extends Component {
   lastNameTextInput;
   emailTextInput;
   passwordTextInput;
-  renderInput({ input, label, type, meta: { touched, error, warning } }) {
+  referralCodeTextInput;
+  renderInput({ input, meta: { touched, error } }) {
     return (
       <View>
         <View style={[styles.inputGrp, INPUT_FIELDS[input.name].extraStyle]}>
@@ -89,14 +92,23 @@ class PersonalDetails extends Component {
                 case "password":
                   this.passwordTextInput = c;
                   break;
+                case "referralCode":
+                  this.referralCodeTextInput = c;
+                  break;
               }
             }}
             placeholderTextColor={colors.darkerGrey}
             style={styles.input}
             placeholder={INPUT_FIELDS[input.name].placeholder}
             secureTextEntry={INPUT_FIELDS[input.name].secureEntry}
-            keyboardType={input.name === "email" ? "email-address" : "default"}
-            returnKeyType={input.name === "password" ? "done" : "next"}
+            autoCapitalize={
+              input.name === "referralCode"
+                ? "characters"
+                : ["firstName", "lastName"].includes(input.name)
+                  ? "words"
+                  : "none"
+            }
+            returnKeyType={input.name === "referralCode" ? "done" : "next"}
             onSubmitEditing={() => {
               switch (input.name) {
                 case "firstName":
@@ -108,9 +120,12 @@ class PersonalDetails extends Component {
                 case "email":
                   this.passwordTextInput.focus();
                   break;
+                case "password":
+                  this.referralCodeTextInput.focus();
+                  break;
               }
             }}
-            blurOnSubmit={input.name === "password"}
+            blurOnSubmit={input.name === "referralCode"}
             underlineColorAndroid="transparent"
             {...input}
           />
@@ -167,7 +182,6 @@ class PersonalDetails extends Component {
             <Field
               name="lastName"
               component={this.renderInput}
-              type="lastName"
               validate={[required]}
             />
           </View>
@@ -175,15 +189,16 @@ class PersonalDetails extends Component {
           <Field
             name="email"
             component={this.renderInput}
-            type="email"
             validate={[required, email]}
           />
           <Field
             name="password"
             component={this.renderInput}
-            type="password"
             validate={[required, minLength8]}
           />
+
+          <Text style={styles.referralLabel}>Do you have a referral code?</Text>
+          <Field name="referralCode" component={this.renderInput} />
 
           <View style={styles.checkboxRow}>
             <CheckBox

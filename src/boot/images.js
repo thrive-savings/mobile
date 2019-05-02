@@ -89,6 +89,9 @@ const imageAssets = [
   require("../../assets/Icons/TickIcon/bitmap.png"),
   require("../../assets/Icons/Star/Empty/star.png"),
   require("../../assets/Icons/Star/Blue/star.png"),
+  require("../../assets/Icons/Referral/like.png"),
+  require("../../assets/Icons/Copy/copy-content.png"),
+  require("../../assets/Icons/Share/share.png"),
 
   // Product Tour
   require("../../assets/ProductTour/step0/bitmap.png"),

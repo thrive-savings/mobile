@@ -76,6 +76,15 @@ export default StyleSheet.create({
     fontSize: 12,
     fontFamily: "LatoRegular"
   },
+  referralLabel: {
+    marginTop: -7.5,
+    marginBottom: 7.5,
+    marginLeft: 3,
+    color: colors.charcoal,
+    fontSize: 12,
+    fontFamily: "LatoRegular",
+    letterSpacing: 0.2
+  },
   inputGrp: {
     height: 30,
     flexDirection: "row",

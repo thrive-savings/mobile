@@ -14,7 +14,7 @@ import addStatusBar from "../../components/StatusBar";
 import globalStyles from "../../globals/globalStyles";
 
 import ChooseType from "./pages/ChooseType";
-import ReferralCode from "./pages/ReferralCode";
+import EmployerCode from "./pages/EmployerCode";
 import PersonalDetails from "./pages/PersonalDetails";
 
 import { changeStep } from "./state/actions";
@@ -59,7 +59,12 @@ class SignUp extends Component {
     let body, header;
     switch (step) {
       case 0:
-        body = <ChooseType onButtonPress={type => this.props.changeStep({ step: type === "personal" ? 2 : 1 })} />;
+        body = (
+          <ChooseType
+            onButtonPress={type =>
+              this.props.changeStep({ step: type === "personal" ? 2 : 1 })}
+          />
+        );
         break;
       case 1:
         header = (
@@ -69,14 +74,15 @@ class SignUp extends Component {
             onButtonPress={() => this.props.changeStep({ step: 0 })}
           />
         );
-        body = <ReferralCode navigation={navigation} />;
+        body = <EmployerCode navigation={navigation} />;
         break;
       case 2:
         header = (
           <Header
             navigation={navigation}
             button="back"
-            onButtonPress={() => this.props.changeStep({ step: companyID > 1 ? 1 : 0 })}
+            onButtonPress={() =>
+              this.props.changeStep({ step: companyID > 1 ? 1 : 0 })}
           />
         );
         body = <PersonalDetails navigation={navigation} />;

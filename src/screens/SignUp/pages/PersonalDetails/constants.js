@@ -10,13 +10,14 @@ const INPUT_FIELDS = {
     extraStyle: styles.names
   },
   email: {
-    placeholder: "Email",
-    extraStyle: styles.email
+    placeholder: "Email"
   },
   password: {
     placeholder: "Password",
-    secureEntry: true,
-    extraStyle: styles.password
+    secureEntry: true
+  },
+  referralCode: {
+    placeholder: "Referral Code"
   }
 };
 
