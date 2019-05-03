@@ -71,7 +71,7 @@ const stackerOptions = {
 
 const StackerWithProductTour = createStackNavigator(stackScreens, {
   ...stackerOptions,
-  initialRouteName: "SignUp"
+  initialRouteName: "ProductTour"
 });
 
 const StackerWithDrawer = createStackNavigator(stackScreens, {
