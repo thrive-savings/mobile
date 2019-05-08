@@ -92,13 +92,20 @@ const imageAssets = [
   require("../../assets/Icons/Referral/like.png"),
   require("../../assets/Icons/Copy/copy-content.png"),
   require("../../assets/Icons/Share/share.png"),
+  require("../../assets/Icons/Money/money.png"),
+  require("../../assets/Icons/Donation/donation.png"),
+  require("../../assets/Icons/CalendarMoney/calendar-money.png"),
+  require("../../assets/Icons/Warning/warning.png"),
 
   // Product Tour
   require("../../assets/ProductTour/step0/bitmap.png"),
   require("../../assets/ProductTour/step1/icon0/bitmap.png"),
   require("../../assets/ProductTour/step1/icon1/bitmap.png"),
   require("../../assets/ProductTour/step2/bitmap.png"),
-  require("../../assets/ProductTour/step3/bitmap.png")
+  require("../../assets/ProductTour/step3/bitmap.png"),
+
+  // Momentum Special
+  require("../../assets/Momentum/Logos/InApp/logo.png")
 ];
 
 const cacheImages = images => {

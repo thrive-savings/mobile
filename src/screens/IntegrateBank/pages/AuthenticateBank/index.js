@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { View, WebView } from "react-native";
+import { View, WebView, Text } from "react-native";
 import { Spinner } from "native-base";
 import { connect } from "react-redux";
 
@@ -40,7 +40,10 @@ class AuthenticateBank extends Component {
 
     const {
       event,
-      data: { connection: { id: connectionID } = {}, account: { id: accountID } = {} } = {},
+      data: {
+        connection: { id: connectionID } = {},
+        account: { id: accountID } = {}
+      } = {},
       error
     } = msgData;
 
@@ -56,7 +59,10 @@ class AuthenticateBank extends Component {
           this.props.setDefaultAuthAccount({ accountID });
           break;
         case "onDelete":
-          this.props.unlinkConnection({ connectionID: connectionID.toString(), fromQuovo: false });
+          this.props.unlinkConnection({
+            connectionID: connectionID.toString(),
+            fromQuovo: false
+          });
           break;
         case "onClose":
           this.props.onQuovoClose();
@@ -70,6 +76,7 @@ class AuthenticateBank extends Component {
   renderLoading() {
     return (
       <View style={styles.container}>
+        <Text style={styles.regularText}>Connecting to Bank</Text>
         <Spinner color={colors.blue} />
       </View>
     );
@@ -77,35 +84,38 @@ class AuthenticateBank extends Component {
 
   render() {
     const {
-      integrateBankReducer: { loadingState: loadingStateFromReducer, quovoUiToken },
+      integrateBankReducer: {
+        loadingState: loadingStateFromReducer,
+        quovoUiToken
+      },
       connection: connectionToFix,
       userData: { userType }
     } = this.props;
 
-    const loadingState = loadingStateFromReducer === LOADING_STATES.UNLINKING_CONNECTION ? LOADING_STATES.NONE : loadingStateFromReducer;
+    const loadingState =
+      loadingStateFromReducer === LOADING_STATES.UNLINKING_CONNECTION
+        ? LOADING_STATES.NONE
+        : loadingStateFromReducer;
 
     return (
       <React.Fragment>
-        {
-          loadingState !== LOADING_STATES.NONE
-            ? this.renderLoading()
-            :
-              <View style={styles.webViewContainer}>
-                <WebView
-                  source={{
-                    uri: `${API}/link.html?token=${quovoUiToken}${userType ===
-                    "tester"
-                      ? "&test=true"
-                      : ""}${connectionToFix && connectionToFix.quovoConnectionID
-                      ? `&connectionId=${connectionToFix.quovoConnectionID}`
-                      : ""}`
-                  }}
-                  onMessage={this.onWebViewMessage}
-                  startInLoadingState
-                  renderLoading={() => this.renderLoading()}
-                />
-              </View>
-        }
+        {loadingState !== LOADING_STATES.NONE
+          ? this.renderLoading()
+          : <View style={styles.webViewContainer}>
+              <WebView
+                source={{
+                  uri: `${API}/link.html?token=${quovoUiToken}${userType ===
+                  "tester"
+                    ? "&test=true"
+                    : ""}${connectionToFix && connectionToFix.quovoConnectionID
+                    ? `&connectionId=${connectionToFix.quovoConnectionID}`
+                    : ""}`
+                }}
+                onMessage={this.onWebViewMessage}
+                startInLoadingState
+                renderLoading={() => this.renderLoading()}
+              />
+            </View>}
       </React.Fragment>
     );
   }
@@ -125,7 +135,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     fetchConnection: (payload = {}) => dispatch(fetchConnection(payload)),
-    setDefaultAuthAccount: (payload = {}) => dispatch(setDefaultAuthAccount(payload)),
+    setDefaultAuthAccount: (payload = {}) =>
+      dispatch(setDefaultAuthAccount(payload)),
     unlinkConnection: (payload = {}) => dispatch(unlinkConnection(payload)),
     getUiToken: () => dispatch(getUiToken()),
     changeBankStep: (payload = {}) => dispatch(changeBankStep(payload))

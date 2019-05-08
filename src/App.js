@@ -30,6 +30,8 @@ import PP from "./screens/PP";
 import TOS from "./screens/TOS";
 import Faq from "./screens/Faq";
 import Contact from "./screens/Contact";
+import MomentumTour from "./screens/MomentumTour";
+import MomentumVerification from "./screens/MomentumVerification";
 
 const Drawer = createDrawerNavigator(
   {
@@ -61,7 +63,9 @@ const stackScreens = {
   SavingGoals: { screen: SavingGoals },
   PP: { screen: PP },
   TOS: { screen: TOS },
-  Drawer: { screen: Drawer }
+  Drawer: { screen: Drawer },
+  MomentumTour: { screen: MomentumTour },
+  MomentumVerification: { screen: MomentumVerification }
 };
 
 const stackerOptions = {
@@ -72,6 +76,11 @@ const stackerOptions = {
 const StackerWithProductTour = createStackNavigator(stackScreens, {
   ...stackerOptions,
   initialRouteName: "ProductTour"
+});
+
+const StackerWithMomentumTour = createStackNavigator(stackScreens, {
+  ...stackerOptions,
+  initialRouteName: "MomentumTour"
 });
 
 const StackerWithDrawer = createStackNavigator(stackScreens, {
@@ -137,6 +146,8 @@ class App extends React.Component {
         stacker = <StackerWithDrawer />;
       }
     }
+
+    // stacker = <StackerWithMomentumTour />;
 
     return (
       <Root>

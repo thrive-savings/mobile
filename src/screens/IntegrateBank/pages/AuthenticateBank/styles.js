@@ -17,7 +17,7 @@ export default StyleSheet.create({
     flex: 1,
     overflow: "hidden",
     marginHorizontal: 20,
-    marginBottom: 20,
+    marginBottom: 20
   },
 
   // Text styles
@@ -28,5 +28,11 @@ export default StyleSheet.create({
     letterSpacing: 1.6,
     textAlign: "center",
     paddingVertical: 10
+  },
+  regularText: {
+    color: colors.charcoal,
+    textAlign: "center",
+    fontSize: 14,
+    fontFamily: "LatoRegular"
   }
 });

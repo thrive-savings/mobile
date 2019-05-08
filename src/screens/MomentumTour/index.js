@@ -111,7 +111,6 @@ class MomentumTour extends Component {
         <ModalTemplate
           show={showWarning}
           buttonVisible={false}
-          buttonText={"SUBMIT"}
           content={this.renderWarningModal()}
           onClose={() => this.setState({ showWarning: false })}
         />

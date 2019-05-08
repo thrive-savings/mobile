@@ -8,10 +8,15 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
-  button: {
+  leftButton: {
     alignSelf: "flex-start",
     position: "absolute",
     left: 25
+  },
+  rightButton: {
+    alignSelf: "flex-end",
+    position: "absolute",
+    right: 25
   },
   text: {
     color: "white",

@@ -3,6 +3,8 @@ import { ScrollView, ImageBackground } from "react-native";
 import { connect } from "react-redux";
 
 import Header from "../../components/Header";
+import ModalTemplate from "../../components/ModalTemplate";
+import bankOutageModal from "../../components/BankOutageModal";
 import addStatusBar from "../../components/StatusBar";
 
 import globalStyles from "../../globals/globalStyles";
@@ -19,6 +21,14 @@ import { LINK_STEPS } from "./state/constants";
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
 
 class IntegrateBank extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showWarning: false
+    };
+  }
+
   componentWillUnmount() {
     this.props.changeBankStep();
   }
@@ -50,9 +60,7 @@ class IntegrateBank extends Component {
   onQuovoClose = () => {
     const {
       integrateBankReducer: {
-        connection: {
-          quovoConnectionID: curConnectionID,
-        } = {}
+        connection: { quovoConnectionID: curConnectionID } = {}
       },
       navigation: { state: { params: { step: stepFromNavigation } = {} } = {} }
     } = this.props;
@@ -115,7 +123,10 @@ class IntegrateBank extends Component {
       default:
       case LINK_STEPS.INFO:
         return (
-          <ScrollView style={globalStyles.container} showsVerticalScrollIndicator={false}>
+          <ScrollView
+            style={globalStyles.container}
+            showsVerticalScrollIndicator={false}
+          >
             <WhyLink
               next={() => this.props.changeBankStep({ step: LINK_STEPS.AUTH })}
             />
@@ -130,16 +141,19 @@ class IntegrateBank extends Component {
         );
       case LINK_STEPS.ACCOUNT:
         return (
-          <ScrollView style={globalStyles.container} showsVerticalScrollIndicator={false}>
-            <ChooseAccount
-              accounts={providedAccounts}
-              goBack={this.goBack}
-            />
+          <ScrollView
+            style={globalStyles.container}
+            showsVerticalScrollIndicator={false}
+          >
+            <ChooseAccount accounts={providedAccounts} goBack={this.goBack} />
           </ScrollView>
         );
       case LINK_STEPS.FINAL:
         return (
-          <ScrollView style={globalStyles.container} showsVerticalScrollIndicator={false}>
+          <ScrollView
+            style={globalStyles.container}
+            showsVerticalScrollIndicator={false}
+          >
             <AuthSuccess updateConnectionsData={this.updateConnectionsData} />
           </ScrollView>
         );
@@ -166,8 +180,17 @@ class IntegrateBank extends Component {
             step || typeof stepFromNavigation !== "undefined" ? "back" : "none"
           }
           onButtonPress={this.onBackPress}
+          warning={step === LINK_STEPS.AUTH}
+          onWarningPress={() => this.setState({ showWarning: true })}
         />
         {this.renderContent()}
+
+        <ModalTemplate
+          show={this.state.showWarning}
+          buttonVisible={false}
+          content={bankOutageModal()}
+          onClose={() => this.setState({ showWarning: false })}
+        />
       </ImageBackground>
     );
   }
