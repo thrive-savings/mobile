@@ -8,7 +8,24 @@ import styles from "./styles";
 import colors from "../../theme/colors";
 
 class SpecialButton extends Component {
-  renderEnabled() {
+  renderWhite() {
+    let text = this.props.text ? this.props.text : "CONTINUE";
+
+    return (
+      <TouchableOpacity
+        activeOpacity={0.6}
+        style={[styles.whiteButton, this.props.style]}
+      >
+        {this.props.loading
+          ? <Spinner color={colors.blue} />
+          : <Text style={styles.whiteButtonText}>
+              {text}
+            </Text>}
+      </TouchableOpacity>
+    );
+  }
+
+  renderGradient() {
     let text = this.props.text ? this.props.text : "CONTINUE";
 
     return (
@@ -49,7 +66,10 @@ class SpecialButton extends Component {
   }
 
   render() {
-    return this.props.enabled ? this.renderEnabled() : this.renderDisabled();
+    const { enabled, type } = this.props;
+    return enabled
+      ? type === "gradient" ? this.renderGradient() : this.renderWhite()
+      : this.renderDisabled();
   }
 }
 
@@ -58,16 +78,20 @@ SpecialButton.propTypes = {
   enabled: PropTypes.bool,
   loading: PropTypes.bool,
   style: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.number])),
+    PropTypes.arrayOf(
+      PropTypes.oneOfType([PropTypes.object, PropTypes.number])
+    ),
     PropTypes.object,
     PropTypes.number
-  ])
+  ]),
+  type: PropTypes.oneOf(["gradient", "white"])
 };
 SpecialButton.defaultProps = {
   next: () => {},
   enabled: true,
   loading: false,
-  style: undefined
+  style: undefined,
+  type: "gradient"
 };
 
 export default SpecialButton;
