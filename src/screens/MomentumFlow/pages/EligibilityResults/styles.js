@@ -13,32 +13,21 @@ export default StyleSheet.create({
     borderRadius: 8,
     backgroundColor: "white"
   },
-  titleText: {
-    color: colors.blue,
-    fontSize: 15,
-    fontFamily: "LatoBold",
-    letterSpacing: 1.6,
-    textAlign: "center",
-    paddingVertical: 10
-  },
-  secondaryTitleText: {
-    color: colors.blue,
-    fontSize: 15,
-    fontFamily: "LatoBold",
-    lineHeight: 24,
-    letterSpacing: 0.2,
-    textAlign: "center",
-    paddingTop: 10,
-    paddingHorizontal: 10
+  momentumLogo: {
+    marginTop: 10,
+    alignSelf: "center"
   },
   regularText: {
     fontSize: 13,
     fontFamily: "LatoRegular",
-    lineHeight: 21,
+    lineHeight: 20,
     letterSpacing: 0.2,
     textAlign: "center",
     color: colors.charcoal,
-    paddingVertical: 10,
-    paddingHorizontal: 20
+    paddingVertical: 20,
+    paddingHorizontal: 10
+  },
+  boldText: {
+    fontFamily: "LatoBold"
   }
 });

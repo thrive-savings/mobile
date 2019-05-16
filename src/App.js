@@ -10,6 +10,8 @@ import getAuthorized from "./globals/getAuthorized";
 
 import { getUpdates, setExpoToken } from "./screens/Login/state/actions";
 
+import { MOMENTUM_OFFER_STATUSES } from "./screens/MomentumFlow/state/constants";
+
 import ProductTour from "./screens/ProductTour";
 import Login from "./screens/Login/";
 import ForgotPassword from "./screens/ForgotPassword";
@@ -30,8 +32,7 @@ import PP from "./screens/PP";
 import TOS from "./screens/TOS";
 import Faq from "./screens/Faq";
 import Contact from "./screens/Contact";
-import MomentumTour from "./screens/MomentumTour";
-import MomentumVerification from "./screens/MomentumVerification";
+import MomentumFlow from "./screens/MomentumFlow";
 
 const Drawer = createDrawerNavigator(
   {
@@ -64,8 +65,7 @@ const stackScreens = {
   PP: { screen: PP },
   TOS: { screen: TOS },
   Drawer: { screen: Drawer },
-  MomentumTour: { screen: MomentumTour },
-  MomentumVerification: { screen: MomentumVerification }
+  MomentumFlow: { screen: MomentumFlow }
 };
 
 const stackerOptions = {
@@ -78,9 +78,9 @@ const StackerWithProductTour = createStackNavigator(stackScreens, {
   initialRouteName: "ProductTour"
 });
 
-const StackerWithMomentumTour = createStackNavigator(stackScreens, {
+const StackerWithMomentumFlow = createStackNavigator(stackScreens, {
   ...stackerOptions,
-  initialRouteName: "MomentumTour"
+  initialRouteName: "MomentumFlow"
 });
 
 const StackerWithDrawer = createStackNavigator(stackScreens, {
@@ -143,11 +143,24 @@ class App extends React.Component {
       if (!authorized.isVerified) {
         stacker = <StackerWithSetPhone />;
       } else {
-        stacker = <StackerWithDrawer />;
+        const momentumOfferData = authorized.momentumOfferData;
+        console.log("---------APP rendering---------");
+        console.log(momentumOfferData);
+        console.log("--------------------------------");
+
+        if (
+          momentumOfferData &&
+          ![
+            MOMENTUM_OFFER_STATUSES.UNINTERESTED,
+            MOMENTUM_OFFER_STATUSES.DONE
+          ].includes(momentumOfferData.status)
+        ) {
+          stacker = <StackerWithMomentumFlow />;
+        } else {
+          stacker = <StackerWithDrawer />;
+        }
       }
     }
-
-    // stacker = <StackerWithMomentumTour />;
 
     return (
       <Root>

@@ -29,7 +29,6 @@ import { bankLogoUrl } from "../../globals/logoUrls";
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
 const bankSymbolWhite = require("../../../assets/Icons/BankSymbolWhite/bitmap.png");
 
-
 class BankConnections extends Component {
   constructor(props) {
     super(props);
@@ -107,7 +106,9 @@ class BankConnections extends Component {
       <View style={styles.emptyStateContainer}>
         <Image source={bankSymbolWhite} />
         <Text style={styles.emptyStateLabel}>Your accounts aren't linked</Text>
-        <Text style={styles.emptyStateDesc}>Linking your bank account enables Thrive to save for you.</Text>
+        <Text style={styles.emptyStateDesc}>
+          Linking your bank account enables Thrive to save for you.
+        </Text>
       </View>
     );
   }
@@ -179,7 +180,9 @@ class BankConnections extends Component {
                     activeOpacity={0.6}
                     style={styles.accountButton}
                     onPress={() =>
-                      this.setState({ showConfirmationModalForID: quovoConnectionID })}
+                      this.setState({
+                        showConfirmationModalForID: quovoConnectionID
+                      })}
                   >
                     <Text style={styles.blueButtonText}>UNLINK</Text>
                   </TouchableOpacity>
@@ -219,9 +222,7 @@ class BankConnections extends Component {
 
   render() {
     const { showConfirmationModalForID } = this.state;
-    const {
-      userData: { connections = [] }
-    } = this.props;
+    const { userData: { connections = [] } } = this.props;
 
     return (
       <ImageBackground source={bg} style={globalStyles.background}>
@@ -235,7 +236,12 @@ class BankConnections extends Component {
           showsVerticalScrollIndicator={false}
           style={styles.contentContainer}
         >
-          <Text onPress={() => this.openLinkingFlow(LINK_STEPS.INFO)} style={styles.readMoreSecurityText}>Read more about our security</Text>
+          <Text
+            onPress={() => this.openLinkingFlow(LINK_STEPS.INFO)}
+            style={styles.readMoreSecurityText}
+          >
+            Read more about our security
+          </Text>
           {connections.length ? this.renderConnections() : this.renderEmpty()}
         </ScrollView>
         <SpecialButton
@@ -253,7 +259,8 @@ class BankConnections extends Component {
             this.setState({ showConfirmationModalForID: undefined });
           }}
           content={this.getConfirmationModalContent(showConfirmationModalForID)}
-          onClose={() => this.setState({ showConfirmationModalForID: undefined })}
+          onClose={() =>
+            this.setState({ showConfirmationModalForID: undefined })}
         />
       </ImageBackground>
     );

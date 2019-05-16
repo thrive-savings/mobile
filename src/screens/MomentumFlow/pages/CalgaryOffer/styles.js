@@ -21,24 +21,13 @@ export default StyleSheet.create({
     textAlign: "center",
     paddingVertical: 10
   },
-  secondaryTitleText: {
-    color: colors.blue,
-    fontSize: 15,
-    fontFamily: "LatoBold",
-    lineHeight: 24,
-    letterSpacing: 0.2,
-    textAlign: "center",
-    paddingTop: 10,
-    paddingHorizontal: 10
-  },
   regularText: {
     fontSize: 13,
     fontFamily: "LatoRegular",
-    lineHeight: 21,
+    lineHeight: 20,
     letterSpacing: 0.2,
     textAlign: "center",
-    color: colors.charcoal,
-    paddingVertical: 10,
-    paddingHorizontal: 20
+    color: colors.blue,
+    paddingVertical: 20
   }
 });

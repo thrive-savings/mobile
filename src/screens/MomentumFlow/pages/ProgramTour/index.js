@@ -6,24 +6,24 @@ import {
   TouchableOpacity,
   Text
 } from "react-native";
+import PropTypes from "prop-types";
 import { TabView, SceneMap } from "react-native-tab-view";
 
-import ModalTemplate from "../../components/ModalTemplate";
-import Dots from "../../components/Dots";
-import SpecialButton from "../../components/SpecialButton";
-import addStatusBar from "../../components/StatusBar";
+import ModalTemplate from "../../../../components/ModalTemplate";
+import Dots from "../../../../components/Dots";
+import SpecialButton from "../../../../components/SpecialButton";
 
-import amplitude from "../../globals/amplitude";
+import amplitude from "../../../../globals/amplitude";
 
-import globalStyles from "../../globals/globalStyles";
+import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
 
 import { Tour0, Tour1, Tour2, routes } from "./components";
 
-const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
-const momentumLogo = require("../../../assets/Momentum/Logos/InApp/logo.png");
+const bg = require("../../../../../assets/Backgrounds/BackgroundFull.png");
+const momentumLogo = require("../../../../../assets/Momentum/Logos/InApp/logo.png");
 
-class MomentumTour extends Component {
+class ProgramTour extends Component {
   constructor(props) {
     super(props);
 
@@ -67,7 +67,7 @@ class MomentumTour extends Component {
         />
         <SpecialButton
           text="I DON'T WANT $60"
-          onClick={() => {}}
+          onClick={this.props.onUninterestedConfirmed}
           type="white"
           style={[styles.modalButtonStyle, globalStyles.shadow]}
         />
@@ -98,7 +98,7 @@ class MomentumTour extends Component {
             onClick={() =>
               activeIndex < 2
                 ? this.onStepChange(activeIndex + 1)
-                : this.props.navigation.navigate("MomentumVerification")}
+                : this.props.onGoToEligibilityCheck()}
           />
           <TouchableOpacity
             activeOpacity={0.6}
@@ -119,4 +119,9 @@ class MomentumTour extends Component {
   }
 }
 
-export default addStatusBar(MomentumTour);
+ProgramTour.propTypes = {
+  onUninterestedConfirmed: PropTypes.func.isRequired,
+  onGoToEligibilityCheck: PropTypes.func.isRequired
+};
+
+export default ProgramTour;

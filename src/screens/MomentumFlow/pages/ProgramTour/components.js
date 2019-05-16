@@ -3,9 +3,9 @@ import { ScrollView, Image, Text } from "react-native";
 
 import styles from "./styles";
 
-const tour0Icon = require("../../../assets/Icons/Money/money.png");
-const tour1Icon = require("../../../assets/Icons/CalendarMoney/calendar-money.png");
-const tour2Icon = require("../../../assets/Icons/Donation/donation.png");
+const tour0Icon = require("../../../../../assets/Icons/Money/money.png");
+const tour1Icon = require("../../../../../assets/Icons/CalendarMoney/calendar-money.png");
+const tour2Icon = require("../../../../../assets/Icons/Donation/donation.png");
 
 const Tour0 = () =>
   <ScrollView

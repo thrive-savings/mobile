@@ -96,6 +96,7 @@ const imageAssets = [
   require("../../assets/Icons/Donation/donation.png"),
   require("../../assets/Icons/CalendarMoney/calendar-money.png"),
   require("../../assets/Icons/Warning/warning.png"),
+  require("../../assets/Icons/StarLarger/star.png"),
 
   // Product Tour
   require("../../assets/ProductTour/step0/bitmap.png"),

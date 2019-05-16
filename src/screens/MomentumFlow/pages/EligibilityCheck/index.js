@@ -7,22 +7,22 @@ import {
   Text,
   Image
 } from "react-native";
+import PropTypes from "prop-types";
 import CheckBox from "react-native-check-box";
 
-import Header from "../../components/Header";
-import SpecialButton from "../../components/SpecialButton";
-import addStatusBar from "../../components/StatusBar";
+import Header from "../../../../components/Header";
+import SpecialButton from "../../../../components/SpecialButton";
 
-import globalStyles from "../../globals/globalStyles";
+import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
 
 import INCOME_THRESHOLDS from "./constants";
 
-const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
-const momentumLogo = require("../../../assets/Momentum/Logos/InApp/logo.png");
-const tick = require("../../../assets/Icons/Checkbox/tick.png");
+const bg = require("../../../../../assets/Backgrounds/BackgroundFull.png");
+const momentumLogo = require("../../../../../assets/Momentum/Logos/InApp/logo.png");
+const tick = require("../../../../../assets/Icons/Checkbox/tick.png");
 
-class MomentumVerification extends Component {
+class EligibilityCheck extends Component {
   constructor(props) {
     super(props);
 
@@ -31,6 +31,18 @@ class MomentumVerification extends Component {
       isIncomeVerified: undefined,
       agreed: false
     };
+
+    this.onSubmitCheck = this.onSubmitCheck.bind(this);
+  }
+
+  onSubmitCheck() {
+    const { familyMemberCount, isIncomeVerified, agreed } = this.state;
+    if (agreed && familyMemberCount > 0) {
+      this.props.onSubmitCheck({
+        householdCount: familyMemberCount,
+        isIncomeBelow: isIncomeVerified
+      });
+    }
   }
 
   onFamilyMemberCountSet(i) {
@@ -187,6 +199,7 @@ class MomentumVerification extends Component {
         <Header
           navigation={this.props.navigation}
           button="back"
+          onButtonPress={this.props.onBackPress}
           content="text"
         />
         <Image source={momentumLogo} style={styles.momentumLogo} />
@@ -208,7 +221,7 @@ class MomentumVerification extends Component {
                 <SpecialButton
                   enabled={agreed}
                   text={"NEXT"}
-                  onClick={() => {}}
+                  onClick={this.onSubmitCheck}
                 />
               </React.Fragment>}
           </View>
@@ -218,4 +231,9 @@ class MomentumVerification extends Component {
   }
 }
 
-export default addStatusBar(MomentumVerification);
+EligibilityCheck.propTypes = {
+  onBackPress: PropTypes.func.isRequired,
+  onSubmitCheck: PropTypes.func.isRequired
+};
+
+export default EligibilityCheck;

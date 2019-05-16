@@ -3,7 +3,7 @@ import {
   SET_DEFAULT_AUTH_ACCOUNT_URL,
   SET_DEFAULT_ACCOUNT_URL,
   UNLINK_CONNECTION_URL,
-  UPDATE_USER_CONNECTIONS,
+  UPDATE_USER_DATA_AFTER_LINKING_DONE,
   CHANGE_BANK_STEP,
   GET_UI_TOKEN
 } from "./constants";
@@ -27,9 +27,9 @@ export const unlinkConnection = payload => ({
   type: `${UNLINK_CONNECTION_URL}_SUBMIT`
 });
 
-export const updateUserConnections = payload => ({
+export const updateUserDataAfterLinkingDone = payload => ({
   payload,
-  type: `${UPDATE_USER_CONNECTIONS}`
+  type: `${UPDATE_USER_DATA_AFTER_LINKING_DONE}`
 });
 export const changeBankStep = payload => ({
   payload,

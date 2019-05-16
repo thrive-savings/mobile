@@ -9,6 +9,7 @@ import {
   UPDATE_GOALS_DATA,
   UPDATE_NOTIFICATIONS_DATA,
   UPDATE_SAVING_PREFERENCES_DATA,
+  UPDATE_MOMENTUM_OFFER_DATA,
   UPDATE_AVATAR
 } from "./constants";
 
@@ -130,6 +131,20 @@ export default function authReducer(state = initialState, action) {
           authorized: {
             ...dataOnSavingPreferencesUpdate,
             savingPreferences
+          }
+        }
+      };
+
+    // Update Saving Preferences case
+    case `${UPDATE_MOMENTUM_OFFER_DATA}`:
+      const { payload: { momentumOfferData } } = action;
+      const dataOnMomentumOfferDataUpdate = state.data.authorized;
+      return {
+        ...state,
+        data: {
+          authorized: {
+            ...dataOnMomentumOfferDataUpdate,
+            momentumOfferData
           }
         }
       };

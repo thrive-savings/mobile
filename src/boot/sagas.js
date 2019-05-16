@@ -32,7 +32,7 @@ import {
   setDefaultAccountSucceedSaga,
   unlinkConnectionSaga,
   unlinkConnectionSucceedSaga,
-  updateUserConnectionsSaga
+  updateUserDataAfterLinkingDoneSaga
 } from "../screens/IntegrateBank/state/sagas";
 import {
   setWorkTypeSaga,
@@ -67,6 +67,12 @@ import {
   fetchDebtsSaga,
   saveDebtDetailsSaga
 } from "../screens/DebtDashboard/state/sagas";
+import {
+  checkEligibilitySaga,
+  checkEligibilitySucceedSaga,
+  updateOfferStatusSaga,
+  updateOfferStatusSucceedSaga
+} from "../screens/MomentumFlow/state/sagas";
 
 export default function runSagas(sagaMiddleware) {
   sagaMiddleware.run(requestApiSaga);
@@ -93,7 +99,7 @@ export default function runSagas(sagaMiddleware) {
   sagaMiddleware.run(setDefaultAccountSucceedSaga);
   sagaMiddleware.run(unlinkConnectionSaga);
   sagaMiddleware.run(unlinkConnectionSucceedSaga);
-  sagaMiddleware.run(updateUserConnectionsSaga);
+  sagaMiddleware.run(updateUserDataAfterLinkingDoneSaga);
   sagaMiddleware.run(setWorkTypeSaga);
   sagaMiddleware.run(setWorkTypeSucceedSaga);
   sagaMiddleware.run(setSavingTypeSaga);
@@ -119,4 +125,8 @@ export default function runSagas(sagaMiddleware) {
   sagaMiddleware.run(fetchHistorySaga);
   sagaMiddleware.run(fetchDebtsSaga);
   sagaMiddleware.run(saveDebtDetailsSaga);
+  sagaMiddleware.run(checkEligibilitySaga);
+  sagaMiddleware.run(checkEligibilitySucceedSaga);
+  sagaMiddleware.run(updateOfferStatusSaga);
+  sagaMiddleware.run(updateOfferStatusSucceedSaga);
 }

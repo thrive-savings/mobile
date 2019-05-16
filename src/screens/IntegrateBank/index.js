@@ -7,6 +7,7 @@ import ModalTemplate from "../../components/ModalTemplate";
 import bankOutageModal from "../../components/BankOutageModal";
 import addStatusBar from "../../components/StatusBar";
 
+import amplitude from "../../globals/amplitude";
 import globalStyles from "../../globals/globalStyles";
 
 import WhyLink from "./pages/WhyLink";
@@ -15,7 +16,10 @@ import ChooseAccount from "./pages/ChooseAccount";
 import AuthSuccess from "./pages/AuthSuccess";
 
 import { fetchDebts } from "../DebtDashboard/state/actions";
-import { changeBankStep, updateUserConnections } from "./state/actions";
+import {
+  changeBankStep,
+  updateUserDataAfterLinkingDone
+} from "./state/actions";
 import { LINK_STEPS } from "./state/constants";
 
 const bg = require("../../../assets/Backgrounds/BackgroundFull.png");
@@ -34,15 +38,20 @@ class IntegrateBank extends Component {
   }
 
   updateConnectionsData = () => {
-    const { integrateBankReducer: { connection, allConnections } } = this.props;
+    const {
+      integrateBankReducer: { connection, allConnections, momentumOfferData }
+    } = this.props;
     if (connection || allConnections) {
-      const updateConnectionObj = {};
-      if (allConnections) {
-        updateConnectionObj.connections = allConnections;
-      } else {
-        updateConnectionObj.connection = connection;
+      const data = {};
+      if (momentumOfferData) {
+        data.momentumOfferData = momentumOfferData;
       }
-      this.props.updateUserConnections(updateConnectionObj);
+      if (allConnections) {
+        data.connections = allConnections;
+      } else {
+        data.connection = connection;
+      }
+      this.props.updateUserDataAfterLinkingDone(data);
     }
   };
 
@@ -98,6 +107,11 @@ class IntegrateBank extends Component {
         this.goBack();
       }
     }
+  };
+
+  onWarningPress = () => {
+    amplitude.track(amplitude.events.BANK_OUTAGE_WARNING_CLICK);
+    this.setState({ showWarning: true });
   };
 
   renderContent() {
@@ -181,7 +195,7 @@ class IntegrateBank extends Component {
           }
           onButtonPress={this.onBackPress}
           warning={step === LINK_STEPS.AUTH}
-          onWarningPress={() => this.setState({ showWarning: true })}
+          onWarningPress={this.onWarningPress}
         />
         {this.renderContent()}
 
@@ -206,8 +220,8 @@ function mapDispatchToProps(dispatch) {
   return {
     fetchDebts: (payload = {}) => dispatch(fetchDebts(payload)),
     changeBankStep: (payload = {}) => dispatch(changeBankStep(payload)),
-    updateUserConnections: (payload = {}) =>
-      dispatch(updateUserConnections(payload))
+    updateUserDataAfterLinkingDone: (payload = {}) =>
+      dispatch(updateUserDataAfterLinkingDone(payload))
   };
 }
 

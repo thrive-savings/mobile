@@ -3,12 +3,15 @@ import {
   SET_DEFAULT_AUTH_ACCOUNT_URL,
   SET_DEFAULT_ACCOUNT_URL,
   UNLINK_CONNECTION_URL,
-  UPDATE_USER_CONNECTIONS,
+  UPDATE_USER_DATA_AFTER_LINKING_DONE,
   GET_UI_TOKEN
 } from "./constants";
 import { put, takeEvery } from "redux-saga/effects";
 import { requestApi } from "../../../globals/requestApi";
-import { updateConnectionsData } from "../../Login/state/actions";
+import {
+  updateConnectionsData,
+  updateMomentumOfferData
+} from "../../Login/state/actions";
 
 const getUiTokenSaga = function*() {
   yield takeEvery(`${GET_UI_TOKEN}_SUBMIT`, function*() {
@@ -23,7 +26,9 @@ const fetchConnectionSaga = function*() {
 };
 
 const setDefaultAuthAccountSaga = function*() {
-  yield takeEvery(`${SET_DEFAULT_AUTH_ACCOUNT_URL}_SUBMIT`, function*({ payload }) {
+  yield takeEvery(`${SET_DEFAULT_AUTH_ACCOUNT_URL}_SUBMIT`, function*({
+    payload
+  }) {
     yield put(requestApi(`${SET_DEFAULT_AUTH_ACCOUNT_URL}`, { data: payload }));
   });
 };
@@ -52,9 +57,23 @@ const unlinkConnectionSucceedSaga = function*() {
   });
 };
 
-const updateUserConnectionsSaga = function*() {
-  yield takeEvery(`${UPDATE_USER_CONNECTIONS}`, function*({ payload }) {
-    yield put(updateConnectionsData(payload));
+const updateUserDataAfterLinkingDoneSaga = function*() {
+  yield takeEvery(`${UPDATE_USER_DATA_AFTER_LINKING_DONE}`, function*({
+    payload: {
+      connection: newConnectionData,
+      connections: allConnectionsData,
+      momentumOfferData
+    }
+  }) {
+    if (momentumOfferData) {
+      yield put(updateMomentumOfferData({ momentumOfferData }));
+    }
+
+    if (allConnectionsData) {
+      yield put(updateConnectionsData({ connections: allConnectionsData }));
+    } else if (newConnectionData) {
+      yield put(updateConnectionsData({ connection: newConnectionData }));
+    }
   });
 };
 
@@ -66,5 +85,5 @@ export {
   setDefaultAccountSucceedSaga,
   unlinkConnectionSaga,
   unlinkConnectionSucceedSaga,
-  updateUserConnectionsSaga
+  updateUserDataAfterLinkingDoneSaga
 };

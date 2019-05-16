@@ -14,6 +14,7 @@ class SpecialButton extends Component {
     return (
       <TouchableOpacity
         activeOpacity={0.6}
+        onPress={() => this.props.onClick()}
         style={[styles.whiteButton, this.props.style]}
       >
         {this.props.loading

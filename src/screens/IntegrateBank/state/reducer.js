@@ -13,6 +13,7 @@ const initialState = {
   quovoUiToken: undefined,
   connection: undefined,
   allConnections: undefined,
+  momentumOfferData: undefined,
   step: LINK_STEPS.INFO,
   loadingState: LOADING_STATES.NONE,
   error: undefined
@@ -46,6 +47,7 @@ export default function integrateBankReducer(state = initialState, action) {
       return {
         ...state,
         connection: action.payload.connection,
+        momentumOfferData: action.payload.momentumOfferData,
         loadingState: LOADING_STATES.NONE
       };
     case `${FETCH_CONNECTION_URL}_FAIL`:
@@ -96,10 +98,12 @@ export default function integrateBankReducer(state = initialState, action) {
       };
     case `${UNLINK_CONNECTION_URL}_SUCCEED`:
       const fromQuovo = action.payload.fromQuovo;
-      return fromQuovo ? initialState : {
-        ...state,
-        loadingState: LOADING_STATES.NONE,
-      };
+      return fromQuovo
+        ? initialState
+        : {
+            ...state,
+            loadingState: LOADING_STATES.NONE
+          };
 
     // Change Bank Step cases
     case `${CHANGE_BANK_STEP}`:
