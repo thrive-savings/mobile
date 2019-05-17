@@ -39,9 +39,23 @@ const updateOfferStatusSucceedSaga = function*() {
   });
 };
 
+const updateMomentumOfferDataSucceedSaga = function*() {
+  yield takeEvery(
+    [`${CHECK_ELIGIBILITY_URL}_SUCCEED`, `${UPDATE_OFFER_STATUS_URL}_SUCCEED`],
+    function*({ payload: { momentumOfferData } }) {
+      yield put(
+        updateMomentumOfferData({
+          momentumOfferData
+        })
+      );
+    }
+  );
+};
+
 export {
   checkEligibilitySaga,
   checkEligibilitySucceedSaga,
   updateOfferStatusSaga,
-  updateOfferStatusSucceedSaga
+  updateOfferStatusSucceedSaga,
+  updateMomentumOfferDataSucceedSaga
 };

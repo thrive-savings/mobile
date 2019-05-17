@@ -68,6 +68,7 @@ class ProgramTour extends Component {
         <SpecialButton
           text="I DON'T WANT $60"
           onClick={this.props.onUninterestedConfirmed}
+          loading={this.props.loading}
           type="white"
           style={[styles.modalButtonStyle, globalStyles.shadow]}
         />
@@ -121,7 +122,8 @@ class ProgramTour extends Component {
 
 ProgramTour.propTypes = {
   onUninterestedConfirmed: PropTypes.func.isRequired,
-  onGoToEligibilityCheck: PropTypes.func.isRequired
+  onGoToEligibilityCheck: PropTypes.func.isRequired,
+  loading: PropTypes.bool
 };
 
 export default ProgramTour;

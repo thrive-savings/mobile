@@ -8,7 +8,11 @@ import ProgramTour from "./pages/ProgramTour";
 import EligibilityCheck from "./pages/EligibilityCheck";
 import EligibilityResults from "./pages/EligibilityResults";
 
-import { MOMENTUM_STEPS, MOMENTUM_OFFER_STATUSES } from "./state/constants";
+import {
+  MOMENTUM_STEPS,
+  MOMENTUM_OFFER_STATUSES,
+  LOADING_STATES
+} from "./state/constants";
 import {
   checkEligibility,
   updateOfferStatus,
@@ -16,9 +20,13 @@ import {
 } from "./state/actions";
 
 class MomentumFlow extends Component {
+  componentWillUnmount() {
+    this.props.changeMomentumStep();
+  }
+
   render() {
     const {
-      momentumFlowReducer: { step } = {},
+      momentumFlowReducer: { step, loadingState } = {},
       momentumOfferData: { status } = {}
     } = this.props;
 
@@ -44,6 +52,7 @@ class MomentumFlow extends Component {
               this.props.changeMomentumStep({
                 step: MOMENTUM_STEPS.ELIGIBILITY_CHECK
               })}
+            loading={loadingState === LOADING_STATES.UPDATING_STATUS}
           />
         );
       case MOMENTUM_STEPS.ELIGIBILITY_CHECK:
@@ -52,16 +61,19 @@ class MomentumFlow extends Component {
             onBackPress={() =>
               this.props.changeMomentumStep({ step: step - 1 })}
             onSubmitCheck={data => this.props.checkEligibility(data)}
+            loading={loadingState === LOADING_STATES.CHECKING_ELIGIBILITY}
           />
         );
       case MOMENTUM_STEPS.ELIGIBILITY_RESULT:
         return (
           <EligibilityResults
             status={status}
-            onFinish={() =>
+            onFinish={doneStatus =>
               this.props.updateOfferStatus({
-                status: MOMENTUM_OFFER_STATUSES.DONE
+                status: doneStatus
               })}
+            onNavigate={path => this.props.navigation.navigate(path)}
+            loading={loadingState === LOADING_STATES.UPDATING_STATUS}
           />
         );
     }

@@ -15,7 +15,8 @@ export const MOMENTUM_OFFER_STATUSES = {
   UNINTERESTED: "uninterested",
   INELIGIBLE: "ineligible",
   PASSED: "passed",
-  DONE: "done"
+  PASSED_DONE: "passed_done",
+  INELIGIBLE_DONE: "ineligible_done"
 };
 
 export const LOADING_STATES = {

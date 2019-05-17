@@ -220,6 +220,7 @@ class EligibilityCheck extends Component {
                 {this.renderCheckboxFields()}
                 <SpecialButton
                   enabled={agreed}
+                  loading={this.props.loading}
                   text={"NEXT"}
                   onClick={this.onSubmitCheck}
                 />
@@ -233,7 +234,8 @@ class EligibilityCheck extends Component {
 
 EligibilityCheck.propTypes = {
   onBackPress: PropTypes.func.isRequired,
-  onSubmitCheck: PropTypes.func.isRequired
+  onSubmitCheck: PropTypes.func.isRequired,
+  loading: PropTypes.bool
 };
 
 export default EligibilityCheck;

@@ -152,7 +152,8 @@ class App extends React.Component {
           momentumOfferData &&
           ![
             MOMENTUM_OFFER_STATUSES.UNINTERESTED,
-            MOMENTUM_OFFER_STATUSES.DONE
+            MOMENTUM_OFFER_STATUSES.PASSED_DONE,
+            MOMENTUM_OFFER_STATUSES.INELIGIBLE_DONE
           ].includes(momentumOfferData.status)
         ) {
           stacker = <StackerWithMomentumFlow />;

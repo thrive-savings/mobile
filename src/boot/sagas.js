@@ -71,7 +71,8 @@ import {
   checkEligibilitySaga,
   checkEligibilitySucceedSaga,
   updateOfferStatusSaga,
-  updateOfferStatusSucceedSaga
+  updateOfferStatusSucceedSaga,
+  updateMomentumOfferDataSucceedSaga
 } from "../screens/MomentumFlow/state/sagas";
 
 export default function runSagas(sagaMiddleware) {
@@ -126,7 +127,8 @@ export default function runSagas(sagaMiddleware) {
   sagaMiddleware.run(fetchDebtsSaga);
   sagaMiddleware.run(saveDebtDetailsSaga);
   sagaMiddleware.run(checkEligibilitySaga);
-  sagaMiddleware.run(checkEligibilitySucceedSaga);
+  // sagaMiddleware.run(checkEligibilitySucceedSaga);
   sagaMiddleware.run(updateOfferStatusSaga);
-  sagaMiddleware.run(updateOfferStatusSucceedSaga);
+  // sagaMiddleware.run(updateOfferStatusSucceedSaga);
+  sagaMiddleware.run(updateMomentumOfferDataSucceedSaga);
 }
