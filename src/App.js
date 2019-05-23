@@ -144,10 +144,6 @@ class App extends React.Component {
         stacker = <StackerWithSetPhone />;
       } else {
         const momentumOfferData = authorized.momentumOfferData;
-        console.log("---------APP rendering---------");
-        console.log(momentumOfferData);
-        console.log("--------------------------------");
-
         if (
           momentumOfferData &&
           ![
