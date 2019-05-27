@@ -55,7 +55,8 @@ class SavingDetails extends Component {
 
     if (
       contribution &&
-      (contribution < MIN_FIXED_CONTRIBUTION || contribution > MAX_FIXED_CONTRIBUTION)
+      (contribution < MIN_FIXED_CONTRIBUTION ||
+        contribution > MAX_FIXED_CONTRIBUTION)
     ) {
       Toast.show({
         text: `Contribution amount should be between ${getDollarString(
@@ -68,20 +69,18 @@ class SavingDetails extends Component {
         textStyle: { textAlign: "center" }
       });
     } else {
-      this.props.save({
-        nextSaveDate,
-        fixedContribution: contribution,
-        frequency: frequencyIndex && FREQUENCY_TYPES[frequencyIndex].identifier
-      });
+      const submitData = { nextSaveDate, fixedContribution: contribution };
+      if (typeof frequencyIndex !== "undefined") {
+        submitData.frequency = FREQUENCY_TYPES[frequencyIndex].identifier;
+      }
+      this.props.save(submitData);
     }
   }
 
   numPadClicked(value) {
     let contribution = this.getData().contribution / 100;
     contribution =
-      value >= 0
-        ? contribution * 10 + value
-        : Math.floor(contribution / 10);
+      value >= 0 ? contribution * 10 + value : Math.floor(contribution / 10);
     contribution *= 100;
 
     this.setState({ contribution });
@@ -104,14 +103,24 @@ class SavingDetails extends Component {
 
     return {
       savingType,
-      nextSaveDate: nextSaveDate || moment(savedNextSaveDate).format(DATE_DISPLAY_FORMAT),
-      frequencyIndex: frequencyIndex ? frequencyIndex : savedFrequency && getFrequencyIndex(savedFrequency),
-      contribution: typeof contribution !== "undefined" ? contribution : savedContribution
+      nextSaveDate:
+        nextSaveDate || moment(savedNextSaveDate).format(DATE_DISPLAY_FORMAT),
+      frequencyIndex:
+        typeof frequencyIndex !== "undefined"
+          ? frequencyIndex
+          : savedFrequency && getFrequencyIndex(savedFrequency),
+      contribution:
+        typeof contribution !== "undefined" ? contribution : savedContribution
     };
   }
 
   render() {
-    const { savingType, nextSaveDate, frequencyIndex, contribution } = this.getData();
+    const {
+      savingType,
+      nextSaveDate,
+      frequencyIndex,
+      contribution
+    } = this.getData();
 
     const { showContributionSetter, showFrequencySetter } = this.state;
     const { reducer: { loadingState }, showDots } = this.props;
@@ -121,12 +130,10 @@ class SavingDetails extends Component {
       <View style={styles.container}>
         {showDots && <Dots step={3} />}
 
-        <Text
-          style={[styles.labelText, showDots && styles.topPadder]}
-        >
-          {
-            isFlex ? "WHEN WOULD YOU LIKE TO START SAVING?" : "HOW MUCH WOULD YOU LIKE TO SAVE?"
-          }
+        <Text style={[styles.labelText, showDots && styles.topPadder]}>
+          {isFlex
+            ? "WHEN WOULD YOU LIKE TO START SAVING?"
+            : "HOW MUCH WOULD YOU LIKE TO SAVE?"}
         </Text>
         <Text style={styles.regularText}>
           You are currently on the{" "}
@@ -151,14 +158,20 @@ class SavingDetails extends Component {
             cancelBtnText="Cancel"
             showIcon={false}
             androidMode="spinner"
-            onDateChange={date => this.setState({ nextSaveDate: date, showContributionSetter: false, showFrequencySetter: false })}
+            onDateChange={date =>
+              this.setState({
+                nextSaveDate: date,
+                showContributionSetter: false,
+                showFrequencySetter: false
+              })}
           />
         </View>
 
         <View style={styles.separator} />
         <TouchableOpacity
           activeOpacity={isFlex ? 1 : 0.6}
-          onPress={() => !isFlex &&
+          onPress={() =>
+            !isFlex &&
             this.setState({
               showContributionSetter: true,
               showFrequencySetter: false
@@ -167,21 +180,18 @@ class SavingDetails extends Component {
           style={styles.inputRow}
         >
           <Text style={styles.inputLabel}>Amount:</Text>
-          {
-            isFlex ?
-              <Text style={styles.inputLabel}>
-                Automated
-              </Text> :
-              <Text style={styles.inputButtonText}>
+          {isFlex
+            ? <Text style={styles.inputLabel}>Automated</Text>
+            : <Text style={styles.inputButtonText}>
                 {getDollarString(contribution, true)}
-              </Text>
-          }
+              </Text>}
         </TouchableOpacity>
 
         <View style={styles.separator} />
         <TouchableOpacity
           activeOpacity={isFlex ? 1 : 0.6}
-          onPress={() => !isFlex &&
+          onPress={() =>
+            !isFlex &&
             this.setState({
               showContributionSetter: false,
               showFrequencySetter: true
@@ -190,25 +200,22 @@ class SavingDetails extends Component {
           style={styles.inputRow}
         >
           <Text style={styles.inputLabel}>Frequency:</Text>
-          {
-            isFlex ?
-              <Text style={styles.inputLabel}>
-                Automated
-              </Text> :
-              <Text style={styles.inputButtonText}>
+          {isFlex
+            ? <Text style={styles.inputLabel}>Automated</Text>
+            : <Text style={styles.inputButtonText}>
                 {FREQUENCY_TYPES[frequencyIndex].displayName}
-              </Text>
-          }
+              </Text>}
         </TouchableOpacity>
 
         {isFlex && <View style={styles.separator} />}
-        {
-          isFlex &&
+        {isFlex &&
           <Text style={[styles.regularText, styles.smallerText]}>
-            We’ll automatically transfer a small amount of money into your Thrive Savings account.{"\n\n"}
-            <Text style={styles.blueText}>Don’t worry, we will never overdraft you</Text>
-          </Text>
-        }
+            We’ll automatically transfer a small amount of money into your
+            Thrive Savings account.{"\n\n"}
+            <Text style={styles.blueText}>
+              Don’t worry, we will never overdraft you
+            </Text>
+          </Text>}
 
         <SpecialButton
           loading={loadingState !== LOADING_STATES.NONE}
