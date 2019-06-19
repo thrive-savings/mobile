@@ -20,6 +20,9 @@ export default StyleSheet.create({
   row: {
     flexDirection: "row"
   },
+  withOpacity: {
+    opacity: 0.3
+  },
   centerItems: {
     alignItems: "center",
     justifyContent: "center"

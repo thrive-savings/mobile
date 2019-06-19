@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { View, Text } from "react-native";
 import PropTypes from "prop-types";
 
-import { getDollarString } from "../../../../globals/helpers";
-
 import globalStyles from "../../../../globals/globalStyles";
 import styles from "./styles";
 
@@ -35,37 +33,39 @@ class HistoryList extends Component {
 
       data.map(
         (
-          { date, activity: { type, amount, color, typeToDisplay }, total },
+          {
+            date,
+            activity: { amountInDollars, color, typeToDisplay },
+            totalInDollars,
+            withOpacity
+          },
           index
         ) => {
           if (index >= limit) {
             return;
           }
 
-          const activityTypeColor = color;
-          const activityAmountSign = type === "credit" ? "-" : "+";
-          const activityName = typeToDisplay.toUpperCase();
-
           body.push(
-            <View key={index} style={styles.row}>
+            <View
+              key={index}
+              style={[styles.row, withOpacity && styles.withOpacity]}
+            >
               <View style={styles.smallColumn}>
                 <Text style={styles.regularText}>
                   {date}
                 </Text>
               </View>
               <View style={[styles.activityContent, styles.largeColumn]}>
-                <Text
-                  style={[styles.regularText, { color: activityTypeColor }]}
-                >
-                  {`${activityAmountSign} ${getDollarString(amount)}`}
+                <Text style={[styles.regularText, { color }]}>
+                  {`${amountInDollars}`}
                 </Text>
                 <Text style={styles.greyText}>
-                  {activityName}
+                  {typeToDisplay.toUpperCase()}
                 </Text>
               </View>
               <View style={styles.smallColumn}>
                 <Text style={styles.regularText}>
-                  {getDollarString(total)}
+                  {totalInDollars}
                 </Text>
               </View>
             </View>
