@@ -44,17 +44,7 @@ class History extends Component {
   }
 
   componentWillMount() {
-    const { data } = this.props.historyReducer;
-
-    const fetchArgs = { fromDate: "-1" };
-    if (Object.keys(data).length) {
-      const { history, totalSavings } = data;
-      if (history.length && totalSavings) {
-        fetchArgs.fromDate = history[0].processedDate;
-      }
-    }
-
-    this.props.fetchHistory(fetchArgs);
+    this.props.fetchHistory({ fromDate: "-1" });
   }
 
   onHeaderButtonPress() {
