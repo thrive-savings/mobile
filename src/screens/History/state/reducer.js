@@ -15,23 +15,12 @@ export default function historyReducer(state = initialState, action) {
         isFetching: true
       };
     case `${FETCH_HISTORY_URL}_SUCCEED`:
-      const {
-        payload: {
-          data: {
-            chart: newChart,
-            history: newHistory,
-            totalSavings: newTotalSavings
-          }
-        }
-      } = action;
-
-      const { data: { chart, history, totalSavings } } = state;
+      const { payload: { data: { history, totalSavings } } } = action;
       return {
         ...state,
         data: {
-          chart: chart.concat(newChart),
-          history: totalSavings ? newHistory.concat(history) : newHistory,
-          totalSavings: totalSavings + newTotalSavings
+          history,
+          totalSavings
         },
         isFetching: false,
         error: false,
