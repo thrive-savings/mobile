@@ -139,6 +139,9 @@ class App extends React.Component {
     let stacker = <StackerWithProductTour />;
 
     const authorized = getAuthorized(this.props.authReducer);
+
+    console.log("---------------APP rendering--------------");
+    console.log(authorized.synapse);
     if (authorized) {
       if (!authorized.isVerified) {
         stacker = <StackerWithSetPhone />;

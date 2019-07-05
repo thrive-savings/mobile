@@ -9,6 +9,7 @@ import {
   UPDATE_GOALS_DATA,
   UPDATE_NOTIFICATIONS_DATA,
   UPDATE_SAVING_PREFERENCES_DATA,
+  UPDATE_SYANPSE_DATA,
   UPDATE_MOMENTUM_OFFER_DATA,
   UPDATE_AVATAR
 } from "./constants";
@@ -33,6 +34,10 @@ export const updateNotificationsData = payload => ({
 export const updateSavingPreferencesData = payload => ({
   payload,
   type: UPDATE_SAVING_PREFERENCES_DATA
+});
+export const updateSynapseData = payload => ({
+  payload,
+  type: UPDATE_SYANPSE_DATA
 });
 export const updateMomentumOfferData = payload => ({
   payload,

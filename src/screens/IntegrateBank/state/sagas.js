@@ -10,7 +10,8 @@ import { put, takeEvery } from "redux-saga/effects";
 import { requestApi } from "../../../globals/requestApi";
 import {
   updateConnectionsData,
-  updateMomentumOfferData
+  updateMomentumOfferData,
+  updateSynapseData
 } from "../../Login/state/actions";
 
 const getUiTokenSaga = function*() {
@@ -62,11 +63,16 @@ const updateUserDataAfterLinkingDoneSaga = function*() {
     payload: {
       connection: newConnectionData,
       connections: allConnectionsData,
-      momentumOfferData
+      momentumOfferData,
+      synapseEntryData
     }
   }) {
     if (momentumOfferData) {
       yield put(updateMomentumOfferData({ momentumOfferData }));
+    }
+
+    if (synapseEntryData && Object.keys(synapseEntryData).length) {
+      yield put(updateSynapseData({ data: synapseEntryData, key: "entry" }));
     }
 
     if (allConnectionsData) {

@@ -48,6 +48,7 @@ export default function integrateBankReducer(state = initialState, action) {
         ...state,
         connection: action.payload.connection,
         momentumOfferData: action.payload.momentumOfferData,
+        synapseEntryData: action.payload.synapseEntryData,
         loadingState: LOADING_STATES.NONE
       };
     case `${FETCH_CONNECTION_URL}_FAIL`:

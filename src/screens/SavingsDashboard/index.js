@@ -87,7 +87,9 @@ class SavingsDashboard extends Component {
         break;
       case "IntegrateBank":
         this.props.navigation.navigate("IntegrateBank", {
-          step: this.props.userData.bankLinked ? LINK_STEPS.AUTH : LINK_STEPS.INFO
+          step: this.props.userData.bankLinked
+            ? LINK_STEPS.AUTH
+            : LINK_STEPS.INFO
         });
         break;
       default:
@@ -132,7 +134,13 @@ class SavingsDashboard extends Component {
     const {
       isSeeingBonus,
       preferencesLoadingState,
-      userData: { bankLinked, connections, notifications }
+      userData: {
+        countryCode = "CAN",
+        bankLinked,
+        connections,
+        synapse: { entry: synapseEntryData } = {},
+        notifications
+      }
     } = this.props;
 
     let notifPreferencesSet = false,
@@ -141,6 +149,12 @@ class SavingsDashboard extends Component {
       notifPreferencesSet = notifications.savingPreferencesSet;
       notifBonus = notifications.bonus;
     }
+
+    // TODO: logic to check if CompleteKYC should render
+
+    console.log("-------Renderig Notifications------");
+    console.log(countryCode);
+    console.log(synapseEntryData);
 
     return NOTIFICATION_TYPES.map(({ type, title, getDescription, icon }) => {
       let shouldRender = false;
@@ -155,10 +169,22 @@ class SavingsDashboard extends Component {
           break;
         case "SavingPreferences":
           shouldRender = !notifPreferencesSet;
-          description = preferencesLoadingState === LOADING_STATES.SETTING_INITIAL_DONE ? "Setting up ..." : getDescription();
+          description =
+            preferencesLoadingState === LOADING_STATES.SETTING_INITIAL_DONE
+              ? "Setting up ..."
+              : getDescription();
           break;
         case "IntegrateBank":
-          shouldRender = !bankLinked || !connections || connections.length === 0;
+          shouldRender =
+            !bankLinked || !connections || connections.length === 0;
+          description = getDescription();
+          break;
+        case "CompleteKYC":
+          shouldRender =
+            bankLinked &&
+            countryCode === "USA" &&
+            synapseEntryData &&
+            synapseEntryData.docStatus === "INVALID";
           description = getDescription();
           break;
         default:
@@ -254,12 +280,14 @@ class SavingsDashboard extends Component {
 
   render() {
     const { setRating } = this.state;
-    const {
-      navigation,
-      userData: { promptRating, balance }
-    } = this.props;
+    const { navigation, userData: { promptRating, balance } } = this.props;
 
-    const { beforeDot: balanceBD, afterDot: balanceAD } = getSplitDollarStrings(balance);
+    const { beforeDot: balanceBD, afterDot: balanceAD } = getSplitDollarStrings(
+      balance
+    );
+
+    console.log("-------SavingsDashboard rendering------");
+    console.log(this.props.userData.synapse);
     return (
       <ImageBackground source={bg} style={globalStyles.background}>
         <Header navigation={navigation} />
@@ -336,4 +364,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(addStatusBar(SavingsDashboard));
+export default connect(mapStateToProps, mapDispatchToProps)(
+  addStatusBar(SavingsDashboard)
+);

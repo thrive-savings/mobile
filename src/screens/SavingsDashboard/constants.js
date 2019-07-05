@@ -3,9 +3,17 @@ const settingsIcon = require("../../../assets/Icons/Settings/bitmap.png");
 
 const NOTIFICATION_TYPES = [
   {
+    type: "CompleteKYC",
+    title: "COMPLETE KYC",
+    getDescription: () =>
+      "Tap here to verify & submit your KYC data so we can open Synapse Bank Account under your name.",
+    icon: settingsIcon
+  },
+  {
     type: "EmployerBonus",
     title: "EMPLOYER BONUS",
-    getDescription: amount => `Hooray, your employer has contributed ${amount} to your Thrive Savings balance! Tap to dismiss.`,
+    getDescription: amount =>
+      `Hooray, your employer has contributed ${amount} to your Thrive Savings balance! Tap to dismiss.`,
     icon: handShakeIcon
   },
   {

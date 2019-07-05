@@ -39,18 +39,27 @@ class IntegrateBank extends Component {
 
   updateConnectionsData = () => {
     const {
-      integrateBankReducer: { connection, allConnections, momentumOfferData }
+      integrateBankReducer: {
+        connection,
+        allConnections,
+        momentumOfferData,
+        synapseEntryData
+      }
     } = this.props;
     if (connection || allConnections) {
       const data = {};
       if (momentumOfferData) {
         data.momentumOfferData = momentumOfferData;
       }
+      if (synapseEntryData) {
+        data.synapseEntryData = synapseEntryData;
+      }
       if (allConnections) {
         data.connections = allConnections;
       } else {
         data.connection = connection;
       }
+
       this.props.updateUserDataAfterLinkingDone(data);
     }
   };

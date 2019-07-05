@@ -9,6 +9,7 @@ import {
   UPDATE_GOALS_DATA,
   UPDATE_NOTIFICATIONS_DATA,
   UPDATE_SAVING_PREFERENCES_DATA,
+  UPDATE_SYANPSE_DATA,
   UPDATE_MOMENTUM_OFFER_DATA,
   UPDATE_AVATAR
 } from "./constants";
@@ -131,6 +132,33 @@ export default function authReducer(state = initialState, action) {
           authorized: {
             ...dataOnSavingPreferencesUpdate,
             savingPreferences
+          }
+        }
+      };
+
+    // Update Saving Preferences case
+    case `${UPDATE_SYANPSE_DATA}`:
+      const { payload: { data: synapseData, key } } = action;
+      const dataOnSynapseDataUpdate = state.data.authorized;
+
+      let newSynapseData = state.data.authorized.synapse;
+      if (key) {
+        if (key === "entry") {
+          newSynapseData.entry = synapseData;
+        } else if (key === "nodes") {
+          newSynapseData.nodes = synapseData;
+        }
+      } else {
+        newSynapseData = synapseData;
+      }
+
+      return {
+        ...state,
+        data: {
+          authorized: {
+            ...dataOnSynapseDataUpdate,
+            countryCode: Object.keys(newSynapseData).length ? "USA" : "CAN",
+            synapse: newSynapseData
           }
         }
       };
