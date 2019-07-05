@@ -150,12 +150,6 @@ class SavingsDashboard extends Component {
       notifBonus = notifications.bonus;
     }
 
-    // TODO: logic to check if CompleteKYC should render
-
-    console.log("-------Renderig Notifications------");
-    console.log(countryCode);
-    console.log(synapseEntryData);
-
     return NOTIFICATION_TYPES.map(({ type, title, getDescription, icon }) => {
       let shouldRender = false;
       let description = "";
@@ -286,8 +280,6 @@ class SavingsDashboard extends Component {
       balance
     );
 
-    console.log("-------SavingsDashboard rendering------");
-    console.log(this.props.userData.synapse);
     return (
       <ImageBackground source={bg} style={globalStyles.background}>
         <Header navigation={navigation} />
