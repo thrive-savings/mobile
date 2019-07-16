@@ -3,7 +3,7 @@ const settingsIcon = require("../../../assets/Icons/Settings/bitmap.png");
 
 const NOTIFICATION_TYPES = [
   {
-    type: "CompleteKYC",
+    type: "CompleteProfile",
     title: "COMPLETE KYC",
     getDescription: () =>
       "Tap here to verify & submit your KYC data so we can open Synapse Bank Account under your name.",

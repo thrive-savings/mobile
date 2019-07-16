@@ -92,6 +92,9 @@ class SavingsDashboard extends Component {
             : LINK_STEPS.INFO
         });
         break;
+      case "CompleteProfile":
+        this.props.navigation.navigate("CompleteProfile");
+        break;
       default:
         break;
     }
@@ -173,7 +176,7 @@ class SavingsDashboard extends Component {
             !bankLinked || !connections || connections.length === 0;
           description = getDescription();
           break;
-        case "CompleteKYC":
+        case "CompleteProfile":
           shouldRender =
             bankLinked &&
             countryCode === "USA" &&

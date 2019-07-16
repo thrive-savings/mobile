@@ -69,11 +69,12 @@ import {
 } from "../screens/DebtDashboard/state/sagas";
 import {
   checkEligibilitySaga,
-  checkEligibilitySucceedSaga,
+  // checkEligibilitySucceedSaga,
   updateOfferStatusSaga,
-  updateOfferStatusSucceedSaga,
+  // updateOfferStatusSucceedSaga,
   updateMomentumOfferDataSucceedSaga
 } from "../screens/MomentumFlow/state/sagas";
+import { submitDocumentDataSaga } from "../screens/CompleteProfile/state/sagas";
 
 export default function runSagas(sagaMiddleware) {
   sagaMiddleware.run(requestApiSaga);
@@ -131,4 +132,5 @@ export default function runSagas(sagaMiddleware) {
   sagaMiddleware.run(updateOfferStatusSaga);
   // sagaMiddleware.run(updateOfferStatusSucceedSaga);
   sagaMiddleware.run(updateMomentumOfferDataSucceedSaga);
+  sagaMiddleware.run(submitDocumentDataSaga);
 }

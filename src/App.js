@@ -28,6 +28,7 @@ import BankConnections from "./screens/BankConnections";
 import SavingPreferences from "./screens/SavingPreferences";
 import History from "./screens/History";
 import SavingGoals from "./screens/SavingGoals";
+import CompleteProfile from "./screens/CompleteProfile";
 import PP from "./screens/PP";
 import TOS from "./screens/TOS";
 import Faq from "./screens/Faq";
@@ -44,10 +45,11 @@ const Drawer = createDrawerNavigator(
     Referral: { screen: Referral },
     Settings: { screen: Settings },
     Faq: { screen: Faq },
-    Contact: { screen: Contact }
+    Contact: { screen: Contact },
+    CompleteProfile: { screen: CompleteProfile }
   },
   {
-    initialRouteName: "SavingsDashboard",
+    initialRouteName: "CompleteProfile",
     contentComponent: props => <Sidebar {...props} />
   }
 );
@@ -62,6 +64,7 @@ const stackScreens = {
   BankConnections: { screen: BankConnections },
   SavingPreferences: { screen: SavingPreferences },
   SavingGoals: { screen: SavingGoals },
+  CompleteProfile: { screen: CompleteProfile },
   PP: { screen: PP },
   TOS: { screen: TOS },
   Drawer: { screen: Drawer },

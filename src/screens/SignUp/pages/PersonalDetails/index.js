@@ -176,7 +176,6 @@ class PersonalDetails extends Component {
             <Field
               name="firstName"
               component={this.renderInput}
-              type="firstName"
               validate={[required]}
             />
             <Field

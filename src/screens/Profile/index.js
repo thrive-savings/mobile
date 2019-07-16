@@ -11,6 +11,7 @@ import { Spinner } from "native-base";
 import { Svg } from "expo";
 
 import Header from "../../components/Header";
+import UploadPhotoModal from "../../components/UploadPhotoModal";
 import addStatusBar from "../../components/StatusBar";
 
 import getAvatar from "../../globals/getAvatar";
@@ -22,7 +23,6 @@ import colors from "../../theme/colors";
 
 import { setEmail, setPassword } from "./state/actions";
 
-import ChangePhotoModal from "./modals/ChangePhoto";
 import ChangeEmail from "./pages/ChangeEmail";
 import ChangePassword from "./pages/ChangePassword";
 
@@ -230,8 +230,10 @@ class Profile extends Component {
         />
         <View style={globalStyles.container}>
           {this.renderContent()}
-          <ChangePhotoModal
-            showModal={this.state.showModal}
+          <UploadPhotoModal
+            uploadPhoto={() => {}}
+            deletePhoto={() => {}}
+            show={this.state.showModal}
             onClose={() => this.setState({ showModal: false })}
           />
         </View>
