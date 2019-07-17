@@ -21,7 +21,12 @@ import globalStyles from "../../globals/globalStyles";
 import styles from "./styles";
 import colors from "../../theme/colors";
 
-import { setEmail, setPassword } from "./state/actions";
+import {
+  setEmail,
+  setPassword,
+  uploadPhoto,
+  deletePhoto
+} from "./state/actions";
 
 import ChangeEmail from "./pages/ChangeEmail";
 import ChangePassword from "./pages/ChangePassword";
@@ -231,8 +236,8 @@ class Profile extends Component {
         <View style={globalStyles.container}>
           {this.renderContent()}
           <UploadPhotoModal
-            uploadPhoto={() => {}}
-            deletePhoto={() => {}}
+            uploadPhoto={this.props.uploadPhoto}
+            deletePhoto={this.props.deletePhoto}
             show={this.state.showModal}
             onClose={() => this.setState({ showModal: false })}
           />
@@ -251,8 +256,10 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    setEmail: payload => dispatch(setEmail(payload)),
-    setPassword: payload => dispatch(setPassword(payload))
+    setEmail: (payload = {}) => dispatch(setEmail(payload)),
+    setPassword: (payload = {}) => dispatch(setPassword(payload)),
+    uploadPhoto: (payload = {}) => dispatch(uploadPhoto(payload)),
+    deletePhoto: () => dispatch(deletePhoto())
   };
 }
 
